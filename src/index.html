@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- to run webpack, i need to link an index file to the html -->
+    <script src="./index.js" />
+
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>asuka-405 @ github</title>
+    <title>asuka-405@github</title>
 
     <meta property="og:title" content="Suryansh Kapil" />
     <meta
       property="og:description"
       content="Check out my portfolio and drop a follow on github"
     />
-    <meta property="og:image" content="./assets/img/bg.jpg" />
+    <meta property="og:image" content="./snapshot.png" />
     <meta property="og:url" content="https://suryansh405.netlify.app" />
 
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="./assets/img/favicon.png" rel="icon" />
+    <link href="./assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link
@@ -29,19 +32,25 @@
 
     <!-- Vendor CSS Files -->
     <link
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      href="./assets/vendor/bootstrap/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
-      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      href="./assets/vendor/bootstrap-icons/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <link
+      href="./assets/vendor/boxicons/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link href="./assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link
+      href="./assets/vendor/swiper/swiper-bundle.min.css"
+      rel="stylesheet"
+    />
 
     <!-- Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="./assets/css/style.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -108,7 +117,7 @@
         <br /><br />
         <div class="row">
           <div class="col-lg-2" data-aos="fade-right">
-            <img src="assets/img/me.jpg" class="img-fluid" alt="" />
+            <img src="./assets/img/me.jpg" class="img-fluid" alt="" />
           </div>
           <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
             <h3>Web Developer</h3>
@@ -394,15 +403,17 @@
             <ul id="portfolio-flters">
               <li data-filter="*" class="filter-active">All</li>
               <li data-filter=".filter-frontend">Frontend</li>
-              <li data-filter=".filter-backend">Backend</li>
-              <li data-filter=".filter-electron">Desktop</li>
+              <li data-filter=".filter-node">NodeJS</li>
+              <li data-filter=".filter-express">Express</li>
+              <li data-filter=".filter-react">React</li>
+              <li data-filter=".filter-desktop">Desktop</li>
             </ul>
           </div>
         </div>
 
         <div class="row portfolio-container">
           <div
-            class="col-lg-4 col-md-6 portfolio-item filter-electron filter-backend"
+            class="col-lg-4 col-md-6 portfolio-item filter-desktop filter-node"
           >
             <div class="portfolio-wrap">
               <div class="col-md-4 filter-app">
@@ -433,9 +444,7 @@
             </div>
           </div>
 
-          <div
-            class="col-lg-4 col-md-6 portfolio-item filter-frontend filter-backend"
-          >
+          <div class="col-lg-4 col-md-6 portfolio-item filter-node">
             <div class="portfolio-wrap">
               <div class="col-md-4 filter-app">
                 <div class="card-xtra" style="width: 18rem">
@@ -465,7 +474,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-backend">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-node">
             <div class="portfolio-wrap">
               <div class="col-md-4 filter-app">
                 <div class="card-xtra" style="width: 18rem">
@@ -497,7 +506,7 @@
           </div>
 
           <div
-            class="col-lg-4 col-md-6 portfolio-item filter-backend filter-frontend"
+            class="col-lg-4 col-md-6 portfolio-item filter-node filter-frontend filter-express"
           >
             <div class="portfolio-wrap">
               <div class="col-md-4 filter-app">
@@ -558,12 +567,81 @@
               </div>
             </div>
           </div>
+
+          <div
+            class="col-lg-4 col-md-6 portfolio-item filter-node filter-react"
+          >
+            <div class="portfolio-wrap">
+              <div class="col-md-4 filter-app">
+                <div class="card-xtra" style="width: 18rem">
+                  <div class="card-xtra-body">
+                    <h5 class="card-xtra-title">Coffee News</h5>
+                    <h6 class="card-xtra-subtitle mb-2 text-muted">News App</h6>
+                    <p class="card-xtra-text">
+                      Read news in a clean and minimalistic UI. Either maintain
+                      privacy by using private mode or login to save articles.
+                    </p>
+
+                    <div class="portfolio-info">
+                      <h4>News 🍵</h4>
+                      <div>
+                        <a
+                          href="https://github.com/asuka-405/coffee-news"
+                          target="_blank"
+                          ><i class="bx bx-link" style="transform: scale(2)"></i
+                        ></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col-lg-4 col-md-6 portfolio-item filter-node filter-express"
+          >
+            <div class="portfolio-wrap">
+              <div class="col-md-4 filter-app">
+                <div class="card-xtra" style="width: 18rem">
+                  <div class="card-xtra-body">
+                    <h5 class="card-xtra-title">Ecom-API</h5>
+                    <h6 class="card-xtra-subtitle mb-2 text-muted">
+                      Sample API
+                    </h6>
+                    <p class="card-xtra-text">
+                      Sample API demonstrating how to securely handle an
+                      ecommerce website.
+                    </p>
+
+                    <div class="portfolio-info">
+                      <h4>EcomAPI</h4>
+                      <div>
+                        <a
+                          href="https://github.com/asuka-405/ecom-api"
+                          target="_blank"
+                          ><i class="bx bx-link" style="transform: scale(2)"></i
+                        ></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
     <!-- End Portfolio Section -->
 
     <!-- ======= Contact Section ======= -->
+    <style>
+      @media (max-width: 768px) {
+        #contact {
+          margin-top: 3vh !important;
+        }
+      }
+    </style>
     <section id="contact" class="contact" style="margin-top: 10vh !important">
       <div class="container">
         <div class="section-title">
@@ -633,12 +711,12 @@
     </div>
 
     <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="./assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="./assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="./assets/vendor/waypoints/noframework.waypoints.js"></script>
 
     <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
+    <script src="./assets/js/main.js"></script>
   </body>
 </html>
