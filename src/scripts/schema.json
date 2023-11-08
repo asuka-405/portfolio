@@ -1,0 +1,15 @@
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "name": "Suryansh Kapil",
+  "jobTitle": "Software Engineer",
+  "url": "https://suryansh405.netlify.app/",
+  "description": "Hi! I'm Suryansh, a passionate software engineer in making. On a hunt to experience the entire spectrum of full-stack development. Tech: Node.js, TypeScript, Core Java and some Rust. Frameworks: React.js, Express.js, Electron.js. Databases: MongoDB & SQL. Other tech: HTML, CSS, SASS/SCSS, NGINX, Linux, Netlify, Github Workflows",
+  "image": "https://suryansh405.netlify.app/assets/me.png",
+  "sameAs": [
+    "https://www.linkedin.com/in/asuka405",
+    "https://twitter.com/asuka_405_",
+    "https://github.com/asuka-405",
+    "https://www.instagram.com/suryansh.kapil"
+  ]
+}
