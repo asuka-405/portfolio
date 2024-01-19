@@ -76,7 +76,10 @@ export function getCurrentArticleHtml() {
     const article = document.querySelector(".article")
     article.classList.remove("editor")
     article.querySelectorAll(".article-item").forEach((item) => {
-        item.contentEditable = false
+        item.removeAttribute("contenteditable")
+    })
+    article.querySelectorAll(".delete").forEach((item) => {
+        item.remove()
     })
     const title = article.querySelector(".title").innerText
     const content = article.outerHTML
