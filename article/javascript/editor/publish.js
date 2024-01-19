@@ -32,7 +32,7 @@ export function publishArticle(uname, token, repo) {
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             alert(
-                `Article published @ https://suryansh405.netlify.app/${article}/${title}.html`
+                `Article published @ https://suryansh405.netlify.app/article/${title}.html`
             )
         } else {
             alert(`Error ${xhr.status}: ${xhr.statusText}`)
@@ -41,7 +41,7 @@ export function publishArticle(uname, token, repo) {
     const data = {
         message: "Article published",
         content: base64EncodedContents,
-        branch: "master",
+        branch: "Main",
     }
     xhr.send(JSON.stringify(data))
 }
