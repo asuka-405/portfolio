@@ -22,7 +22,7 @@ export function publishArticle(uname, token, repo) {
     const base64EncodedContents = btoa(contents)
     const title = RegExp(/<title>(.*)<\/title>/).exec(contents)[1]
 
-    const url = `https://api.github.com/repos/${uname}/${repo}/contents/${article}/${title}.html`
+    const url = `https://api.github.com/repos/${uname}/${repo}/contents/article/${title}.html`
 
     const xhr = new XMLHttpRequest()
     xhr.open("PUT", url, true)
