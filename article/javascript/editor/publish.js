@@ -22,7 +22,7 @@ export function publishArticle(uname, token, repo) {
     const base64EncodedContents = btoa(contents)
     const title = RegExp(/<title>(.*)<\/title>/).exec(contents)[1]
 
-    const url = `https://api.github.com/repos/${uname}/${repo}/contents/blog/${title}.html`
+    const url = `https://api.github.com/repos/${uname}/${repo}/contents/${article}/${title}.html`
 
     const xhr = new XMLHttpRequest()
     xhr.open("PUT", url, true)
@@ -32,7 +32,7 @@ export function publishArticle(uname, token, repo) {
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             alert(
-                `Article published @ https://suryansh405.netlify.app/blog/${title}.html`
+                `Article published @ https://suryansh405.netlify.app/${article}/${title}.html`
             )
         } else {
             alert(`Error ${xhr.status}: ${xhr.statusText}`)
