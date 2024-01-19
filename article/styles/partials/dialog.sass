@@ -1,0 +1,52 @@
+@import "../colors"
+
+dialog::backdrop
+    backdrop-filter: blur(2px)
+
+dialog[open]
+    position: relative
+    margin: auto
+    display: flex
+    align-items: center
+    justify-content: center
+    background-color: rgba(0, 0, 0, 0.1)
+    z-index: 100
+    padding: 2em 4em
+    max-width: 100%
+    overflow: hidden
+    border: 3px solid $accent
+    border-radius: 4px
+
+    input
+        min-width: 90%
+        max-width: 110%
+        padding: 0.5em 1em
+        border: 1px solid $text
+        border-radius: 4px
+        background-color: $bg
+        color: $text
+        font-size: 1em
+        margin-bottom: 1em
+        &:hover, &:focus
+            cursor: pointer
+            transform: scale(1.01)
+            border: 1px solid $accent
+            outline: none
+    button
+        min-width: 50%
+        padding: 0.5em 1em
+        border: 1px solid $text
+        border-radius: 4px
+        background-color: $bg
+        color: $text
+        font-size: 1em
+        margin-bottom: 1em
+        &:hover, &:focus
+            cursor: pointer
+            transform: scale(1.05)
+            border: 1px solid $accent
+            outline: none
+    button:last-child
+        min-width: 0%
+        width: 36%
+        margin-left: 1em

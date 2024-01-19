@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/article/styles/main.css" />
+        <script
+            defer
+            src="/article/javascript/editor.js"
+            type="module"
+        ></script>
+        <meta name="darkreader-lock" />
+        <title>Editor</title>
+    </head>
+    <body>
+        <div class="article wrapper editor">
+            <h1 class="title">Title</h1>
+        </div>
+        <div class="new-item">
+            <div class="option heading">
+                <img src="/article/assets/heading.svg" alt="heading" />
+            </div>
+            <div class="option text">
+                <img src="/article/assets/text.svg" alt="text" />
+            </div>
+            <div class="option image">
+                <img src="/article/assets/image.svg" alt="image" />
+            </div>
+        </div>
+        <div class="preview hanging-item">
+            <span class="toggle-text">Preview</span>
+            <div class="toggle">
+                <input
+                    type="checkbox"
+                    name="toggle-preview"
+                    class="toggle-checkbox"
+                    id="toggle-preview"
+                    tabindex="0"
+                />
+                <label class="toggle-label" for="toggle-preview"></label>
+            </div>
+        </div>
+        <div class="publish hanging-item">
+            <img src="/article/assets/publish.svg" alt="publish" />
+        </div>
+        <dialog>
+            <form method="dialog">
+                <input
+                    type="text"
+                    name="gh-uname"
+                    id="gh-uname"
+                    placeholder="github username"
+                />
+                <input
+                    type="text"
+                    name="gh-repo"
+                    id="gh-repo"
+                    placeholder="repo name"
+                />
+                <input
+                    type="password"
+                    name="gh-token"
+                    id="gh-token"
+                    placeholder="github auth token"
+                />
+                <div><button>Publish</button> <button>Close</button></div>
+            </form>
+        </dialog>
+    </body>
+</html>
