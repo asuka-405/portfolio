@@ -7,7 +7,9 @@ export async function publishArticle(uname, token, repo) {
 
     uploadToGithub(uname, token, repo, `article/${title}.html`, contents)
         .then(() => {
-            updateArchive(title, uname, token, repo)
+            setTimeout(() => {
+                updateArchive(title, uname, token, repo)
+            }, 5000)
         })
         .catch((e) => {
             console.error(e)
