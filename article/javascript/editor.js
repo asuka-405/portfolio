@@ -1,5 +1,8 @@
-import { publishArticle } from "./editor/publish.js"
-import { newHeading, newImage, newText } from "./editor/utils.js"
+import {
+    newHeading,
+    newImage,
+    newText,
+} from "/article/javascript/editor/utils.js"
 
 const editor = document.querySelector(".editor")
 const newItemBar = document.querySelector(".new-item")

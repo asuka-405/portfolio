@@ -1,4 +1,4 @@
-import { getCurrentArticleHtml } from "./helpers.js"
+import { getCurrentArticleHtml } from "/article/javascript/editor/helpers.js"
 
 const dialog = document.querySelector("dialog")
 

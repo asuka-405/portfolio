@@ -1,26 +1,26 @@
-import { newItem, setImage } from "./helpers.js"
+import { newItem, setImage } from "/article/javascript/editor/helpers.js"
 
 export function newHeading() {
-  return newItem("h1", "Heading!!", undefined, { classList: ["heading"] })
+    return newItem("h1", "Heading!!", undefined, { classList: ["heading"] })
 }
 export function newText() {
-  return newItem("p", "Paragraph!!", undefined, { classList: ["text"] })
+    return newItem("p", "Paragraph!!", undefined, { classList: ["text"] })
 }
 
 export function newImage() {
-  const image = newItem(
-    "img",
-    undefined,
-    {
-      src: "",
-    },
-    {
-      classList: ["image"],
-    }
-  )
-  image.addEventListener("click", () => {
-    image.classList.toggle("expanded-image")
-  })
-  setImage(image)
-  return image
+    const image = newItem(
+        "img",
+        undefined,
+        {
+            src: "",
+        },
+        {
+            classList: ["image"],
+        }
+    )
+    image.addEventListener("click", () => {
+        image.classList.toggle("expanded-image")
+    })
+    setImage(image)
+    return image
 }
