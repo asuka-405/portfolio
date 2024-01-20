@@ -6,3 +6,7 @@ document
             image.classList.toggle("expanded-image")
         })
     })
+
+document.querySelectorAll("pre").forEach((code) => {
+    Prism.highlightElement(code, false, function () {})
+})
