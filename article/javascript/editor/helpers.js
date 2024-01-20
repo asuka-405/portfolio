@@ -75,7 +75,7 @@ function setAttributes(element, attrs) {
 export function getCurrentArticleHtml() {
     const article = document.querySelector(".article")
     article.classList.remove("editor")
-    article.querySelectorAll(".article-item").forEach((item) => {
+    article.querySelectorAll("*").forEach((item) => {
         item.removeAttribute("contenteditable")
     })
     article.querySelectorAll(".delete").forEach((item) => {
@@ -91,6 +91,7 @@ export function getCurrentArticleHtml() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/article/styles/main.css" />
+    <script src="/article/javascript/viewer.js" defer></script>
     <meta name="darkreader-lock" />
     <title>${title}</title>
   </head>
