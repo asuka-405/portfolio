@@ -3,6 +3,7 @@
 @import "./partials/new-item"
 @import "./partials/editor"
 @import "./partials/dialog"
+@import "./partials/archive"
 
 *
     margin: 0
@@ -47,6 +48,9 @@ body
     &::-webkit-scrollbar-track
         background-color: $bg
         border-radius: 4px
+
+.article:not(.editor)
+    user-select: text
 
 .hanging-item
     position: fixed

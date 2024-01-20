@@ -1,0 +1,59 @@
+@import "../colors"
+
+h1.headline
+    width: 100%
+    font-size: 2.5rem
+    font-weight: 200
+    margin-bottom: 1rem
+    color: $accent
+    border-bottom: 3px solid $accent
+
+.article-nav
+    position: absolute
+    top: 1em
+    right: 3em
+    display: flex
+    flex-direction: row
+    gap: 1em
+    padding: 1em
+
+    color: $text
+    font-weight: 600
+    font-size: 1.25rem
+    a
+        text-decoration: none
+
+    a:hover
+        color: $accent
+        cursor: pointer
+
+.article-list
+    padding: 2em 4em
+    display: flex
+    flex-wrap: wrap
+    flex-direction: column
+    gap: 1em
+    margin-left: 0
+    gap: 1em
+
+    .article
+        width: 100%
+        font-size: 1.25rem
+        border-bottom: 3px solid $accent
+
+        &::before
+            content: ">"
+            position: absolute
+            top: 0
+            left: -2em
+            width: 1em
+            height: 1em
+            transition: all 0.2s ease-in-out
+            color: $accent
+
+        &:hover, &:focus
+            cursor: pointer
+            transform: scale(1.005)
+
+        &:last-of-type
+            border-bottom: none
