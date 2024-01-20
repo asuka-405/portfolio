@@ -4,6 +4,8 @@ import {
     newText,
 } from "/article/javascript/editor/utils.js"
 
+import { publishArticle } from "/article/javascript/editor/publish.js"
+
 const editor = document.querySelector(".editor")
 const newItemBar = document.querySelector(".new-item")
 const togglePreview = document.querySelector("#toggle-preview")
@@ -32,6 +34,23 @@ newItemBar.querySelectorAll(".option").forEach((option) => {
     })
 })
 
+const dialog = document.querySelector("dialog")
+
 document.querySelector(".publish").addEventListener("click", () => {
-    document.querySelector("dialog").showModal()
+    dialog.showModal()
+})
+
+dialog.querySelector("#gh-upload").addEventListener("click", () => {
+    document.querySelector(".publish").disabled = false
+
+    const uname = dialog.querySelector("#gh-uname").value
+    const token = dialog.querySelector("#gh-token").value
+    const repo = dialog.querySelector("#gh-repo").value
+
+    if (!uname || !token || !repo) {
+        alert("Please fill all the fields")
+        return
+    }
+
+    publishArticle(uname, token, repo)
 })
