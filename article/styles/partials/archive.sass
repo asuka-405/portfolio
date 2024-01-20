@@ -72,3 +72,17 @@ h1.headline
         &:hover, &:focus
             cursor: pointer
             transform: scale(1.005)
+
+@media ( max-width: 574px )
+    .article-nav
+        top: 0.5em
+        right: 0.5em
+        padding: 0.5em
+    .headline
+        margin-top: 1.5rem
+    .article-list
+        padding: 2em 0
+        .article
+            padding: 0
+            &::before
+                left: -1em
