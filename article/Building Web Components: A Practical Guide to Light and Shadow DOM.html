@@ -1,0 +1,65 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/article/styles/main.css" />
+    <link rel="stylesheet" href="/vendor/prism/prism.css" />
+    <script src="/vendor/prism/prism.js"></script>
+    <script src="/article/javascript/viewer.js" defer></script>
+    <meta name="darkreader-lock" />
+    <title>Building Web Components: A Practical Guide to Light and Shadow DOM</title>
+  </head>
+  <body>
+    <div class="article wrapper">
+            <h1 class="title">Building Web Components: A Practical Guide to Light and Shadow DOM</h1>
+        <div class="text article-item"><p class="content">Web Components have become a cornerstone in modern web development, offering a practical approach to building modular and reusable elements. In this hands-on guide, we'll dive into the practical aspects of working with the Light DOM and the Shadow DOM to create robust and flexible components.</p></div><div class="heading article-item"><h1 class="content">Setting the Stage: Understanding the Light DOM</h1></div><div class="text article-item"><p class="content">The Light DOM is where the user interacts with the component. Let's take a real-world example of a custom dropdown menu. The Light DOM would contain the visible elements like the button and the list of options. To get started create the light DOM structure:</p></div><div class="code article-item"><div class="content"></div><pre class="language-javascript"><font color="#cccccc" face="Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace">&lt;custom-dropdown&gt;
+  &lt;button&gt;Choose an option&lt;/button&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Option 1&lt;/li&gt;
+    &lt;li&gt;Option 2&lt;/li&gt;
+    &lt;li&gt;Option 3&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/custom-dropdown&gt;</font></pre></div><div class="heading article-item"><h1 class="content">Accessing the Light DOM in JavaScript</h1></div><div class="code article-item"><div class="content"></div><pre class="language-javascript"><font color="#cccccc" face="Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace">class CustomDropdown extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    const button = this.querySelector('button');
+    // Add event listeners or perform actions with the Light DOM elements
+  }
+}
+
+customElements.define('custom-dropdown', CustomDropdown);</font></pre></div><div class="heading article-item"><h1 class="content">Behind the Scenes: Harnessing the Power of Shadow DoM</h1></div><div class="text article-item"><p class="content">Now, let's add a layer of complexity by incorporating the Shadow DOM. This will provide encapsulation, ensuring that the internal styles and scripts of our component don't interfere with the rest of the document.<div>Activate the shadow DOM;</div></p></div><div class="code article-item"><div class="content"></div><pre class="language-javascript"><font color="#cccccc" face="Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace">class CustomDropdown extends HTMLElement {
+  constructor() {
+    super();
+    const shadow = this.attachShadow({ mode: 'open' });
+    shadow.innerHTML = `
+      &lt;style&gt;
+        /* Your component-specific styles go here */
+        :host {
+          display: block;
+          position: relative;
+        }
+      &lt;/style&gt;
+      &lt;slot&gt;&lt;/slot&gt;
+    `;
+  }
+}</font></pre></div><div class="text article-item"><p class="content"><div>Styling and Interaction in Shadow DOM:</div><div>Now you can add styles and interactions within the Shadow DOM, ensuring they won't affect other elements on the page.</div></p></div><div class="heading article-item"><h1 class="content">Achieving Harmony: Integrating Light and Shadow DOM</h1></div><div class="text article-item"><p class="content"><div>Styles Bridge:</div><div>Use CSS variables to bridge the gap between the Light and Shadow DOM, allowing users to customize the appearance of the component.</div></p></div><div class="code article-item"><div class="content"></div><pre class="language-javascript"><font color="#cccccc" face="Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace">/* In the Shadow DOM */
+:host {
+  --button-color: #3498db;
+}
+
+button {
+  background-color: var(--button-color);
+}</font></pre></div><div class="text article-item"><p class="content"><div><b style="letter-spacing: 1px; white-space-collapse: preserve;">Event Propagation:</b><br></div><div><span style="letter-spacing: 1px; white-space-collapse: preserve; background-color: rgb(0, 0, 0);"><b>Ensure that events triggered in the Light DOM can be handled in the Shadow DOM and vice versa.</b></span></div></p></div><div class="text article-item"><p class="content">Event Propagation:<div>Ensure that events triggered in the Light DOM can be handled in the Shadow DOM and vice versa.</div></p></div><div class="code article-item"><div class="content"></div><pre class="language-javascript"><font color="#cccccc" face="Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace">// Inside connectedCallback in CustomDropdown class
+const button = this.querySelector('button');
+button.addEventListener('click', () =&gt; {
+  // Handle the event in the Shadow DOM
+});</font></pre></div><div class="heading article-item"><h1 class="content">Conclusion: Building Better Components</h1></div><div class="text article-item"><p class="content">By integrating the Light and Shadow DOM effectively, you've created a customizable, encapsulated, and maintainable Web Component. This practical guide should serve as a starting point for incorporating these concepts into your web development projects. As you continue to explore, remember that the true power of Web Components lies in their ability to make your development process more efficient and your applications more modular.</p></div></div>
+  </body>
+  </html>
+  
+  
