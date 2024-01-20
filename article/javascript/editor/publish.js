@@ -1,22 +1,5 @@
 import { getCurrentArticleHtml } from "/article/javascript/editor/helpers.js"
 
-const dialog = document.querySelector("dialog")
-
-dialog.addEventListener("close", () => {
-    document.querySelector(".publish").disabled = false
-
-    const uname = dialog.querySelector("#gh-uname").value
-    const token = dialog.querySelector("#gh-token").value
-    const repo = dialog.querySelector("#gh-repo").value
-
-    if (!uname || !token || !repo) {
-        alert("Please fill all the fields")
-        return
-    }
-
-    publishArticle(uname, token, repo)
-})
-
 export function publishArticle(uname, token, repo) {
     const contents = getCurrentArticleHtml()
 
@@ -33,10 +16,12 @@ export function publishArticle(uname, token, repo) {
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             alert(
-                `Article published @ https://suryansh405.netlify.app/article/${title}.html`
+                `Article published @ https://suryansh405.netlify.app/article/${title}/`
             )
+            console.log(JSON.parse(xhr.responseText))
         } else {
-            alert(`Error ${xhr.status}: ${xhr.statusText}`)
+            alert(`Error ${xhr.status}: ${xhr.responseText}`)
+            console.log(JSON.parse(xhr.response))
         }
     }
     const data = {
