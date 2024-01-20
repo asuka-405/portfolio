@@ -1,4 +1,5 @@
 import {
+    newCodeSnippet,
     newHeading,
     newImage,
     newText,
@@ -31,6 +32,8 @@ newItemBar.querySelectorAll(".option").forEach((option) => {
             editor.appendChild(newText())
         else if (option.classList.contains("image"))
             editor.appendChild(newImage())
+        else if (option.classList.contains("code"))
+            editor.appendChild(newCodeSnippet())
     })
 })
 
