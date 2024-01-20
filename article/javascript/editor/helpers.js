@@ -81,12 +81,6 @@ export function getCurrentArticleHtml() {
     article.querySelectorAll(".delete").forEach((item) => {
         item.remove()
     })
-    article.querySelector(".title").innerHTML =
-        article.querySelector(".title").innerText +
-        `<nav class="article-nav">
-    <a href="/">Home</a>
-    <a href="/article/editor/">Editor</a>
-</nav>`
     const title = article.querySelector(".title").innerText
     const content = article.outerHTML
 
