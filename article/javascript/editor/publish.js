@@ -5,9 +5,14 @@ export async function publishArticle(uname, token, repo) {
 
     const title = RegExp(/<title>(.*)<\/title>/).exec(contents)[1]
 
-    await uploadToGithub(uname, token, repo, `article/${title}.html`, contents)
-
-    updateArchive(title, uname, token, repo)
+    uploadToGithub(uname, token, repo, `article/${title}.html`, contents)
+        .then(() => {
+            updateArchive(title, uname, token, repo)
+        })
+        .catch((e) => {
+            console.error(e)
+            alert("Error publishing article")
+        })
 }
 
 export function updateArchive(title, uname, token, repo) {
