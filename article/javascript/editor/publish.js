@@ -3,10 +3,55 @@ import { getCurrentArticleHtml } from "/article/javascript/editor/helpers.js"
 export function publishArticle(uname, token, repo) {
     const contents = getCurrentArticleHtml()
 
-    const base64EncodedContents = btoa(contents)
     const title = RegExp(/<title>(.*)<\/title>/).exec(contents)[1]
 
-    const url = `https://api.github.com/repos/${uname}/${repo}/contents/article/${title}.html`
+    uploadToGithub(uname, token, repo, `article/${title}.html`, contents)
+    updateArchive(title, uname, token, repo)
+}
+
+export function updateArchive(title, uname, token, repo) {
+    fetch(
+        `https://api.github.com/repos/${uname}/${repo}/contents/article/index.html`
+    )
+        .then((data) => data.json())
+        .then(() => {
+            const dom = new DOMParser().parseFromString(
+                xhr.responseText,
+                "text/html"
+            )
+            const newContent = addArticle(dom, title)
+            //updateRepo(uname, token, repo, newContent)
+            console.log(newContent)
+        })
+}
+
+updateArchive(
+    null,
+    "asuka-405",
+    "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",
+    "portfolio"
+)
+
+function addArticle(dom, title) {
+    const article = dom.createElement("div")
+    article.classList.add("article")
+    article.innerHTML = `
+        <a href="/article/${title}/">
+            <h3>${title}</h3>
+        </a>
+    `
+    dom.querySelector(".article-list").appendChild(article)
+    return new XMLSerializer().serializeToString(dom)
+}
+
+function updateRepo(uname, token, repo, content) {
+    uploadToGithub(uname, token, repo, "article/index.html", content)
+}
+
+function uploadToGithub(uname, token, repo, filePath, content) {
+    const url = `https://api.github.com/repos/${uname}/${repo}/contents/${filePath}`
+
+    content = btoa(content)
 
     const xhr = new XMLHttpRequest()
     xhr.open("PUT", url, true)
@@ -16,7 +61,7 @@ export function publishArticle(uname, token, repo) {
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             alert(
-                `Article published @ https://suryansh405.netlify.app/article/${title}/`
+                `Article published @ https://suryansh405.netlify.app/${filePath}`
             )
             console.log(JSON.parse(xhr.responseText))
         } else {
@@ -26,63 +71,8 @@ export function publishArticle(uname, token, repo) {
     }
     const data = {
         message: "Article published",
-        content: base64EncodedContents,
+        content,
         branch: "Main",
     }
     xhr.send(JSON.stringify(data))
 }
-
-// export async function publishArticle() {
-//   let content = extractContent()
-//   console.log(content)
-//   const images = content.filter((item) => item.type === "image")
-//   content = content.filter(async (item) => {
-//     if (item.type === "image") {
-//       item.content = await getHashFromString(item.content)
-//     }
-//   })
-//   const formData = new FormData()
-//   formData.append("content", JSON.stringify(content))
-//   images.forEach((image) => {
-//     formData.append("images", image.content)
-//   })
-//   const response = await fetch("http://localhost:3000/publish", {
-//     method: "POST",
-//     body: formData,
-//   })
-//   const result = await response.text()
-//   console.log(result)
-// }
-
-// async function getHashFromString(str) {
-//   const hashBuffer = await crypto.subtle.digest(
-//     "SHA-256",
-//     new TextEncoder().encode(str)
-//   )
-//   const hashArray = Array.from(new Uint8Array(hashBuffer))
-//   const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("")
-//   return hashHex
-// }
-
-// function extractContent() {
-//   const article = document.querySelector(".article")
-//   const title = article.querySelector(".title")
-//   const items = article.querySelectorAll(".article-item")
-//   const contentList = []
-//   contentList.push({
-//     type: "title",
-//     content: title.innerText,
-//   })
-//   items.forEach((item) => {
-//     let content
-//     const contentNode = item.querySelector(".content")
-//     const type = item.classList[0]
-//     if (type === "text" || type === "heading") content = contentNode.innerText
-//     else if (type === "image") content = contentNode.src
-//     contentList.push({
-//       type: item.classList[0],
-//       content,
-//     })
-//   })
-//   return contentList
-// }
