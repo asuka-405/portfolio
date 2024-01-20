@@ -20,11 +20,6 @@ dialog.addEventListener("close", () => {
 export function publishArticle(uname, token, repo) {
     const contents = getCurrentArticleHtml()
 
-    console.log(contents)
-
-    const isTrue = true
-    if (isTrue) return
-
     const base64EncodedContents = btoa(contents)
     const title = RegExp(/<title>(.*)<\/title>/).exec(contents)[1]
 
