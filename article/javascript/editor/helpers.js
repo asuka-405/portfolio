@@ -44,7 +44,7 @@ function bindDeleteButton(parent) {
     deleteButton.classList.add("absolute")
     deleteButton.classList.add("delete")
     const deleteIcon = document.createElement("img")
-    deleteIcon.src = "./assets/delete.svg"
+    deleteIcon.src = "/article/assets/delete.svg"
     deleteButton.appendChild(deleteIcon)
     deleteButton.addEventListener("click", () => {
         parent.remove()
