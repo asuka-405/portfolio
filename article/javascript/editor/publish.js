@@ -22,10 +22,11 @@ export function updateArchive(title, uname, token, repo) {
         }
     )
         .then((data) => data.json())
-        .then((domString) => {
-            const dom = new DOMParser().parseFromString(domString, "text/html")
+        .then((json) => {
+            const content = atob(json.content)
+            const dom = new DOMParser().parseFromString(content, "text/html")
             const newContent = addArticle(dom, title)
-            updateRepo(uname, token, repo, newContent)
+            updateRepo(uname, token, repo, newContent, json.sha)
         })
 }
 
@@ -41,11 +42,11 @@ function addArticle(dom, title) {
     return new XMLSerializer().serializeToString(dom)
 }
 
-function updateRepo(uname, token, repo, content) {
-    uploadToGithub(uname, token, repo, "article/index.html", content)
+function updateRepo(uname, token, repo, content, sha) {
+    uploadToGithub(uname, token, repo, "article/index.html", content, sha)
 }
 
-async function uploadToGithub(uname, token, repo, filePath, content) {
+async function uploadToGithub(uname, token, repo, filePath, content, sha) {
     const url = `https://api.github.com/repos/${uname}/${repo}/contents/${filePath}`
 
     content = btoa(content)
@@ -71,5 +72,6 @@ async function uploadToGithub(uname, token, repo, filePath, content) {
         content,
         branch: "Main",
     }
+    if (sha) data.sha = sha
     xhr.send(JSON.stringify(data))
 }
