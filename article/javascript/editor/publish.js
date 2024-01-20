@@ -7,8 +7,12 @@ export async function publishArticle(uname, token, repo) {
 
     uploadToGithub(uname, token, repo, `article/${title}.html`, contents)
         .then(() => {
+            const body = document.querySelector("body").innerHTML
+            document.body.innerHTML = `<span class="loader"></span>`
             setTimeout(() => {
                 updateArchive(title, uname, token, repo)
+                document.body.innerHTML = body
+                document.querySelector("dialog").close()
             }, 5000)
         })
         .catch((e) => {
