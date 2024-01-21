@@ -5,10 +5,14 @@
 
 .article
     user-select: all
-    max-width: 746px
+
     margin: 0 auto
     padding: 1em 2em
     overflow: hidden
+    max-width: 900px
+    @media screen and ( max-width: 1078px  )
+        max-width: 746px
+
     &>*:not(.new-item)
         border-radius: 0px
         position: relative
@@ -38,8 +42,9 @@
             max-height: 500px
     .code
         overflow: auto
+        max-width: none
         pre
-            max-width: 900px
+            max-width: none
             width: fit-content
             overflow: auto
     .expanded-item
@@ -52,6 +57,9 @@
         align-items: center
         justify-content: center
         z-index: 500
+        & > *
+            position: absolute
+            top: 0.5em
         & > img
             max-width: 95% !important
             max-height: 95% !important
