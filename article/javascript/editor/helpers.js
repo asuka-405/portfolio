@@ -93,7 +93,7 @@ export function getCurrentArticleHtml() {
     <link rel="stylesheet" href="/article/styles/main.css" />
     <link rel="stylesheet" href="/vendor/prism/prism.css" />
     <script src="/vendor/prism/prism.js"></script>
-    <script src="/article/javascript/viewer.js" defer></script>
+    <script defer src="/article/javascript/viewer.js" defer></script>
     <meta name="darkreader-lock" />
     <title>${title}</title>
   </head>

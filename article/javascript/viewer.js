@@ -11,10 +11,20 @@ document.querySelectorAll("pre").forEach((code) => {
     Prism.highlightElement(code, false, function () {})
 })
 
-const title = document.querySelectorAll(".title")
-title.innerHTML =
-    title.innerText +
-    `<nav class="article-nav">
-<a href="/">Home</a>
-<a href="/article/editor/">Editor</a>
-</nav>`
+const title = document.querySelector(".title")
+title.style.marginTop = "2.5rem"
+
+const homeLink = document.createElement("a")
+homeLink.href = "/"
+homeLink.innerText = "Home"
+
+const articlesLink = document.createElement("a")
+articlesLink.href = "/article"
+articlesLink.innerText = "Articles"
+
+const nav = document.createElement("nav")
+nav.classList.add("article-nav")
+nav.appendChild(homeLink)
+nav.appendChild(articlesLink)
+
+document.body.appendChild(nav)
