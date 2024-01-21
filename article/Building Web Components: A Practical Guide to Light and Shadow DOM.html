@@ -54,7 +54,7 @@ customElements.define('custom-dropdown', CustomDropdown);</font></pre></div><div
 
 button {
   background-color: var(--button-color);
-}</font></pre></div><div class="text article-item"><p class="content"><div><b style="letter-spacing: 1px; white-space-collapse: preserve;">Event Propagation:</b><br></div><div><span style="letter-spacing: 1px; white-space-collapse: preserve; background-color: rgb(0, 0, 0);"><b>Ensure that events triggered in the Light DOM can be handled in the Shadow DOM and vice versa.</b></span></div></p></div><div class="text article-item"><p class="content">Event Propagation:<div>Ensure that events triggered in the Light DOM can be handled in the Shadow DOM and vice versa.</div></p></div><div class="code article-item"><div class="content"></div><pre class="language-javascript"><font color="#cccccc" face="Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace">// Inside connectedCallback in CustomDropdown class
+}</font></pre></div><div class="text article-item"><p class="content"><div class="text article-item"><p class="content">Event Propagation:<div>Ensure that events triggered in the Light DOM can be handled in the Shadow DOM and vice versa.</div></p></div><div class="code article-item"><div class="content"></div><pre class="language-javascript"><font color="#cccccc" face="Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace">// Inside connectedCallback in CustomDropdown class
 const button = this.querySelector('button');
 button.addEventListener('click', () =&gt; {
   // Handle the event in the Shadow DOM
