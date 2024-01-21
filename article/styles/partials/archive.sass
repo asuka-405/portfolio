@@ -40,6 +40,7 @@ h1.headline
         width: 100%
         border-bottom: 3px solid $accent
         position: relative
+        padding-bottom: 1em
 
         a, h3
             padding: 0 !important
@@ -73,7 +74,7 @@ h1.headline
             cursor: pointer
             transform: scale(1.005)
 
-        &:last-of-type
+        &:first-of-type
             border-bottom: none
 
 @media ( max-width: 574px )
@@ -85,7 +86,5 @@ h1.headline
         margin-top: 2.5rem
     .article-list
         padding: 2em 0
-        .article
-            padding: 0
-            &::before
-                left: -1em
+        .article::before
+            left: -1em
