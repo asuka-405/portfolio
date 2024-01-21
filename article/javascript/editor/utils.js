@@ -17,6 +17,9 @@ export function newCodeSnippet() {
         classList: ["code"],
     })
     codeSnippetContainer.appendChild(codeSnippet)
+    codeSnippetContainer.addEventListener("click", () => {
+        codeSnippetContainer.classList.toggle("expanded-item")
+    })
     return codeSnippetContainer
 }
 
@@ -32,7 +35,7 @@ export function newImage() {
         }
     )
     image.addEventListener("click", () => {
-        image.classList.toggle("expanded-image")
+        image.classList.toggle("expanded-item")
     })
     setImage(image)
     return image

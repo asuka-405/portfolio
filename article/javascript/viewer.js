@@ -1,9 +1,9 @@
 document
     .querySelector(".article")
-    .querySelectorAll(".image.article-item")
-    .forEach((image) => {
-        image.addEventListener("click", () => {
-            image.classList.toggle("expanded-image")
+    .querySelectorAll(".image, .code")
+    .forEach((item) => {
+        item.addEventListener("click", () => {
+            item.classList.toggle("expanded-item")
         })
     })
 
