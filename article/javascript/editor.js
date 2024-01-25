@@ -1,6 +1,7 @@
 import {
     newCodeSnippet,
-    newHeading,
+    newH2,
+    newH3,
     newImage,
     newText,
 } from "/article/javascript/editor/utils.js"
@@ -12,7 +13,7 @@ const newItemBar = document.querySelector(".new-item")
 const togglePreview = document.querySelector("#toggle-preview")
 
 document.querySelector(".article > .title").contentEditable = true
-newHeading()
+// newHeading()
 
 document.querySelector(".toggle").addEventListener("click", () => {
     togglePreview.checked
@@ -26,9 +27,11 @@ document.querySelector(".toggle").addEventListener("click", () => {
 
 newItemBar.querySelectorAll(".option").forEach((option) => {
     option.addEventListener("click", () => {
-        if (option.classList.contains("heading"))
-            editor.appendChild(newHeading())
-        else if (option.classList.contains("text"))
+        if (option.classList.contains("heading")) {
+            if (option.classList.contains("h2")) editor.appendChild(newH2())
+            else if (option.classList.contains("h3"))
+                editor.appendChild(newH3())
+        } else if (option.classList.contains("text"))
             editor.appendChild(newText())
         else if (option.classList.contains("image"))
             editor.appendChild(newImage())
