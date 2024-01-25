@@ -2,7 +2,7 @@ import { getCurrentArticleHtml } from "/article/javascript/editor/helpers.js"
 
 export async function publishArticle(uname, token, repo) {
     const contents = getCurrentArticleHtml()
-
+    console.log(contents)
     const title = RegExp(/<title>(.*)<\/title>/).exec(contents)[1]
 
     const filename = title.toLowerCase().replace(/ /g, "_")
@@ -51,7 +51,7 @@ function addArticle(dom, title) {
             <h3>${title}</h3>
         </a>
     `
-    dom.querySelector(".article-list").appendBefore(
+    dom.querySelector(".article-list").insertBefore(
         article,
         dom.querySelector(".article-list").firstChild
     )
