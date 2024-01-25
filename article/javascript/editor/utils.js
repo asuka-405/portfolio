@@ -1,8 +1,17 @@
 import { newItem, setImage } from "/article/javascript/editor/helpers.js"
 
-export function newHeading() {
-    return newItem("h1", "Heading!!", undefined, { classList: ["heading"] })
+export function newH2() {
+    return newItem("h2", "Heading2!!", undefined, {
+        classList: ["heading", "h2"],
+    })
 }
+
+export function newH3() {
+    return newItem("h3", "Heading3!!", undefined, {
+        classList: ["heading", "h3"],
+    })
+}
+
 export function newText() {
     return newItem("p", "Paragraph!!", undefined, { classList: ["text"] })
 }

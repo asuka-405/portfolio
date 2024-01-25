@@ -5,7 +5,9 @@ export async function publishArticle(uname, token, repo) {
 
     const title = RegExp(/<title>(.*)<\/title>/).exec(contents)[1]
 
-    uploadToGithub(uname, token, repo, `article/${title}.html`, contents)
+    const filename = title.toLowerCase().replace(/ /g, "_")
+
+    uploadToGithub(uname, token, repo, `article/${filename}.html`, contents)
         .then(() => {
             const body = document.querySelector("body").innerHTML
             document.body.innerHTML = `<span class="loader"></span>`
@@ -49,7 +51,10 @@ function addArticle(dom, title) {
             <h3>${title}</h3>
         </a>
     `
-    dom.querySelector(".article-list").appendChild(article)
+    dom.querySelector(".article-list").appendBefore(
+        article,
+        dom.querySelector(".article-list").firstChild
+    )
     return new XMLSerializer().serializeToString(dom)
 }
 
