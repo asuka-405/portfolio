@@ -2,7 +2,11 @@
 
 .editor
     margin-top: 2em !important
-
+    &>*:not(.new-item)
+        border-radius: 0px
+        position: relative
+        margin-bottom: 1em
+        // width: max-content
 .article
     margin: 0 auto
     padding: 1em 2em
@@ -10,12 +14,6 @@
     max-width: 900px
     @media screen and ( max-width: 1078px  )
         max-width: 746px
-
-    &>*:not(.new-item)
-        border-radius: 0px
-        position: relative
-        margin-bottom: 1em
-        // width: max-content
 
     &.editor > *:not(.new-item):not(.absolute)
         border: 1px solid $accent
@@ -28,7 +26,10 @@
         font-weight: 700
         border-bottom: 1px solid $accent
         border-bottom-width: 6px
-        // width: 100%
+
+    .title, .heading
+        margin-bottom: 1em
+
     .heading
         font-size: 3em
         font-weight: 700
