@@ -214,3 +214,20 @@ textarea
 
   &:hover, &:focus-visible
     border-color: $highlight
+
+button
+  user-select: none
+  background: $accent-deep
+  color: $fg
+  border: 2px solid $accent
+  padding: 0.5em 1em
+  border-top-right-radius: 10px
+  border-bottom-left-radius: 10px
+  cursor: pointer
+  transition: background-color 0.5s ease
+  font-weight: 900
+  &:hover, &:focus
+    background: rgba($fg, 0.5)
+    color: $bg
+    border-color: $fg
+    transition: background-color 0.5s ease

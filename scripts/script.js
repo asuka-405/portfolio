@@ -19,3 +19,9 @@ filterOptions()
 
 animate(".fade-in", "fade-in--active")
 animate(".slide-in", "slide-in--active")
+
+document
+  .querySelector("#show-resume")
+  .addEventListener("click", () =>
+    document.querySelector("#resume").showModal()
+  )
