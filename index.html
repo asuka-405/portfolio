@@ -8,9 +8,17 @@
     <script src="/scripts/particles.min.js"></script>
     <script src="/scripts/TagCloud.min.js"></script>
     <script src="/scripts/script.js" type="module" defer></script>
-    <title>Document</title>
+    <title>asuka405 @ github</title>
   </head>
   <body>
+    <dialog id="resume">
+      <iframe
+        src="https://docs.google.com/document/d/e/2PACX-1vRTEe-bBvXiwliob6E-7_9Y4HcMRGALYMDD4xBUEqEGooJLsaBGrHoRG2qZMEduQA/pub?embedded=true"
+      ></iframe>
+      <form method="dialog">
+        <button>Close</button>
+      </form>
+    </dialog>
     <main>
       <section class="hero bg-text bg-text--vertical" data-bg="about">
         <h5 class="subtitle slide-in">Hi, I'm</h5>
@@ -24,7 +32,7 @@
         >
           KAPIL
         </h2>
-        <h4 class="subtitle narrow fade-in">
+        <h4 class="subtitle narrow fade-in slide-in">
           A software engineering student currently working as
           <span class="caption">Cyber Security Intern</span> at
           <a class="link" href="https://kpmg.com/in/en/home.html"
@@ -121,21 +129,75 @@
               data-options="or"
               data-url="https://router405.netlify.app"
             >
-              option
+              <h4 class="title link">Opoen Recorder</h4>
+              <p class="paragraph">
+                Developed a cross-platform screen recording application for
+                Windows, Linux, and MacOS using HTML, SASS, and JavaScript for
+                the UI, with Electron for system access. Currently migrating to
+                Rust Tauri for improved performance, anticipating a significant
+                reduction in RAM usage and storage requirements.
+              </p>
             </div>
-            <div class="entry inactive" data-options="cn">option</div>
-            <div class="entry inactive" data-options="ar">option</div>
-            <div class="entry inactive" data-options="im">option</div>
-            <div class="entry inactive" data-options="bb">option</div>
-            <div class="entry inactive" data-options="ot">option</div>
+            <div class="entry inactive" data-options="cn">
+              <h4 class="title link">Coffee News</h4>
+              <p class="paragraph">
+                Designed and implemented a high-impact news platform using
+                Firebase and Next.js 13. Implemented secure anonymous browsing
+                and user authentication for news bookmarking, reducing page load
+                times by 30%.
+              </p>
+            </div>
+            <div class="entry inactive" data-options="ar">
+              <h4 class="title link">Auto Reply</h4>
+              <p class="paragraph">
+                Created "Auto Reply," a Gmail utility utilizing Google APIs for
+                first-time auto-responses, categorizing emails, and streamlining
+                workflows. Anticipated a minimum 10% reduction in manual
+                workload.
+              </p>
+            </div>
+            <div class="entry inactive" data-options="im">
+              <h4 class="title link">Inventory Manager</h4>
+              <p class="paragraph">
+                Developed an Inventory Manager application to simplify managing
+                product listings at Shopify and other platforms. Added support
+                for product UUID and barcode 128, enhancing usability. Tech
+                Stack: Express, Passport, BwipJS, JWT, Bcrypt.
+              </p>
+            </div>
+            <div class="entry inactive" data-options="bb">
+              <h4 class="title link">Blog Bits</h4>
+              <p class="paragraph">
+                Led the development of a minimalist article platform using HTML,
+                SASS, and JavaScript. Achieved serverless operation with GitHub
+                commits and secure access through repository secrets. Enhanced
+                the publishing process for authors, ensuring simplicity and
+                efficiency while retaining 100% AdSense revenue.
+              </p>
+            </div>
+            <div class="entry inactive" data-options="ot">
+              <h4 class="title link">SearchIO</h4>
+              <p class="paragraph">
+                Created "SearchIO," an image search engine using JavaScript with
+                higher accuracy, incorporating Weaviate's machine learning
+                model-based vector database. Also developed "Shadowfy," a
+                collection of drop-in scripts optimizing web development, saving
+                developers time typically spent debugging. Implemented web
+                component generators, SPA router, drag-and-drop, and docker
+                templates.
+              </p>
+            </div>
           </div>
         </div>
       </section>
       <section class="contact flex--left bg-text" data-bg="contact">
-        <h4 class="title link">Contact</h4>
+        <h4 class="title link slide-in fade-in">Contact</h4>
 
-        <form action="https://api.web3forms.com/submit" method="POST">
-          <!-- Replace with your Access Key -->
+        <form
+          action="https://api.web3forms.com/submit"
+          method="POST"
+          class="fade-in"
+        >
           <input
             type="hidden"
             name="access_key"
@@ -235,7 +297,7 @@
           />
         </svg>
       </a>
-      <a class="links--item" href="">
+      <a class="links--item" id="show-resume">
         <svg
           fill="cyan"
           width="800px"
