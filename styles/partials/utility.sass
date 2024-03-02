@@ -1,0 +1,216 @@
+@import "./colors"
+
+.grab-attention
+  font-size: 7em
+  font-weight: bold
+  margin-bottom: 0.25em
+
+.headline
+  font-size: 3em
+  font-weight: bold
+  margin-bottom: 0.25em
+
+.title
+  font-size: 2em
+  font-weight: bold
+  margin-bottom: 0.25em
+
+.subtitle
+  font-size: 1.5em
+  font-weight: bold
+  margin-bottom: 0.25em
+
+.paragraph
+  font-size: 1.25em
+  margin-bottom: 0.25em
+
+.caption
+  font-size: 1em
+  margin-bottom: 0.25em
+  opacity: 0.8
+  color: $highlight
+
+.narrow
+  max-width: 500px
+
+.link
+  color: $accent
+  text-decoration: none
+  width: fit-content
+  display: block
+  &::after
+    content: ''
+    height: 1px
+    width: 100%
+    background: $accent-deep
+    display: block
+    transition: all 0.3s ease
+  &:hover, &:focus
+    cursor: pointer
+    color: $accent-deep
+    &::after
+      width: 0%
+
+@mixin flex($direction: row, $justify: center, $align: center, $gap: 1em)
+  display: flex
+  flex-direction: $direction
+  justify-content: $justify
+  align-items: $align
+  flex-wrap: wrap
+  gap: $gap
+
+@media screen and (max-width: 600px)
+  .grab-attention
+    font-size: 4em
+  .headline
+    font-size: 2em
+  .title
+    font-size: 1.75em
+  .subtitle
+    font-size: 1.25em
+  .paragraph
+    font-size: 1em
+  .caption
+    font-size: 0.75em
+
+.title--vertical
+  writing-mode: vertical-lr
+  text-orientation: upright
+  text-transform: uppercase
+  position: relative
+  color: $accent
+  font-size: 2rem
+  font-weight: 700
+
+  &::after
+    content: ''
+    display: block
+    position: absolute
+    top: 0
+    right: 0
+    height: 100%
+    width: 1px
+    background: $accent
+    transition: all 0.3s ease
+
+  @media screen and ( max-width: 768px )
+    font-size: 1.5rem
+    font-weight: normal
+    writing-mode: horizontal-tb
+
+    &::after
+      top: 100%
+      bottom: 0
+      width: 100%
+      height: 1px
+    &:hover, &:focus
+      &::after
+        width: 0%
+
+  &:hover, &:focus
+    cursor: pointer
+    color: $accent-deep
+    &::after
+      height: 0%
+
+.flex--left
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: flex-start
+  align-items: center
+  @media screen and (max-width: 768px)
+    flex-direction: column
+
+.bg-text
+  position: relative
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  padding-top: 5em
+  z-index: 100
+
+  &--vertical
+    flex-direction: column
+    align-items: flex-start
+
+  & > *
+    z-index: 101
+
+  @media screen and (max-width: 768px)
+    flex-direction: column
+    justify-content: flex-start
+    padding-top: 12em
+    & > *
+      margin: 0.5em 0
+
+  &::after
+    content: attr(data-bg)
+    position: absolute
+    inset: 15% 7%
+    top: 25%
+    left: 3%
+    background: rgba(#000, 0.5 )
+    color: rgba($fg, 0.2)
+    z-index: 1
+    font-size: 25vw
+    font-weight: 900
+    text-align: center
+    mix-blend-mode: multiply
+    text-transform: uppercase
+    opacity: 0.1
+    border-top-right-radius: 40px
+    border-bottom-left-radius: 40px
+    overflow: hidden
+    @media screen and (max-width: 768px)
+      font-size: 25vh
+      inset: 5%
+      top: 15%
+      writing-mode: vertical-lr
+
+section.bg-text .title
+  position: absolute
+  top: 4em
+  left: 2em
+  z-index: 40
+  user-select: none
+  @media screen and (max-width: 768px)
+    left: 0
+    right: 0
+    margin: 0 auto
+
+input
+  min-width: 200px
+  width: 100%
+  padding: 0.5em 1em
+  border: none
+  background: none
+  border-bottom: 2px solid $accent
+  font-weight: 700
+  transition: all 0.3s ease-out
+  outline-offset: 1em
+  &::placeholder
+    color: rgba( $fg, 0.7 )
+
+  &:hover, &:focus-visible
+    border-color: $highlight
+
+textarea
+  min-width: 200px
+  width: 100%
+  max-width: 300px
+  padding: 0.5em 1em
+  border: none
+  background: none
+  border-bottom: 2px solid $accent
+  font-weight: 700
+  transition: all 0.3s ease-out
+  outline-offset: 1em
+
+  &::placeholder
+    color: rgba( $fg, 0.7 )
+
+  &:hover, &:focus-visible
+    border-color: $highlight
