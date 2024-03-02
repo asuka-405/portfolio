@@ -1,0 +1,46 @@
+////// particle bg ////////////////////
+#particles-js
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  z-index: -1
+//////// imports       ////////////////
+@import "partials/reset"
+@import "partials/colors"
+@import "partials/utility"
+@import "partials/graphics"
+@import "partials/filter"
+@import "partials/transition"
+@import "partials/floating-links"
+@import "partials/sections"
+///////////////////////////////////////
+*
+  color: $fg
+
+body
+  background: $bg
+
+main
+  height: 100vh
+  width: 100vw
+  overflow-y: scroll
+  overflow-x: hidden
+  scroll-snap-type: y mandatory
+  margin-top: -2.9em
+
+section
+  min-height: 100vh
+  max-width: 100%
+  margin: 0 1em
+  position: relative
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: left
+  scroll-snap-align: start
+  scroll-snap-stop: always
+  &:first-of-type
+    @media screen and (max-width: 768px)
+      height: 90vh

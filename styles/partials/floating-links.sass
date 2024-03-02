@@ -1,0 +1,72 @@
+@import "./colors"
+
+.links
+  position: absolute
+  right: 1em
+  top: 50%
+  transform: translateY(-50%)
+  width: 60px
+  display: flex
+  flex-direction: column
+  gap: 1em
+  opacity: 0
+  transition: opacity 0.5s ease
+
+  @media screen and (max-width: 730px)
+    flex-direction: row
+    right: 0
+    left: 0
+    top: 2em
+    margin: 0 auto
+    width: fit-content
+    height: 60px
+
+  a svg
+    height: 30px
+    width: 30px
+  path
+    fill: $fg
+
+  a:nth-child(1)::after
+    content: 'github'
+  a:nth-child(2)::after
+    content: 'linkedin'
+  a:nth-child(3)::after
+    content: 'resume'
+
+.links--item
+  height: 50px
+  width: 50px
+  text-decoration: none
+  transition: background-color 0.7s ease
+  border-radius: 50%
+  background: transparent
+  display: flex
+  justify-content: center
+  align-items: center
+  position: relative
+  background: $bg
+
+  &::after
+    position: absolute
+    top: 5px
+    left: -100px
+    border: 2px solid $accent
+    border-top-right-radius: 10px
+    border-bottom-left-radius: 10px
+    text-align: center
+    padding: 0.5em 1em
+    transform: scaleX(0)
+    transition: transform 0.2s ease-out
+    backdrop-filter: blur(5px)
+  &:hover, &:focus
+    background: $accent
+    &::after
+      transform: scaleX(1)
+
+@media screen and (max-width: 730px)
+  .links a::after
+    left: -40%
+    right: 0
+    top: 60px
+    width: fit-content

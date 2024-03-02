@@ -1,0 +1,37 @@
+@import "./colors"
+
+.bar-chart
+  .entry
+    min-width: 200px
+    max-width: 300px
+    position: relative
+    background: rgba($fg, 0.1)
+    border-top-right-radius: 10px
+    margin-bottom: 1.5em
+
+    &:hover, &:focus
+      cursor: pointer
+      .bar
+        opacity: 0
+      .label
+        color: $accent
+
+  .bar
+    background: var(--color, coral)
+    height: 30px
+    width: 0
+    transition: width 0.5s ease-out, opacity 0.1s ease-out
+    border-top-right-radius: 10px
+  .label
+    position: absolute
+    left: 5%
+    top: 8px
+    font-weight: bold
+    color: var(--label-color, whitesmoke)
+    transition: color 0.2s ease-out
+  .caption
+    position: absolute
+    left: 0
+    top: 35px
+    width: fit-content
+    border-bottom: 1px solid var(--color, coral)
