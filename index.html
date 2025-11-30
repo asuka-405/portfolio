@@ -116,75 +116,61 @@
 				<h3 class="title link slide-in">Projects</h3>
 				<div class="filter">
 					<div class="options fade-in">
-						<div class="option" data-option="or">Open Recorder</div>
-						<div class="option" data-option="cn">Coffee News</div>
-						<div class="option" data-option="ar">Auto Reply</div>
+						<div class="option" data-option="igapoc">IGA PoC</div>
 						<div class="option" data-option="im">Inventory Manager</div>
 						<div class="option" data-option="bb">Blog Bits</div>
-						<div class="option" data-option="ot">Other Projects</div>
+						<div class="option" data-option="aiapigen">AI API Generator</div>
 					</div>
 					<div class="entries fade-in">
 						<div
 							class="entry"
-							data-options="or"
+							data-options="igapoc"
 							data-url="https://router405.netlify.app"
 						>
-							<h4 class="title link">Open Recorder</h4>
+							<h4 class="title link">IGA PoC</h4>
 							<p class="paragraph">
-								Developed a cross-platform screen recording application for
-								Windows, Linux, and MacOS using HTML, SASS, and JavaScript for
-								the UI, with Electron for system access. Currently migrating to
-								Rust Tauri for improved performance, anticipating a significant
-								reduction in RAM usage and storage requirements.
-							</p>
-						</div>
-						<div class="entry inactive" data-options="cn">
-							<h4 class="title link">Coffee News</h4>
-							<p class="paragraph">
-								Designed and implemented a high-impact news platform using
-								Firebase and Next.js 13. Implemented secure anonymous browsing
-								and user authentication for news bookmarking, reducing page load
-								times by 30%.
-							</p>
-						</div>
-						<div class="entry inactive" data-options="ar">
-							<h4 class="title link">Auto Reply</h4>
-							<p class="paragraph">
-								Created "Auto Reply," a Gmail utility utilizing Google APIs for
-								first-time auto-responses, categorizing emails, and streamlining
-								workflows. Anticipated a minimum 10% reduction in manual
-								workload.
+								Working on an Identity Governance & Administration app as a proof
+								of concept. I've worked on SailPoint, an enterprise grade IGA
+								platform. I noted that the platform is unnecessarily slow and can
+								be optimized for performance. Debugging is annoying
+								due to lack of logs. My IGA system uses golang APIs along with CPP
+								services for business logic, protocol buffers as comms interface
+								to minimize the latency and delegate logging events to a seperate
+								service that can also be accessed by admins. Additionally, making
+								the platform to be highly modular, in order to be able to inject
+								admin's code at any step of execution along with multilingual
+								support.
 							</p>
 						</div>
 						<div class="entry inactive" data-options="im">
 							<h4 class="title link">Inventory Manager</h4>
 							<p class="paragraph">
-								Developed an Inventory Manager application to simplify managing
-								product listings at Shopify and other platforms. Added support
-								for product UUID and barcode 128, enhancing usability. Tech
-								Stack: Express, Passport, BwipJS, JWT, Bcrypt.
+								A modular product management web-app that can connect to various
+								e-commerce platforms like shopify & amazon initially. we can
+								centrally manage procucts on this app and reclect results on all
+								the connected target platforms. Initial features include product
+								uuid & QR tagging and CRUD across e-commerce platforms. Built
+								this for an e-commerce client.
 							</p>
 						</div>
 						<div class="entry inactive" data-options="bb">
 							<h4 class="title link">Blog Bits</h4>
 							<p class="paragraph">
-								Led the development of a minimalist article platform using HTML,
-								SASS, and JavaScript. Achieved serverless operation with GitHub
-								commits and secure access through repository secrets. Enhanced
-								the publishing process for authors, ensuring simplicity and
-								efficiency while retaining 100% AdSense revenue.
+								Goal was to create a small scale cms. Used this to refine my skills
+								over frontend. Attempted to create a simple frontend UI library
+								that can utilize ShadowDOM and replace react where it is not needed.
+								Additionally have islands of micro react apps, e.g embeddable chat
+								apps within htmx or ShadowDOM based websites.
 							</p>
 						</div>
-						<div class="entry inactive" data-options="ot">
-							<h4 class="title link">SearchIO</h4>
+						<div class="entry inactive" data-options="aiapigen">
+							<h4 class="title link">AI API Generator</h4>
 							<p class="paragraph">
-								Created "SearchIO," an image search engine using JavaScript with
-								higher accuracy, incorporating Weaviate's machine learning
-								model-based vector database. Also developed "Shadowfy," a
-								collection of drop-in scripts optimizing web development, saving
-								developers time typically spent debugging. Implemented web
-								component generators, SPA router, drag-and-drop, and docker
-								templates.
+								A tight set of instructions that can take in a lose set of instructions
+								or a swagger and generate API boilerplate in go/js/ts/java/python.
+								It will do the initialization, including utilities - eg db util crm or
+								sqlc init, oauth or jwt setup, logging and other middlewares. This will
+								lift API stuff and let us work on business logic.
 							</p>
 						</div>
 					</div>
@@ -281,7 +267,7 @@
 					/>
 				</svg>
 			</a>
-			<a class="links--item" href="https://www.linkedin.com/in/asuka405">
+			<a class="links--item" href="https://www.linkedin.com/in/suryansh405">
 				<svg
 					width="800px"
 					height="800px"
