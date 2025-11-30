@@ -2,22 +2,24 @@ export function generateTagCloud() {
   const tagCloudContainer = document.querySelector(".tag-cloud")
   const tags = [
     "JavaScript",
-    "ReactJS",
+    "TypeScript",
+    "React",
+    "QwikJS",
+    "ExpressJS",
+    "ElectronJS",
+    "NodeJS",
+    "Go",
+    "Chi",
+    "Java",
+    "SprintBoot",
+    "ProtoBuf",
     "Linux",
     "Bash",
-    "NodeJS",
-    "Rust",
-    "Docker",
-    "Nginx",
+    "SQL",
     "MongoDB",
-    "ExpressJS",
-    "TypeScript",
-    "Java",
-    "ElectronJS",
-    "HTML",
-    "CSS",
-    "SASS",
-    "Git",
+    "SailPoint",
+    "IGA",
+    "n8n"
   ]
   const options = {
     radius: 180, // default 100px
