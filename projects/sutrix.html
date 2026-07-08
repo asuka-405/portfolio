@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Sutrix by Sutrid — an enterprise OS. The vision, architecture direction, UI, and engineering challenges."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Sutrix — Case study · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-orbit"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="doc-hero">
+				<a class="back-link reveal" href="../index.html#projects">← All projects</a>
+				<p class="doc-status reveal" style="--d: 0.04s">
+					Sutrid · MVP in development
+				</p>
+				<h1 class="doc-title reveal" style="--d: 0.08s">
+					Sutri<span class="text-accent">x</span>
+				</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">
+					An <strong>enterprise OS</strong> under Sutrid — a unified operating
+					layer that brings an organization's tools, workflows and data into
+					one coherent system.
+				</p>
+				<div class="doc-meta reveal" style="--d: 0.16s">
+					<span class="chip">Enterprise OS</span>
+					<span class="chip">Platform</span>
+					<span class="chip chip--muted">Modular architecture</span>
+					<span class="chip chip--muted">TypeScript</span>
+				</div>
+				<div class="doc-actions reveal" style="--d: 0.2s">
+					<a class="btn btn--primary" href="https://sutrid.in" target="_blank" rel="noopener"
+						>About Sutrid</a
+					>
+					<a class="btn btn--ghost" href="../index.html#projects">Back to projects</a>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Overview</p>
+				<h2 class="reveal" style="--d: 0.04s">One system instead of a dozen tabs</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						Most organizations run on a patchwork of disconnected tools —
+						each with its own login, data model and idea of who a "user" is.
+						<strong>Sutrix</strong> is Sutrid's answer: an enterprise OS that
+						hosts the pieces an organization runs on as modules over a shared
+						foundation, so data and identity are common rather than copied.
+					</p>
+					<p>
+						It's early — the MVP is in active development, and this page
+						describes the shape I'm building toward as much as what exists
+						today. AuditFlow is the first product; Sutrix is the platform
+						those products are meant to live on.
+					</p>
+				</div>
+				<div class="fact-grid">
+					<div class="fact reveal" style="--d: 0.04s">
+						<span class="k">Provider</span>
+						<span class="v">Sutrid</span>
+					</div>
+					<div class="fact reveal" style="--d: 0.09s">
+						<span class="k">Stage</span>
+						<span class="v">MVP · in development</span>
+					</div>
+					<div class="fact reveal" style="--d: 0.14s">
+						<span class="k">Type</span>
+						<span class="v">Enterprise platform</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Architecture direction</p>
+				<h2 class="reveal" style="--d: 0.04s">A shell, modules, and a shared core</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						The design centres on a thin <strong>workspace shell</strong> that
+						hosts modules registered against a common runtime. Every module
+						reads and writes through one <strong>unified data layer</strong>
+						and one identity &amp; permission model, which is what turns a
+						bag of tools into an operating system.
+					</p>
+				</div>
+				<div class="arch reveal" style="--d: 0.12s">
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Workspace shell</span>
+							<span class="d">Navigation, command palette, module host</span>
+							<span class="tech">app shell</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;hosts&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Module registry</span>
+							<span class="d">Pluggable modules with a common contract</span>
+							<span class="tech">runtime</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">Modules</span>
+							<span class="d">AuditFlow, and products to come</span>
+							<span class="tech">extensible</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Unified data layer</span>
+							<span class="d">Shared entities — no per-tool silos</span>
+							<span class="tech">core</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">Identity &amp; permissions</span>
+							<span class="d">One model across every module</span>
+							<span class="tech">core</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">Integrations</span>
+							<span class="d">Bridges to external systems</span>
+							<span class="tech">adapters</span>
+						</div>
+					</div>
+				</div>
+				<p class="arch-caption reveal">
+					The bet: shared identity and data are the hard part — get those
+					right and modules become easy.
+				</p>
+				<div class="dgm dgm-flow reveal">
+					<div class="dgm-scroll">
+						<div class="dgm-flow dgm-flow--row">
+							<div class="dgm-box"><span class="dgm-bt">User action</span><span class="dgm-bd">in any module</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Workspace shell</span><span class="dgm-bd">routes it</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">The right module</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box dgm-box--accent"><span class="dgm-bt">Unified data layer</span><span class="dgm-bd">+ one permission model, enforced at the core</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Result</span></div>
+						</div>
+					</div>
+				</div>
+				<p class="fig-cap reveal">Because identity and data are shared, "employee" or "vendor" means the same thing in every module — that's what turns separate tools into an operating system.</p>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Sample UI experience</p>
+				<h2 class="reveal" style="--d: 0.04s">Unified workspace</h2>
+				<div class="mock-window reveal" style="--d: 0.08s">
+					<div class="mock-bar">
+						<div class="mock-dots"><span></span><span></span><span></span></div>
+						<div class="mock-url">app.sutrid.in/workspace</div>
+					</div>
+					<div class="mock-app mock-app--side">
+						<div class="mock-side">
+							<div class="mock-brand">Sutrix</div>
+							<div class="mock-nav mock-nav--active">Home</div>
+							<div class="mock-nav">AuditFlow</div>
+							<div class="mock-nav">People</div>
+							<div class="mock-nav">Operations</div>
+							<div class="mock-nav">Settings</div>
+						</div>
+						<div class="mock-main">
+							<div class="mock-h">
+								<span class="t">Good morning · Acme Inc.</span>
+								<span class="mock-btn">⌘K</span>
+							</div>
+							<div class="mock-tiles">
+								<div class="mock-tile">
+									<div class="kpi">7</div>
+									<div class="lbl">Modules</div>
+								</div>
+								<div class="mock-tile">
+									<div class="kpi">23</div>
+									<div class="lbl">Tasks today</div>
+								</div>
+								<div class="mock-tile">
+									<div class="kpi">1</div>
+									<div class="lbl">Identity source</div>
+								</div>
+							</div>
+							<div class="mock-table">
+								<div class="mock-tr"><span>Activity</span><span>Module</span><span></span></div>
+								<div class="mock-tr">
+									<span>Control marked met</span>
+									<span class="mock-tag">AuditFlow</span>
+									<span class="mock-dot"></span>
+								</div>
+								<div class="mock-tr">
+									<span>New hire onboarded</span>
+									<span class="mock-tag mock-tag--gold">People</span>
+									<span class="mock-dot"></span>
+								</div>
+								<div class="mock-tr">
+									<span>Access request routed</span>
+									<span class="mock-tag">Operations</span>
+									<span class="mock-dot"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="mock-caption reveal">
+					A directional mockup — one shell, one identity, and a home that
+					reads activity across every module in a single feed.
+				</p>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Engineering challenges</p>
+				<h2 class="reveal" style="--d: 0.04s">The hard problems I'm designing around</h2>
+				<div class="challenges">
+					<div class="challenge reveal" style="--d: 0.04s">
+						<div class="challenge-num">01</div>
+						<h3>An extensible shell that stays thin</h3>
+						<span class="label">Problem</span>
+						<p>
+							A host for many modules tends to accumulate everything and
+							become the bottleneck it was meant to remove.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							A minimal shell plus a clear module contract — capabilities
+							live in modules, not the core.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.09s">
+						<div class="challenge-num">02</div>
+						<h3>One data model, many modules</h3>
+						<span class="label">Problem</span>
+						<p>
+							Shared entities are what make an OS an OS — and are exactly
+							where tools normally fragment into silos.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							A unified data layer modules read and write through, so an
+							"employee" or "vendor" means the same thing everywhere.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.14s">
+						<div class="challenge-num">03</div>
+						<h3>Permissions across everything</h3>
+						<span class="label">Problem</span>
+						<p>
+							Every module needs authorization, but per-module access rules
+							quickly become inconsistent and unsafe.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							A single identity &amp; permission model enforced at the core,
+							inherited by modules rather than reinvented.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.19s">
+						<div class="challenge-num">04</div>
+						<h3>Fault isolation between modules</h3>
+						<span class="label">Problem</span>
+						<p>
+							If modules share one runtime, a bug in a minor module can crash
+							or corrupt the whole workspace — the opposite of what an OS
+							should offer.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Treat each module as an isolated unit with a defined contract to
+							the core, so failures are contained and the shell stays up even
+							when one module misbehaves.
+						</p>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../index.html#projects">All projects</a>
+				<a href="https://sutrid.in" target="_blank" rel="noopener">sutrid.in</a>
+				<a href="mailto:suryansh@archdev.in">Email</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+	</body>
+</html>

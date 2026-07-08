@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="AuditFlow by Sutrid — audit & compliance workflows. Architecture, UI, and engineering challenges."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>AuditFlow — Case study · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-orbit"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="doc-hero">
+				<a class="back-link reveal" href="../index.html#projects">← All projects</a>
+				<p class="doc-status reveal" style="--d: 0.04s">Sutrid · MVP ready</p>
+				<h1 class="doc-title reveal" style="--d: 0.08s">
+					Audit<span class="text-accent">Flow</span>
+				</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">
+					The first product under <strong>Sutrid</strong> — software that
+					helps organizations run with less friction and clearer
+					accountability. AuditFlow streamlines audit and compliance
+					workflows end to end.
+				</p>
+				<div class="doc-meta reveal" style="--d: 0.16s">
+					<span class="chip">TypeScript</span>
+					<span class="chip">Design system</span>
+					<span class="chip chip--muted">Design tokens</span>
+					<span class="chip chip--muted">Theme-aware</span>
+				</div>
+				<div class="doc-actions reveal" style="--d: 0.2s">
+					<a class="btn btn--primary" href="https://sutrid.in" target="_blank" rel="noopener"
+						>Visit sutrid.in</a
+					>
+					<a class="btn btn--ghost" href="../index.html#projects">Back to projects</a>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Overview</p>
+				<h2 class="reveal" style="--d: 0.04s">Compliance work, with the friction removed</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						<strong>Sutrid</strong> is a software company I'm building around
+						a simple idea: help organizations operate better — less friction
+						between teams, clearer accountability. <strong>AuditFlow</strong>
+						is its first product, aimed at the audit and compliance
+						workflows that most teams still run on spreadsheets and email.
+					</p>
+					<p>
+						The MVP is ready. Alongside the product I built a
+						<strong>token-driven design system</strong> shared with the rest
+						of Sutrid, and a theme-aware marketing site — animated,
+						pointer-reactive grid and all — that stays perfectly in sync with
+						the product's look and feel.
+					</p>
+				</div>
+				<div class="fact-grid">
+					<div class="fact reveal" style="--d: 0.04s">
+						<span class="k">Provider</span>
+						<span class="v">Sutrid</span>
+					</div>
+					<div class="fact reveal" style="--d: 0.09s">
+						<span class="k">Stage</span>
+						<span class="v">MVP ready</span>
+					</div>
+					<div class="fact reveal" style="--d: 0.14s">
+						<span class="k">Focus</span>
+						<span class="v">Audit &amp; compliance</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Architecture</p>
+				<h2 class="reveal" style="--d: 0.04s">One design language, two surfaces</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						A shared token layer (<code>@common</code>) is the backbone: both
+						the marketing site and the product app render from the same
+						palette, spacing and motion primitives, so the brand never
+						drifts. The app itself is a workflow engine over a structured
+						evidence and audit-trail store.
+					</p>
+				</div>
+				<div class="arch reveal" style="--d: 0.12s">
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">@common — Design tokens</span>
+							<span class="d">Palette, radii, motion, theme — one source of truth</span>
+							<span class="tech">shared</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;consumed by&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Marketing site</span>
+							<span class="d">Static, theme-aware, pointer-reactive grid</span>
+							<span class="tech">sutrid.in</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">AuditFlow app</span>
+							<span class="d">Workflow UI &amp; product surface</span>
+							<span class="tech">TypeScript</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Workflow engine</span>
+							<span class="d">Controls, tasks, approvals, state</span>
+							<span class="tech">app core</span>
+						</div>
+						<div class="arch-node arch-node--accent">
+							<span class="n">Evidence &amp; audit trail</span>
+							<span class="d">Immutable record of who did what, when</span>
+							<span class="tech">data store</span>
+						</div>
+					</div>
+				</div>
+				<p class="arch-caption reveal">
+					Keeping tokens in one place is what lets a small team ship a site
+					and a product that feel like one thing.
+				</p>
+				<div class="dgm dgm-flow reveal">
+					<div class="dgm-scroll">
+						<div class="dgm-flow dgm-flow--row">
+							<div class="dgm-box"><span class="dgm-bt">Define a control</span><span class="dgm-bd">from the library</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Collect evidence</span><span class="dgm-bd">attached &amp; kept as an immutable trail</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Review</span></div>
+						</div>
+					</div>
+					<div class="dgm-arr"><span class="ico v">↓</span><span class="lbl">outcome</span></div>
+					<div class="dgm-branch dgm-branch--2">
+						<div class="dgm-box dgm-box--accent"><span class="dgm-bt">✓ Met</span><span class="dgm-bd">rolls straight into the audit read-out</span></div>
+						<div class="dgm-box dgm-box--gold"><span class="dgm-bt">⚠ Gap</span><span class="dgm-bd">→ remediate → re-collect evidence</span></div>
+					</div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box dgm-box--accent"><span class="dgm-bt">Audit read-out</span><span class="dgm-bd">proof on demand — not a scramble</span></div>
+				</div>
+				<p class="fig-cap reveal">Every control carries its own evidence and history — so an audit becomes a read-out instead of a fire drill.</p>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Sample UI experience</p>
+				<h2 class="reveal" style="--d: 0.04s">Compliance dashboard</h2>
+				<div class="mock-window reveal" style="--d: 0.08s">
+					<div class="mock-bar">
+						<div class="mock-dots"><span></span><span></span><span></span></div>
+						<div class="mock-url">app.sutrid.in/auditflow</div>
+					</div>
+					<div class="mock-app mock-app--side">
+						<div class="mock-side">
+							<div class="mock-brand">AuditFlow</div>
+							<div class="mock-nav mock-nav--active">Controls</div>
+							<div class="mock-nav">Workflows</div>
+							<div class="mock-nav">Evidence</div>
+							<div class="mock-nav">Reports</div>
+							<div class="mock-nav">Team</div>
+						</div>
+						<div class="mock-main">
+							<div class="mock-h">
+								<span class="t">SOC 2 — readiness</span>
+								<span class="mock-btn">Add control</span>
+							</div>
+							<div class="mock-tiles">
+								<div class="mock-tile">
+									<div class="kpi">86%</div>
+									<div class="lbl">Controls met</div>
+								</div>
+								<div class="mock-tile">
+									<div class="kpi">42</div>
+									<div class="lbl">Evidence items</div>
+								</div>
+								<div class="mock-tile">
+									<div class="kpi">5</div>
+									<div class="lbl">Overdue</div>
+								</div>
+							</div>
+							<div class="mock-table">
+								<div class="mock-tr"><span>Control</span><span>State</span><span></span></div>
+								<div class="mock-tr">
+									<span>Access reviews quarterly</span>
+									<span class="mock-tag">Met</span>
+									<span class="mock-dot"></span>
+								</div>
+								<div class="mock-tr">
+									<span>Change management logs</span>
+									<span class="mock-tag mock-tag--gold">In review</span>
+									<span class="mock-dot"></span>
+								</div>
+								<div class="mock-tr">
+									<span>Vendor risk assessment</span>
+									<span class="mock-tag mock-tag--gold">In review</span>
+									<span class="mock-dot"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="mock-caption reveal">
+					A representative view — controls, their state, and the evidence
+					behind each one in a single place, so an audit is a read-out rather
+					than a scramble.
+				</p>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Engineering challenges</p>
+				<h2 class="reveal" style="--d: 0.04s">What was hard, and how I approached it</h2>
+				<div class="challenges">
+					<div class="challenge reveal" style="--d: 0.04s">
+						<div class="challenge-num">01</div>
+						<h3>Modelling compliance as a stateful graph</h3>
+						<span class="label">Problem</span>
+						<p>
+							Controls, evidence, owners and approvals form an interdependent
+							graph — a control's state depends on its evidence, which depends
+							on tasks and sign-offs. Representing that so it stays consistent
+							as things move is the core modelling problem.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							An explicit state machine per control with typed transitions,
+							so a control can only move between valid states and every change
+							has a defined cause.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.09s">
+						<div class="challenge-num">02</div>
+						<h3>A trustworthy, immutable audit trail</h3>
+						<span class="label">Problem</span>
+						<p>
+							In a compliance tool the record <em>is</em> the product — it has
+							to answer "who did what, when" without any doubt it was edited
+							after the fact.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Model the trail as append-only events; current state is derived
+							from that log rather than mutated in place, so history is
+							reconstructable and tamper-evident.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.14s">
+						<div class="challenge-num">03</div>
+						<h3>Multi-tenant data isolation</h3>
+						<span class="label">Problem</span>
+						<p>
+							Every organization's audit data is sensitive; a single leak
+							across tenants would be fatal to trust. Isolation has to be a
+							property of the design, not a query you remember to add.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Tenant scoping enforced at the data-access layer so every read
+							and write is bound to an org by construction, not by convention.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.19s">
+						<div class="challenge-num">04</div>
+						<h3>Many frameworks, one control model</h3>
+						<span class="label">Problem</span>
+						<p>
+							SOC 2, ISO 27001 and the rest overlap heavily but describe
+							controls differently. Modelling each separately means collecting
+							the same evidence many times.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							A shared internal control schema that frameworks map onto, so a
+							single piece of evidence can satisfy the equivalent control in
+							several frameworks at once.
+						</p>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../index.html#projects">All projects</a>
+				<a href="https://sutrid.in" target="_blank" rel="noopener">sutrid.in</a>
+				<a href="mailto:suryansh@archdev.in">Email</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+	</body>
+</html>

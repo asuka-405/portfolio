@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Where software development is right now, honestly — what AI has changed, what it hasn't, and my bets on where the craft is heading."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>The state of software development · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-orbit"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../index.html#writing">Writing</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="doc-hero">
+				<a class="back-link reveal" href="../index.html#writing">← Writing</a>
+				<p class="doc-status reveal" style="--d: 0.04s">Industry · Opinion</p>
+				<h1 class="doc-title reveal" style="--d: 0.08s">
+					The state of <span class="text-accent">software</span>, and where
+					it's going
+				</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">
+					I've been writing code for about six years, two and a half of them
+					professionally — which means my whole working career has happened
+					<em>inside</em> this AI shift. This is my honest read from that vantage:
+					what has actually changed, what hasn't, and the bets I'm making.
+				</p>
+				<div class="article-meta reveal" style="--d: 0.16s">
+					<span>July 2026</span><span class="sep">·</span>
+					<span>8 min read</span><span class="sep">·</span>
+					<span>Industry · Opinion</span>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<div class="prose reveal">
+					<h3>Where I'm writing this from</h3>
+					<p>
+						A quick disclaimer so you can weigh what follows: I'm not a
+						twenty-year veteran with grand hindsight. I've been coding for around
+						six years and working in the industry for about two and a half. But
+						that turns out to be an oddly useful seat — I learned my craft the
+						old way (reading code, breaking things, slow understanding) and then
+						started my professional career right as AI rewrote how the work gets
+						done. I've felt the shift land on me personally, not observed it from
+						a corner office. Take this as a practitioner's field notes, not a
+						prophecy.
+					</p>
+
+					<h3>The thing that actually changed</h3>
+					<p>
+						When I started out, the bottleneck in building software was mostly
+						<em>typing it</em> — knowing the syntax, the framework, the exact
+						incantation. In just a couple of years that bottleneck has largely
+						dissolved. AI can now produce a working first draft of almost any
+						well-trodden piece of code faster than you can describe it. That's
+						not hype; it's my daily experience.
+					</p>
+					<p>
+						But here's what I keep telling people: the typing was never the
+						hard part. The hard part was always deciding <em>what</em> to build,
+						why, and how the pieces should fit — and then being on the hook when
+						it breaks at 2 a.m. Those parts didn't get automated. If anything,
+						they got more important, because everything around them sped up.
+					</p>
+				</div>
+				<div class="dgm reveal">
+					<p class="dgm-bd" style="margin-bottom:.5rem;font-weight:700;color:var(--muted)">Before — the bottleneck was typing</p>
+					<div class="dgm-scroll">
+						<div class="dgm-flow dgm-flow--row">
+							<div class="dgm-box"><span class="dgm-bt">Idea</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box dgm-box--accent"><span class="dgm-bt">Type the code</span><span class="dgm-tag">the slow part</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Ship</span></div>
+						</div>
+					</div>
+				</div>
+				<div class="dgm reveal">
+					<p class="dgm-bd" style="margin-bottom:.5rem;font-weight:700;color:var(--muted)">Now — the bottleneck moved to the ends</p>
+					<div class="dgm-scroll">
+						<div class="dgm-flow dgm-flow--row">
+							<div class="dgm-box dgm-box--accent"><span class="dgm-bt">Decide what &amp; why</span><span class="dgm-tag">judgment · scarce</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box dgm-box--ghost"><span class="dgm-bt">AI writes the draft</span><span class="dgm-bd">nearly free now</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box dgm-box--accent"><span class="dgm-bt">Review &amp; verify</span><span class="dgm-tag">the new core skill</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Ship</span></div>
+						</div>
+					</div>
+				</div>
+				<p class="fig-cap reveal">AI didn't remove the bottleneck — it moved it from your keyboard to your judgment at both ends.</p>
+				<div class="prose reveal">
+
+					<h3>What got cheaper, what got precious</h3>
+					<p>
+						A useful way to think about it: AI made a whole category of work
+						nearly free, and in doing so made a different category more
+						valuable.
+					</p>
+					<ul>
+						<li>
+							<strong>Cheaper:</strong> boilerplate, glue code, first drafts,
+							one-off scripts, looking up how an API works, translating between
+							languages. The "I know this is possible, I just have to type it
+							out" tier.
+						</li>
+						<li>
+							<strong>More precious:</strong> judgment, system design, knowing
+							which problem is worth solving, reading a codebase you didn't
+							write, catching the subtle bug the AI confidently introduced, and
+							owning the result. Taste, basically.
+						</li>
+					</ul>
+					<blockquote>
+						AI turned code into a commodity and made judgment the scarce
+						resource. The engineers who thrive are the ones who were already
+						more than typists.
+					</blockquote>
+
+					<h3>The uncomfortable middle (where I actually sit)</h3>
+					<p>
+						I won't pretend this is all rosy — and this is the part I feel most
+						directly, because I'm early enough in my career to still be climbing
+						it. The path from junior to senior used to run <em>through</em> all
+						that now-automated grunt work; grinding out the boilerplate is how
+						you accidentally built intuition. If AI does all the easy parts, the
+						ladder loses its bottom rungs. Where does the next generation of
+						seniors come from?
+					</p>
+					<p>
+						I don't have a clean answer, only a working theory I'm living out:
+						the job of a developer at my stage is being redefined in real time
+						toward <em>reviewing, directing, and verifying</em> AI output. That's
+						a harder skill to learn early, not an easier one — you have to be
+						good enough to catch what the machine got subtly wrong before you've
+						earned the scars that make catching it instinctive. So I've made a
+						deliberate choice to keep doing some things the slow way, precisely
+						so the intuition still forms.
+					</p>
+					<p>
+						There's also a quality reckoning coming. It has never been easier to
+						produce a large amount of code that <em>works in the demo</em>. The
+						amount of software in the world is about to balloon, and a lot of it
+						will be under-understood by the people nominally responsible for it.
+						Maintenance, security, and "why does this actually do what it does"
+						become the defining problems of the next decade.
+					</p>
+
+					<h3>My bets on the next few years</h3>
+					<ol>
+						<li>
+							<strong>The unit of work shifts from "write code" to "specify and
+							verify."</strong> Increasingly you'll describe intent and review
+							outcomes. The people who can write a precise spec and a sharp test
+							will outperform the people who can write a clever loop.
+						</li>
+						<li>
+							<strong>Small teams do what big teams used to.</strong> A tiny,
+							high-taste team with good tooling can now ship what needed a
+							department five years ago. This is the part I find genuinely
+							exciting — it's why I'm building things under Sutrid with a very
+							small footprint.
+						</li>
+						<li>
+							<strong>Fundamentals come roaring back.</strong> When anyone can
+							generate code, understanding what the machine is doing —
+							data structures, systems, networks, how the OS actually behaves —
+							becomes the differentiator, not a relic. You can't review what
+							you don't understand.
+						</li>
+						<li>
+							<strong>Software gets more personal.</strong> When building is
+							cheap, more software gets built for an audience of one, or ten, or
+							a single team — bespoke tools that were never worth a company's
+							time before. I think that's a quietly beautiful shift.
+						</li>
+					</ol>
+
+					<h3>How I'm playing it</h3>
+					<p>
+						I'm leaning into the parts AI doesn't touch: understanding systems
+						deeply, having opinions about how things should be built, and
+						staying close to the metal (which is half of why I still run
+						<a href="arch-linux.html">Arch</a> and read the code I ship). I use
+						AI heavily — it's a fantastic collaborator — but I try never to ship
+						something I couldn't explain line by line. That's the line I'd offer
+						anyone right now: let the machine do the typing, but never outsource
+						the understanding.
+					</p>
+					<p>
+						This is the most leverage individual engineers have ever had. It's
+						also the easiest it's ever been to build a mess. Both are true. The
+						craft, honestly, is learning to hold both at once.
+					</p>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../index.html#writing">More writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+				<a href="mailto:suryansh@archdev.in">Email</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+	</body>
+</html>

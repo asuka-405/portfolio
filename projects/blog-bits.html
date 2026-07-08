@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Blog Bits — a small CMS exploring Shadow DOM components and React islands. Architecture, UI, and engineering challenges."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Blog Bits — Case study · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-orbit"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="doc-hero">
+				<a class="back-link reveal" href="../index.html#projects">← All projects</a>
+				<p class="doc-status reveal" style="--d: 0.04s">
+					Learning project · Frontend R&amp;D
+				</p>
+				<h1 class="doc-title reveal" style="--d: 0.08s">
+					Blog <span class="text-accent">Bits</span>
+				</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">
+					A small-scale CMS I built to sharpen my frontend — and to test a
+					hunch: that a <strong>Shadow-DOM component library</strong> plus
+					targeted <strong>React islands</strong> can replace React where it
+					isn't earning its weight.
+				</p>
+				<div class="doc-meta reveal" style="--d: 0.16s">
+					<span class="chip">Web Components</span>
+					<span class="chip">Shadow DOM</span>
+					<span class="chip chip--muted">React (islands)</span>
+					<span class="chip chip--muted">HTMX</span>
+				</div>
+				<div class="doc-actions reveal" style="--d: 0.2s">
+					<a class="btn btn--ghost" href="../index.html#projects">Back to projects</a>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Overview</p>
+				<h2 class="reveal" style="--d: 0.04s">A CMS as a frontend proving ground</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						Blog Bits started as a way to refine my frontend skills on
+						something real: a small content-management system. But the goal
+						underneath was architectural — to see how far you can get with
+						<strong>plain Web Components and the Shadow DOM</strong> before
+						reaching for a full framework.
+					</p>
+					<p>
+						The result is a lightweight UI library that handles the
+						static-and-structural work, with <strong>islands of micro React
+						apps</strong> dropped in only where genuine interactivity earns
+						it — for example, an embeddable chat widget that can live inside
+						an HTMX page or another Shadow-DOM-based site.
+					</p>
+				</div>
+				<div class="fact-grid">
+					<div class="fact reveal" style="--d: 0.04s">
+						<span class="k">Role</span>
+						<span class="v">Solo — build &amp; research</span>
+					</div>
+					<div class="fact reveal" style="--d: 0.09s">
+						<span class="k">Theme</span>
+						<span class="v">Islands architecture</span>
+					</div>
+					<div class="fact reveal" style="--d: 0.14s">
+						<span class="k">Goal</span>
+						<span class="v">Less JS, same UX</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Architecture</p>
+				<h2 class="reveal" style="--d: 0.04s">Server-driven, hydrated only where needed</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						The CMS renders server-driven HTML enhanced with HTMX. Reusable
+						pieces are Shadow-DOM components with fully scoped styles. Only
+						the genuinely interactive pockets — a chat widget, a rich editor —
+						are hydrated as small React islands, so the JavaScript you ship
+						maps to the interactivity you actually use.
+					</p>
+				</div>
+				<div class="arch reveal" style="--d: 0.12s">
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">CMS core</span>
+							<span class="d">Content, authoring, server-rendered pages</span>
+							<span class="tech">backend</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Shadow-DOM UI library</span>
+							<span class="d">Encapsulated, reusable components</span>
+							<span class="tech">Web Components</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">HTMX layer</span>
+							<span class="d">Server-driven interactivity, no SPA</span>
+							<span class="tech">HTMX</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;hydrate selectively&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">React islands</span>
+							<span class="d">Chat widget, rich editor — only where needed</span>
+							<span class="tech">React</span>
+						</div>
+					</div>
+				</div>
+				<p class="arch-caption reveal">
+					Reach for React last, not first — the library and HTMX carry most of
+					the UI, islands cover the rest.
+				</p>
+				<div class="dgm reveal">
+					<div class="dgm-page">
+						<div class="dgm-static">static HTML &nbsp;·&nbsp; Shadow-DOM components &nbsp;·&nbsp; 0 kB JS</div>
+						<div class="dgm-islands">
+							<div class="dgm-island"><div class="t">💬 chat widget</div><div class="s">React island</div></div>
+							<div class="dgm-island"><div class="t">✎ rich editor</div><div class="s">React island</div></div>
+						</div>
+						<div class="dgm-static">static HTML &nbsp;·&nbsp; server-rendered &nbsp;·&nbsp; 0 kB JS</div>
+					</div>
+				</div>
+				<p class="fig-cap reveal">Only the genuinely interactive pockets (the accented boxes) become React "islands" — the rest of the page ships zero framework code.</p>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Sample UI experience</p>
+				<h2 class="reveal" style="--d: 0.04s">Content editor</h2>
+				<div class="mock-window reveal" style="--d: 0.08s">
+					<div class="mock-bar">
+						<div class="mock-dots"><span></span><span></span><span></span></div>
+						<div class="mock-url">blogbits.local/admin/posts</div>
+					</div>
+					<div class="mock-app mock-app--side">
+						<div class="mock-side">
+							<div class="mock-brand">Blog Bits</div>
+							<div class="mock-nav mock-nav--active">Posts</div>
+							<div class="mock-nav">Pages</div>
+							<div class="mock-nav">Media</div>
+							<div class="mock-nav">Components</div>
+							<div class="mock-nav">Settings</div>
+						</div>
+						<div class="mock-main">
+							<div class="mock-h">
+								<span class="t">Posts</span>
+								<span class="mock-btn">New post</span>
+							</div>
+							<div class="mock-table">
+								<div class="mock-tr"><span>Title</span><span>Status</span><span></span></div>
+								<div class="mock-tr">
+									<span>Shadow DOM, revisited</span>
+									<span class="mock-tag">Published</span>
+									<span class="mock-dot"></span>
+								</div>
+								<div class="mock-tr">
+									<span>Islands over frameworks</span>
+									<span class="mock-tag mock-tag--gold">Draft</span>
+									<span class="mock-dot"></span>
+								</div>
+								<div class="mock-tr">
+									<span>Embedding a chat widget</span>
+									<span class="mock-tag mock-tag--gold">Draft</span>
+									<span class="mock-dot"></span>
+								</div>
+							</div>
+							<div class="mock-tiles">
+								<div class="mock-tile">
+									<div class="kpi">B I ↳</div>
+									<div class="lbl">Editor toolbar · React island</div>
+								</div>
+								<div class="mock-tile">
+									<div class="kpi">💬</div>
+									<div class="lbl">Chat widget · embeddable</div>
+								</div>
+								<div class="mock-tile">
+									<div class="kpi">&lt;/&gt;</div>
+									<div class="lbl">Shadow component</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="mock-caption reveal">
+					A representative view — a mostly server-rendered admin where only the
+					toolbar and chat are React, each isolated in its own island.
+				</p>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Engineering challenges</p>
+				<h2 class="reveal" style="--d: 0.04s">What was hard, and what I learned</h2>
+				<div class="challenges">
+					<div class="challenge reveal" style="--d: 0.04s">
+						<div class="challenge-num">01</div>
+						<h3>Where to draw the hydration boundary</h3>
+						<span class="label">Problem</span>
+						<p>
+							Islands architecture only pays off if the seam between
+							server-rendered and interactive is drawn well — too coarse and
+							you ship a framework for static content; too fine and the page
+							fragments into dozens of tiny runtimes.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Make interactivity the unit of decision: a region becomes an
+							island only when it owns real client state, and everything else
+							stays server-rendered.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.09s">
+						<div class="challenge-num">02</div>
+						<h3>Island state vs. server-driven swaps</h3>
+						<span class="label">Problem</span>
+						<p>
+							HTMX replaces regions of the DOM from the server, while an
+							island holds its own in-memory state. Reconciling two sources of
+							truth over the same page is the core logical problem.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Give islands stable identity and a defined lifecycle tied to
+							HTMX's swap events, so ownership of each region is unambiguous
+							at any moment.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.14s">
+						<div class="challenge-num">03</div>
+						<h3>A stable component contract</h3>
+						<span class="label">Problem</span>
+						<p>
+							A reusable library lives or dies by its API. Components need a
+							predictable contract — inputs, events, composition — that
+							doesn't leak their internals to consumers.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Treat each Web Component as a black box with a declared
+							attribute/event interface, so pages compose against a contract
+							rather than an implementation.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.19s">
+						<div class="challenge-num">04</div>
+						<h3>Keeping React off the critical path</h3>
+						<span class="label">Problem</span>
+						<p>
+							The whole premise fails if React ends up in the base bundle —
+							then every page pays for a framework most of them don't use.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Isolate React into per-island bundles loaded only when that
+							island mounts, keeping the default page's dependency graph free
+							of it entirely.
+						</p>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../index.html#projects">All projects</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+				<a href="mailto:suryansh@archdev.in">Email</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+	</body>
+</html>
