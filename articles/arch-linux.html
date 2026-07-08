@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="What makes Arch Linux different, why I keep coming back to it, and a plain walkthrough of installing it end to end — finishing with my setup script."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Arch Linux, and why I keep coming back · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-orbit"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../index.html#writing">Writing</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="doc-hero">
+				<a class="back-link reveal" href="../index.html#writing">← Writing</a>
+				<p class="doc-status reveal" style="--d: 0.04s">Linux · Guide</p>
+				<h1 class="doc-title reveal" style="--d: 0.08s">
+					Arch Linux, and why I keep <span class="text-accent">coming
+					back</span>
+				</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">
+					Arch has a reputation for being hard. It isn't, really — it's just
+					honest. Here's what makes it different, and how to install it end to
+					end, finishing with the script I use every time.
+				</p>
+				<div class="article-meta reveal" style="--d: 0.16s">
+					<span>July 2026</span><span class="sep">·</span>
+					<span>9 min read</span><span class="sep">·</span>
+					<span>Linux · Arch</span>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<div class="prose reveal">
+					<h3>What Arch actually is</h3>
+					<p>
+						Most Linux distributions hand you a finished house — furniture
+						arranged, defaults chosen, a friendly installer. Arch hands you the
+						materials and the best-documented set of instructions in the world,
+						and lets you build the house you actually want. Nothing is on your
+						system unless you put it there.
+					</p>
+					<p>
+						That's the whole philosophy: keep it simple (in the engineering
+						sense — no unnecessary layers between you and the system), and trust
+						the user. It rubs some people the wrong way. For me it's the point.
+						I like knowing what every piece of my machine is doing, because I
+						put it there on purpose.
+					</p>
+
+					<h3>How it's different from Ubuntu or Fedora</h3>
+					<ul>
+						<li>
+							<strong>Rolling release.</strong> There's no "Arch 24.04." You
+							install once and update forever; packages arrive continuously,
+							close to upstream. You're always on the latest, which is
+							wonderful and occasionally requires you to read a news post before
+							updating.
+						</li>
+						<li>
+							<strong>You assemble it.</strong> A base Arch install is a
+							terminal. Desktop, audio, drivers — you choose and add them. The
+							result is a system with exactly what you need and nothing you
+							don't.
+						</li>
+						<li>
+							<strong>pacman + the AUR.</strong> pacman is a fast, no-nonsense
+							package manager, and the Arch User Repository is a community
+							collection that puts almost any piece of software one command
+							away.
+						</li>
+						<li>
+							<strong>The Arch Wiki.</strong> Honestly one of the best technical
+							resources on the internet, for any distro. Half of "learning
+							Arch" is really just learning to read the wiki.
+						</li>
+					</ul>
+				</div>
+				<div class="dgm dgm-compare reveal">
+					<div class="dgm-panel">
+						<h4>Other distros · a finished house</h4>
+						<div class="dgm-mini">
+							<div class="m">desktop + apps &nbsp;(chosen for you)</div>
+							<div class="m">drivers + services &nbsp;(pre-set)</div>
+							<div class="m">base system</div>
+							<div class="sep">▶ boots to someone's defaults</div>
+						</div>
+					</div>
+					<div class="dgm-panel dgm-panel--accent">
+						<h4>Arch · you add each layer</h4>
+						<div class="dgm-mini">
+							<div class="m keep">+ desktop &nbsp;(or none at all)</div>
+							<div class="m keep">+ apps &nbsp;(only what you use)</div>
+							<div class="m keep">+ drivers &nbsp;(only yours)</div>
+							<div class="m">base system &nbsp;(just a terminal)</div>
+							<div class="sep">▶ boots to exactly what you picked</div>
+						</div>
+					</div>
+				</div>
+				<p class="fig-cap reveal">The core difference: other distros hand you a pre-assembled stack; Arch hands you the parts and the best manual on the internet.</p>
+				<div class="prose reveal">
+					<blockquote>
+						Arch isn't hard so much as unabstracted. It asks you to understand
+						the thing you're using — and then rewards you with a system that
+						never surprises you.
+					</blockquote>
+
+					<h3>Installing it, in plain terms</h3>
+					<p>
+						You boot the live ISO and do a handful of deliberate steps. Here's
+						the whole map before we walk it — it's shorter than its reputation.
+					</p>
+				</div>
+				<div class="dgm dgm-scroll reveal">
+					<div class="dgm-flow dgm-flow--row">
+						<div class="dgm-box">
+							<span class="dgm-bt">Boot live USB</span>
+							<span class="dgm-bd">Connect &amp; partition the disk</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box">
+							<span class="dgm-bt">pacstrap</span>
+							<span class="dgm-bd">Install the base system</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box">
+							<span class="dgm-bt">genfstab</span>
+							<span class="dgm-bd">Record how disks mount</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box">
+							<span class="dgm-bt">arch-chroot</span>
+							<span class="dgm-bd">Step into the new system</span>
+							<span class="dgm-tag">manual part ends here</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box dgm-box--accent">
+							<span class="dgm-bt">★ arch-setup.sh</span>
+							<span class="dgm-bd">locale · user · services · bootloader · KDE · yay</span>
+							<span class="dgm-tag">my script takes over</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box">
+							<span class="dgm-bt">Reboot</span>
+							<span class="dgm-bd">Into a working desktop</span>
+						</div>
+					</div>
+				</div>
+				<p class="fig-cap reveal">The full install, end to end. The manual part stops at arch-chroot; the highlighted step is where my script takes over.</p>
+				<div class="prose reveal">
+					<p><strong>1 · Connect and partition.</strong> Get online, then carve
+						up the disk — at minimum an EFI partition and a root partition.</p>
+					<div class="cmd reveal">iwctl        # connect to wi-fi, or use ethernet</div>
+					<div class="cmd reveal">lsblk        # see your disks, then partition with cfdisk</div>
+					<p><strong>2 · Install the base system.</strong>
+						<code>pacstrap</code> lays the core packages onto your root
+						partition, and <code>genfstab</code> records how your disks should
+						mount.</p>
+					<div class="cmd reveal">pacstrap -K /mnt base linux linux-firmware</div>
+					<div class="cmd reveal">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</div>
+					<p><strong>3 · Step into the new system.</strong> This is the moment it
+						becomes "your" machine rather than the installer's.</p>
+					<div class="cmd reveal">arch-chroot /mnt</div>
+
+					<h3>Where my script picks up</h3>
+					<p>
+						Everything after <code>arch-chroot</code> — locale, timezone, your
+						user account, networking, the bootloader, a desktop — is the same
+						twenty-odd commands every single time. So I wrote them down once.
+						From inside the chroot:
+					</p>
+					<div class="cmd reveal">curl -fsSL https://cdn.archdev.in/content/archiso/arch-setup.sh -o arch-setup.sh</div>
+					<div class="cmd reveal">bash arch-setup.sh</div>
+					<p>
+						It walks you through setting the root and user passwords, creates
+						your account with Zsh and the right groups, enables NetworkManager,
+						turns on the multilib repo, lets you pick GRUB or systemd-boot, and
+						installs a KDE Plasma desktop plus <code>yay</code> for the AUR. I
+						broke down each section on the
+						<a href="../arch-setup.html">setup-script page</a> if you want to
+						see exactly what it touches before you run it.
+					</p>
+					<div class="callout reveal">
+						<p>
+							<strong>Make it yours first.</strong> The script bakes in my
+							choices — Indian locale, <code>Asia/Kolkata</code>, AMD microcode,
+							KDE. Read it, change those to match your hardware and taste, then
+							run it. That five-minute read is very much in the spirit of Arch.
+						</p>
+					</div>
+
+					<h3>Should you run Arch?</h3>
+					<p>
+						If you want a computer that just works and you never think about,
+						genuinely — use something else, and that's not a knock. But if you
+						want to actually understand your machine, if you like the idea of a
+						system that only contains what you chose, and if reading a great
+						wiki sounds like a fair trade for total control — Arch is a joy. It
+						made me a better engineer simply by refusing to hide things from me.
+					</p>
+					<p>
+						I also wrote about
+						<a href="btrfs-snapshots.html">using Btrfs to make an Arch system
+						basically un-brickable</a> — snapshots you can roll back to when a
+						rolling-release update inevitably has an opinion. Pair the two and
+						you get the best of both worlds: bleeding edge, with an undo button.
+					</p>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../index.html#writing">More writing</a>
+				<a href="../arch-setup.html">Setup script</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+	</body>
+</html>

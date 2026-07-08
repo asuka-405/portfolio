@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="My Arch Linux post-install setup script — what it does, how to run it, and every command explained in an expandable reference."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Arch setup script · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-orbit"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="index.html#about">About</a>
+					<a href="index.html#projects">Projects</a>
+					<a href="index.html#writing">Writing</a>
+					<a href="index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="doc-hero">
+				<a class="back-link reveal" href="index.html">← Home</a>
+				<p class="doc-status reveal" style="--d: 0.04s">Dotfile · Bash</p>
+				<h1 class="doc-title reveal" style="--d: 0.08s">
+					Arch setup <span class="text-accent">script</span>
+				</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">
+					One Bash script that turns a fresh Arch base install into the machine
+					I actually work on — locale, user, services, bootloader and desktop,
+					with sane prompts along the way.
+				</p>
+				<div class="article-meta reveal" style="--d: 0.16s">
+					<span>Bash</span><span class="sep">·</span>
+					<span>~157 lines</span><span class="sep">·</span>
+					<span>run inside <code>arch-chroot</code></span>
+				</div>
+				<div class="doc-actions reveal" style="--d: 0.2s">
+					<a
+						class="btn btn--primary"
+						href="https://cdn.archdev.in/content/archiso/arch-setup.sh"
+						target="_blank"
+						rel="noopener"
+						>View raw script</a
+					>
+					<a class="btn btn--ghost" href="articles/arch-linux.html"
+						>Read the full Arch guide</a
+					>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">What this is</p>
+				<h2 class="reveal" style="--d: 0.04s">A post-install script, not an installer</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						Arch doesn't hold your hand, and I like it that way — but I don't
+						enjoy re-typing the same twenty commands every time I set up a
+						machine. So this script picks up
+						<strong>after</strong> the base system is installed (once you've
+						partitioned, run <code>pacstrap</code> and <code>genfstab</code>,
+						and entered the new system with <code>arch-chroot</code>) and
+						carries it the rest of the way to a usable desktop.
+					</p>
+					<p>
+						It's deliberately readable and interactive: it asks for your
+						passwords, username and bootloader choice rather than hiding them
+						in config. Nothing here is magic — it's the manual Arch install,
+						written down once so I never lose it.
+					</p>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">How to run it</p>
+				<h2 class="reveal" style="--d: 0.04s">From inside the chroot</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						Download it and run it — don't pipe straight into <code>bash</code>,
+						because the script is interactive and needs its own stdin for the
+						prompts.
+					</p>
+				</div>
+				<div class="cmd reveal">curl -fsSL https://cdn.archdev.in/content/archiso/arch-setup.sh -o arch-setup.sh</div>
+				<div class="cmd reveal">bash arch-setup.sh</div>
+				<div class="callout reveal">
+					<p>
+						<strong>Read before you run.</strong> This is my personal setup —
+						<code>en_IN</code> locale, <code>Asia/Kolkata</code> time, KDE
+						Plasma, an <code>amd-ucode</code> for my CPU. Skim it and swap
+						those for your own before running it on real hardware.
+					</p>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Reference</p>
+				<h2 class="reveal" style="--d: 0.04s">Every command, explained</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						Expand any line to see exactly what it does. This is the whole
+						script, in order — nothing hidden.
+					</p>
+				</div>
+
+				<h3 class="cmd-group reveal">1 · Base packages, locale &amp; clock</h3>
+				<details class="cmd-explain reveal">
+					<summary><span>pacman -Sy neovim zsh networkmanager git github-cli glab ntfs-3g --noconfirm</span><span class="chev">›</span></summary>
+					<div class="body">
+						Syncs the package database and installs the essentials in one go:
+						the <code>neovim</code> editor, the <code>zsh</code> shell,
+						<code>networkmanager</code> for networking, Git plus the GitHub
+						(<code>gh</code>) and GitLab (<code>glab</code>) CLIs, and
+						<code>ntfs-3g</code> so Windows/NTFS drives are readable.
+						<code>--noconfirm</code> skips the yes/no prompts.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>pacman -S amd-ucode --noconfirm</span><span class="chev">›</span></summary>
+					<div class="body">
+						Installs AMD CPU microcode — early firmware fixes the bootloader
+						loads before the kernel. On an Intel machine you'd swap this for
+						<code>intel-ucode</code>.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>echo "en_IN UTF-8" &gt; /etc/locale.gen</span><span class="chev">›</span></summary>
+					<div class="body">
+						Un-comments (by writing) the Indian English UTF-8 locale in the list
+						of locales to generate. Change this to your own, e.g.
+						<code>en_US.UTF-8 UTF-8</code>.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>locale-gen</span><span class="chev">›</span></summary>
+					<div class="body">
+						Actually builds the locale data for whatever's listed in
+						<code>/etc/locale.gen</code>. Without this the language settings have
+						nothing to point at.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>echo "LANG=en_IN.UTF-8" &gt; /etc/locale.conf</span><span class="chev">›</span></summary>
+					<div class="body">
+						Sets the system-wide language. <code>LANG</code> is the default every
+						program falls back to for text, dates and number formatting.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime</span><span class="chev">›</span></summary>
+					<div class="body">
+						Points the system clock at a timezone by symlinking the zoneinfo
+						file. Swap <code>Asia/Kolkata</code> for your region, e.g.
+						<code>Europe/London</code>.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>hwclock --systohc --utc</span><span class="chev">›</span></summary>
+					<div class="body">
+						Writes the current system time back to the hardware (BIOS) clock and
+						records that it's kept in UTC — the sane default on Linux, and what
+						avoids the "clock is wrong after dual-booting" mess.
+					</div>
+				</details>
+
+				<h3 class="cmd-group reveal">2 · Services &amp; the multilib repo</h3>
+				<details class="cmd-explain reveal">
+					<summary><span>systemctl enable NetworkManager</span><span class="chev">›</span></summary>
+					<div class="body">
+						Marks NetworkManager to start automatically on every boot — so you
+						have internet the first time the installed system comes up, not just
+						in the live environment.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>systemctl enable fstrim.timer</span><span class="chev">›</span></summary>
+					<div class="body">
+						Enables a weekly <code>fstrim</code> that tells your SSD which blocks
+						are free. It keeps solid-state drives fast and healthy over time.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>echo "[multilib]" &gt;&gt; /etc/pacman.conf &nbsp;(+ Include line)</span><span class="chev">›</span></summary>
+					<div class="body">
+						Appends the <code>[multilib]</code> repository to pacman's config
+						(the <code>&gt;&gt;</code> means "add to the end"). Multilib holds
+						32-bit packages you need for Steam, Wine and some games.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>pacman -Sy</span><span class="chev">›</span></summary>
+					<div class="body">
+						Re-syncs the package databases so the newly-enabled multilib repo is
+						actually known to pacman.
+					</div>
+				</details>
+
+				<h3 class="cmd-group reveal">3 · Root, your user &amp; sudo</h3>
+				<details class="cmd-explain reveal">
+					<summary><span>passwd &nbsp;# root, looped until it succeeds</span><span class="chev">›</span></summary>
+					<div class="body">
+						Sets the root (administrator) password. The script wraps this in a
+						loop so a typo or mismatch just asks you to try again instead of
+						moving on with no password set.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>read -p "Enter the new username: " username</span><span class="chev">›</span></summary>
+					<div class="body">
+						Prompts for your everyday username, then validates it (must start
+						with a letter/underscore, only lowercase letters, digits, dashes and
+						underscores) and checks it doesn't already exist — the same rules
+						Linux itself enforces.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>useradd -m -g users -G wheel,storage,power -s /bin/zsh "$username"</span><span class="chev">›</span></summary>
+					<div class="body">
+						Creates your account: <code>-m</code> makes a home directory,
+						<code>-g users</code> sets the primary group, <code>-G</code> adds it
+						to <code>wheel</code> (for sudo), <code>storage</code> and
+						<code>power</code>, and <code>-s /bin/zsh</code> makes Zsh your login
+						shell.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>passwd "$username"</span><span class="chev">›</span></summary>
+					<div class="body">
+						Sets the password for the account you just created — also looped so
+						it can't silently fail.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>echo "%wheel ALL=(ALL) ALL" &gt;&gt; /etc/sudoers</span><span class="chev">›</span></summary>
+					<div class="body">
+						Grants everyone in the <code>wheel</code> group permission to use
+						<code>sudo</code>. This is the line that lets your normal user run
+						admin commands.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>echo "Defaults rootpw" &gt;&gt; /etc/sudoers</span><span class="chev">›</span></summary>
+					<div class="body">
+						A personal preference: makes <code>sudo</code> ask for the
+						<em>root</em> password rather than your user's. Remove this line if
+						you prefer the usual behaviour.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>echo "Defaults !tty_tickets" &gt;&gt; /etc/sudoers</span><span class="chev">›</span></summary>
+					<div class="body">
+						Makes a single <code>sudo</code> authentication apply across all your
+						terminals for the timeout window, instead of per-terminal. Convenience
+						over strictness — drop it if you want each terminal to re-prompt.
+					</div>
+				</details>
+
+				<h3 class="cmd-group reveal">4 · Bootloader (your choice: GRUB / systemd-boot / skip)</h3>
+				<details class="cmd-explain reveal">
+					<summary><span>bootctl --path=/boot install</span><span class="chev">›</span></summary>
+					<div class="body">
+						Installs systemd-boot's files into your EFI partition. Both paths use
+						this; GRUB then layers on top, while "direct boot" uses systemd-boot
+						by itself.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB</span><span class="chev">›</span></summary>
+					<div class="body">
+						The GRUB path. Installs the GRUB bootloader into the EFI directory.
+						GRUB is the better pick if you <strong>dual-boot</strong>, since
+						<code>os-prober</code> can detect Windows and other OSes.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>grub-mkconfig -o /boot/grub/grub.cfg</span><span class="chev">›</span></summary>
+					<div class="body">
+						Scans your kernels (and other operating systems) and writes GRUB's
+						boot menu configuration. Run this again any time you want the menu
+						regenerated.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>echo "title / linux / initrd ..." &gt; /boot/loader/entries/arch.conf</span><span class="chev">›</span></summary>
+					<div class="body">
+						The systemd-boot "direct" path. Writes a tiny boot entry naming the
+						kernel (<code>vmlinuz-linux</code>) and initramfs — a leaner
+						alternative to GRUB when you're not dual-booting.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>blkid -s PARTUUID -o value /dev/$partname</span><span class="chev">›</span></summary>
+					<div class="body">
+						Looks up the stable <code>PARTUUID</code> of your root partition and
+						writes it into the boot entry as <code>root=PARTUUID=… rw</code>.
+						Using the UUID (not <code>/dev/sda2</code>) means booting still works
+						if device names shuffle around.
+					</div>
+				</details>
+
+				<h3 class="cmd-group reveal">5 · Hostname, desktop &amp; the AUR</h3>
+				<details class="cmd-explain reveal">
+					<summary><span>echo "KEYMAP=us" &gt; /etc/vconsole.conf</span><span class="chev">›</span></summary>
+					<div class="body">
+						Sets the keyboard layout for the text console (before a desktop
+						loads). Change <code>us</code> if you use a different physical
+						layout.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>echo "arch" &gt; /etc/hostname</span><span class="chev">›</span></summary>
+					<div class="body">
+						Names the machine on the network. Purely cosmetic — set it to
+						whatever you like to see at your shell prompt.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>pacman -S plasma cosmic firefox dolphin</span><span class="chev">›</span></summary>
+					<div class="body">
+						Installs the actual desktop: KDE <code>plasma</code>, the newer
+						<code>cosmic</code> desktop to try, the Firefox browser, and the
+						Dolphin file manager. This is the step that turns a terminal into a
+						graphical machine.
+					</div>
+				</details>
+				<details class="cmd-explain reveal">
+					<summary><span>git clone https://aur.archlinux.org/yay.git</span><span class="chev">›</span></summary>
+					<div class="body">
+						Clones <code>yay</code>, an AUR helper. Once built, it lets you
+						install from the Arch User Repository as easily as official packages
+						— <code>yay -S &lt;anything&gt;</code>.
+					</div>
+				</details>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Next</p>
+				<h2 class="reveal" style="--d: 0.04s">The reasoning, in long form</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						If you want the <em>why</em> — why Arch, how the install actually
+						works, and where this script fits — I wrote a full walkthrough:
+						<a href="articles/arch-linux.html">Arch Linux, and why I keep
+						coming back to it</a>. It ends exactly where this script begins.
+					</p>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="index.html">Home</a>
+				<a href="index.html#writing">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="app.js" defer></script>
+	</body>
+</html>
