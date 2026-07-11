@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AuditFlow — live preview (mock data)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<!-- Real compiled CSS bundle from the Sutrix app build (Tailwind output + the app's own
+     index.css tokens) — AuditFlow is a module inside the same app/bundle, not a separate
+     product build, so this is the exact same file as app-preview/sutrix-app.css. -->
+<link rel="stylesheet" href="sutrix-app.css">
+<style>
+  html, body { height: 100%; }
+  body { overflow: hidden; }
+  a { text-decoration: none; }
+</style>
+</head>
+<body>
+  <div class="grid-bg" aria-hidden="true"><div class="grid-glow"></div></div>
+
+  <div class="flex min-h-screen" style="height:100vh">
+    <!-- Sidebar — same markup/classes as web/src/app/AppLayout.tsx -->
+    <aside class="relative z-10 w-[220px] shrink-0 flex flex-col border-r border-white/[0.06] bg-[#121019]/80 backdrop-blur-xl h-screen sticky top-0 overflow-hidden">
+      <div class="flex items-center gap-2.5 px-4 py-4 border-b border-white/[0.05]">
+        <div class="logo-mark">AF</div>
+        <div>
+          <p class="text-[13px] font-semibold text-white leading-none tracking-tight">AuditFlow</p>
+          <p class="text-[10px] text-slate-500 mt-0.5">Audit &amp; compliance</p>
+        </div>
+      </div>
+
+      <div class="px-2 py-2 border-b border-white/[0.05]">
+        <div class="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-slate-500 text-xs">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span class="flex-1 text-left">Search…</span>
+          <kbd class="text-[9px] font-mono border border-white/[0.06] rounded px-1 py-0.5 text-slate-700">⌘K</kbd>
+        </div>
+      </div>
+
+      <nav class="flex-1 px-2 py-3 overflow-y-auto" id="sp-sidebar">
+        <div class="mb-1 px-3"><p class="text-[9px] font-semibold tracking-[0.12em] text-slate-700 uppercase">Audit Center</p></div>
+        <div class="space-y-0.5">
+
+          <div>
+            <a href="#" class="sp-nav-link flex items-center gap-2.5 px-3 py-2 rounded-md text-sm transition-colors bg-indigo-500/10 text-indigo-300" data-view="audits">
+              <span class="shrink-0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg></span>
+              <span class="flex-1 text-left font-medium text-[13px]">All Audits</span>
+            </a>
+            <a href="#" class="sp-nav-link flex items-center gap-2.5 px-3 py-2 rounded-md text-sm transition-colors text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]" data-view="my-items">
+              <span class="shrink-0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg></span>
+              <span class="flex-1 text-left font-medium text-[13px]">My Audit Items</span>
+            </a>
+            <a href="#" class="sp-nav-link flex items-center gap-2.5 px-3 py-2 rounded-md text-sm transition-colors text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]" data-view="applications">
+              <span class="shrink-0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+              <span class="flex-1 text-left font-medium text-[13px]">Applications</span>
+            </a>
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-slate-600"><span class="flex-1">Certifications</span></div>
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-slate-600"><span class="flex-1">Cert Templates</span></div>
+          </div>
+
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="relative z-10 flex-1 min-h-0 overflow-auto flex flex-col pb-24">
+
+      <!-- Audits (AuditsPage.tsx) -->
+      <div class="sp-view px-8 py-8 max-w-4xl" data-view-panel="audits">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h1 class="text-xl font-semibold text-white tracking-tight">Audits</h1>
+            <p class="text-sm text-slate-400 mt-0.5">Every audit run against the org — access certifications, financial, compliance, SOX, ISO 27001, and more — in one place</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="#" class="sp-nav-link flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm border border-white/[0.08] text-slate-300 hover:text-white hover:border-white/20 transition-colors" data-view="my-items">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg> My Items
+            </a>
+            <a href="#" class="sp-nav-link flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm border border-white/[0.08] text-slate-300 hover:text-white hover:border-white/20 transition-colors" data-view="applications">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Applications
+            </a>
+            <button type="button" class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm border border-white/[0.08] text-slate-300 hover:text-white hover:border-white/20 transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Link Campaign
+            </button>
+            <button type="button" class="btn-primary flex items-center gap-2 text-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg> New Audit
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-4 gap-3 mb-6">
+          <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3">
+            <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Active Engagements</p>
+            <p class="text-xl font-semibold text-white mt-1">4</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3">
+            <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Overdue Scope Items</p>
+            <p class="text-xl font-semibold text-white mt-1">3</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3">
+            <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Open Findings</p>
+            <p class="text-xl font-semibold text-white mt-1">9</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3">
+            <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">High / Critical Findings</p>
+            <p class="text-xl font-semibold text-white mt-1">2</p>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end mb-3">
+          <label class="flex items-center gap-2 text-xs text-slate-400 cursor-pointer">
+            <input type="checkbox" class="accent-indigo-500"> Show archived
+          </label>
+        </div>
+
+        <div class="space-y-2.5">
+          <div class="w-full rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3 flex items-center gap-3 hover:border-white/20 transition-colors group">
+            <a href="#" class="sp-nav-link flex items-center gap-3 flex-1 min-w-0 text-left" data-open-engagement="sox-q3">
+              <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <p class="text-sm font-medium text-white truncate">Q3 SOX 404 Audit</p>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-amber-300 bg-amber-500/10 border-amber-500/25">IN_REVIEW</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border border-white/[0.08] text-slate-500">SOX</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-amber-300 bg-amber-500/10 border-amber-500/25 flex items-center gap-1">★ CURRENT</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">14/22 items done · due 9/30/2026</p>
+              </div>
+            </a>
+          </div>
+          <div class="w-full rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3 flex items-center gap-3 hover:border-white/20 transition-colors group">
+            <a href="#" class="sp-nav-link flex items-center gap-3 flex-1 min-w-0 text-left" data-open-engagement="iso27001">
+              <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <p class="text-sm font-medium text-white truncate">ISO 27001:2022 Surveillance Audit</p>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-indigo-300 bg-indigo-500/10 border-indigo-500/25">ACTIVE</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border border-white/[0.08] text-slate-500">ISO 27001</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">6/18 items done · due 11/15/2026</p>
+              </div>
+            </a>
+          </div>
+          <div class="w-full rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3 flex items-center gap-3 hover:border-white/20 transition-colors group">
+            <a href="#" class="sp-nav-link flex items-center gap-3 flex-1 min-w-0 text-left" data-open-engagement="vendor-q2">
+              <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <p class="text-sm font-medium text-white truncate">Q2 Vendor Access Certification</p>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-emerald-300 bg-emerald-500/10 border-emerald-500/25">COMPLETE</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border border-white/[0.08] text-slate-500">Access Certification</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">31/31 items done</p>
+              </div>
+            </a>
+          </div>
+          <div class="w-full rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3 flex items-center gap-3 hover:border-white/20 transition-colors group">
+            <a href="#" class="sp-nav-link flex items-center gap-3 flex-1 min-w-0 text-left" data-open-engagement="ar-controls">
+              <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <p class="text-sm font-medium text-white truncate">AR Controls — Financial Close</p>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-slate-400 bg-slate-500/10 border-slate-500/25">DRAFT</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border border-white/[0.08] text-slate-500">Financial</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">0/9 items done</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Applications (ApplicationsPage.tsx) -->
+      <div class="sp-view px-8 py-8 max-w-4xl hidden" data-view-panel="applications">
+        <a href="#" class="sp-nav-link flex items-center gap-1.5 text-xs text-slate-500 hover:text-white transition-colors mb-4" data-view="audits">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg> Back to audits
+        </a>
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h1 class="text-xl font-semibold text-white tracking-tight">Applications</h1>
+            <p class="text-sm text-slate-400 mt-0.5">Org-wide applications that persist across audits — engagements marked "current" auto-generate scope items from active applications</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/[0.08] text-slate-400 text-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg> Import CSV</span>
+            <span class="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/[0.08] text-slate-400 text-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> Export CSV</span>
+            <button type="button" class="btn-primary flex items-center gap-2 text-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg> New Application</button>
+          </div>
+        </div>
+        <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-white/[0.07]">
+                <th class="px-4 py-2.5 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Name</th>
+                <th class="px-4 py-2.5 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Code</th>
+                <th class="px-4 py-2.5 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Status</th>
+                <th class="px-4 py-2.5 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Members</th>
+                <th class="px-4 py-2.5 w-20"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors">
+                <td class="px-4 py-2.5 text-sm text-white">General Ledger</td>
+                <td class="px-4 py-2.5 text-xs text-slate-400 font-mono">GL</td>
+                <td class="px-4 py-2.5"><span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-emerald-300 bg-emerald-500/10 border-emerald-500/25">ACTIVE</span></td>
+                <td class="px-4 py-2.5 text-xs text-slate-400">4</td>
+                <td class="px-4 py-2.5"></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors">
+                <td class="px-4 py-2.5 text-sm text-white">Vendor Portal</td>
+                <td class="px-4 py-2.5 text-xs text-slate-400 font-mono">VP</td>
+                <td class="px-4 py-2.5"><span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-emerald-300 bg-emerald-500/10 border-emerald-500/25">ACTIVE</span></td>
+                <td class="px-4 py-2.5 text-xs text-slate-400">2</td>
+                <td class="px-4 py-2.5"></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors">
+                <td class="px-4 py-2.5 text-sm text-white">ERP Core</td>
+                <td class="px-4 py-2.5 text-xs text-slate-400 font-mono">ERP</td>
+                <td class="px-4 py-2.5"><span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-emerald-300 bg-emerald-500/10 border-emerald-500/25">ACTIVE</span></td>
+                <td class="px-4 py-2.5 text-xs text-slate-400">6</td>
+                <td class="px-4 py-2.5"></td>
+              </tr>
+              <tr class="hover:bg-white/[0.02] transition-colors">
+                <td class="px-4 py-2.5 text-sm text-white">Legacy Payroll (retired)</td>
+                <td class="px-4 py-2.5 text-xs text-slate-400 font-mono">PAY-L</td>
+                <td class="px-4 py-2.5"><span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-slate-400 bg-slate-500/10 border-slate-500/25">INACTIVE</span></td>
+                <td class="px-4 py-2.5 text-xs text-slate-400">0</td>
+                <td class="px-4 py-2.5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Engagement detail (EngagementDetailPage.tsx) -->
+      <div class="sp-view px-8 py-8 max-w-4xl hidden" data-view-panel="engagement">
+        <a href="#" class="sp-nav-link flex items-center gap-1.5 text-xs text-slate-500 hover:text-white transition-colors mb-4" data-view="audits">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg> Back to audits
+        </a>
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl font-semibold text-white tracking-tight">Q3 SOX 404 Audit</h1>
+              <span class="text-[10px] px-1.5 py-0.5 rounded border border-white/[0.08] text-slate-500">SOX</span>
+            </div>
+            <p class="text-sm text-slate-400 mt-0.5">SOX 404 · Owned by R. Okafor · due 9/30/2026</p>
+            <p class="text-xs text-slate-500 mt-1">Annual internal-controls audit over financial reporting, scoped to in-scope applications.</p>
+          </div>
+          <span class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm border border-white/[0.08] text-slate-300 shrink-0">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> Archive
+          </span>
+        </div>
+
+        <div class="flex items-center gap-1 mb-4 border-b border-white/[0.06]">
+          <button type="button" class="sp-audittab px-3 py-2 text-sm border-b-2 transition-colors -mb-px border-indigo-500 text-white" data-audittab="scope">Scope Items (4)</button>
+          <button type="button" class="sp-audittab px-3 py-2 text-sm border-b-2 transition-colors -mb-px border-transparent text-slate-500 hover:text-slate-300" data-audittab="findings">Findings (2)</button>
+        </div>
+
+        <div class="sp-auditpanel" data-auditpanel="scope">
+          <div class="flex justify-end mb-3">
+            <span class="flex items-center gap-1 text-[11px] text-indigo-400"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg> Add scope item</span>
+          </div>
+          <div class="space-y-2">
+            <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] overflow-hidden">
+              <button type="button" class="sp-scope-toggle w-full text-left px-4 py-3 flex items-center gap-3">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2">
+                    <p class="text-sm font-medium text-white truncate">General Ledger — access review</p>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-indigo-300 bg-indigo-500/10 border-indigo-500/25">SUBMITTED</span>
+                  </div>
+                  <p class="text-[11px] text-slate-500 mt-0.5">R. Okafor · 3 files · due 9/20/2026</p>
+                </div>
+              </button>
+              <div class="sp-scope-body px-4 pb-4 border-t border-white/[0.06] pt-3 space-y-3 hidden">
+                <p class="text-xs text-slate-500">Quarterly access review evidence for the GL application, all in-scope users.</p>
+                <div class="space-y-1.5">
+                  <div class="flex items-center gap-2 text-xs bg-black/20 rounded-lg px-3 py-2 border border-white/[0.05]">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-slate-500 shrink-0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                    <span class="flex-1 min-w-0 truncate text-slate-300">gl_access_review_q3.xlsx</span>
+                    <span class="text-slate-600 shrink-0">214 KB</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 pt-1">
+                  <span class="text-xs px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-emerald-300">Approve</span>
+                  <span class="text-xs px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/25 text-amber-300">Flag</span>
+                  <span class="text-xs px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/25 text-red-300">Reject</span>
+                </div>
+              </div>
+            </div>
+            <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] overflow-hidden">
+              <button type="button" class="sp-scope-toggle w-full text-left px-4 py-3 flex items-center gap-3">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2">
+                    <p class="text-sm font-medium text-white truncate">Vendor Portal — control 4.2</p>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-amber-300 bg-amber-500/10 border-amber-500/25">FLAGGED</span>
+                  </div>
+                  <p class="text-[11px] text-slate-500 mt-0.5">M. Chen · 1 file · due 9/18/2026</p>
+                </div>
+              </button>
+              <div class="sp-scope-body px-4 pb-4 border-t border-white/[0.06] pt-3 space-y-3 hidden">
+                <p class="text-xs text-slate-500">Segregation-of-duties control for vendor onboarding vs. payment approval.</p>
+                <p class="text-[11px] text-slate-500">"Two approvers share the same manager — needs a compensating control note before this can be approved."</p>
+              </div>
+            </div>
+            <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] overflow-hidden">
+              <button type="button" class="sp-scope-toggle w-full text-left px-4 py-3 flex items-center gap-3">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2">
+                    <p class="text-sm font-medium text-white truncate">ERP Core — privileged access</p>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-emerald-300 bg-emerald-500/10 border-emerald-500/25">APPROVED</span>
+                  </div>
+                  <p class="text-[11px] text-slate-500 mt-0.5">R. Okafor · 2 files · due 9/12/2026</p>
+                </div>
+              </button>
+              <div class="sp-scope-body px-4 pb-4 border-t border-white/[0.06] pt-3 space-y-3 hidden">
+                <p class="text-xs text-slate-500">Admin-role holders on ERP Core, cross-checked against active-employee roster.</p>
+              </div>
+            </div>
+            <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] overflow-hidden">
+              <button type="button" class="sp-scope-toggle w-full text-left px-4 py-3 flex items-center gap-3">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2">
+                    <p class="text-sm font-medium text-white truncate">Payroll change log — Q3</p>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-slate-400 bg-slate-500/10 border-slate-500/25">PENDING</span>
+                  </div>
+                  <p class="text-[11px] text-slate-500 mt-0.5">Unassigned · 0 files</p>
+                </div>
+              </button>
+              <div class="sp-scope-body px-4 pb-4 border-t border-white/[0.06] pt-3 space-y-3 hidden">
+                <p class="text-xs text-slate-500">Awaiting owner assignment.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sp-auditpanel hidden" data-auditpanel="findings">
+          <div class="flex justify-end mb-3">
+            <span class="flex items-center gap-1 text-[11px] text-indigo-400"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg> Log finding</span>
+          </div>
+          <div class="space-y-2">
+            <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3">
+              <div class="flex items-center gap-2">
+                <p class="text-sm font-medium text-white flex-1 truncate">Segregation of duties conflict — Vendor Portal</p>
+                <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-orange-300 bg-orange-500/10 border-orange-500/25">HIGH</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded border border-white/[0.08] text-slate-500">IN_REMEDIATION</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-1">Two approvers on the same reporting chain can both onboard and pay a vendor.</p>
+              <div class="flex gap-2 mt-2">
+                <span class="text-[11px] px-2 py-1 rounded border border-emerald-500/25 text-emerald-300 flex items-center gap-1">✓ Resolve</span>
+                <span class="text-[11px] px-2 py-1 rounded border border-white/[0.08] text-slate-400">Accept risk</span>
+              </div>
+            </div>
+            <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3">
+              <div class="flex items-center gap-2">
+                <p class="text-sm font-medium text-white flex-1 truncate">Stale admin account — ERP Core</p>
+                <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-amber-300 bg-amber-500/10 border-amber-500/25">MEDIUM</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded border border-white/[0.08] text-slate-500">OPEN</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-1">Admin role still active for a contractor whose engagement ended in June.</p>
+              <div class="flex gap-2 mt-2">
+                <span class="text-[11px] px-2 py-1 rounded border border-white/[0.08] text-slate-400">Start remediation</span>
+                <span class="text-[11px] px-2 py-1 rounded border border-emerald-500/25 text-emerald-300 flex items-center gap-1">✓ Resolve</span>
+                <span class="text-[11px] px-2 py-1 rounded border border-white/[0.08] text-slate-400">Accept risk</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Audit Items (MyAuditItemsPage.tsx) -->
+      <div class="sp-view px-8 py-8 max-w-4xl hidden" data-view-panel="my-items">
+        <a href="#" class="sp-nav-link flex items-center gap-1.5 text-xs text-slate-500 hover:text-white transition-colors mb-4" data-view="audits">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg> Back to audits
+        </a>
+        <div class="mb-6">
+          <h1 class="text-xl font-semibold text-white tracking-tight">My Audit Items</h1>
+          <p class="text-sm text-slate-400 mt-0.5">Scope items you own directly, or that belong to an application you're a member of — across every active engagement</p>
+        </div>
+        <div class="space-y-6">
+          <div>
+            <a href="#" class="sp-nav-link text-xs text-slate-500 hover:text-white transition-colors mb-2 inline-block" data-view="engagement">View engagement →</a>
+            <div class="space-y-2.5">
+              <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3">
+                <div class="flex items-center gap-2">
+                  <p class="text-sm font-medium text-white flex-1 truncate">General Ledger — access review</p>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-indigo-300 bg-indigo-500/10 border-indigo-500/25">SUBMITTED</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">3 files · due 9/20/2026</p>
+              </div>
+              <div class="rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3">
+                <div class="flex items-center gap-2">
+                  <p class="text-sm font-medium text-white flex-1 truncate">ERP Core — privileged access</p>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium text-emerald-300 bg-emerald-500/10 border-emerald-500/25">APPROVED</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">2 files · due 9/12/2026</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+<script>
+(function () {
+  var NAV_ACTIVE = 'bg-indigo-500/10 text-indigo-300';
+  var NAV_INACTIVE_SUB = 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]';
+
+  function showView(id) {
+    document.querySelectorAll('.sp-view').forEach(function (v) {
+      v.classList.toggle('hidden', v.getAttribute('data-view-panel') !== id);
+    });
+    document.querySelectorAll('.sp-nav-link[data-view]').forEach(function (link) {
+      var on = link.getAttribute('data-view') === id;
+      var isSidebar = link.closest('#sp-sidebar') !== null;
+      if (isSidebar) {
+        link.className = 'sp-nav-link flex items-center gap-2.5 px-3 py-2 rounded-md text-sm transition-colors ' + (on ? NAV_ACTIVE : NAV_INACTIVE_SUB);
+      }
+    });
+  }
+
+  document.querySelectorAll('[data-view]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      showView(link.getAttribute('data-view'));
+    });
+  });
+  document.querySelectorAll('[data-open-engagement]').forEach(function (row) {
+    row.addEventListener('click', function (e) {
+      e.preventDefault();
+      showView('engagement');
+    });
+  });
+
+  // Engagement detail tabs
+  document.querySelectorAll('.sp-audittab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var id = tab.getAttribute('data-audittab');
+      document.querySelectorAll('.sp-audittab').forEach(function (t) {
+        var on = t === tab;
+        t.className = 'sp-audittab px-3 py-2 text-sm border-b-2 transition-colors -mb-px ' + (on ? 'border-indigo-500 text-white' : 'border-transparent text-slate-500 hover:text-slate-300');
+      });
+      document.querySelectorAll('.sp-auditpanel').forEach(function (p) {
+        p.classList.toggle('hidden', p.getAttribute('data-auditpanel') !== id);
+      });
+    });
+  });
+
+  // Scope item expand/collapse
+  document.querySelectorAll('.sp-scope-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var body = btn.nextElementSibling;
+      if (body) body.classList.toggle('hidden');
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -41,22 +41,50 @@
 		});
 	}
 
-	// Pointer-tracked ambient glow.
+	// Pointer-tracked ambient glow: big red orbit (hero only, viewport %)
+	// and a small bright grid highlight (sitewide, aligned to the grid layer's own box).
 	if (!reduce && window.matchMedia("(pointer: fine)").matches) {
+		var setPtr = function (clientX, clientY) {
+			var w = window.innerWidth || 1;
+			var h = window.innerHeight || 1;
+			document.body.style.setProperty("--ptr-x", (clientX / w) * 100 + "%");
+			document.body.style.setProperty("--ptr-y", (clientY / h) * 100 + "%");
+
+			var grid = document.querySelector(".bg-grid-accent");
+			if (grid) {
+				var r = grid.getBoundingClientRect();
+				var rw = r.width > 0 ? r.width : 1;
+				var rh = r.height > 0 ? r.height : 1;
+				var gx = ((clientX - r.left) / rw) * 100;
+				var gy = ((clientY - r.top) / rh) * 100;
+				document.body.style.setProperty(
+					"--grid-ptr-x",
+					Math.max(0, Math.min(100, gx)).toFixed(3) + "%"
+				);
+				document.body.style.setProperty(
+					"--grid-ptr-y",
+					Math.max(0, Math.min(100, gy)).toFixed(3) + "%"
+				);
+			}
+		};
 		window.addEventListener(
 			"pointermove",
 			function (e) {
-				document.body.style.setProperty(
-					"--ptr-x",
-					(e.clientX / window.innerWidth) * 100 + "%"
-				);
-				document.body.style.setProperty(
-					"--ptr-y",
-					(e.clientY / window.innerHeight) * 100 + "%"
+				setPtr(e.clientX, e.clientY);
+			},
+			{ passive: true }
+		);
+		window.addEventListener(
+			"resize",
+			function () {
+				setPtr(
+					(window.innerWidth || 0) * 0.5,
+					(window.innerHeight || 0) * 0.36
 				);
 			},
 			{ passive: true }
 		);
+		setPtr((window.innerWidth || 0) * 0.5, (window.innerHeight || 0) * 0.36);
 	}
 
 	// Reading progress bar + heading minimap (long-form sub-pages only).
