@@ -25,7 +25,7 @@
 	<body>
 		<div class="bg-stack" aria-hidden="true">
 			<div class="bg-grid"></div>
-			<div class="bg-orbit"></div>
+			<div class="bg-grid-accent"></div>
 			<div class="bg-vignette"></div>
 		</div>
 
@@ -46,6 +46,7 @@
 
 		<main>
 			<section class="doc-hero">
+				<div class="hero-ambient" aria-hidden="true"><div class="hero-orbit"></div></div>
 				<a class="back-link reveal" href="../index.html#projects">← All projects</a>
 				<p class="doc-status reveal" style="--d: 0.04s">Sutrid · MVP ready</p>
 				<h1 class="doc-title reveal" style="--d: 0.08s">
@@ -58,10 +59,10 @@
 					workflows end to end.
 				</p>
 				<div class="doc-meta reveal" style="--d: 0.16s">
-					<span class="chip">TypeScript</span>
-					<span class="chip">Design system</span>
-					<span class="chip chip--muted">Design tokens</span>
-					<span class="chip chip--muted">Theme-aware</span>
+					<span class="chip">Compliance</span>
+					<span class="chip">Audit trail</span>
+					<span class="chip chip--muted">Multi-tenant</span>
+					<span class="chip chip--muted">Go + TypeScript</span>
 				</div>
 				<div class="doc-actions reveal" style="--d: 0.2s">
 					<a class="btn btn--primary" href="https://sutrid.in" target="_blank" rel="noopener"
@@ -83,11 +84,14 @@
 						workflows that most teams still run on spreadsheets and email.
 					</p>
 					<p>
-						The MVP is ready. Alongside the product I built a
-						<strong>token-driven design system</strong> shared with the rest
-						of Sutrid, and a theme-aware marketing site — animated,
-						pointer-reactive grid and all — that stays perfectly in sync with
-						the product's look and feel.
+						It covers recurring engagements across the frameworks
+						organizations actually get audited against —
+						<strong>access certification, SOX, ISO 27001, financial,
+						internal and vendor audits</strong> — each with its own scope,
+						owners, evidence, and findings tracked to closure. The MVP is
+						ready and the backend is live-verified: engagement lifecycle,
+						scope-item review, findings by severity, and an
+						organization-scoped audit trail all run end to end.
 					</p>
 				</div>
 				<div class="fact-grid">
@@ -108,54 +112,58 @@
 
 			<section class="doc-section">
 				<p class="doc-kicker reveal">Architecture</p>
-				<h2 class="reveal" style="--d: 0.04s">One design language, two surfaces</h2>
+				<h2 class="reveal" style="--d: 0.04s">Engagements, scope, and an audit trail that doesn't lie</h2>
 				<div class="prose reveal" style="--d: 0.08s">
 					<p>
-						A shared token layer (<code>@common</code>) is the backbone: both
-						the marketing site and the product app render from the same
-						palette, spacing and motion primitives, so the brand never
-						drifts. The app itself is a workflow engine over a structured
-						evidence and audit-trail store.
+						Every audit is an <strong>engagement</strong> — access
+						certification, SOX, financial, ISO 27001, internal or vendor —
+						scoped down into applications or controls under review. Each
+						scope item carries its own evidence and can raise
+						<strong>findings</strong>, tracked by severity through to
+						closure. Everything runs org-scoped on a Go backend with
+						Postgres underneath, so one organization's audit data is never
+						reachable from another's.
 					</p>
 				</div>
 				<div class="arch reveal" style="--d: 0.12s">
 					<div class="arch-tier">
 						<div class="arch-node arch-node--accent">
-							<span class="n">@common — Design tokens</span>
-							<span class="d">Palette, radii, motion, theme — one source of truth</span>
-							<span class="tech">shared</span>
+							<span class="n">Engagement</span>
+							<span class="d">Access cert, SOX, ISO 27001, financial, vendor — one lifecycle</span>
+							<span class="tech">core entity</span>
 						</div>
 					</div>
-					<div class="arch-flow">↓ &nbsp;consumed by&nbsp; ↓</div>
+					<div class="arch-flow">↓ &nbsp;scoped into&nbsp; ↓</div>
 					<div class="arch-tier">
 						<div class="arch-node">
-							<span class="n">Marketing site</span>
-							<span class="d">Static, theme-aware, pointer-reactive grid</span>
-							<span class="tech">sutrid.in</span>
+							<span class="n">Scope items</span>
+							<span class="d">Applications and controls under review this cycle</span>
+							<span class="tech">per-engagement</span>
 						</div>
 						<div class="arch-node">
-							<span class="n">AuditFlow app</span>
-							<span class="d">Workflow UI &amp; product surface</span>
-							<span class="tech">TypeScript</span>
+							<span class="n">Findings</span>
+							<span class="d">Issues raised during review, ranked by severity</span>
+							<span class="tech">tracked to closure</span>
 						</div>
 					</div>
 					<div class="arch-flow">↓</div>
 					<div class="arch-tier">
 						<div class="arch-node">
 							<span class="n">Workflow engine</span>
-							<span class="d">Controls, tasks, approvals, state</span>
-							<span class="tech">app core</span>
+							<span class="d">Draft → active → in review → complete, with valid transitions only</span>
+							<span class="tech">Go backend</span>
 						</div>
 						<div class="arch-node arch-node--accent">
 							<span class="n">Evidence &amp; audit trail</span>
-							<span class="d">Immutable record of who did what, when</span>
-							<span class="tech">data store</span>
+							<span class="d">Org-scoped, append-only record of who did what, when</span>
+							<span class="tech">Postgres</span>
 						</div>
 					</div>
 				</div>
 				<p class="arch-caption reveal">
-					Keeping tokens in one place is what lets a small team ship a site
-					and a product that feel like one thing.
+					The bet isn't the UI — it's that engagement state, scope, and
+					evidence stay consistent by construction, so an audit read-out is
+					never a scramble to reconstruct what happened.
 				</p>
 				<div class="dgm dgm-flow reveal">
 					<div class="dgm-scroll">
@@ -179,66 +187,25 @@
 			</section>
 
 			<section class="doc-section">
-				<p class="doc-kicker reveal">Sample UI experience</p>
-				<h2 class="reveal" style="--d: 0.04s">Compliance dashboard</h2>
+				<p class="doc-kicker reveal">Live UI preview</p>
+				<h2 class="reveal" style="--d: 0.04s">This is the real app, not a mockup</h2>
 				<div class="mock-window reveal" style="--d: 0.08s">
 					<div class="mock-bar">
 						<div class="mock-dots"><span></span><span></span><span></span></div>
-						<div class="mock-url">app.sutrid.in/auditflow</div>
+						<div class="mock-url">app-preview/auditflow.html</div>
 					</div>
-					<div class="mock-app mock-app--side">
-						<div class="mock-side">
-							<div class="mock-brand">AuditFlow</div>
-							<div class="mock-nav mock-nav--active">Controls</div>
-							<div class="mock-nav">Workflows</div>
-							<div class="mock-nav">Evidence</div>
-							<div class="mock-nav">Reports</div>
-							<div class="mock-nav">Team</div>
-						</div>
-						<div class="mock-main">
-							<div class="mock-h">
-								<span class="t">SOC 2 — readiness</span>
-								<span class="mock-btn">Add control</span>
-							</div>
-							<div class="mock-tiles">
-								<div class="mock-tile">
-									<div class="kpi">86%</div>
-									<div class="lbl">Controls met</div>
-								</div>
-								<div class="mock-tile">
-									<div class="kpi">42</div>
-									<div class="lbl">Evidence items</div>
-								</div>
-								<div class="mock-tile">
-									<div class="kpi">5</div>
-									<div class="lbl">Overdue</div>
-								</div>
-							</div>
-							<div class="mock-table">
-								<div class="mock-tr"><span>Control</span><span>State</span><span></span></div>
-								<div class="mock-tr">
-									<span>Access reviews quarterly</span>
-									<span class="mock-tag">Met</span>
-									<span class="mock-dot"></span>
-								</div>
-								<div class="mock-tr">
-									<span>Change management logs</span>
-									<span class="mock-tag mock-tag--gold">In review</span>
-									<span class="mock-dot"></span>
-								</div>
-								<div class="mock-tr">
-									<span>Vendor risk assessment</span>
-									<span class="mock-tag mock-tag--gold">In review</span>
-									<span class="mock-dot"></span>
-								</div>
-							</div>
-						</div>
+					<div class="mock-frame-embed">
+						<iframe
+							src="../app-preview/auditflow.html"
+							title="AuditFlow live preview (mock data)"
+							loading="lazy"
+						></iframe>
 					</div>
 				</div>
 				<p class="mock-caption reveal">
-					A representative view — controls, their state, and the evidence
-					behind each one in a single place, so an audit is a read-out rather
-					than a scramble.
+					The frame above is the real AuditFlow build — same compiled CSS and
+					component markup the product ships — loaded with fabricated
+					engagement data. Demonstration only, not a connected environment.
 				</p>
 			</section>
 

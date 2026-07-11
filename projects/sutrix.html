@@ -25,7 +25,7 @@
 	<body>
 		<div class="bg-stack" aria-hidden="true">
 			<div class="bg-grid"></div>
-			<div class="bg-orbit"></div>
+			<div class="bg-grid-accent"></div>
 			<div class="bg-vignette"></div>
 		</div>
 
@@ -46,6 +46,7 @@
 
 		<main>
 			<section class="doc-hero">
+				<div class="hero-ambient" aria-hidden="true"><div class="hero-orbit"></div></div>
 				<a class="back-link reveal" href="../index.html#projects">← All projects</a>
 				<p class="doc-status reveal" style="--d: 0.04s">
 					Sutrid · MVP in development
@@ -181,65 +182,26 @@
 			</section>
 
 			<section class="doc-section">
-				<p class="doc-kicker reveal">Sample UI experience</p>
-				<h2 class="reveal" style="--d: 0.04s">Unified workspace</h2>
+				<p class="doc-kicker reveal">Live UI preview</p>
+				<h2 class="reveal" style="--d: 0.04s">This is the real app, not a mockup</h2>
 				<div class="mock-window reveal" style="--d: 0.08s">
 					<div class="mock-bar">
 						<div class="mock-dots"><span></span><span></span><span></span></div>
-						<div class="mock-url">app.sutrid.in/workspace</div>
+						<div class="mock-url">app-preview/index.html</div>
 					</div>
-					<div class="mock-app mock-app--side">
-						<div class="mock-side">
-							<div class="mock-brand">Sutrix</div>
-							<div class="mock-nav mock-nav--active">Home</div>
-							<div class="mock-nav">AuditFlow</div>
-							<div class="mock-nav">People</div>
-							<div class="mock-nav">Operations</div>
-							<div class="mock-nav">Settings</div>
-						</div>
-						<div class="mock-main">
-							<div class="mock-h">
-								<span class="t">Good morning · Acme Inc.</span>
-								<span class="mock-btn">⌘K</span>
-							</div>
-							<div class="mock-tiles">
-								<div class="mock-tile">
-									<div class="kpi">7</div>
-									<div class="lbl">Modules</div>
-								</div>
-								<div class="mock-tile">
-									<div class="kpi">23</div>
-									<div class="lbl">Tasks today</div>
-								</div>
-								<div class="mock-tile">
-									<div class="kpi">1</div>
-									<div class="lbl">Identity source</div>
-								</div>
-							</div>
-							<div class="mock-table">
-								<div class="mock-tr"><span>Activity</span><span>Module</span><span></span></div>
-								<div class="mock-tr">
-									<span>Control marked met</span>
-									<span class="mock-tag">AuditFlow</span>
-									<span class="mock-dot"></span>
-								</div>
-								<div class="mock-tr">
-									<span>New hire onboarded</span>
-									<span class="mock-tag mock-tag--gold">People</span>
-									<span class="mock-dot"></span>
-								</div>
-								<div class="mock-tr">
-									<span>Access request routed</span>
-									<span class="mock-tag">Operations</span>
-									<span class="mock-dot"></span>
-								</div>
-							</div>
-						</div>
+					<div class="mock-frame-embed">
+						<iframe
+							src="../app-preview/index.html"
+							title="Sutrix live preview (mock data)"
+							loading="lazy"
+						></iframe>
 					</div>
 				</div>
 				<p class="mock-caption reveal">
-					A directional mockup — one shell, one identity, and a home that
-					reads activity across every module in a single feed.
+					The frame above is the real Sutrix build — same compiled CSS and
+					component markup the product ships — loaded with fabricated data
+					across Identities, Access Requests, and App Studio. Demonstration
+					only, not a connected environment.
 				</p>
 			</section>
 
