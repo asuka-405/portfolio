@@ -110,12 +110,9 @@
 					<p>A more useful scale, borrowed from self-driving cars, helps place any workflow by how much you trust it:</p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Levels (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>L0</li><li>Generation only. The human does everything with the output.</li><li>L1</li><li>Uses tools, every action confirmed. A copilot.</li><li>L2</li><li>Reads freely, writes need approval. The sane enterprise default.</li><li>L3</li><li>Writes run automatically within limits. Humans handle exceptions and review samples.</li><li>L4</li><li>Starts itself, checks itself, escalates only on anomalies.</li><li>L5</li><li>Sets its own goals across domains. Doesn't really exist yet — treat claims with suspicion.</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/ai-in-iam/1.png" alt="Figure in ai-in-iam" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p>Every step up trades less human review for a bigger blast radius if things go wrong. The honest way to decide where a task belongs is arithmetic, not vibes:<em>how often does it fail × how bad is a failure</em>, versus the review effort you'd save. This exact frame drives every decision in the IAM section later.</p>
@@ -136,12 +133,9 @@
 					<p>A language model is one small pipeline, repeated dozens of times deep:</p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Text → tokens</li><li>split into vocabulary chunks, each turned into a vector plus its position</li><li>Repeat N times (the &quot;layers&quot;)</li><li>Attention — each word looks at earlier words and pulls in whatever's relevant (&quot;which past words matter to me?&quot;)</li><li>Feed-forward — transforms that information; where most of the model's &quot;knowledge&quot; lives</li><li>Predict the next token</li><li>append it, then do the whole thing again</li><li>↺ autoregression</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/ai-in-iam/2.png" alt="Figure in ai-in-iam" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p>That's genuinely all there is — no separate memory bank, no planner. Two parts do the work.<strong>Attention</strong>moves information between words: every word asks &quot;which earlier words are relevant to me right now?&quot; and copies from them. It's a smart, content-based lookup.<strong>Feed-forward</strong>layers then process that information, and hold most of what the model &quot;knows.&quot; Stack these deep and, at enormous scale, everything else — grammar, reasoning, translation — emerges.</p>
@@ -200,12 +194,9 @@
 					<p>A model can't<em>do</em>anything by itself — it can only output text. To let it act, you define<strong>tools</strong>(functions), the model outputs a structured request to call one, your code runs it, and you feed the result back. The pattern that works is a loop: reason, act, look at the real result, adjust.</p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Thought</li><li>I need the host city before I can check the weather</li><li>Action</li><li>search(&quot;2024 Olympics host city&quot;)</li><li>Observation</li><li>Paris, France</li><li>Thought</li><li>now the weather there</li><li>Action</li><li>get_weather(&quot;Paris&quot;)</li><li>Observation</li><li>18°C, rain</li><li>Final answer</li><li>grounded in two real observations</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/ai-in-iam/3.png" alt="Figure in ai-in-iam" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p>A subtle but important tip: your<strong>error messages are prompts.</strong>An error that says &quot;date must be in YYYY-MM-DD format&quot; lets the model fix itself; a bare &quot;400 error&quot; makes it flail. You are, in effect, writing prompts every time you write an error string.</p>
@@ -233,12 +224,9 @@
 					<p>Two properties make it the enterprise favourite over fine-tuning:<strong>citations</strong>(every claim is checkable) and<strong>query-time access control</strong>(you can filter what each user is allowed to see). Neither is possible when knowledge is baked into the weights. Every RAG system is two pipelines:</p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Architecture diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>① Ingestion (offline, when docs change) Parse &amp; split docs → create embeddings + tag with metadata/permissions → store in a searchable index runs in the background</li><li>① Ingestion (offline, when docs change) Parse &amp; split docs → create embeddings + tag with metadata/permissions → store in a searchable index runs in the background</li><li>runs in the background</li><li>② Query (live, per question) Rewrite the question → retrieve the top matches (permission-filtered) → re-rank for precision → answer with citations runs per request</li><li>② Query (live, per question) Rewrite the question → retrieve the top matches (permission-filtered) → re-rank for precision → answer with citations runs per request</li><li>runs per request</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/ai-in-iam/4.png" alt="Figure in ai-in-iam" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p><em>RAG is two pipelines: one prepares your knowledge, the other answers questions from it.</em></p>
@@ -268,12 +256,9 @@
 					<p>Strip away the hype and an agent is a simple formula:<strong>agent = model + tools + memory + a loop.</strong>The model decides the next step (but can only ever<em>emit a request</em>, never act); your program runs the tool; the result gets added to the context; the model is called again. Repeat until it's done.</p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Perceive</li><li>goal + context</li><li>Plan next step</li><li>Act</li><li>call a tool</li><li>Observe</li><li>real result appended</li><li>Reflect</li><li>↺ loops back to plan</li><li>Stop when</li><li>goal achieved ✓ · budget used up · needs a human · stuck</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/ai-in-iam/5.png" alt="Figure in ai-in-iam" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p>Two facts follow. First,<strong>whatever you put in the context IS the decision-making process</strong>— the tool descriptions, the observations, the task. Second, since your program (not the model) runs the tools,<strong>your program is the security boundary</strong>. Treat the model as an untrusted advisor inside a trusted executor.</p>
@@ -348,12 +333,9 @@
 					<p>Everything from the earlier parts assembles into a layered system. Read it bottom-up: your real systems become tools, an orchestration layer reasons across them, and governance wraps the whole thing.</p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Architecture diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Interaction A Teams/Slack bot for questions, plus event- and schedule-triggered runs how work arrives</li><li>Interaction A Teams/Slack bot for questions, plus event- and schedule-triggered runs how work arrives</li><li>how work arrives</li><li>Orchestration (the brain) A durable, checkpointed graph: a smart orchestrator, cheap parallel workers, and a fresh-context reviewer — with human approval gates that can wait days reads auto · writes gated</li><li>Orchestration (the brain) A durable, checkpointed graph: a smart orchestrator, cheap parallel workers, and a fresh-context reviewer — with human approval gates that can wait days reads auto · writes gated</li><li>reads auto · writes gated</li><li>Knowledge index Policies, SoD rationale, past decisions — permission-filtered RAG Systems of record, as MCP tools Identity platform (live search + gated writes), PAM, ticketing, directory MCP servers</li><li>Knowledge index Policies, SoD rationale, past decisions — permission-filtered RAG</li><li>RAG</li><li>Systems of record, as MCP tools Identity platform (live search + gated writes), PAM, ticketing, directory MCP servers</li><li>MCP servers</li><li>Governance (cross-cutting) Each agent is its own identity · acts with the requester's scope · reads free / writes gated · every decision traced &amp; replayable the part that earns trust</li><li>Governance (cross-cutting) Each agent is its own identity · acts with the requester's scope · reads free / writes gated · every decision traced &amp; replayable the part that earns trust</li><li>the part that earns trust</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/ai-in-iam/6.png" alt="Figure in ai-in-iam" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p><em>Systems become tools; a durable graph reasons across them; governance wraps everything. Swap the vendors and only the bottom layer changes.</em></p>
@@ -379,12 +361,9 @@
 					<p><strong>Deterministic core, AI at the edges.</strong>The reliable machinery — creating identities, birthright access, and above all the<em>leaver disable path</em>— stays plain, fast, testable code with no AI in it. The AI works only at the<em>edges</em>, where humans currently do slow judgment work. The slogan:<strong>the AI proposes and verifies; the deterministic engine executes.</strong></p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Architecture diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Authoritative sources HR (hire / transfer / termination), contingent-worker systems with end dates events in</li><li>Authoritative sources HR (hire / transfer / termination), contingent-worker systems with end dates events in</li><li>events in</li><li>Deterministic core Aggregation → lifecycle states → birthright roles &amp; provisioning. No AI. plain, fast, testable</li><li>Deterministic core Aggregation → lifecycle states → birthright roles &amp; provisioning. No AI. plain, fast, testable</li><li>plain, fast, testable</li><li>Joiner agent Peer-based access proposals; day-one readiness check Mover agent The access diff: what to add, and what to remove Leaver agent Verify, rotate, triage, chase, transfer ownership</li><li>Joiner agent Peer-based access proposals; day-one readiness check</li><li>Mover agent The access diff: what to add, and what to remove</li><li>Leaver agent Verify, rotate, triage, chase, transfer ownership</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/ai-in-iam/7.png" alt="Figure in ai-in-iam" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p><em>Events flow through deterministic machinery; agents are triggered at the judgment edges and propose changes back through normal approvals.</em></p>

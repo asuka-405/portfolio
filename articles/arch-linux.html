@@ -75,12 +75,9 @@
 					<ul><li><strong>Rolling release.</strong>There's no &quot;Arch 24.04.&quot; You install once and update forever; packages arrive continuously, close to upstream. You're always on the latest, which is wonderful and occasionally requires you to read a news post before updating.</li><li><strong>You assemble it.</strong>A base Arch install is a terminal. Desktop, audio, drivers — you choose and add them. The result is a system with exactly what you need and nothing you don't.</li><li><strong>pacman + the AUR.</strong>pacman is a fast, no-nonsense package manager, and the Arch User Repository is a community collection that puts almost any piece of software one command away.</li><li><strong>The Arch Wiki.</strong>Honestly one of the best technical resources on the internet, for any distro. Half of &quot;learning Arch&quot; is really just learning to read the wiki.</li></ul>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Other distros · a finished house</li><li>desktop + apps (chosen for you)</li><li>drivers + services (pre-set)</li><li>base system</li><li>▶ boots to someone's defaults</li><li>Arch · you add each layer</li><li>+ desktop (or none at all)</li><li>+ apps (only what you use)</li><li>+ drivers (only yours)</li><li>base system (just a terminal)</li><li>▶ boots to exactly what you picked</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/arch-linux/1.png" alt="Figure in arch-linux" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p><em>The core difference: other distros hand you a pre-assembled stack; Arch hands you the parts and the best manual on the internet.</em></p>
@@ -89,12 +86,9 @@
 					<p>You boot the live ISO and do a handful of deliberate steps. Here's the whole map before we walk it — it's shorter than its reputation.</p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Boot live USB</li><li>Connect &amp; partition the disk</li><li>pacstrap</li><li>Install the base system</li><li>genfstab</li><li>Record how disks mount</li><li>arch-chroot</li><li>Step into the new system</li><li>manual part ends here</li><li>★ arch-setup.sh</li><li>locale · user · services · bootloader · KDE · yay</li><li>my script takes over</li><li>Reboot</li><li>Into a working desktop</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/arch-linux/2.png" alt="Figure in arch-linux" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p><em>The full install, end to end. The manual part stops at arch-chroot; the highlighted step is where my script takes over.</em></p>

@@ -76,12 +76,9 @@
 					<p>That means a<strong>snapshot</strong>— a full, frozen view of your files at a moment in time — costs almost nothing to create. It's not a copy; it's just a second set of pointers to the same blocks. Only the things that change afterwards take up new space.</p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Normal filesystem · overwrite in place</li><li>file → block A</li><li>↓ you edit the file</li><li>file → block A′</li><li>block A is gone forever ✕</li><li>Btrfs · copy-on-write</li><li>file → block A</li><li>↓ you edit the file</li><li>file → block A′ (new)</li><li>snapshot → block A (kept!)</li><li>jump back to A anytime ✓</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/btrfs-snapshots/1.png" alt="Figure in btrfs-snapshots" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p><em>Because Btrfs never overwrites, an old snapshot keeps pointing at the original blocks — that's the whole magic.</em></p>
@@ -100,12 +97,9 @@
 					<p>You then mount<code>@</code>as<code>/</code>and<code>@home</code>as<code>/home</code>. Keeping them separate is the whole reason a system rollback won't eat this afternoon's work.</p>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Architecture diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Physical disk One Btrfs filesystem on the partition /dev/nvme0n1p2</li><li>Physical disk One Btrfs filesystem on the partition /dev/nvme0n1p2</li><li>/dev/nvme0n1p2</li><li>@ → mounted at / The system: OS, packages, configs. Roll this back on its own. snapshot before every update @home → mounted at /home Your personal files — untouched when you roll back the system. snapshot on its own schedule</li><li>@ → mounted at / The system: OS, packages, configs. Roll this back on its own. snapshot before every update</li><li>snapshot before every update</li><li>@home → mounted at /home Your personal files — untouched when you roll back the system. snapshot on its own schedule</li><li>snapshot on its own schedule</li><li>.snapshots/ Frozen points in time — instant to make, sharing unchanged blocks managed by Snapper</li><li>.snapshots/ Frozen points in time — instant to make, sharing unchanged blocks managed by Snapper</li><li>managed by Snapper</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/btrfs-snapshots/2.png" alt="Figure in btrfs-snapshots" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p><em>Splitting the OS (@) from your files (@home) is what lets you undo a bad system update without losing a single document.</em></p>
@@ -143,12 +137,9 @@
 					<h3>The whole picture</h3>
 				</div>
 
-				<details class="cmd-explain reveal">
-					<summary>Architecture diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
-					<div class="body"><div class="prose reveal">
-					<ul><li>Layer 1 · Automatic snapshots Snapper + snap-pac take a snapshot before &amp; after every package operation protects you from bad updates</li><li>Layer 1 · Automatic snapshots Snapper + snap-pac take a snapshot before &amp; after every package operation protects you from bad updates</li><li>protects you from bad updates</li><li>Layer 2 · Boot into any snapshot grub-btrfs lists snapshots in the boot menu — recover even if the system won't start protects you when it won't boot</li><li>Layer 2 · Boot into any snapshot grub-btrfs lists snapshots in the boot menu — recover even if the system won't start protects you when it won't boot</li><li>protects you when it won't boot</li><li>Layer 3 · Off-disk backup btrfs send / receive copies snapshots to another drive (incrementally) protects you when the disk dies</li><li>Layer 3 · Off-disk backup btrfs send / receive copies snapshots to another drive (incrementally) protects you when the disk dies</li><li>protects you when the disk dies</li><li>Result: a system that's never beyond repair Bad update → roll back · won't boot → pick a snapshot · dead disk → restore bleeding edge, with an undo button</li><li>Result: a system that's never beyond repair Bad update → roll back · won't boot → pick a snapshot · dead disk → restore bleeding edge, with an undo button</li><li>bleeding edge, with an undo button</li></ul>
-				</div></div>
-				</details>
+				<figure class="reveal">
+					<img src="img/btrfs-snapshots/3.png" alt="Figure in btrfs-snapshots" loading="lazy" />
+				</figure>
 
 <div class="prose reveal">
 					<p><em>Three independent layers, each covering a different way things go wrong.</em></p>
