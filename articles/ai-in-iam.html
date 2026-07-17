@@ -110,9 +110,14 @@
 					<p>A more useful scale, borrowed from self-driving cars, helps place any workflow by how much you trust it:</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/ai-in-iam/1.png" alt="Figure in ai-in-iam" loading="lazy" />
-				</figure>
+<div class="ladder reveal">
+					<div class="rung"><span class="lvl">L0</span><span class="rtext"><b>Generation only.</b> The human does everything with the output.</span></div>
+					<div class="rung"><span class="lvl">L1</span><span class="rtext"><b>Uses tools, every action confirmed.</b> A copilot.</span></div>
+					<div class="rung"><span class="lvl">L2</span><span class="rtext"><b>Reads freely, writes need approval.</b> The sane enterprise default.</span></div>
+					<div class="rung"><span class="lvl">L3</span><span class="rtext"><b>Writes run automatically within limits.</b> Humans handle exceptions and review samples.</span></div>
+					<div class="rung"><span class="lvl">L4</span><span class="rtext"><b>Starts itself, checks itself,</b> escalates only on anomalies.</span></div>
+					<div class="rung"><span class="lvl">L5</span><span class="rtext"><b>Sets its own goals across domains.</b> Doesn't really exist yet — treat claims with suspicion.</span></div>
+				</div>
 
 <div class="prose reveal">
 					<p>Every step up trades less human review for a bigger blast radius if things go wrong. The honest way to decide where a task belongs is arithmetic, not vibes:<em>how often does it fail × how bad is a failure</em>, versus the review effort you'd save. This exact frame drives every decision in the IAM section later.</p>
@@ -133,9 +138,17 @@
 					<p>A language model is one small pipeline, repeated dozens of times deep:</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/ai-in-iam/2.png" alt="Figure in ai-in-iam" loading="lazy" />
-				</figure>
+<div class="dgm dgm-flow reveal">
+					<div class="dgm-box"><span class="dgm-bt">Text → tokens</span><span class="dgm-bd">split into vocabulary chunks, each turned into a vector plus its position</span></div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box dgm-box--accent">
+						<span class="dgm-bt">Repeat N times (the "layers")</span>
+						<span class="dgm-bd"><strong>Attention</strong> — each word looks at earlier words and pulls in whatever's relevant ("which past words matter to me?")</span>
+						<span class="dgm-bd"><strong>Feed-forward</strong> — transforms that information; where most of the model's "knowledge" lives</span>
+					</div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box"><span class="dgm-bt">Predict the next token</span><span class="dgm-bd">append it, then do the whole thing again</span><span class="dgm-tag">↺ autoregression</span></div>
+				</div>
 
 <div class="prose reveal">
 					<p>That's genuinely all there is — no separate memory bank, no planner. Two parts do the work.<strong>Attention</strong>moves information between words: every word asks &quot;which earlier words are relevant to me right now?&quot; and copies from them. It's a smart, content-based lookup.<strong>Feed-forward</strong>layers then process that information, and hold most of what the model &quot;knows.&quot; Stack these deep and, at enormous scale, everything else — grammar, reasoning, translation — emerges.</p>
@@ -194,9 +207,21 @@
 					<p>A model can't<em>do</em>anything by itself — it can only output text. To let it act, you define<strong>tools</strong>(functions), the model outputs a structured request to call one, your code runs it, and you feed the result back. The pattern that works is a loop: reason, act, look at the real result, adjust.</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/ai-in-iam/3.png" alt="Figure in ai-in-iam" loading="lazy" />
-				</figure>
+<div class="dgm dgm-flow reveal">
+					<div class="dgm-box"><span class="dgm-tag">Thought</span><span class="dgm-bd">I need the host city before I can check the weather</span></div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box dgm-box--accent"><span class="dgm-tag">Action</span><span class="dgm-bd"><code>search("2024 Olympics host city")</code></span></div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box dgm-box--gold"><span class="dgm-tag">Observation</span><span class="dgm-bd">Paris, France</span></div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box"><span class="dgm-tag">Thought</span><span class="dgm-bd">now the weather there</span></div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box dgm-box--accent"><span class="dgm-tag">Action</span><span class="dgm-bd"><code>get_weather("Paris")</code></span></div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box dgm-box--gold"><span class="dgm-tag">Observation</span><span class="dgm-bd">18°C, rain</span></div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box"><span class="dgm-bt">Final answer</span><span class="dgm-bd">grounded in two real observations</span></div>
+				</div>
 
 <div class="prose reveal">
 					<p>A subtle but important tip: your<strong>error messages are prompts.</strong>An error that says &quot;date must be in YYYY-MM-DD format&quot; lets the model fix itself; a bare &quot;400 error&quot; makes it flail. You are, in effect, writing prompts every time you write an error string.</p>
@@ -224,9 +249,23 @@
 					<p>Two properties make it the enterprise favourite over fine-tuning:<strong>citations</strong>(every claim is checkable) and<strong>query-time access control</strong>(you can filter what each user is allowed to see). Neither is possible when knowledge is baked into the weights. Every RAG system is two pipelines:</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/ai-in-iam/4.png" alt="Figure in ai-in-iam" loading="lazy" />
-				</figure>
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">① Ingestion (offline, when docs change)</span>
+							<span class="d">Parse &amp; split docs → create embeddings + tag with metadata/permissions → store in a searchable index</span>
+							<span class="tech">runs in the background</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;feeds the index&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">② Query (live, per question)</span>
+							<span class="d">Rewrite the question → retrieve the top matches (permission-filtered) → re-rank for precision → answer with citations</span>
+							<span class="tech">runs per request</span>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>RAG is two pipelines: one prepares your knowledge, the other answers questions from it.</em></p>
@@ -256,9 +295,25 @@
 					<p>Strip away the hype and an agent is a simple formula:<strong>agent = model + tools + memory + a loop.</strong>The model decides the next step (but can only ever<em>emit a request</em>, never act); your program runs the tool; the result gets added to the context; the model is called again. Repeat until it's done.</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/ai-in-iam/5.png" alt="Figure in ai-in-iam" loading="lazy" />
-				</figure>
+<div class="dgm reveal">
+					<div class="dgm-scroll">
+						<div class="dgm-flow dgm-flow--row">
+							<div class="dgm-box"><span class="dgm-bt">Perceive</span><span class="dgm-bd">goal + context</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Plan next step</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box dgm-box--accent"><span class="dgm-bt">Act</span><span class="dgm-bd">call a tool</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box dgm-box--gold"><span class="dgm-bt">Observe</span><span class="dgm-bd">real result appended</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Reflect</span><span class="dgm-tag">↺ loops back to plan</span></div>
+						</div>
+					</div>
+					<div class="dgm-box dgm-box--ghost" style="margin-top:.55rem">
+						<span class="dgm-bt">Stop when</span>
+						<span class="dgm-bd">goal achieved ✓ &nbsp;·&nbsp; budget used up &nbsp;·&nbsp; needs a human &nbsp;·&nbsp; stuck</span>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p>Two facts follow. First,<strong>whatever you put in the context IS the decision-making process</strong>— the tool descriptions, the observations, the task. Second, since your program (not the model) runs the tools,<strong>your program is the security boundary</strong>. Treat the model as an untrusted advisor inside a trusted executor.</p>
@@ -333,9 +388,44 @@
 					<p>Everything from the earlier parts assembles into a layered system. Read it bottom-up: your real systems become tools, an orchestration layer reasons across them, and governance wraps the whole thing.</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/ai-in-iam/6.png" alt="Figure in ai-in-iam" loading="lazy" />
-				</figure>
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Interaction</span>
+							<span class="d">A Teams/Slack bot for questions, plus event- and schedule-triggered runs</span>
+							<span class="tech">how work arrives</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Orchestration (the brain)</span>
+							<span class="d">A durable, checkpointed graph: a smart orchestrator, cheap parallel workers, and a fresh-context reviewer — with human approval gates that can wait days</span>
+							<span class="tech">reads auto · writes gated</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;uses&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Knowledge index</span>
+							<span class="d">Policies, SoD rationale, past decisions — permission-filtered</span>
+							<span class="tech">RAG</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">Systems of record, as MCP tools</span>
+							<span class="d">Identity platform (live search + gated writes), PAM, ticketing, directory</span>
+							<span class="tech">MCP servers</span>
+						</div>
+					</div>
+					<div class="arch-flow">↑ &nbsp;wrapped by&nbsp; ↑</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Governance (cross-cutting)</span>
+							<span class="d">Each agent is its own identity · acts with the requester's scope · reads free / writes gated · every decision traced &amp; replayable</span>
+							<span class="tech">the part that earns trust</span>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>Systems become tools; a durable graph reasons across them; governance wraps everything. Swap the vendors and only the bottom layer changes.</em></p>
@@ -361,9 +451,38 @@
 					<p><strong>Deterministic core, AI at the edges.</strong>The reliable machinery — creating identities, birthright access, and above all the<em>leaver disable path</em>— stays plain, fast, testable code with no AI in it. The AI works only at the<em>edges</em>, where humans currently do slow judgment work. The slogan:<strong>the AI proposes and verifies; the deterministic engine executes.</strong></p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/ai-in-iam/7.png" alt="Figure in ai-in-iam" loading="lazy" />
-				</figure>
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Authoritative sources</span>
+							<span class="d">HR (hire / transfer / termination), contingent-worker systems with end dates</span>
+							<span class="tech">events in</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Deterministic core</span>
+							<span class="d">Aggregation → lifecycle states → birthright roles &amp; provisioning. No AI.</span>
+							<span class="tech">plain, fast, testable</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;event triggers&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Joiner agent</span>
+							<span class="d">Peer-based access proposals; day-one readiness check</span>
+						</div>
+						<div class="arch-node arch-node--accent">
+							<span class="n">Mover agent</span>
+							<span class="d">The access diff: what to add, and what to remove</span>
+						</div>
+						<div class="arch-node arch-node--accent">
+							<span class="n">Leaver agent</span>
+							<span class="d">Verify, rotate, triage, chase, transfer ownership</span>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>Events flow through deterministic machinery; agents are triggered at the judgment edges and propose changes back through normal approvals.</em></p>

@@ -76,9 +76,27 @@
 					<p>That means a<strong>snapshot</strong>— a full, frozen view of your files at a moment in time — costs almost nothing to create. It's not a copy; it's just a second set of pointers to the same blocks. Only the things that change afterwards take up new space.</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/btrfs-snapshots/1.png" alt="Figure in btrfs-snapshots" loading="lazy" />
-				</figure>
+<div class="dgm dgm-compare reveal">
+					<div class="dgm-panel">
+						<h4>Normal filesystem · overwrite in place</h4>
+						<div class="dgm-mini">
+							<div class="m keep">file → block A</div>
+							<div class="sep">↓ &nbsp;you edit the file</div>
+							<div class="m keep">file → block A′</div>
+							<div class="sep">block A is gone forever ✕</div>
+						</div>
+					</div>
+					<div class="dgm-panel dgm-panel--accent">
+						<h4>Btrfs · copy-on-write</h4>
+						<div class="dgm-mini">
+							<div class="m keep">file → block A</div>
+							<div class="sep">↓ &nbsp;you edit the file</div>
+							<div class="m keep">file → block A′ &nbsp;(new)</div>
+							<div class="m keep">snapshot → block A &nbsp;(kept!)</div>
+							<div class="sep">jump back to A anytime ✓</div>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>Because Btrfs never overwrites, an old snapshot keeps pointing at the original blocks — that's the whole magic.</em></p>
@@ -97,9 +115,36 @@
 					<p>You then mount<code>@</code>as<code>/</code>and<code>@home</code>as<code>/home</code>. Keeping them separate is the whole reason a system rollback won't eat this afternoon's work.</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/btrfs-snapshots/2.png" alt="Figure in btrfs-snapshots" loading="lazy" />
-				</figure>
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Physical disk</span>
+							<span class="d">One Btrfs filesystem on the partition</span>
+							<span class="tech">/dev/nvme0n1p2</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;carved into subvolumes&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">@ &nbsp;→&nbsp; mounted at /</span>
+							<span class="d">The system: OS, packages, configs. Roll this back on its own.</span>
+							<span class="tech">snapshot before every update</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">@home &nbsp;→&nbsp; mounted at /home</span>
+							<span class="d">Your personal files — untouched when you roll back the system.</span>
+							<span class="tech">snapshot on its own schedule</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;snapshots stored in&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">.snapshots/</span>
+							<span class="d">Frozen points in time — instant to make, sharing unchanged blocks</span>
+							<span class="tech">managed by Snapper</span>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>Splitting the OS (@) from your files (@home) is what lets you undo a bad system update without losing a single document.</em></p>
@@ -137,9 +182,39 @@
 					<h3>The whole picture</h3>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/btrfs-snapshots/3.png" alt="Figure in btrfs-snapshots" loading="lazy" />
-				</figure>
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Layer 1 · Automatic snapshots</span>
+							<span class="d">Snapper + snap-pac take a snapshot before &amp; after every package operation</span>
+							<span class="tech">protects you from bad updates</span>
+						</div>
+					</div>
+					<div class="arch-flow">＋</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Layer 2 · Boot into any snapshot</span>
+							<span class="d">grub-btrfs lists snapshots in the boot menu — recover even if the system won't start</span>
+							<span class="tech">protects you when it won't boot</span>
+						</div>
+					</div>
+					<div class="arch-flow">＋</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Layer 3 · Off-disk backup</span>
+							<span class="d">btrfs send / receive copies snapshots to another drive (incrementally)</span>
+							<span class="tech">protects you when the disk dies</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Result: a system that's never beyond repair</span>
+							<span class="d">Bad update → roll back · won't boot → pick a snapshot · dead disk → restore</span>
+							<span class="tech">bleeding edge, with an undo button</span>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>Three independent layers, each covering a different way things go wrong.</em></p>
