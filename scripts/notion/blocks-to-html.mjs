@@ -1,6 +1,6 @@
 import { richTextToHtml, richTextToPlain } from "../lib/html.mjs";
 import { downloadArticleImage } from "./download-images.mjs";
-import { renderCodeBlock } from "../render/code-block.mjs";
+import { renderCodeBlock, renderGodboltEmbed, GODBOLT_RUN_MARKER } from "../render/code-block.mjs";
 
 export async function fetchChildren(client, blockId) {
 	const results = [];
@@ -140,12 +140,27 @@ export async function renderSectionBody(
 			case "code": {
 				flushProse();
 				const code = richTextToPlain(block.code.rich_text);
-				if (block.code.language === "html") {
+				const lang = (block.code.language || "").toLowerCase();
+				if (lang === "html") {
 					// Escape hatch: a code block set to the "HTML" language is injected verbatim,
 					// unescaped — lets an article embed custom markup (e.g. hand-built diagrams
 					// using the site's own .dgm/.arch/.ladder components) that Notion has no
 					// native block for, while staying real HTML/CSS instead of a static image.
 					output.push(code);
+				} else if ((lang === "c++" || lang === "c") && code.trimStart().startsWith(GODBOLT_RUN_MARKER)) {
+					// Convention: a C/C++ code block whose first line starts with the
+					// GODBOLT_RUN_MARKER sentinel comment renders as an embedded, editable,
+					// runnable Compiler Explorer iframe instead of a static highlighted block.
+					// Anything after the marker on that same line is passed through as compiler
+					// options (e.g. "// godbolt-run -std=c++23"), letting individual examples
+					// target a specific standard; the sentinel line itself is stripped before
+					// the code is shown/compiled.
+					const trimmed = code.trimStart();
+					const firstNewline = trimmed.indexOf("\n");
+					const firstLine = firstNewline === -1 ? trimmed : trimmed.slice(0, firstNewline);
+					const rest = firstNewline === -1 ? "" : trimmed.slice(firstNewline + 1);
+					const optionsOverride = firstLine.slice(GODBOLT_RUN_MARKER.length).trim();
+					output.push(renderGodboltEmbed(rest, optionsOverride || undefined));
 				} else {
 					const html = await renderCodeBlock(code, block.code.language);
 					output.push(html);
