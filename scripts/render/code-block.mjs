@@ -9,6 +9,9 @@ const LANG_ALIASES = {
 	"c#": "csharp",
 	objective_c: "objc",
 	docker: "dockerfile",
+	ps1: "powershell",
+	powershell: "powershell",
+	java: "java",
 };
 
 function resolveLang(notionLanguage) {
