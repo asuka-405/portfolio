@@ -2063,8 +2063,13 @@ table.tbl code {
 .code-block pre {
 	margin: 0;
 	padding: 0 1rem 1rem;
+	border: none;
+	border-radius: 0;
 	background: transparent !important;
 	overflow-x: auto;
+}
+.code-block pre code {
+	padding: 0;
 }
 .shiki,
 .shiki span {
