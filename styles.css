@@ -2016,7 +2016,9 @@ table.tbl code {
 
 /* ————— Code blocks (Shiki, build-time highlighted) ————— */
 .code-block {
+	position: relative;
 	margin: 1.5rem 0;
+	padding-top: 2.1rem;
 	border-radius: var(--radius);
 	background: var(--surface);
 	box-shadow: var(--shadow-code);
@@ -2026,11 +2028,12 @@ table.tbl code {
 	overflow: hidden;
 }
 .code-block-head {
+	position: absolute;
+	top: 0.75rem;
+	left: 1rem;
 	display: flex;
 	align-items: center;
 	gap: 0.6rem;
-	padding: 0.6rem 1rem;
-	border-bottom: 1px solid var(--line);
 }
 .code-dots {
 	display: inline-flex;
@@ -2059,7 +2062,7 @@ table.tbl code {
 }
 .code-block pre {
 	margin: 0;
-	padding: 1rem;
+	padding: 0 1rem 1rem;
 	background: transparent !important;
 	overflow-x: auto;
 }
