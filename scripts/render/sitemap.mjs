@@ -10,7 +10,7 @@ const STATIC_PAGES = [
 	"projects/sutrix.html",
 ];
 
-function urlEntry(pathname, lastmod) {
+export function urlEntry(pathname, lastmod) {
 	const loc = pathname ? `${SITE_URL}/${pathname}` : `${SITE_URL}/`;
 	const lastmodTag = lastmod ? `\n\t\t<lastmod>${lastmod}</lastmod>` : "";
 	return `\t<url>\n\t\t<loc>${loc}</loc>${lastmodTag}\n\t</url>`;
@@ -24,4 +24,15 @@ export function buildSitemap(articles) {
 
 	const body = [...staticEntries, ...articleEntries, ...listingEntries].join("\n");
 	return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
+}
+
+/** Inserts extra `<url>` entries (already-built strings from urlEntry()) into an existing
+ * sitemap.xml string, just before </urlset>. Used by build-docs.mjs to append docs URLs
+ * to the sitemap build-articles.mjs already wrote, without duplicating the static/article lists. */
+export function insertSitemapEntries(xml, entries) {
+	if (entries.length === 0) return xml;
+	const closeTag = "</urlset>";
+	const idx = xml.lastIndexOf(closeTag);
+	if (idx === -1) throw new Error("sitemap.xml is missing a </urlset> closing tag.");
+	return `${xml.slice(0, idx)}${entries.join("\n")}\n${xml.slice(idx)}`;
 }

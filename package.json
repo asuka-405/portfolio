@@ -3,7 +3,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"build": "node scripts/build-articles.mjs"
+		"build": "node scripts/build-articles.mjs && node scripts/build-docs.mjs"
 	},
 	"dependencies": {
 		"@notionhq/client": "^2.2.15",
