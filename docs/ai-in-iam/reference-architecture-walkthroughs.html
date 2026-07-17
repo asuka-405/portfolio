@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Reference Architecture Walkthroughs: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Reference Architecture Walkthroughs · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/reference-architecture-walkthroughs.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Reference Architecture Walkthroughs" />
+		<meta property="og:description" content="Reference Architecture Walkthroughs: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/reference-architecture-walkthroughs.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Reference Architecture Walkthroughs" />
+		<meta name="twitter:description" content="Reference Architecture Walkthroughs: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="active">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Reference Architecture Walkthroughs</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Two full walkthroughs, tying together everything from this course into an architecture you could actually build. Both companies and every system name are fictional.</p>
+					<h3>Walkthrough 1: the access request agent at Northwind Traders</h3>
+					<p>Northwind Traders is a mid-size distribution company running SailPoint ISC for identity governance. Employees have always been able to self-request access, but the catalog of a few hundred access profiles is named in IT shorthand nobody outside IT can parse, so most requests go through a help desk ticket instead. The goal: let people ask in plain language and still land in the exact same governed request flow.</p>
+				</div>
+
+<div class="dgm dgm-flow reveal">
+	<div class="dgm-box"><span class="dgm-bt">Employee types a request</span><span class="dgm-bd">"I need to run month-end close reports" into the existing access request portal's search box</span></div>
+	<div class="dgm-arr"><span class="ico v">↓</span></div>
+	<div class="dgm-box dgm-box--accent"><span class="dgm-bt">Retrieval agent</span><span class="dgm-bd">Embeds the request, matches against the requestable access-profile catalog, returns the top 3 candidates with plain-language descriptions</span></div>
+	<div class="dgm-arr"><span class="ico v">↓</span></div>
+	<div class="dgm-box"><span class="dgm-bt">Policy and SOD check</span><span class="dgm-bd">Same deterministic check every manual request already runs, no exceptions for agent-originated requests</span></div>
+	<div class="dgm-arr"><span class="ico v">↓</span></div>
+	<div class="dgm-box"><span class="dgm-bt">Manager approval, AI draft attached</span><span class="dgm-bd">The certification copilot's plain-language justification is shown, editable, never final until the manager submits</span></div>
+	<div class="dgm-arr"><span class="ico v">↓</span></div>
+	<div class="dgm-box"><span class="dgm-bt">Standard provisioning</span><span class="dgm-bd">Grant flows through the normal provisioning engine and its retry logic, no different path for an AI-assisted request</span></div>
+</div>
+
+<div class="prose reveal">
+					<p>The part worth noticing: the AI touches exactly two steps, finding candidates and drafting a justification, and both outputs are fully overridable before anything is submitted. The policy check, the approval step, and the provisioning engine are completely unchanged from the process that existed before this project. If the AI service went down entirely tomorrow, employees would fall back to browsing the catalog manually, slower, but the request flow keeps working.</p>
+					<h3>Walkthrough 2: JML and SOD anomaly detection at Meridian Health Group</h3>
+					<p>Meridian Health Group is a fictional healthcare provider where access sprawl from transfers is the single biggest audit finding two years running: people who moved departments keep the old department's access indefinitely. The project targets that specifically, plus a standing gap in their SOD program (real conflicts nobody had written a policy for yet).</p>
+				</div>
+
+<div class="arch reveal">
+	<div class="arch-tier"><div class="arch-node"><span class="n">HR system</span><span class="d">Authoritative source: hires, transfers, terminations</span></div></div>
+	<div class="arch-flow">↓</div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Deterministic core</span><span class="d">Aggregation, correlation, lifecycle state, birthright provisioning. No AI, ever.</span></div></div>
+	<div class="arch-flow">↓ event triggers ↓</div>
+	<div class="arch-tier"><div class="arch-node arch-node--accent"><span class="n">Mover agent</span><span class="d">Computes the access diff on every transfer event, drafts add and revoke proposals</span></div></div>
+	<div class="arch-flow">↓</div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">SOD anomaly scan (scheduled, separate)</span><span class="d">Flags entitlement pairs that look like undeclared conflicts across the whole access catalog</span></div></div>
+	<div class="arch-flow">↓</div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Governance: agent as identity</span><span class="d">Both agents are service accounts inside the same platform, certified on the same schedule as every human account</span></div></div>
+</div>
+
+<div class="prose reveal">
+					<p>The mover agent alone closes most of the audit finding: every transfer now produces an explicit access diff with a reason attached, instead of relying on someone remembering to manually clean up old access. The SOD anomaly scan runs on an entirely separate schedule from the mover agent and never blocks a live transfer, its output is a queue for the compliance team, not a gate on provisioning. And because both agents are registered as governed identities inside ISC itself, this quarter's access certification for privileged service accounts includes them by default, no separate process was built to remember to review the AI.</p>
+					<h3>What both walkthroughs have in common</h3>
+					<ul><li>Deterministic machinery does the reliable, high-volume work. AI touches only the parts that were previously slow human judgment calls.</li><li>Every AI output passes through the platform's existing approval and provisioning path, there is no shortcut or bypass lane for agent-originated work.</li><li>The AI components are themselves governed the same way every other identity in the platform is governed.</li><li>If the AI service disappeared tomorrow, the underlying process still works, just slower. Nothing critical depends on the AI being available.</li></ul>
+					<hr>
+					<h3>If you remember five things from this course</h3>
+					<ol><li>Identity fits AI unusually well and punishes carelessness brutally, perfect workload shape, maximum blast radius, and free-text fields as an injection surface. Design for the trifecta from day one.</li><li>Query your facts, embed your judgment. Live API for who has what, a search index for policies, rationale, and your secret weapon: past decisions with outcomes.</li><li>The spine is systems wrapped as tools, a durable orchestration graph with cheap workers and a fresh-context reviewer, a human on every write, and fully replayable decision traces.</li><li>Govern every agent as a first-class identity inside the platform itself, same story as your non-human-identity program, and the strongest slide you have.</li><li>Buy the platform's native AI, build the cross-system brain, earn autonomy on measured accuracy, and publish the never-automate list next to the roadmap.</li></ol>
+					<p>Do that, and AI stops being a liability in identity and starts being the most tireless, best-documented analyst on the team, one whose every decision you can actually explain to an auditor.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

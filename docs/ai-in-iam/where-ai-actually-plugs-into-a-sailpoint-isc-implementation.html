@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Where AI Actually Plugs Into a SailPoint ISC Implementation: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Where AI Actually Plugs Into a SailPoint ISC Implementation · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Where AI Actually Plugs Into a SailPoint ISC Implementation" />
+		<meta property="og:description" content="Where AI Actually Plugs Into a SailPoint ISC Implementation: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Where AI Actually Plugs Into a SailPoint ISC Implementation" />
+		<meta name="twitter:description" content="Where AI Actually Plugs Into a SailPoint ISC Implementation: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="active">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Where AI Actually Plugs Into a SailPoint ISC Implementation</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Everything so far has been architecture-agnostic. This page is not: it is specifically about where, inside a real SailPoint Identity Security Cloud (ISC) implementation, an AI integration can live, and just as importantly, where it structurally cannot. Get this wrong and you either build something that can never work, or something that quietly bypasses the platform's own guardrails. All identifiers below (companies, tenants, systems) are fictional.</p>
+					<h3>The platform, in six engines</h3>
+					<p>ISC's own architecture already separates concerns the way this course has been arguing you should: identity data, access data, governance rules, provisioning execution, event-driven automation, and the API surface are six distinct layers. AI has exactly one honest home in this picture.</p>
+				</div>
+
+<div class="arch reveal">
+	<div class="arch-tier"><div class="arch-node"><span class="n">Identity Engine</span><span class="d">Identity profiles, correlation, attribute mapping, lifecycle state</span></div></div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Access Engine</span><span class="d">Access profiles, roles, entitlements, segments</span></div></div>
+	<div class="arch-tier"><div class="arch-node arch-node--accent"><span class="n">Governance Engine</span><span class="d">Certifications, SOD policies, recommendations, reporting</span></div></div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Provisioning Engine</span><span class="d">Provisioning plans, policies, retry logic, manual queue</span></div></div>
+	<div class="arch-tier"><div class="arch-node arch-node--accent"><span class="n">Automation Engine</span><span class="d">Workflows, triggers, forms, transforms</span><span class="tech">where AI plugs in</span></div></div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Integration Layer</span><span class="d">REST API, event triggers, webhooks</span><span class="tech">where an external agent plugs in</span></div></div>
+</div>
+
+<div class="prose reveal">
+					<h3>Where AI cannot go: cloud rules have no network</h3>
+					<p>ISC's cloud-side rules (the Beanshell scripts that compute attributes, generate provisioning fields, or run before and after a provisioning plan) execute inside a sandboxed cloud context with no outbound network access at all. That is not a permissions setting you can change, it is how the execution environment is built. A rule like </p>
+					<p><strong>AttributeGenerator</strong>, <strong>BeforeProvisioning</strong>, or <strong>IdentityAttribute</strong> physically cannot call an LLM API, an embeddings endpoint, or any HTTP service. If you have ever seen a slide claiming &quot;just write a rule that calls GPT&quot;, that slide is wrong for anything running in ISC's cloud rule context.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Only two places in the platform can make an outbound network call at all: a Virtual Appliance running a customer-managed connector rule (WebServiceBeforeOperationRule, WebServiceAfterOperationRule, BuildMap, and similar VA-side rule types), or a Workflow's sp:http step. The VA path exists for connecting to on-prem source systems, not for calling AI services, and inherits a 120 second execution timeout that makes it a poor fit regardless. The workflow path is the one built for this.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Where AI actually goes: a workflow step</h3>
+					<p>Workflows run outside the cloud rule sandbox specifically so they can call external systems: ServiceNow, a webhook, an email provider, or, just as easily, an AI service. The pattern is always the same shape: an event trigger fires (an access request submitted, a lifecycle state changed, a certification generated), a workflow step calls out to your AI service over sp:http, and the AI's output becomes an input to the next step, never a decision made and executed on its own.</p>
+				</div>
+
+<div class="arch reveal">
+	<div class="arch-tier"><div class="arch-node"><span class="n">idn:access-request-submitted</span><span class="d">Event fires the moment a request lands</span><span class="tech">event trigger</span></div></div>
+	<div class="arch-flow">↓</div>
+	<div class="arch-tier"><div class="arch-node arch-node--accent"><span class="n">sp:http → AI service</span><span class="d">POST the request context, get back a risk score and a draft justification</span><span class="tech">the only place a cloud-native call to AI can happen</span></div></div>
+	<div class="arch-flow">↓</div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">sp:create-form-instance</span><span class="d">Show the approver the AI's draft, pre-filled but fully editable</span><span class="tech">human in the loop</span></div></div>
+	<div class="arch-flow">↓</div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Normal approval flow continues</span><span class="d">Whatever the human submits is what gets provisioned</span></div></div>
+</div>
+
+<div class="prose reveal">
+					<p>As JSON, a minimal version of that pattern looks like this: an access request comes in, a workflow calls an AI service for a risk score and a draft justification, then hands both to a form the actual approver sees and can freely overwrite.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "name"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Access Request - AI Risk Draft"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "trigger"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "type"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"EVENT"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "attributes"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      "id"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"idn:access-request-submitted"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      "filter.$"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"$.requestedItems[?(@.type == 'ACCESS_PROFILE')]"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "definition"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "start"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"trigger"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "steps"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      "trigger"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"actionId"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"sp:trigger"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"attributes"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {}, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"nextStep"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"ask-ai"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      "ask-ai"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">        "actionId"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"sp:http"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">        "attributes"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">          "url"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"https://your-ai-service.example.com/v1/access-review"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">          "method"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"POST"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">          "headers"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"Content-Type"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"application/json"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"Authorization"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Bearer {{secret}}"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">          "body"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">            "requestedFor.$"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"$.trigger.requestedFor"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">            "requestedItems.$"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"$.trigger.requestedItems"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">          },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">          "timeout"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">20</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">        },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">        "nextStep"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"show-form"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">      },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      "show-form"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">        "actionId"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"sp:create-form-instance"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">        "attributes"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">          "formDefinitionId"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"form-uuid"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">          "formInput"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">            "riskScore.$"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"$.steps.ask-ai.output.riskScore"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">            "draftJustification.$"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"$.steps.ask-ai.output.draftJustification"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">          },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">          "recipients"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [{ </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"recipientType"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"IDENTITY"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"id.$"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"$.trigger.requestedFor[0]"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> }]</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">        },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">        "nextStep"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"end"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">      },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      "end"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"actionId"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"sp:terminate"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"attributes"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {} }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Notice what the AI step does not do: it does not call sp:grant-access, it does not touch the provisioning plan, and its output never reaches a target system except by passing through a human-reviewed form first. That is the deterministic-core, AI-at-the-edges rule from earlier in this course, expressed in the platform's own step actions rather than as a slogan.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: map your own tenant's automation surface<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>List every workflow, rule, and form currently active in a SailPoint ISC tenant you know (or imagine one for a hypothetical company). For each, classify it: cloud rule (no network, AI can never touch it directly), workflow (can call sp:http, AI can plug in here), or VA-side connector rule (technically can call out, but shouldn't be where you put AI logic). If the classification surprises you for something already running, that's worth a second look.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>The governance layer already has AI built in</h3>
+					<p>Before building anything custom, know what SailPoint ships natively: certification campaigns support a recommendationsEnabled flag that surfaces the platform's own access recommendations to reviewers directly in the certification UI, no workflow or external service required.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">POST /v</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">2024</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">/campaigns</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "name"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Q3 2026 Finance Access Review"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "type"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Manager"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "recommendationsEnabled"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">true</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "autoRevokeAllowed"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">false</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "filter"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "type"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"CRITERIA"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "criteria"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      "operation"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"EQUALS"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      "key"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"type"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"IDENTITY"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"property"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"attribute.department"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      "stringValue"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Finance"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>This is the buy side of build vs buy from earlier: turn this on before building a custom certification copilot. Build the cross-system reasoning (the orchestrator that spans identity, PAM, ticketing, and your own decision history together) because that is what no vendor feature covers, not a better version of a review recommendation that already ships in the product.</p>
+					<h3>The other integration point: an external agent against the API</h3>
+					<p>Everything above lives inside ISC's own automation. The more flexible integration point is outside it entirely: an orchestrator (the same reference architecture from the previous page) that authenticates with OAuth2 client credentials, reads identities, access profiles, entitlements, and campaign data through the paginated REST API, reasons over that data with an LLM, and writes back through the same API, an access request here, a certification decision there, always through the platform's own approval and provisioning machinery rather than around it.</p>
+					<ul><li>Authentication: OAuth2 client credentials, tokens live roughly 12 minutes, cache and refresh rather than requesting a fresh one per call.</li><li>Reading at scale: every list endpoint paginates (limit up to 250, offset, an X-Total-Count response header), never assume a single page holds everything.</li><li>Writing: the same access-requests and certification endpoints a human-facing UI calls, an agent gets no special write path and no special exemption from approval workflows.</li></ul>
+					<blockquote>An agent that only ever calls the same public API endpoints a human user's UI calls is, by construction, unable to do anything the platform's own governance would not have allowed a human to do.</blockquote>
+					<h3>Summary: the AI integration map</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>ISC layer</th><th>Can AI call out from here?</th><th>Use instead</th></tr></thead><tbody><tr><td>Cloud rules (AttributeGenerator, BeforeProvisioning, etc.)</td><td>No, no network I/O in the sandbox</td><td>A workflow step upstream of the rule</td></tr><tr><td>VA-side connector rules</td><td>Technically yes, but 120s timeout and wrong layer for judgment calls</td><td>A workflow step, or a VA-triggered workflow</td></tr><tr><td>Workflows (sp:http)</td><td>Yes, this is the sanctioned pattern</td><td>Use it, gated by a form or approval step</td></tr><tr><td>Certification campaigns</td><td>AI already built in (recommendationsEnabled)</td><td>Turn it on before building your own</td></tr><tr><td>External orchestrator against the REST API</td><td>Yes, the most flexible integration point</td><td>The reference architecture from the previous page</td></tr></tbody></table></div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Giving Models Knowledge: RAG: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Giving Models Knowledge: RAG · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/giving-models-knowledge-rag.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Giving Models Knowledge: RAG" />
+		<meta property="og:description" content="Giving Models Knowledge: RAG: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/giving-models-knowledge-rag.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Giving Models Knowledge: RAG" />
+		<meta name="twitter:description" content="Giving Models Knowledge: RAG: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="active">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Giving Models Knowledge: RAG</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>What RAG is, and why enterprises love it</h3>
+					<p>A model only knows what it learned in training: frozen, general, and with no idea about<em>your</em>company.<strong>RAG (retrieval-augmented generation)</strong>fixes that without any retraining: when a question comes in, you search your own documents for the relevant bits, paste them into the prompt, and tell the model to answer<em>from those</em>, with citations.</p>
+					<p>Two properties make it the enterprise favourite over fine-tuning:<strong>citations</strong>(every claim is checkable) and<strong>query-time access control</strong>(you can filter what each user is allowed to see). Neither is possible when knowledge is baked into the weights. Every RAG system is two pipelines:</p>
+				</div>
+
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">① Ingestion (offline, when docs change)</span>
+							<span class="d">Parse &amp; split docs → create embeddings + tag with metadata/permissions → store in a searchable index</span>
+							<span class="tech">runs in the background</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;feeds the index&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">② Query (live, per question)</span>
+							<span class="d">Rewrite the question → retrieve the top matches (permission-filtered) → re-rank for precision → answer with citations</span>
+							<span class="tech">runs per request</span>
+						</div>
+					</div>
+				</div>
+
+<div class="prose reveal">
+					<p><em>RAG is two pipelines: one prepares your knowledge, the other answers questions from it.</em></p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Try RAG on your own document<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Upload a PDF you know well (a paper, a policy doc, meeting notes) to a tool that supports file-based Q&amp;A. Google's NotebookLM is free and built for exactly this. Ask it a specific factual question and check its citation against the actual source text. That citation-checking step is the entire trust model RAG is built around.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Vector databases: where retrieval actually lives</h3>
+					<p>Embeddings (from the model-internals part) turn text into a list of numbers positioned so that similar meaning sits close together in that number-space. A <strong>vector database</strong> is what stores millions of those number-lists and answers one question fast: &quot;which of these are closest to this new vector?&quot; Doing that by brute-force comparison doesn't scale, so vector databases build an approximate-nearest-neighbour index, trading a small amount of accuracy for search that stays fast at millions of documents.</p>
+					<ul><li><strong>Purpose-built options</strong>. Pinecone, Weaviate, Qdrant, Milvus: managed or self-hosted, built for this one job.</li><li><strong>Bolt-on options</strong>: pgvector on Postgres, or OpenSearch/Elasticsearch with a vector field: you add a vector index to a database you already run and already have audit and backup processes for.</li></ul>
+					<p>For enterprise identity work specifically, the bolt-on route usually wins: reusing the Postgres instance you already back up, encrypt, and have a data-residency story for is one less new vendor to run risk assessment on, see the compliance part later for why that matters.</p>
+					<p>Three concrete uses:</p>
+					<ul><li><strong>A helpdesk agent's policy search.</strong> The access-policy wiki, embedded once and re-embedded on edit, searched live per question: the retrieval half of RAG, made concrete.</li><li><strong>Similar-case lookup for access reviews.</strong> Embedding past reviewers' written justifications lets a new reviewer search &quot;has anyone approved something like this before&quot; instead of starting from a blank page.</li><li><strong>Deduplicating tickets.</strong> Embedding incoming access-request tickets and searching for near-duplicates before routing catches the same request filed twice under different wording.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Compute similarity between near-synonyms<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Using a free sentence-embedding demo (Hugging Face's inference widgets work well, no signup needed for many models), embed 'revoke access' and 'terminate employee' and compute cosine similarity: then compare it to the similarity between 'revoke access' and a genuinely unrelated phrase like 'lunch menu.' Seeing the numbers makes 'similar meanings sit close together' concrete instead of abstract.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>The parts that make it actually work</h3>
+					<p>Naive RAG (chop docs into fixed blocks, grab the closest matches, stuff them in) demos nicely and then stalls around 70% quality. The improvements each fix a specific failure:</p>
+					<ul><li><strong>Smart splitting.</strong> Split along the document's real structure (headings, sections), not blindly every N words. A chunk that cuts a table in half is poison. Add a breadcrumb (doc title, section, date) to every chunk so it isn't stranded without context.</li><li><strong>Hybrid search.</strong> Pure semantic search misses exact codes and negations; old-fashioned keyword search misses synonyms. Use<em> both</em> and merge the results. This alone fixes a lot.</li><li><strong>Re-ranking.</strong> Retrieve ~100 candidates cheaply, then use a slower, sharper model to re-score and keep the best 5–10. Best value-for-effort upgrade in the whole stack.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Chunk a paragraph two ways<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Take any paragraph from a document with a table or list in it. Manually split it once at a fixed word count (ignoring structure) and once along its actual headings/sections. Read each chunk in isolation, pretending you have no other context. Notice which chunk boundary produces pieces that still make sense on their own, that's the difference 'smart splitting' is solving for.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>The rule that saves projects: don't embed facts</h3>
+					<p>This is the single most important architecture decision, and where most failed AI-in-IAM projects go wrong. There are two kinds of data, and you handle them oppositely:</p>
+				</div>
+
+				<div class="callout reveal">
+					<p><strong>Embed prose; query facts.</strong> Put<em> documents</em>(policies, guidelines, descriptions) into a search index. But for<em> facts and current state</em>: who has what access right now: don't memorize a snapshot; ask the real system's API live. &quot;Who can access X?&quot; answered from an embedded copy is a confident-hallucination machine; answered through the live API, it's exact and fresh.</p>
+				</div>
+
+<div class="prose reveal">
+					<p>There's also a security angle unique to RAG: the documents you retrieve are themselves untrusted text that lands in your prompt, so a booby-trapped document is another injection path. And permissions must be enforced <em>at search time </em>by filtering on metadata, not cleaned up afterwards in the app (one bug there is a data leak).</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Notice a fact go stale<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Write down something true right now that changes often: what's in your fridge, who's currently online in a group chat, today's exchange rate. Check it again in three days. It's already wrong. That's exactly why 'current state' facts need a live query, not a snapshot baked into a search index: the snapshot goes stale the moment reality moves on.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>When one search isn't enough</h3>
+					<p><strong>Agentic RAG</strong> lets the model search, read, decide it needs more, and search again in a loop: better answers, at the cost of speed. And a note for the identity section: identity data is naturally a<em> graph</em>(people → roles → entitlements → resources), and questions like &quot;who can reach system X through any chain of nested roles?&quot; are graph walks, not text search. Use the graph you already have rather than forcing it into search.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Watch a multi-hop search happen<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Ask a search-enabled AI assistant (Perplexity, or any chat model with web search turned on) a question that genuinely requires two separate facts to combine: 'who is older, the current CEO of [company] or the founder of [other company]?' Watch it perform more than one search before answering. That's agentic RAG's search-read-decide-search-again loop, visible in the transcript.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

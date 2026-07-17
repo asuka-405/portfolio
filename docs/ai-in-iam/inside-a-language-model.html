@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Inside a Language Model: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Inside a Language Model · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/inside-a-language-model.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Inside a Language Model" />
+		<meta property="og:description" content="Inside a Language Model: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/inside-a-language-model.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Inside a Language Model" />
+		<meta name="twitter:description" content="Inside a Language Model: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="active">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Inside a Language Model</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Everyone's heard &quot;it just predicts the next word.&quot; True, but the machinery underneath explains almost every quirk, cost and limit you run into. Let's open it up.</p>
+					<h3>Tokens: the model's alphabet</h3>
+					<p>A model doesn't read letters or words. It reads<strong> tokens</strong>: chunks of text from a fixed vocabulary (common words, word-pieces, punctuation). Rough rule: one token ≈ ¾ of an English word. This matters more than it sounds:</p>
+					<ul><li><strong>Everything is priced and limited in tokens</strong>: context size, API cost, speed. Output appears one token at a time, which is why longer answers take longer.</li><li><strong>Identifiers and codes are expensive.</strong> Something like<code> SAP_FI_GL_0042</code> shatters into many junk tokens, and the model reasons about it worse than a normal word. (This becomes a real issue in identity data, which is full of such codes.)</li><li><strong>The model is spelling-blind.</strong> It sees token IDs, not characters, which is why &quot;count the letters&quot; or &quot;output exactly 500 characters&quot; is unreliable. Anything character-exact belongs in code.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Compare token counts across languages<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Open platform.openai.com/tokenizer (free, no signup) and paste 'The quick brown fox jumps over the lazy dog.' Note the token count vs. word count. Then paste an equivalent sentence in Hindi, German, or another non-English language you know. Notice it takes noticeably more tokens for the same meaning, since tokenizers are trained mostly on English text.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>The transformer, in one picture</h3>
+					<p>A language model is one small pipeline, repeated dozens of times deep:</p>
+				</div>
+
+<div class="dgm dgm-flow reveal">
+					<div class="dgm-box"><span class="dgm-bt">Text → tokens</span><span class="dgm-bd">split into vocabulary chunks, each turned into a vector plus its position</span></div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box dgm-box--accent">
+						<span class="dgm-bt">Repeat N times (the "layers")</span>
+						<span class="dgm-bd"><strong>Attention</strong>: each word looks at earlier words and pulls in whatever's relevant ("which past words matter to me?")</span>
+						<span class="dgm-bd"><strong>Feed-forward</strong>: transforms that information; where most of the model's "knowledge" lives</span>
+					</div>
+					<div class="dgm-arr"><span class="ico v">↓</span></div>
+					<div class="dgm-box"><span class="dgm-bt">Predict the next token</span><span class="dgm-bd">append it, then do the whole thing again</span><span class="dgm-tag">↺ autoregression</span></div>
+				</div>
+
+<div class="prose reveal">
+					<p>That's genuinely all there is, no separate memory bank, no planner. Two parts do the work.<strong>Attention</strong>moves information between words: every word asks &quot;which earlier words are relevant to me right now?&quot; and copies from them. It's a smart, content-based lookup.<strong>Feed-forward</strong>layers then process that information, and hold most of what the model &quot;knows.&quot; Stack these deep and, at enormous scale, everything else (grammar, reasoning, translation) emerges.</p>
+					<p>One practical fallout: a word can only look<em> backwards</em>, never forwards. So<strong> put your instructions before the data they apply to</strong>: the model reads top to bottom.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Watch attention resolve a pronoun<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Search for a public attention-visualization demo (BertViz is a well-known open-source one, often runnable in a free Google Colab notebook). Feed it a sentence with an ambiguous pronoun: 'The trophy didn't fit in the suitcase because it was too big', and watch which earlier word 'it' attends to most strongly. That's the attention mechanism described above, made visible.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Why output costs more than input</h3>
+					<p>When generating, the model must re-consider every previous token for each new one. To avoid redoing that work, it caches its intermediate calculations (the &quot;KV cache&quot;). This one detail explains the economics:</p>
+					<ul><li><strong>Reading your prompt is fast and parallel; writing the answer is slow and serial.</strong>That's why output tokens cost roughly 5× input tokens, and why long conversations get slower to respond.</li><li><strong>&quot;Prompt caching&quot; is a real feature and a big lever.</strong> Providers can reuse the cached work for a prompt<em> prefix</em> that hasn't changed: around 90% cheaper for that part. The design rule that falls out: put the<em> stable</em> stuff first (system instructions, tool definitions, reference docs) and the<em> changing</em> stuff last (the user's question). One changed byte early on throws away the whole cache after it.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Check a real pricing page<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Open any frontier model provider's API pricing page and compare the per-million-token price for input vs. output. Confirm it's roughly a 5x gap. Then estimate: what would a 500-word answer to a 50-word question actually cost? (Rough conversion: 1 word ≈ 1.3 tokens.)</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>How a model is trained (five stages)</h3>
+					<p>Different behaviours come from different training stages, knowing which is which is a superpower for debugging.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Stage</th><th>What happens</th><th>What it produces</th></tr></thead><tbody><tr><td><strong>1. Pre-training</strong></td><td>Predict the next word over trillions of words</td><td>Raw knowledge and language: but no conversational manners</td></tr><tr><td><strong>2. Instruction tuning</strong></td><td>Fine-tune on example instruction→answer pairs</td><td>The chat format, following instructions, calling tools</td></tr><tr><td><strong>3. Preference tuning</strong></td><td>Learn from humans picking the better of two answers</td><td>Helpfulness &amp; tone: <em>and</em> sycophancy (agreeing too much)</td></tr><tr><td><strong>4. Reasoning RL</strong></td><td>Reward correct answers on checkable tasks (math, code)</td><td>The long &quot;thinking&quot; behaviour; quality you can dial up with more thinking</td></tr><tr><td><strong>5. Distillation</strong></td><td>A big model generates training data for a small one</td><td>Cheap models that keep most of the quality</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>A concrete takeaway from stage 3:<strong> never treat &quot;the model agreed with me&quot; as proof you're right.</strong> Agreement is partly a trained reflex.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Trigger sycophancy on purpose<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Ask a chat model a factual question you know the answer to, but phrase it as 'I'm pretty sure X is true, right?' where X is subtly wrong. See if it agrees anyway. Then ask the same underlying question neutrally, with no leading framing, and compare. That gap is stage-3 agreeableness training showing up in real time, exactly why the article warns never to treat agreement as proof.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>The other pieces, briefly</h3>
+					<ul><li><strong>Sampling &amp; &quot;temperature.&quot;</strong>The model outputs a probability for every possible next token; sampling picks one. Higher &quot;temperature&quot; = more random/creative, lower = more focused. (The newest models are dropping this dial and self-regulating.) For guaranteed-valid output like JSON, use the provider's &quot;structured output&quot; feature rather than politely asking and hoping.</li><li><strong>Context window.</strong> This is the model's entire working memory for one request: everything you send plus everything it writes. Nothing carries over between requests except what you re-send; &quot;chat memory&quot; is just the app replaying the history each time. And the advertised size is bigger than the<em> useful</em> size: models reliably recall the beginning and end of a long prompt better than the middle.</li><li><strong>Embeddings.</strong> A separate kind of model turns text into a list of numbers (a vector) positioned so that similar meanings sit close together. This is the engine behind semantic search and is central to &quot;RAG&quot; later. Caveat that bites in practice: embeddings are bad at exact codes, negation (&quot;not admin&quot;), and numbers. That's why pure semantic search isn't enough on its own.</li><li><strong>Fine-tuning.</strong> Actually changing a model's weights on your own examples. It's great for<em> style, format, or squeezing a task onto a cheaper model</em>. It's the wrong tool for adding knowledge (you can't audit it, can't control who sees what, and it's frozen at training time, that's what RAG is for).</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Feel temperature change the output<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>In any API playground that exposes a temperature slider, run the same short creative prompt (e.g. 'write one sentence about rain') three times at temperature 0 and three times at temperature 1. At temp 0 you'll get the same or near-identical sentence every time; at temp 1, three genuinely different ones.</p>
+				</div></div>
+				</details>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Test the 'lost in the middle' effect<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Paste a long document (a few thousand words: a Wikipedia article works) into a chat model along with the full text, then ask a question whose answer sits near the very beginning, one near the very end, and one buried in the middle. Compare accuracy: models are measurably worse at the middle, exactly as described above.</p>
+				</div></div>
+				</details>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Compute embedding similarity yourself<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Use a free sentence-embedding demo (Hugging Face's inference widgets, or the sentence-transformers 'all-MiniLM-L6-v2' model via a free Colab notebook) to embed 'revoke access' and 'terminate employee', then compute cosine similarity between the two vectors. Compare that to the similarity between 'revoke access' and 'grant access', near-opposite meanings that embeddings sometimes place surprisingly close together, since both are about access changes. That's the negation weakness mentioned above, seen directly.</p>
+				</div></div>
+				</details>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Price out fine-tuning vs. RAG for the same task<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick any provider's fine-tuning page and note the cost to fine-tune a small model on ~1,000 examples. Compare that to just running the same task through RAG (a search index plus a stock model): no training cost, updates instantly when your documents change. Feeling that cost and flexibility gap firsthand is the fastest way to internalize why RAG usually wins for knowledge, and fine-tuning wins for style/format.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

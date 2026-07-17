@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="A full course on using AI to automate enterprise identity and access management: the LLM and agent fundamentals, concrete automation architectures, and exactly where AI plugs into a real SailPoint ISC implementation without breaking compliance." />
+		<meta name="color-scheme" content="dark light" />
+		<title>AI in IAM: Automating the Enterprise Without Breaking Compliance · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/index.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:description" content="A full course on using AI to automate enterprise identity and access management: the LLM and agent fundamentals, concrete automation architectures, and exactly where AI plugs into a real SailPoint ISC implementation without breaking compliance." />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/index.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="twitter:description" content="A full course on using AI to automate enterprise identity and access management: the LLM and agent fundamentals, concrete automation architectures, and exactly where AI plugs into a real SailPoint ISC implementation without breaking compliance." />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="active">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="../index.html">← All docs</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>AI in IAM: Automating the Enterprise Without Breaking Compliance</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Identity and access management runs on volume: thousands of joiners, movers and leavers a year, tens of thousands of access certifications a quarter, a constant stream of access requests. Every one of those is a small, explainable decision. That is exactly the shape of work AI is good at, and exactly the reason the cost of getting IAM wrong (a breach, a failed audit, a regulator's fine) makes it the domain where you can least afford to get AI wrong.</p>
+					<p>This course is about that tension: how to actually use AI to cut the cost of running enterprise identity governance without loosening the compliance posture that makes IAM worth having in the first place. It goes deeper than a single article can. The first half is the AI and LLM foundations you need before any of the identity-specific material makes sense (ported and expanded from a shorter companion piece on this site, if you have already read that, skim). The second half is new: concrete enterprise automation patterns, exactly where AI plugs into a real SailPoint Identity Security Cloud (ISC) implementation, and full reference architecture walkthroughs.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Every architecture and code example in this course uses fictional company and system names. Nothing here describes any real client, tenant or engagement.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>What this course covers</h3>
+					<ol><li>AI, ML and deep learning: what the words actually mean</li><li>Inside a language model: tokens, transformers, training, cost</li><li>Choosing and running models in production</li><li>Prompting models effectively, and the failure modes to design around</li><li>Giving models knowledge with RAG</li><li>Agents: models that take actions, and the reliability math behind them</li><li>Frameworks, MCP, and multi-agent systems</li><li>Enterprise IAM automation patterns: certifications, access requests, SOD, birthright access</li><li>Automating the joiner-mover-leaver lifecycle</li><li>Where AI actually plugs into a SailPoint ISC implementation</li><li>Reference architecture, governance, and compliance</li><li>Cost, explainability, and human-in-the-loop design</li><li>Full reference architecture walkthroughs</li></ol>
+					<h3>Who this is for</h3>
+					<p>Anyone building or evaluating AI-assisted identity governance: IAM engineers and architects, security leaders deciding what to fund, and SailPoint ISC implementers specifically who want to know exactly where in the platform an AI integration is supposed to live, not just that it should exist.</p>
+					<blockquote>The goal is not &quot;AI in IAM&quot; as a slogan. It is a specific, auditable architecture that happens to use AI for the parts AI is actually good at, and plain deterministic code for everything else.</blockquote>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

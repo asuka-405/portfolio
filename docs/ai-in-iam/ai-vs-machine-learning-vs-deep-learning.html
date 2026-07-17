@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="AI vs Machine Learning vs Deep Learning: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>AI vs Machine Learning vs Deep Learning · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/ai-vs-machine-learning-vs-deep-learning.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="AI vs Machine Learning vs Deep Learning" />
+		<meta property="og:description" content="AI vs Machine Learning vs Deep Learning: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/ai-vs-machine-learning-vs-deep-learning.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="AI vs Machine Learning vs Deep Learning" />
+		<meta name="twitter:description" content="AI vs Machine Learning vs Deep Learning: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="active">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>AI vs Machine Learning vs Deep Learning</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>AI vs machine learning vs deep learning</h3>
+					<p>These three words get used interchangeably, but they nest inside each other like Russian dolls.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>AI: artificial intelligence<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Any technique that produces behaviour we'd call &quot;intelligent.&quot; This includes old-school systems with no learning at all, hand-written rules, search algorithms, expert systems where a human encoded every decision.</p>
+					<p><strong>ML, machine learning: </strong>The part of AI where the machine learns the rules from examples instead of a human writing them. You give it data and a goal; it figures out the mapping. (Classic ML like decision trees still beats fancy AI on lots of everyday data. Worth remembering.)</p>
+					<p><strong>DL, deep learning: </strong>The part of ML that uses many-layered neural networks. Each layer learns to spot more abstract patterns than the last (letters → words → meaning). Today's language models are deep learning applied to text at enormous scale.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<p>The nesting is true but it doesn't tell you much about behaviour. What actually predicts how a model behaves is<strong>where its learning signal came from</strong>, which is the next idea.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Classify three tools you use daily<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick three AI-ish products you actually use: a spam filter, a phone's predictive keyboard, and a chatbot like ChatGPT or Claude. For each, guess: is it AI (rules), ML (learned from examples), or DL (deep neural net)? Most spam filters are classic ML; predictive keyboards and chat models are deep learning. No tools needed, just five minutes of thinking through what you already use.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Three ways a machine learns</h3>
+					<p>The whole field runs on one question: where does the &quot;correct answer&quot; the model learns from come from, and what does it cost to get?</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Style</th><th>Where the answer comes from</th><th>Cost</th><th>Used for</th></tr></thead><tbody><tr><td><strong>Supervised</strong></td><td>Humans label each example by hand</td><td>Expensive; can't scale past millions</td><td>Teaching format &amp; instruction-following</td></tr><tr><td><strong>Self-supervised</strong></td><td>The data labels itself: &quot;predict the next word&quot;</td><td>Nearly free; the whole internet is training data</td><td>The core of how models learn language</td></tr><tr><td><strong>Reinforcement</strong></td><td>A reward signal or human preference (&quot;A is better than B&quot;)</td><td>Expensive per example, but shapes behaviour</td><td>Making models helpful, and teaching reasoning</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Self-supervision is the trick that made modern AI possible. &quot;Predict the next word&quot; turns every piece of text ever written into a practice question with a known answer, no human labelling needed. Do that across trillions of words and the model absorbs grammar, facts, and reasoning patterns as a side effect. A handy debugging habit: when a model misbehaves, guess which stage caused it. Missing facts come from the first stage; excessive agreeableness comes from the &quot;make it helpful&quot; stage; its refusal style comes from the safety stage.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Compare a labeled dataset to a self-supervised one<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Search for the ImageNet dataset and read how it was built: humans labeled each photo by hand. Then search for how GPT-style models are pretrained on web text. Notice the difference in who produced the 'correct answer': a paid human labeler in one case, the structure of the text itself in the other. That labor difference is why self-supervised learning scaled so much further.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Why this generation of AI won</h3>
+					<p>Neural networks are decades old. Three things made them suddenly dominant in the 2020s:</p>
+					<ul><li><strong>The &quot;bitter lesson.&quot;</strong>Over 70 years, general methods that simply use more computing power have always, eventually, beaten clever hand-crafted approaches. Betting on scale kept winning.</li><li><strong>The transformer fits the hardware.</strong> The transformer (the architecture behind every modern model) does its work as huge parallel matrix multiplications: exactly what GPUs are built for. Older designs processed text one word at a time and couldn't keep a GPU busy. The transformer won on hardware efficiency, not elegance.</li><li><strong>Scaling became predictable.</strong> Researchers found that a model's error drops in a smooth, forecastable curve as you add parameters, data and compute. That turned &quot;train a giant model&quot; from a gamble into a budgeting exercise, which is why the money flooded in.</li></ul>
+					<p>And a myth to drop: &quot;scaling has stopped.&quot; It didn't stop, it moved. Instead of only making models bigger, labs now also let them<em>think longer</em>at answer time, use &quot;mixture-of-experts&quot; tricks, and have big models teach small ones.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Feel the scale jump<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Look up the parameter count of GPT-2 (2019, ~1.5 billion) and a current frontier model (often 100B+ or undisclosed but estimated far higher). Then look up roughly how training compute cost has grown over the same years. The 'bitter lesson' isn't an abstraction, it's this specific curve.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Generative vs agentic vs autonomous</h3>
+					<p>Three words that vendors love to blur. The distinction is genuinely important:</p>
+					<ul><li><strong>Generative</strong> AI produces an artifact when you ask: text, an image, some code. It has no memory and takes no actions;<em> you</em> do everything with its output.</li><li><strong>Agentic</strong> AI wraps that same model in a program that gives it<em> tools</em>, memory, and a loop, so it can take actions in the world and react to the results, with a human supervising.</li><li><strong>Autonomous</strong> AI is an agentic system allowed to start itself (on a schedule or an event) and act within set limits, where humans handle only the exceptions.</li></ul>
+					<p>The key insight:<strong>&quot;agentic&quot; is about architecture (does it have tools and a loop?), while &quot;autonomous&quot; is about policy (what are you allowing it to do without asking?)</strong>. The exact same code is a careful copilot if writes need approval, and an autonomous agent if they don't. When someone says &quot;autonomous AI,&quot; ask, which actions run without a human, and what triggers them?</p>
+					<p>A more useful scale, borrowed from self-driving cars, helps place any workflow by how much you trust it:</p>
+				</div>
+
+<div class="ladder reveal">
+					<div class="rung"><span class="lvl">L0</span><span class="rtext"><b>Generation only.</b> The human does everything with the output.</span></div>
+					<div class="rung"><span class="lvl">L1</span><span class="rtext"><b>Uses tools, every action confirmed.</b> A copilot.</span></div>
+					<div class="rung"><span class="lvl">L2</span><span class="rtext"><b>Reads freely, writes need approval.</b> The sane enterprise default.</span></div>
+					<div class="rung"><span class="lvl">L3</span><span class="rtext"><b>Writes run automatically within limits.</b> Humans handle exceptions and review samples.</span></div>
+					<div class="rung"><span class="lvl">L4</span><span class="rtext"><b>Starts itself, checks itself,</b> escalates only on anomalies.</span></div>
+					<div class="rung"><span class="lvl">L5</span><span class="rtext"><b>Sets its own goals across domains.</b> Doesn't really exist yet, treat claims with suspicion.</span></div>
+				</div>
+
+<div class="prose reveal">
+					<p>Every step up trades less human review for a bigger blast radius if things go wrong. The honest way to decide where a task belongs is arithmetic, not vibes:<em>how often does it fail × how bad is a failure</em>, versus the review effort you'd save. This exact frame drives every decision in the IAM section later.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Place your own AI tools on the ladder<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Take three AI tools you've used: say, ChatGPT for writing, an IDE autocomplete, and an autonomous coding agent (if you've tried one). Place each on the L0–L5 ladder from the diagram above, and write one sentence justifying each placement: does it act without confirmation? Does it chain multiple steps on its own?</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>The reliability math nobody mentions</h3>
+					<p>Here's a sobering bit of multiplication. If an agent is 98% reliable on a single step, and a task takes 20 steps in a row, its success rate for the<em>whole task</em>is 0.9820≈<strong>67%</strong>. Reliability compounds downward, fast. Three consequences shape everything: long tasks depend on per-step reliability far more than on how &quot;smart&quot; the model is; it's better to design for cheap detection-and-retry than to assume steps succeed; and you should build for the model you'll have<em>at deployment</em>, because the length of task models can handle has been roughly doubling every several months.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Run the compounding math yourself<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Calculate 0.95^10, 0.98^10, and 0.99^10 (any calculator works). Notice how a 4-point difference in per-step reliability (95% vs 99%) produces roughly a 30-point difference in whether a 10-step task actually completes. This is why 'the model is 98% accurate' is a much weaker claim than it sounds for anything multi-step.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

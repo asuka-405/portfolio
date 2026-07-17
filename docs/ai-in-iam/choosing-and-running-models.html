@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Choosing and Running Models: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Choosing and Running Models · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/choosing-and-running-models.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Choosing and Running Models" />
+		<meta property="og:description" content="Choosing and Running Models: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/choosing-and-running-models.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Choosing and Running Models" />
+		<meta name="twitter:description" content="Choosing and Running Models: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="active">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Choosing and Running Models</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>The families, and their personalities</h3>
+					<p>Vendors ship models in roughly three tiers: a top &quot;frontier&quot; tier, a mid &quot;workhorse,&quot; and a cheap tier. The personalities stay surprisingly stable across versions even as benchmark scores churn.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Family</th><th>Known for</th><th>Typical use</th></tr></thead><tbody><tr><td><strong>Anthropic (Claude)</strong></td><td>Reliable agents &amp; coding, disciplined instruction-following, long-run coherence</td><td>Coding agents, enterprise automation, regulated industries</td></tr><tr><td><strong>OpenAI (GPT)</strong></td><td>Biggest ecosystem, broad multimodal (voice, images)</td><td>Consumer chat products, Microsoft-stack shops</td></tr><tr><td><strong>Google (Gemini)</strong></td><td>Price-performance at the cheap tier, huge context, video/audio input</td><td>High-volume cheap inference, massive-document work</td></tr><tr><td><strong>Open-weight</strong>(Llama, Qwen, Mistral, DeepSeek)</td><td>Full data control, no per-token cost at scale, ~6–12 months behind frontier</td><td>On-prem, air-gapped, data-residency, custom tuning</td></tr></tbody></table></div>
+
+				<details class="cmd-explain reveal">
+					<summary>Current flagships, as of writing (check before you trust this)<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>As of mid-2026: Anthropic's <strong>Claude Opus 4.8</strong> (plus Sonnet 4.6 and Haiku 4.5 for cheaper tiers), OpenAI's <strong>GPT-5.5</strong> family, and Google's <strong>Gemini 3.1 Pro</strong> (plus 3.5 Flash and 3.1 Flash-Lite) are the three frontier lines, separated by single-digit percentage points on most benchmarks. On the harder SWE-bench Pro coding benchmark, Opus 4.8 leads at roughly 69% against GPT-5.5's ~59% and Gemini 3.1 Pro's ~54%, illustrative of the pattern (Claude ahead on hard coding, Gemini cheapest at volume, GPT-5.5 pushing hardest on agentic tool use), not a number worth memorizing. This entire paragraph will be stale within a couple of quarters, that's the point made two sections up. Check a live leaderboard before you plan around any of it.</p>
+				</div></div>
+				</details>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Feel the tier difference directly<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Send the exact same non-trivial question: 'explain the CAP theorem and why it matters for distributed databases' works well: to a frontier model and to that same vendor's cheapest/smallest model. Compare depth, nuance, and whether either one hedges or gets something subtly wrong. The gap is the 'personality' difference the article means.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Why the leaderboards lie</h3>
+					<p>Public benchmark scores are mostly marketing. Test questions leak into training data (so scores are inflated), and &quot;which answer do people prefer&quot; rewards confident, verbose, nicely-formatted answers over correct ones.<strong>The only number that predicts your result is your own eval</strong>: 20–50 real examples from your actual task, run against a few candidate models, graded with a rubric. Half a day of work, and it beats every public chart. Re-run it on every upgrade, models sometimes get<em>worse</em>at your specific task even as the public scores rise.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Build a five-example eval by hand<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick 5 real examples from something you actually do (grading an email's urgency, summarizing a paragraph, whatever's at hand). Run all 5 through two different models. Grade each answer yourself with a simple rubric (correct / partially correct / wrong). That's a miniature version of the eval process described above, and it'll probably disagree with at least one public leaderboard ranking.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Spending less (in order of impact)</h3>
+					<ol><li><strong>Route by difficulty.</strong> Send easy requests to the cheap model, hard ones to the expensive one. A typical mix is ~70% cheap / 25% mid / 5% frontier, cutting cost several-fold.</li><li><strong>Cache stable prompt prefixes</strong>(put unchanging content first). For agents this is the biggest lever, because an agent re-sends its whole transcript every step.</li><li><strong>Batch the non-urgent work</strong>: about half price if you can wait. Nightly enrichment, bulk analysis.</li><li><strong>Keep output tight.</strong> Output is ~5× the cost of input, so ask for concise, schema-shaped answers.</li></ol>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Estimate the routing savings<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Take a hypothetical workload of 1,000 requests/day. Estimate the cost if 100% go to a frontier model, versus the ~70% cheap / 25% mid / 5% frontier split described above (use any provider's real per-token pricing). The multiplier is usually larger than people expect before they do the arithmetic.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Where the model runs (decided before quality)</h3>
+					<p>For sensitive data (and identity data absolutely counts) the first question isn't &quot;which model is best,&quot; it's &quot;where does my data go?&quot;</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Option</th><th>Where your data goes</th><th>Trade-off</th></tr></thead><tbody><tr><td>Vendor API directly</td><td>To the vendor (under contract, no-training options)</td><td>Newest features first; least control</td></tr><tr><td>Your cloud tenancy(Bedrock, Vertex, Azure)</td><td>Stays inside your cloud's security boundary</td><td>The enterprise default; features lag by months</td></tr><tr><td>Self-host open-weight</td><td>Never leaves your network</td><td>Total control; you own the serving &amp; ops headache</td></tr></tbody></table></div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Find the actual data policy<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick a model provider you or your company uses and find their data-processing terms: specifically, whether prompts sent through the API are used for training by default (usually not, for paid API tiers: often yes, for free consumer chat apps unless you opt out). This single fact is the real gate for anything touching sensitive data, more than any benchmark score.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
