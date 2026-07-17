@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Hand-picked articles by Suryansh Kapil." />
+		<meta name="color-scheme" content="dark light" />
+		<title>Featured Writing · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+		<link rel="canonical" href="https://archdev.in/articles/featured.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Featured Writing" />
+		<meta property="og:description" content="Hand-picked articles by Suryansh Kapil." />
+		<meta property="og:url" content="https://archdev.in/articles/featured.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Featured Writing" />
+		<meta name="twitter:description" content="Hand-picked articles by Suryansh Kapil." />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../index.html#writing">Writing</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section" id="writing" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<div class="section-head reveal">
+					<a class="back-link reveal" href="index.html">← All articles</a>
+					<p class="section-eyebrow">Writing</p>
+					<h2>★ Featured</h2>
+					<p class="section-intro">The pieces I'd point you to first.</p>
+				</div>
+				<div class="article-search">
+					<input type="search" id="article-search-input" placeholder="Search articles…" aria-label="Search articles" />
+				</div>
+				<div class="tag-filter-bar" id="tag-filter-bar">
+					<button type="button" class="tag-chip tag-chip--all active" data-tag="">All</button>
+
+				</div>
+				<p class="search-empty" id="search-empty" hidden>No articles match your search.</p>
+
+				<div class="article-list" id="article-list">
+
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../index.html#writing">More writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+		<script src="hub.js" defer></script>
+	</body>
+</html>
