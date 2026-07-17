@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Idiomatic C++ and Common Pitfalls: C++, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Idiomatic C++ and Common Pitfalls · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/cpp/idiomatic-c-and-common-pitfalls.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Idiomatic C++ and Common Pitfalls" />
+		<meta property="og:description" content="Idiomatic C++ and Common Pitfalls: C++, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/cpp/idiomatic-c-and-common-pitfalls.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Idiomatic C++ and Common Pitfalls" />
+		<meta name="twitter:description" content="Idiomatic C++ and Common Pitfalls: C++, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C++, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="functions-and-program-structure.html" class="">Functions and Program Structure</a>
+					</li>
+					<li>
+						<a href="debugging-c-programs.html" class="">Debugging C++ Programs</a>
+					</li>
+					<li>
+						<a href="fundamental-data-types.html" class="">Fundamental Data Types</a>
+					</li>
+					<li>
+						<a href="constants-literals-and-strings.html" class="">Constants, Literals, and Strings</a>
+					</li>
+					<li>
+						<a href="operators.html" class="">Operators</a>
+					</li>
+					<li>
+						<a href="scope-duration-and-linkage.html" class="">Scope, Duration, and Linkage</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="error-detection-and-handling.html" class="">Error Detection and Handling</a>
+					</li>
+					<li>
+						<a href="type-conversion-aliases-and-deduction.html" class="">Type Conversion, Aliases, and Deduction</a>
+					</li>
+					<li>
+						<a href="function-overloading-and-function-templates.html" class="">Function Overloading and Function Templates</a>
+					</li>
+					<li>
+						<a href="constexpr-and-compile-time-evaluation.html" class="">Constexpr and Compile-Time Evaluation</a>
+					</li>
+					<li>
+						<a href="references-and-pointers.html" class="">References and Pointers</a>
+					</li>
+					<li>
+						<a href="enums-and-structs.html" class="">Enums and Structs</a>
+					</li>
+					<li>
+						<a href="compile-time-and-runtime-polymorphism-previewed.html" class="">Compile-Time and Runtime Polymorphism, Previewed</a>
+					</li>
+					<li>
+						<a href="introduction-to-classes.html" class="">Introduction to Classes</a>
+					</li>
+					<li>
+						<a href="more-on-classes.html" class="">More on Classes</a>
+					</li>
+					<li>
+						<a href="dynamic-arrays-std-vector.html" class="">Dynamic Arrays: std::vector</a>
+					</li>
+					<li>
+						<a href="fixed-size-arrays-std-array-and-c-style-arrays.html" class="">Fixed-Size Arrays: std::array and C-style Arrays</a>
+					</li>
+					<li>
+						<a href="iterators-and-algorithms.html" class="">Iterators and Algorithms</a>
+					</li>
+					<li>
+						<a href="dynamic-memory-allocation.html" class="">Dynamic Memory Allocation</a>
+					</li>
+					<li>
+						<a href="lambdas-and-function-objects.html" class="">Lambdas and Function Objects</a>
+					</li>
+					<li>
+						<a href="operator-overloading.html" class="">Operator Overloading</a>
+					</li>
+					<li>
+						<a href="move-semantics-and-smart-pointers.html" class="">Move Semantics and Smart Pointers</a>
+					</li>
+					<li>
+						<a href="object-relationships.html" class="">Object Relationships</a>
+					</li>
+					<li>
+						<a href="inheritance.html" class="">Inheritance</a>
+					</li>
+					<li>
+						<a href="virtual-functions-and-polymorphism.html" class="">Virtual Functions and Polymorphism</a>
+					</li>
+					<li>
+						<a href="templates-and-generic-classes.html" class="">Templates and Generic Classes</a>
+					</li>
+					<li>
+						<a href="exceptions.html" class="">Exceptions</a>
+					</li>
+					<li>
+						<a href="input-and-output-streams.html" class="">Input and Output Streams</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-c-11-through-23.html" class="">A Tour of Modern C++ (11 Through 23)</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-and-common-pitfalls.html" class="active">Idiomatic C++ and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← C++, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C++, End to End</p>
+							<h1>Idiomatic C++ and Common Pitfalls</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>This closing chapter is less about new syntax and more about how experienced C++ programmers actually write the language day to day, versus how a lot of code from twenty years ago (or a lot of beginner code today) still gets written.</p>
+					<h3>Prefer the standard library over hand-rolled loops</h3>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cvector%3E%0A%23include+%3Calgorithm%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Avector%3Cint%3E+nums%7B5%2C+3%2C+8%2C+1%2C+9%2C+2%7D%3B%0A%0A++++//+instead+of+hand-writing+a+loop+to+find+the+max...%0A++++int+maxVal+%3D+nums%5B0%5D%3B%0A++++for+(int+n+%3A+nums)+if+(n+%3E+maxVal)+maxVal+%3D+n%3B%0A%0A++++//+...reach+for+the+algorithm+that+already+says+what+you+mean%3A%0A++++int+maxVal2+%3D+*std%3A%3Amax_element(nums.begin()%2C+nums.end())%3B%0A%0A++++std%3A%3Acout+%3C%3C+maxVal+%3C%3C+%22+%22+%3C%3C+maxVal2+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cvector%3E%0A%23include+%3Calgorithm%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Avector%3Cint%3E+nums%7B5%2C+3%2C+8%2C+1%2C+9%2C+2%7D%3B%0A%0A++++//+instead+of+hand-writing+a+loop+to+find+the+max...%0A++++int+maxVal+%3D+nums%5B0%5D%3B%0A++++for+(int+n+%3A+nums)+if+(n+%3E+maxVal)+maxVal+%3D+n%3B%0A%0A++++//+...reach+for+the+algorithm+that+already+says+what+you+mean%3A%0A++++int+maxVal2+%3D+*std%3A%3Amax_element(nums.begin()%2C+nums.end())%3B%0A%0A++++std%3A%3Acout+%3C%3C+maxVal+%3C%3C+%22+%22+%3C%3C+maxVal2+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+int main() {
+    std::vector&lt;int&gt; nums{5, 3, 8, 1, 9, 2};
+
+    // instead of hand-writing a loop to find the max...
+    int maxVal = nums[0];
+    for (int n : nums) if (n &gt; maxVal) maxVal = n;
+
+    // ...reach for the algorithm that already says what you mean:
+    int maxVal2 = *std::max_element(nums.begin(), nums.end());
+
+    std::cout &lt;&lt; maxVal &lt;&lt; &quot; &quot; &lt;&lt; maxVal2 &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>std::max_element isn't just shorter, it's more honest about intent: a reader sees the name and immediately knows what the code does, instead of having to trace through a hand-written loop to reverse-engineer that it's finding a maximum.</p>
+					<h3>RAII everywhere, manual cleanup nowhere</h3>
+					<p>If you find yourself writing a matched pair of &quot;acquire&quot; and &quot;release&quot; calls anywhere (lock/unlock, open/close, new/delete, begin/end), that pair belongs inside a constructor and destructor, not scattered through your function's control flow where an early return or an exception can skip the cleanup half.</p>
+					<h3>const by default</h3>
+					<p>Declare variables, parameters, and member functions const unless you have a specific reason not to. It's not just documentation, the compiler enforces it: a const method literally cannot accidentally mutate the object, and a const variable literally cannot be accidentally reassigned three functions later by someone who didn't read the whole file.</p>
+					<h3>Avoid raw owning pointers</h3>
+					<p>A raw pointer is fine for observing something you don't own. A raw pointer that's supposed to represent ownership (something only this code is responsible for eventually deleting) is a bug waiting for the first exception, early return, or forgotten delete along whichever code path doesn't get tested. Use std::unique_ptr or std::shared_ptr for ownership, always.</p>
+					<h3>Avoid C-style casts</h3>
+					<p>(int)someDouble looks harmless, but a C-style cast will silently do whatever combination of static_cast, const_cast, and reinterpret_cast it takes to make the code compile, including ones you almost certainly didn't intend, like casting away const. The named casts (static_cast, const_cast, and so on) are more verbose specifically so that each one only does one narrow, explicit thing, and a code reviewer (or you, six months later) can tell exactly what's happening by the cast's name alone.</p>
+					<h3>Prefer std::string and std::string_view over C-strings</h3>
+					<p>std::string owns and manages its own buffer safely; std::string_view is a lightweight, non-owning view into existing string data, useful for function parameters that just need to read a string without caring who owns it and without forcing an unnecessary copy. Raw char* string handling is where the sibling C course's entire &quot;strings and buffer footguns&quot; chapter worth of bugs lives, and C++ gives you tools to avoid nearly all of it.</p>
+					<h3>Initialize everything</h3>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++int+x%3B+++++++++//+uninitialized%3A+reading+x+right+now+is+undefined+behavior%0A++++int+y%7B%7D%3B+++++++//+zero-initialized%2C+always+safe%0A++++int+z+%3D+42%3B++++//+explicitly+initialized%0A%0A++++std%3A%3Acout+%3C%3C+y+%3C%3C+%22+%22+%3C%3C+z+%3C%3C+%22%5Cn%22%3B+//+never+print+x+before+assigning+it+something+real%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++int+x%3B+++++++++//+uninitialized%3A+reading+x+right+now+is+undefined+behavior%0A++++int+y%7B%7D%3B+++++++//+zero-initialized%2C+always+safe%0A++++int+z+%3D+42%3B++++//+explicitly+initialized%0A%0A++++std%3A%3Acout+%3C%3C+y+%3C%3C+%22+%22+%3C%3C+z+%3C%3C+%22%5Cn%22%3B+//+never+print+x+before+assigning+it+something+real%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int main() {
+    int x;         // uninitialized: reading x right now is undefined behavior
+    int y{};       // zero-initialized, always safe
+    int z = 42;    // explicitly initialized
+
+    std::cout &lt;&lt; y &lt;&lt; &quot; &quot; &lt;&lt; z &lt;&lt; &quot;\n&quot;; // never print x before assigning it something real
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>An uninitialized variable in C++ doesn't reliably contain zero. It contains whatever bits happened to already be sitting in that memory, which might look like a plausible value while testing and then be garbage the moment the stack layout shifts slightly. Prefer brace initialization ({}) as a habit; it also refuses narrowing conversions that would silently lose data, which is a nice bonus catch.</p>
+					<h3>Prefer scoped enums</h3>
+					<p>enum class Color { Red, Green, Blue } instead of a plain enum. Scoped enums don't leak their enumerator names into the surrounding scope, don't implicitly convert to int (a real source of bugs when comparing unrelated enums that happen to share numeric values), and force you to write Color::Red instead of a bare Red that could mean almost anything.</p>
+					<h3>If you remember five things from this course</h3>
+					<ul><li>RAII is why C++ can be both fast and safe: tie every resource's lifetime to an object's constructor/destructor, and exceptions, early returns, and forgotten cleanup stop being a source of bugs.</li><li>Prefer value semantics and the standard library's containers/algorithms to hand-rolled pointer manipulation; reach for raw new/delete and manual loops only when you have a specific reason the abstraction doesn't fit.</li><li>Templates give you compile-time polymorphism (zero runtime cost, but code generated per type); virtual functions give you runtime polymorphism (one shared implementation, small dispatch cost). Know which one your problem actually needs.</li><li>Move semantics exist so that returning and passing heavy objects by value stopped meaning expensive copies. Let the compiler move for you by default; reach for std::move only when you specifically mean &quot;I'm done with this, take it.&quot;</li><li>Modern C++ (11 through 23) changed the language's center of gravity: if code you're reading looks like it was written in 2003 (raw pointers everywhere, manual new/delete, no auto, no range-for), that's not automatically wrong, but it's very likely leaving safety and readability on the table that the language has offered for over a decade now.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

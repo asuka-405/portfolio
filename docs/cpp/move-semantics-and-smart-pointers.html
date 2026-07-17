@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Move Semantics and Smart Pointers: C++, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Move Semantics and Smart Pointers · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/cpp/move-semantics-and-smart-pointers.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Move Semantics and Smart Pointers" />
+		<meta property="og:description" content="Move Semantics and Smart Pointers: C++, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/cpp/move-semantics-and-smart-pointers.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Move Semantics and Smart Pointers" />
+		<meta name="twitter:description" content="Move Semantics and Smart Pointers: C++, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C++, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="functions-and-program-structure.html" class="">Functions and Program Structure</a>
+					</li>
+					<li>
+						<a href="debugging-c-programs.html" class="">Debugging C++ Programs</a>
+					</li>
+					<li>
+						<a href="fundamental-data-types.html" class="">Fundamental Data Types</a>
+					</li>
+					<li>
+						<a href="constants-literals-and-strings.html" class="">Constants, Literals, and Strings</a>
+					</li>
+					<li>
+						<a href="operators.html" class="">Operators</a>
+					</li>
+					<li>
+						<a href="scope-duration-and-linkage.html" class="">Scope, Duration, and Linkage</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="error-detection-and-handling.html" class="">Error Detection and Handling</a>
+					</li>
+					<li>
+						<a href="type-conversion-aliases-and-deduction.html" class="">Type Conversion, Aliases, and Deduction</a>
+					</li>
+					<li>
+						<a href="function-overloading-and-function-templates.html" class="">Function Overloading and Function Templates</a>
+					</li>
+					<li>
+						<a href="constexpr-and-compile-time-evaluation.html" class="">Constexpr and Compile-Time Evaluation</a>
+					</li>
+					<li>
+						<a href="references-and-pointers.html" class="">References and Pointers</a>
+					</li>
+					<li>
+						<a href="enums-and-structs.html" class="">Enums and Structs</a>
+					</li>
+					<li>
+						<a href="compile-time-and-runtime-polymorphism-previewed.html" class="">Compile-Time and Runtime Polymorphism, Previewed</a>
+					</li>
+					<li>
+						<a href="introduction-to-classes.html" class="">Introduction to Classes</a>
+					</li>
+					<li>
+						<a href="more-on-classes.html" class="">More on Classes</a>
+					</li>
+					<li>
+						<a href="dynamic-arrays-std-vector.html" class="">Dynamic Arrays: std::vector</a>
+					</li>
+					<li>
+						<a href="fixed-size-arrays-std-array-and-c-style-arrays.html" class="">Fixed-Size Arrays: std::array and C-style Arrays</a>
+					</li>
+					<li>
+						<a href="iterators-and-algorithms.html" class="">Iterators and Algorithms</a>
+					</li>
+					<li>
+						<a href="dynamic-memory-allocation.html" class="">Dynamic Memory Allocation</a>
+					</li>
+					<li>
+						<a href="lambdas-and-function-objects.html" class="">Lambdas and Function Objects</a>
+					</li>
+					<li>
+						<a href="operator-overloading.html" class="">Operator Overloading</a>
+					</li>
+					<li>
+						<a href="move-semantics-and-smart-pointers.html" class="active">Move Semantics and Smart Pointers</a>
+					</li>
+					<li>
+						<a href="object-relationships.html" class="">Object Relationships</a>
+					</li>
+					<li>
+						<a href="inheritance.html" class="">Inheritance</a>
+					</li>
+					<li>
+						<a href="virtual-functions-and-polymorphism.html" class="">Virtual Functions and Polymorphism</a>
+					</li>
+					<li>
+						<a href="templates-and-generic-classes.html" class="">Templates and Generic Classes</a>
+					</li>
+					<li>
+						<a href="exceptions.html" class="">Exceptions</a>
+					</li>
+					<li>
+						<a href="input-and-output-streams.html" class="">Input and Output Streams</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-c-11-through-23.html" class="">A Tour of Modern C++ (11 Through 23)</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-and-common-pitfalls.html" class="">Idiomatic C++ and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← C++, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C++, End to End</p>
+							<h1>Move Semantics and Smart Pointers</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Everything up to this chapter has treated copying an object as free, conceptually. It isn't. Copying a std::vector with a million elements means allocating a new buffer and copying every element into it. Move semantics exist to let you skip that copy when the source object is about to be discarded anyway.</p>
+					<h3>Lvalues and rvalues</h3>
+					<p>Every expression in C++ has a category, and the two you need are lvalue and rvalue. An lvalue refers to something with a name and a persistent address: a variable, a dereferenced pointer, a function returning a reference. An rvalue is a temporary: the result of x + y, a literal like 42, a function returning by value. The rule of thumb: if you can take its address with &amp;, it's an lvalue.</p>
+					<p>This distinction exists so the compiler can tell the difference between &quot;an object someone else still cares about&quot; and &quot;an object that's about to vanish anyway, so feel free to cannibalize it.&quot;</p>
+					<h3>Rvalue references</h3>
+					<p>T&amp;&amp; is an rvalue reference: a reference that only binds to rvalues (temporaries). It's what lets you write a function overload that specifically handles &quot;this argument is disposable&quot;:</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cutility%3E%0A%0Avoid+greet(const+std%3A%3Astring%26+name)+%7B%0A++++std%3A%3Acout+%3C%3C+%22copying%3A+%22+%3C%3C+name+%3C%3C+%22%5Cn%22%3B%0A%7D%0A%0Avoid+greet(std%3A%3Astring%26%26+name)+%7B%0A++++std%3A%3Acout+%3C%3C+%22moving%3A+%22+%3C%3C+name+%3C%3C+%22%5Cn%22%3B%0A%7D%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+s+%3D+%22Ada%22%3B%0A++++greet(s)%3B++++++++++++//+lvalue%2C+binds+to+const+std%3A%3Astring%26%0A++++greet(std%3A%3Astring(%22Grace%22))%3B+//+rvalue+(temporary)%2C+binds+to+std%3A%3Astring%26%26%0A++++greet(std%3A%3Amove(s))%3B+++++++++//+s+is+now+treated+as+an+rvalue%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cutility%3E%0A%0Avoid+greet(const+std%3A%3Astring%26+name)+%7B%0A++++std%3A%3Acout+%3C%3C+%22copying%3A+%22+%3C%3C+name+%3C%3C+%22%5Cn%22%3B%0A%7D%0A%0Avoid+greet(std%3A%3Astring%26%26+name)+%7B%0A++++std%3A%3Acout+%3C%3C+%22moving%3A+%22+%3C%3C+name+%3C%3C+%22%5Cn%22%3B%0A%7D%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+s+%3D+%22Ada%22%3B%0A++++greet(s)%3B++++++++++++//+lvalue%2C+binds+to+const+std%3A%3Astring%26%0A++++greet(std%3A%3Astring(%22Grace%22))%3B+//+rvalue+(temporary)%2C+binds+to+std%3A%3Astring%26%26%0A++++greet(std%3A%3Amove(s))%3B+++++++++//+s+is+now+treated+as+an+rvalue%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;utility&gt;
+
+void greet(const std::string&amp; name) {
+    std::cout &lt;&lt; &quot;copying: &quot; &lt;&lt; name &lt;&lt; &quot;\n&quot;;
+}
+
+void greet(std::string&amp;&amp; name) {
+    std::cout &lt;&lt; &quot;moving: &quot; &lt;&lt; name &lt;&lt; &quot;\n&quot;;
+}
+
+int main() {
+    std::string s = &quot;Ada&quot;;
+    greet(s);            // lvalue, binds to const std::string&amp;
+    greet(std::string(&quot;Grace&quot;)); // rvalue (temporary), binds to std::string&amp;&amp;
+    greet(std::move(s));         // s is now treated as an rvalue
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>std::move does not move anything</h3>
+					<p>This trips up almost everyone the first time: std::move is a cast, not an action. It doesn't move the object, allocate anything, or free anything. It just tells the compiler &quot;treat this lvalue as an rvalue for overload resolution purposes.&quot; Whether anything is actually moved depends entirely on whether the type you call it on has a move constructor or move assignment operator that does something with that hint.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>After std::move(s), s is left in a valid but unspecified state. You can assign a new value to it or destroy it, but reading its contents is asking for trouble.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Move constructors and move assignment</h3>
+					<p>A move constructor takes ownership of another object's resources instead of copying them, then leaves the source in a safe, empty state. For a class that owns a heap buffer, that usually means: steal the pointer, null out the source's pointer so its destructor doesn't free memory you now own.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Ccstring%3E%0A%0Aclass+Buffer+%7B%0A++++char*+data%3B%0A++++size_t+size%3B%0Apublic%3A%0A++++Buffer(size_t+n)+%3A+data(new+char%5Bn%5D)%2C+size(n)+%7B%0A++++++++std%3A%3Acout+%3C%3C+%22allocated+%22+%3C%3C+n+%3C%3C+%22+bytes%5Cn%22%3B%0A++++%7D%0A%0A++++//+Move+constructor%3A+steal+the+pointer%2C+don%27t+copy+the+bytes.%0A++++Buffer(Buffer%26%26+other)+noexcept+%3A+data(other.data)%2C+size(other.size)+%7B%0A++++++++other.data+%3D+nullptr%3B%0A++++++++other.size+%3D+0%3B%0A++++++++std%3A%3Acout+%3C%3C+%22moved+(no+allocation)%5Cn%22%3B%0A++++%7D%0A%0A++++//+Copy+constructor%3A+actually+duplicate+the+bytes.%0A++++Buffer(const+Buffer%26+other)+%3A+data(new+char%5Bother.size%5D)%2C+size(other.size)+%7B%0A++++++++std%3A%3Amemcpy(data%2C+other.data%2C+size)%3B%0A++++++++std%3A%3Acout+%3C%3C+%22copied+%22+%3C%3C+size+%3C%3C+%22+bytes%5Cn%22%3B%0A++++%7D%0A%0A++++~Buffer()+%7B+delete%5B%5D+data%3B+%7D%0A%7D%3B%0A%0ABuffer+make(size_t+n)+%7B%0A++++return+Buffer(n)%3B+//+returned+by+value%2C+usually+moved+(or+elided)+not+copied%0A%7D%0A%0Aint+main()+%7B%0A++++Buffer+a(1000)%3B%0A++++Buffer+b(std%3A%3Amove(a))%3B+//+explicit+move%3A+cheap%0A++++Buffer+c+%3D+a%3B+++++++++++//+wait%2C+a+was+already+moved+from+above%3B+this+is+legal%0A++++++++++++++++++++++++++++//+but+a+is+empty+now%2C+so+this+copies+zero-ish+state.%0A++++Buffer+d+%3D+make(500)%3B+++//+move/elision+on+return%2C+no+needless+copy%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Ccstring%3E%0A%0Aclass+Buffer+%7B%0A++++char*+data%3B%0A++++size_t+size%3B%0Apublic%3A%0A++++Buffer(size_t+n)+%3A+data(new+char%5Bn%5D)%2C+size(n)+%7B%0A++++++++std%3A%3Acout+%3C%3C+%22allocated+%22+%3C%3C+n+%3C%3C+%22+bytes%5Cn%22%3B%0A++++%7D%0A%0A++++//+Move+constructor%3A+steal+the+pointer%2C+don%27t+copy+the+bytes.%0A++++Buffer(Buffer%26%26+other)+noexcept+%3A+data(other.data)%2C+size(other.size)+%7B%0A++++++++other.data+%3D+nullptr%3B%0A++++++++other.size+%3D+0%3B%0A++++++++std%3A%3Acout+%3C%3C+%22moved+(no+allocation)%5Cn%22%3B%0A++++%7D%0A%0A++++//+Copy+constructor%3A+actually+duplicate+the+bytes.%0A++++Buffer(const+Buffer%26+other)+%3A+data(new+char%5Bother.size%5D)%2C+size(other.size)+%7B%0A++++++++std%3A%3Amemcpy(data%2C+other.data%2C+size)%3B%0A++++++++std%3A%3Acout+%3C%3C+%22copied+%22+%3C%3C+size+%3C%3C+%22+bytes%5Cn%22%3B%0A++++%7D%0A%0A++++~Buffer()+%7B+delete%5B%5D+data%3B+%7D%0A%7D%3B%0A%0ABuffer+make(size_t+n)+%7B%0A++++return+Buffer(n)%3B+//+returned+by+value%2C+usually+moved+(or+elided)+not+copied%0A%7D%0A%0Aint+main()+%7B%0A++++Buffer+a(1000)%3B%0A++++Buffer+b(std%3A%3Amove(a))%3B+//+explicit+move%3A+cheap%0A++++Buffer+c+%3D+a%3B+++++++++++//+wait%2C+a+was+already+moved+from+above%3B+this+is+legal%0A++++++++++++++++++++++++++++//+but+a+is+empty+now%2C+so+this+copies+zero-ish+state.%0A++++Buffer+d+%3D+make(500)%3B+++//+move/elision+on+return%2C+no+needless+copy%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class Buffer {
+    char* data;
+    size_t size;
+public:
+    Buffer(size_t n) : data(new char[n]), size(n) {
+        std::cout &lt;&lt; &quot;allocated &quot; &lt;&lt; n &lt;&lt; &quot; bytes\n&quot;;
+    }
+
+    // Move constructor: steal the pointer, don't copy the bytes.
+    Buffer(Buffer&amp;&amp; other) noexcept : data(other.data), size(other.size) {
+        other.data = nullptr;
+        other.size = 0;
+        std::cout &lt;&lt; &quot;moved (no allocation)\n&quot;;
+    }
+
+    // Copy constructor: actually duplicate the bytes.
+    Buffer(const Buffer&amp; other) : data(new char[other.size]), size(other.size) {
+        std::memcpy(data, other.data, size);
+        std::cout &lt;&lt; &quot;copied &quot; &lt;&lt; size &lt;&lt; &quot; bytes\n&quot;;
+    }
+
+    ~Buffer() { delete[] data; }
+};
+
+Buffer make(size_t n) {
+    return Buffer(n); // returned by value, usually moved (or elided) not copied
+}
+
+int main() {
+    Buffer a(1000);
+    Buffer b(std::move(a)); // explicit move: cheap
+    Buffer c = a;           // wait, a was already moved from above; this is legal
+                            // but a is empty now, so this copies zero-ish state.
+    Buffer d = make(500);   // move/elision on return, no needless copy
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Mark move constructors and move assignment noexcept whenever the operation genuinely can't throw. Containers like std::vector check this: if your move constructor isn't noexcept, vector will fall back to copying during reallocation instead of moving, because it can't safely roll back a partial move if an exception happens partway through.</p>
+					<h3>Why this matters for performance</h3>
+					<p>Before C++11, returning a large object by value or storing it in a vector meant real copies: new allocation, full data copy, then destroying the source. Move semantics turn most of those copies into pointer swaps. This is a big part of why modern C++ code passes and returns heavy objects by value far more casually than pre-2011 code did: the compiler and the standard library quietly move instead of copy in most of the situations where it's safe to.</p>
+					<h3>std::unique_ptr: the default owning smart pointer</h3>
+					<p>A std::unique_ptr&lt;T&gt; owns exactly one object and destroys it when the pointer itself is destroyed. It cannot be copied (there can only ever be one owner), only moved. If you find yourself writing new without immediately wrapping the result in a smart pointer, stop and ask why.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cmemory%3E%0A%0Astruct+Widget+%7B%0A++++Widget()+%7B+std%3A%3Acout+%3C%3C+%22Widget+built%5Cn%22%3B+%7D%0A++++~Widget()+%7B+std%3A%3Acout+%3C%3C+%22Widget+destroyed%5Cn%22%3B+%7D%0A%7D%3B%0A%0Avoid+takeOwnership(std%3A%3Aunique_ptr%3CWidget%3E+w)+%7B%0A++++std%3A%3Acout+%3C%3C+%22using+widget%5Cn%22%3B%0A%7D+//+w+destroyed+here+when+the+function+returns%0A%0Aint+main()+%7B%0A++++auto+w+%3D+std%3A%3Amake_unique%3CWidget%3E()%3B%0A++++takeOwnership(std%3A%3Amove(w))%3B+//+ownership+transferred%2C+w+is+now+null%0A++++std%3A%3Acout+%3C%3C+%22w+is+now+%22+%3C%3C+(w+%3F+%22still+owns+something%22+%3A+%22empty%22)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cmemory%3E%0A%0Astruct+Widget+%7B%0A++++Widget()+%7B+std%3A%3Acout+%3C%3C+%22Widget+built%5Cn%22%3B+%7D%0A++++~Widget()+%7B+std%3A%3Acout+%3C%3C+%22Widget+destroyed%5Cn%22%3B+%7D%0A%7D%3B%0A%0Avoid+takeOwnership(std%3A%3Aunique_ptr%3CWidget%3E+w)+%7B%0A++++std%3A%3Acout+%3C%3C+%22using+widget%5Cn%22%3B%0A%7D+//+w+destroyed+here+when+the+function+returns%0A%0Aint+main()+%7B%0A++++auto+w+%3D+std%3A%3Amake_unique%3CWidget%3E()%3B%0A++++takeOwnership(std%3A%3Amove(w))%3B+//+ownership+transferred%2C+w+is+now+null%0A++++std%3A%3Acout+%3C%3C+%22w+is+now+%22+%3C%3C+(w+%3F+%22still+owns+something%22+%3A+%22empty%22)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+struct Widget {
+    Widget() { std::cout &lt;&lt; &quot;Widget built\n&quot;; }
+    ~Widget() { std::cout &lt;&lt; &quot;Widget destroyed\n&quot;; }
+};
+
+void takeOwnership(std::unique_ptr&lt;Widget&gt; w) {
+    std::cout &lt;&lt; &quot;using widget\n&quot;;
+} // w destroyed here when the function returns
+
+int main() {
+    auto w = std::make_unique&lt;Widget&gt;();
+    takeOwnership(std::move(w)); // ownership transferred, w is now null
+    std::cout &lt;&lt; &quot;w is now &quot; &lt;&lt; (w ? &quot;still owns something&quot; : &quot;empty&quot;) &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Always prefer std::make_unique&lt;T&gt;(args...) over new T(args...) wrapped by hand. It's exception-safe (no window where the raw pointer exists but hasn't been wrapped yet) and it's one less place to typo a mismatched delete.</p>
+					<h3>std::shared_ptr: shared ownership, at a real cost</h3>
+					<p>A std::shared_ptr&lt;T&gt; allows multiple owners; the object is destroyed when the last shared_ptr pointing to it goes away. That flexibility isn't free: every shared_ptr carries a control block with an atomic reference count, copying one means an atomic increment, and destroying one means an atomic decrement plus a check. In a hot path, that overhead is real and measurable.</p>
+					<p>Reach for shared_ptr only when ownership is genuinely shared and unclear who outlives whom. If there's one clear owner, unique_ptr is both cheaper and more honest about the design.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cmemory%3E%0A%0Aint+main()+%7B%0A++++auto+a+%3D+std%3A%3Amake_shared%3Cint%3E(42)%3B%0A++++std%3A%3Acout+%3C%3C+%22use_count%3A+%22+%3C%3C+a.use_count()+%3C%3C+%22%5Cn%22%3B+//+1%0A++++%7B%0A++++++++auto+b+%3D+a%3B+//+shared+ownership%2C+ref+count+goes+up%0A++++++++std%3A%3Acout+%3C%3C+%22use_count%3A+%22+%3C%3C+a.use_count()+%3C%3C+%22%5Cn%22%3B+//+2%0A++++%7D+//+b+destroyed%2C+ref+count+goes+back+down%0A++++std%3A%3Acout+%3C%3C+%22use_count%3A+%22+%3C%3C+a.use_count()+%3C%3C+%22%5Cn%22%3B+//+1%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cmemory%3E%0A%0Aint+main()+%7B%0A++++auto+a+%3D+std%3A%3Amake_shared%3Cint%3E(42)%3B%0A++++std%3A%3Acout+%3C%3C+%22use_count%3A+%22+%3C%3C+a.use_count()+%3C%3C+%22%5Cn%22%3B+//+1%0A++++%7B%0A++++++++auto+b+%3D+a%3B+//+shared+ownership%2C+ref+count+goes+up%0A++++++++std%3A%3Acout+%3C%3C+%22use_count%3A+%22+%3C%3C+a.use_count()+%3C%3C+%22%5Cn%22%3B+//+2%0A++++%7D+//+b+destroyed%2C+ref+count+goes+back+down%0A++++std%3A%3Acout+%3C%3C+%22use_count%3A+%22+%3C%3C+a.use_count()+%3C%3C+%22%5Cn%22%3B+//+1%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+int main() {
+    auto a = std::make_shared&lt;int&gt;(42);
+    std::cout &lt;&lt; &quot;use_count: &quot; &lt;&lt; a.use_count() &lt;&lt; &quot;\n&quot;; // 1
+    {
+        auto b = a; // shared ownership, ref count goes up
+        std::cout &lt;&lt; &quot;use_count: &quot; &lt;&lt; a.use_count() &lt;&lt; &quot;\n&quot;; // 2
+    } // b destroyed, ref count goes back down
+    std::cout &lt;&lt; &quot;use_count: &quot; &lt;&lt; a.use_count() &lt;&lt; &quot;\n&quot;; // 1
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>std::weak_ptr: breaking reference cycles</h3>
+					<p>Two objects holding shared_ptrs to each other will never reach a reference count of zero: a cycle. std::weak_ptr observes an object managed by shared_ptr without contributing to its reference count, which breaks the cycle. You can't dereference a weak_ptr directly; you call .lock() to get a temporary shared_ptr, which is null if the object's already gone.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cmemory%3E%0A%0Astruct+Node+%7B%0A++++std%3A%3Ashared_ptr%3CNode%3E+next%3B%0A++++std%3A%3Aweak_ptr%3CNode%3E+prev%3B+//+weak%3A+doesn%27t+keep+prev+alive+artificially%0A++++~Node()+%7B+std%3A%3Acout+%3C%3C+%22Node+destroyed%5Cn%22%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++auto+a+%3D+std%3A%3Amake_shared%3CNode%3E()%3B%0A++++auto+b+%3D+std%3A%3Amake_shared%3CNode%3E()%3B%0A++++a-%3Enext+%3D+b%3B%0A++++b-%3Eprev+%3D+a%3B+//+if+this+were+shared_ptr+instead+of+weak_ptr%2C+neither+would+ever+be+destroyed%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cmemory%3E%0A%0Astruct+Node+%7B%0A++++std%3A%3Ashared_ptr%3CNode%3E+next%3B%0A++++std%3A%3Aweak_ptr%3CNode%3E+prev%3B+//+weak%3A+doesn%27t+keep+prev+alive+artificially%0A++++~Node()+%7B+std%3A%3Acout+%3C%3C+%22Node+destroyed%5Cn%22%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++auto+a+%3D+std%3A%3Amake_shared%3CNode%3E()%3B%0A++++auto+b+%3D+std%3A%3Amake_shared%3CNode%3E()%3B%0A++++a-%3Enext+%3D+b%3B%0A++++b-%3Eprev+%3D+a%3B+//+if+this+were+shared_ptr+instead+of+weak_ptr%2C+neither+would+ever+be+destroyed%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+struct Node {
+    std::shared_ptr&lt;Node&gt; next;
+    std::weak_ptr&lt;Node&gt; prev; // weak: doesn't keep prev alive artificially
+    ~Node() { std::cout &lt;&lt; &quot;Node destroyed\n&quot;; }
+};
+
+int main() {
+    auto a = std::make_shared&lt;Node&gt;();
+    auto b = std::make_shared&lt;Node&gt;();
+    a-&gt;next = b;
+    b-&gt;prev = a; // if this were shared_ptr instead of weak_ptr, neither would ever be destroyed
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>When a raw pointer is still fine</h3>
+					<p>Raw pointers aren't banned, they're just no longer the default for ownership. A raw T* or a reference is exactly right when you're observing an object you don't own and whose lifetime you know outlives your use of it: a function parameter that just reads or modifies something the caller owns, for instance. The rule: raw pointers for non-owning access, smart pointers for ownership.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: fix a use-after-move bug<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>The function below moves data out of a Config object, then tries to read from it afterward. Run it, watch what happens (it may print an empty string, or it may not crash at all, which is exactly the danger of &quot;valid but unspecified&quot;), then fix it by not reading from the moved-from object.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%23include+%3Cutility%3E%0A%0Astruct+Config+%7B%0A++++std%3A%3Astring+name%3B%0A%7D%3B%0A%0Avoid+process(Config+cfg)+%7B%0A++++std%3A%3Astring+stolen+%3D+std%3A%3Amove(cfg.name)%3B%0A++++std%3A%3Acout+%3C%3C+%22stolen%3A+%22+%3C%3C+stolen+%3C%3C+%22%5Cn%22%3B%0A++++std%3A%3Acout+%3C%3C+%22cfg.name+is+now%3A+%27%22+%3C%3C+cfg.name+%3C%3C+%22%27%5Cn%22%3B+//+reading+a+moved-from+object%0A%7D%0A%0Aint+main()+%7B%0A++++Config+c%7B%22production-db%22%7D%3B%0A++++process(c)%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%23include+%3Cutility%3E%0A%0Astruct+Config+%7B%0A++++std%3A%3Astring+name%3B%0A%7D%3B%0A%0Avoid+process(Config+cfg)+%7B%0A++++std%3A%3Astring+stolen+%3D+std%3A%3Amove(cfg.name)%3B%0A++++std%3A%3Acout+%3C%3C+%22stolen%3A+%22+%3C%3C+stolen+%3C%3C+%22%5Cn%22%3B%0A++++std%3A%3Acout+%3C%3C+%22cfg.name+is+now%3A+%27%22+%3C%3C+cfg.name+%3C%3C+%22%27%5Cn%22%3B+//+reading+a+moved-from+object%0A%7D%0A%0Aint+main()+%7B%0A++++Config+c%7B%22production-db%22%7D%3B%0A++++process(c)%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;utility&gt;
+
+struct Config {
+    std::string name;
+};
+
+void process(Config cfg) {
+    std::string stolen = std::move(cfg.name);
+    std::cout &lt;&lt; &quot;stolen: &quot; &lt;&lt; stolen &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; &quot;cfg.name is now: '&quot; &lt;&lt; cfg.name &lt;&lt; &quot;'\n&quot;; // reading a moved-from object
+}
+
+int main() {
+    Config c{&quot;production-db&quot;};
+    process(c);
+}
+</pre></noscript></div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

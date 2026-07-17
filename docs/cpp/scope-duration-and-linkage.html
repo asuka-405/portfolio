@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Scope, Duration, and Linkage: C++, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Scope, Duration, and Linkage · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/cpp/scope-duration-and-linkage.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Scope, Duration, and Linkage" />
+		<meta property="og:description" content="Scope, Duration, and Linkage: C++, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/cpp/scope-duration-and-linkage.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Scope, Duration, and Linkage" />
+		<meta name="twitter:description" content="Scope, Duration, and Linkage: C++, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C++, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="functions-and-program-structure.html" class="">Functions and Program Structure</a>
+					</li>
+					<li>
+						<a href="debugging-c-programs.html" class="">Debugging C++ Programs</a>
+					</li>
+					<li>
+						<a href="fundamental-data-types.html" class="">Fundamental Data Types</a>
+					</li>
+					<li>
+						<a href="constants-literals-and-strings.html" class="">Constants, Literals, and Strings</a>
+					</li>
+					<li>
+						<a href="operators.html" class="">Operators</a>
+					</li>
+					<li>
+						<a href="scope-duration-and-linkage.html" class="active">Scope, Duration, and Linkage</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="error-detection-and-handling.html" class="">Error Detection and Handling</a>
+					</li>
+					<li>
+						<a href="type-conversion-aliases-and-deduction.html" class="">Type Conversion, Aliases, and Deduction</a>
+					</li>
+					<li>
+						<a href="function-overloading-and-function-templates.html" class="">Function Overloading and Function Templates</a>
+					</li>
+					<li>
+						<a href="constexpr-and-compile-time-evaluation.html" class="">Constexpr and Compile-Time Evaluation</a>
+					</li>
+					<li>
+						<a href="references-and-pointers.html" class="">References and Pointers</a>
+					</li>
+					<li>
+						<a href="enums-and-structs.html" class="">Enums and Structs</a>
+					</li>
+					<li>
+						<a href="compile-time-and-runtime-polymorphism-previewed.html" class="">Compile-Time and Runtime Polymorphism, Previewed</a>
+					</li>
+					<li>
+						<a href="introduction-to-classes.html" class="">Introduction to Classes</a>
+					</li>
+					<li>
+						<a href="more-on-classes.html" class="">More on Classes</a>
+					</li>
+					<li>
+						<a href="dynamic-arrays-std-vector.html" class="">Dynamic Arrays: std::vector</a>
+					</li>
+					<li>
+						<a href="fixed-size-arrays-std-array-and-c-style-arrays.html" class="">Fixed-Size Arrays: std::array and C-style Arrays</a>
+					</li>
+					<li>
+						<a href="iterators-and-algorithms.html" class="">Iterators and Algorithms</a>
+					</li>
+					<li>
+						<a href="dynamic-memory-allocation.html" class="">Dynamic Memory Allocation</a>
+					</li>
+					<li>
+						<a href="lambdas-and-function-objects.html" class="">Lambdas and Function Objects</a>
+					</li>
+					<li>
+						<a href="operator-overloading.html" class="">Operator Overloading</a>
+					</li>
+					<li>
+						<a href="move-semantics-and-smart-pointers.html" class="">Move Semantics and Smart Pointers</a>
+					</li>
+					<li>
+						<a href="object-relationships.html" class="">Object Relationships</a>
+					</li>
+					<li>
+						<a href="inheritance.html" class="">Inheritance</a>
+					</li>
+					<li>
+						<a href="virtual-functions-and-polymorphism.html" class="">Virtual Functions and Polymorphism</a>
+					</li>
+					<li>
+						<a href="templates-and-generic-classes.html" class="">Templates and Generic Classes</a>
+					</li>
+					<li>
+						<a href="exceptions.html" class="">Exceptions</a>
+					</li>
+					<li>
+						<a href="input-and-output-streams.html" class="">Input and Output Streams</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-c-11-through-23.html" class="">A Tour of Modern C++ (11 Through 23)</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-and-common-pitfalls.html" class="">Idiomatic C++ and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← C++, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C++, End to End</p>
+							<h1>Scope, Duration, and Linkage</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Three separate, orthogonal properties govern every named entity in a C++ program: scope (where the name is visible), storage duration (how long the object actually lives in memory), and linkage (whether the same name in a different file refers to the same entity). They get conflated constantly, and keeping them separate in your head clears up a lot of confusion later.</p>
+					<h3>Scope: where a name is visible</h3>
+					<p>A name declared inside a block ({ }) has block (local) scope: visible from its declaration to the end of that enclosing block, and invisible outside it. A name declared at file scope, outside any function, has global scope: visible from its declaration to the end of the file (and beyond, if declared extern and linked to from elsewhere, see linkage below).</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+global+%3D+100%3B++//+global+scope%0A%0Avoid+f()+%7B%0A++++int+local+%3D+5%3B++//+block+scope%3A+only+visible+inside+f%0A++++std%3A%3Acout+%3C%3C+local+%3C%3C+%22+%22+%3C%3C+global+%3C%3C+%22%5Cn%22%3B%0A%7D%0A%0Aint+main()+%7B%0A++++f()%3B%0A++++//+std%3A%3Acout+%3C%3C+local%3B++//+error%3A+local+isn%27t+visible+here%0A++++std%3A%3Acout+%3C%3C+global+%3C%3C+%22%5Cn%22%3B++//+fine%3A+global+scope+reaches+main+too%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+global+%3D+100%3B++//+global+scope%0A%0Avoid+f()+%7B%0A++++int+local+%3D+5%3B++//+block+scope%3A+only+visible+inside+f%0A++++std%3A%3Acout+%3C%3C+local+%3C%3C+%22+%22+%3C%3C+global+%3C%3C+%22%5Cn%22%3B%0A%7D%0A%0Aint+main()+%7B%0A++++f()%3B%0A++++//+std%3A%3Acout+%3C%3C+local%3B++//+error%3A+local+isn%27t+visible+here%0A++++std%3A%3Acout+%3C%3C+global+%3C%3C+%22%5Cn%22%3B++//+fine%3A+global+scope+reaches+main+too%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int global = 100;  // global scope
+
+void f() {
+    int local = 5;  // block scope: only visible inside f
+    std::cout &lt;&lt; local &lt;&lt; &quot; &quot; &lt;&lt; global &lt;&lt; &quot;\n&quot;;
+}
+
+int main() {
+    f();
+    // std::cout &lt;&lt; local;  // error: local isn't visible here
+    std::cout &lt;&lt; global &lt;&lt; &quot;\n&quot;;  // fine: global scope reaches main too
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Nested blocks can shadow an outer name: a local variable with the same name as a global (or an outer local) temporarily hides it for the rest of that inner block. This compiles, and most compilers warn about it with -Wshadow, precisely because it's a frequent source of &quot;why did that use the wrong value&quot; bugs.</p>
+					<h3>Storage duration: how long an object actually lives</h3>
+					<ul><li>Automatic duration: the default for local variables. Created when execution reaches the declaration, destroyed when the enclosing block ends. This is what makes a local variable's address unsafe to return or store past the function's lifetime.</li><li>Static duration: created once, before main runs, and destroyed once, after main returns. Global variables always have this. A local variable can opt into it with the static keyword, in which case it keeps its value between calls instead of being recreated each time.</li><li>Dynamic duration: created explicitly with new, destroyed explicitly with delete (or, in modern C++, managed automatically by a smart pointer, covered in a much later chapter). This is the only duration where you, not the compiler, are responsible for ending the object's life.</li></ul>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Avoid+counter()+%7B%0A++++static+int+calls+%3D+0%3B++//+initialized+once%2C+ever%3B+persists+across+calls%0A++++calls%2B%2B%3B%0A++++std%3A%3Acout+%3C%3C+%22called+%22+%3C%3C+calls+%3C%3C+%22+time(s)%5Cn%22%3B%0A%7D%0A%0Aint+main()+%7B%0A++++counter()%3B%0A++++counter()%3B%0A++++counter()%3B++//+prints+1%2C+2%2C+3%2C+not+1%2C+1%2C+1%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Avoid+counter()+%7B%0A++++static+int+calls+%3D+0%3B++//+initialized+once%2C+ever%3B+persists+across+calls%0A++++calls%2B%2B%3B%0A++++std%3A%3Acout+%3C%3C+%22called+%22+%3C%3C+calls+%3C%3C+%22+time(s)%5Cn%22%3B%0A%7D%0A%0Aint+main()+%7B%0A++++counter()%3B%0A++++counter()%3B%0A++++counter()%3B++//+prints+1%2C+2%2C+3%2C+not+1%2C+1%2C+1%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+void counter() {
+    static int calls = 0;  // initialized once, ever; persists across calls
+    calls++;
+    std::cout &lt;&lt; &quot;called &quot; &lt;&lt; calls &lt;&lt; &quot; time(s)\n&quot;;
+}
+
+int main() {
+    counter();
+    counter();
+    counter();  // prints 1, 2, 3, not 1, 1, 1
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Returning a reference or pointer to a local variable is a classic bug directly caused by mixing up scope and storage duration: the name goes out of scope at the closing brace, and the automatic-duration object it referred to is destroyed at that exact same point, so the returned reference/pointer is left dangling.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint%26+brokenFunction()+%7B%0A++++int+local+%3D+42%3B%0A++++return+local%3B++//+compiles+with+a+warning%3B+the+returned+reference+dangles+immediately%0A%7D%0A%0Aint+main()+%7B%0A++++int%26+r+%3D+brokenFunction()%3B%0A++++std%3A%3Acout+%3C%3C+r+%3C%3C+%22%5Cn%22%3B++//+undefined+behavior%3A+reads+a+destroyed+object%27s+old+memory%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint%26+brokenFunction()+%7B%0A++++int+local+%3D+42%3B%0A++++return+local%3B++//+compiles+with+a+warning%3B+the+returned+reference+dangles+immediately%0A%7D%0A%0Aint+main()+%7B%0A++++int%26+r+%3D+brokenFunction()%3B%0A++++std%3A%3Acout+%3C%3C+r+%3C%3C+%22%5Cn%22%3B++//+undefined+behavior%3A+reads+a+destroyed+object%27s+old+memory%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int&amp; brokenFunction() {
+    int local = 42;
+    return local;  // compiles with a warning; the returned reference dangles immediately
+}
+
+int main() {
+    int&amp; r = brokenFunction();
+    std::cout &lt;&lt; r &lt;&lt; &quot;\n&quot;;  // undefined behavior: reads a destroyed object's old memory
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: run the dangling-reference example above and read the actual compiler warning it produces (most compilers do catch this specific case). Then fix it by returning by value instead of by reference, and notice the warning disappears because a returned value is copied out before the local is destroyed.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Internal versus external linkage</h3>
+					<p>Linkage only applies to names at file scope (globals, free functions), never to locals. A name with external linkage refers to the same single entity across every translation unit that declares it (this is what lets main.cpp call a function defined in a different .cpp file, as in the previous chapter). A name with internal linkage is private to its own translation unit: the same name in a different file is a completely separate, unrelated entity, even if it happens to be spelled identically.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// file_a.cpp</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">static</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> counter </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">   // internal linkage: this counter is private to file_a.cpp</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> sharedValue </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 10</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">     // external linkage (the default for non-const globals):</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">                          // visible to other files via an extern declaration</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>static, applied to a global variable or a free function (not a class member, where static means something else entirely, covered in the classes chapters), gives it internal linkage. It's a genuinely useful tool for a helper function or a variable that's an implementation detail of one .cpp file and should never accidentally collide with a same-named symbol somewhere else in the program. const globals get internal linkage by default in C++, unlike in C, specifically because giving every const global external linkage by default would make simple header constants a linker-error minefield.</p>
+					<h3>Namespaces</h3>
+					<p>A namespace groups related names under a common prefix, which is the language's actual mechanism for avoiding name collisions across a large program or between separate libraries (&quot;my_math::add&quot; and &quot;their_math::add&quot; can coexist without conflict, where two bare global &quot;add&quot; functions could not).</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Anamespace+geometry+%7B%0A++++double+pi+%3D+3.14159%3B%0A%0A++++double+circleArea(double+radius)+%7B%0A++++++++return+pi+*+radius+*+radius%3B%0A++++%7D%0A%7D%0A%0Aint+main()+%7B%0A++++std%3A%3Acout+%3C%3C+geometry%3A%3AcircleArea(2.0)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Anamespace+geometry+%7B%0A++++double+pi+%3D+3.14159%3B%0A%0A++++double+circleArea(double+radius)+%7B%0A++++++++return+pi+*+radius+*+radius%3B%0A++++%7D%0A%7D%0A%0Aint+main()+%7B%0A++++std%3A%3Acout+%3C%3C+geometry%3A%3AcircleArea(2.0)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+namespace geometry {
+    double pi = 3.14159;
+
+    double circleArea(double radius) {
+        return pi * radius * radius;
+    }
+}
+
+int main() {
+    std::cout &lt;&lt; geometry::circleArea(2.0) &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Namespaces can nest (geometry::shapes::circleArea), and can be reopened across multiple files, letting a single logical namespace span an entire library. An anonymous namespace (namespace { ... }, no name) gives everything inside it internal linkage automatically, and in modern C++ it's generally preferred over scattering static in front of individual declarations, since it applies uniformly to everything inside without repetition.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Anamespace+%7B%0A++++int+helper()+%7B+return+42%3B+%7D++//+internal+linkage%3A+private+to+this+file%2C+same+effect+as%0A%7D++++++++++++++++++++++++++++++++++//+marking+it+static+individually%2C+but+scales+to+many+names%0A%0Aint+main()+%7B%0A++++std%3A%3Acout+%3C%3C+helper()+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Anamespace+%7B%0A++++int+helper()+%7B+return+42%3B+%7D++//+internal+linkage%3A+private+to+this+file%2C+same+effect+as%0A%7D++++++++++++++++++++++++++++++++++//+marking+it+static+individually%2C+but+scales+to+many+names%0A%0Aint+main()+%7B%0A++++std%3A%3Acout+%3C%3C+helper()+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+namespace {
+    int helper() { return 42; }  // internal linkage: private to this file, same effect as
+}                                  // marking it static individually, but scales to many names
+
+int main() {
+    std::cout &lt;&lt; helper() &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>The static initialization order fiasco</h3>
+					<p>Global variables with static duration are initialized before main runs, but the standard only guarantees a specific order for globals within the same translation unit (in declaration order). Across different translation units, the order is unspecified. If one global's initializer depends on another global defined in a different .cpp file, there's a real chance it runs before that other global has been initialized, silently reading a zero-initialized (or otherwise not-yet-set) value.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// file_a.cpp</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> a </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 10</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span></code></pre></div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// file_b.cpp</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">extern</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> a;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> b </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> a </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 2</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">  // UNDEFINED whether a is 10 or 0 here, depending on link order,</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">                // which depends on your build system, not your source code</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>This is exactly the kind of bug that works fine for months and then breaks the moment someone reorders source files in a build script or switches compilers. The practical fix, when a global genuinely must depend on another global's value, is to wrap it in a function returning a local static instead: a local static is guaranteed to be initialized the first time control passes through its declaration, which sidesteps the whole cross-file ordering problem.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint%26+getA()+%7B%0A++++static+int+a+%3D+10%3B++//+initialized+on+first+call%2C+guaranteed%2C+regardless+of+link+order%0A++++return+a%3B%0A%7D%0A%0Aint+b+%3D+getA()+*+2%3B++//+safe%3A+calling+getA()+forces+a%27s+initialization+first%2C%0A++++++++++++++++++++++//+sidestepping+the+cross-file+ordering+problem+entirely%0A%0Aint+main()+%7B%0A++++std%3A%3Acout+%3C%3C+b+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint%26+getA()+%7B%0A++++static+int+a+%3D+10%3B++//+initialized+on+first+call%2C+guaranteed%2C+regardless+of+link+order%0A++++return+a%3B%0A%7D%0A%0Aint+b+%3D+getA()+*+2%3B++//+safe%3A+calling+getA()+forces+a%27s+initialization+first%2C%0A++++++++++++++++++++++//+sidestepping+the+cross-file+ordering+problem+entirely%0A%0Aint+main()+%7B%0A++++std%3A%3Acout+%3C%3C+b+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int&amp; getA() {
+    static int a = 10;  // initialized on first call, guaranteed, regardless of link order
+    return a;
+}
+
+int b = getA() * 2;  // safe: calling getA() forces a's initialization first,
+                      // sidestepping the cross-file ordering problem entirely
+
+int main() {
+    std::cout &lt;&lt; b &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: this one is worth reading rather than running, since the bug it describes is nondeterministic by nature. Write down, in your own words, why a local static sidesteps the cross-file ordering problem that a plain global doesn't. If you can explain why, you understand the actual mechanism, not just the workaround.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

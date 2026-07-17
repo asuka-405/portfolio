@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Introduction to Classes: C++, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Introduction to Classes · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/cpp/introduction-to-classes.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Introduction to Classes" />
+		<meta property="og:description" content="Introduction to Classes: C++, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/cpp/introduction-to-classes.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Introduction to Classes" />
+		<meta name="twitter:description" content="Introduction to Classes: C++, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C++, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="functions-and-program-structure.html" class="">Functions and Program Structure</a>
+					</li>
+					<li>
+						<a href="debugging-c-programs.html" class="">Debugging C++ Programs</a>
+					</li>
+					<li>
+						<a href="fundamental-data-types.html" class="">Fundamental Data Types</a>
+					</li>
+					<li>
+						<a href="constants-literals-and-strings.html" class="">Constants, Literals, and Strings</a>
+					</li>
+					<li>
+						<a href="operators.html" class="">Operators</a>
+					</li>
+					<li>
+						<a href="scope-duration-and-linkage.html" class="">Scope, Duration, and Linkage</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="error-detection-and-handling.html" class="">Error Detection and Handling</a>
+					</li>
+					<li>
+						<a href="type-conversion-aliases-and-deduction.html" class="">Type Conversion, Aliases, and Deduction</a>
+					</li>
+					<li>
+						<a href="function-overloading-and-function-templates.html" class="">Function Overloading and Function Templates</a>
+					</li>
+					<li>
+						<a href="constexpr-and-compile-time-evaluation.html" class="">Constexpr and Compile-Time Evaluation</a>
+					</li>
+					<li>
+						<a href="references-and-pointers.html" class="">References and Pointers</a>
+					</li>
+					<li>
+						<a href="enums-and-structs.html" class="">Enums and Structs</a>
+					</li>
+					<li>
+						<a href="compile-time-and-runtime-polymorphism-previewed.html" class="">Compile-Time and Runtime Polymorphism, Previewed</a>
+					</li>
+					<li>
+						<a href="introduction-to-classes.html" class="active">Introduction to Classes</a>
+					</li>
+					<li>
+						<a href="more-on-classes.html" class="">More on Classes</a>
+					</li>
+					<li>
+						<a href="dynamic-arrays-std-vector.html" class="">Dynamic Arrays: std::vector</a>
+					</li>
+					<li>
+						<a href="fixed-size-arrays-std-array-and-c-style-arrays.html" class="">Fixed-Size Arrays: std::array and C-style Arrays</a>
+					</li>
+					<li>
+						<a href="iterators-and-algorithms.html" class="">Iterators and Algorithms</a>
+					</li>
+					<li>
+						<a href="dynamic-memory-allocation.html" class="">Dynamic Memory Allocation</a>
+					</li>
+					<li>
+						<a href="lambdas-and-function-objects.html" class="">Lambdas and Function Objects</a>
+					</li>
+					<li>
+						<a href="operator-overloading.html" class="">Operator Overloading</a>
+					</li>
+					<li>
+						<a href="move-semantics-and-smart-pointers.html" class="">Move Semantics and Smart Pointers</a>
+					</li>
+					<li>
+						<a href="object-relationships.html" class="">Object Relationships</a>
+					</li>
+					<li>
+						<a href="inheritance.html" class="">Inheritance</a>
+					</li>
+					<li>
+						<a href="virtual-functions-and-polymorphism.html" class="">Virtual Functions and Polymorphism</a>
+					</li>
+					<li>
+						<a href="templates-and-generic-classes.html" class="">Templates and Generic Classes</a>
+					</li>
+					<li>
+						<a href="exceptions.html" class="">Exceptions</a>
+					</li>
+					<li>
+						<a href="input-and-output-streams.html" class="">Input and Output Streams</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-c-11-through-23.html" class="">A Tour of Modern C++ (11 Through 23)</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-and-common-pitfalls.html" class="">Idiomatic C++ and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← C++, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C++, End to End</p>
+							<h1>Introduction to Classes</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Everything up to this point has been about data and functions as separate things. A class bundles both together: the data that describes an object, and the functions that operate on it, in one type.</p>
+					<p>A <code>struct</code> and a <code>class</code> in C++ are almost the same thing. The only difference is the default access level: members of a <code>struct</code> are public unless you say otherwise, members of a <code>class</code> are private unless you say otherwise. Everything else, constructors, member functions, inheritance, applies equally to both. The convention is to use <code>struct</code> for plain data with no invariants to protect, and <code>class</code> when you're bundling behavior and enforcing rules about what states the object can be in.</p>
+					<h3>Member variables and member functions</h3>
+					<p>A member variable belongs to each instance of the class. A member function is a function that has implicit access to a particular instance's member variables, without you needing to pass that instance in as an argument.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aclass+Point+%7B%0Apublic%3A%0A++++double+x%3B%0A++++double+y%3B%0A%0A++++double+distanceFromOrigin()+const+%7B%0A++++++++return+std%3A%3Asqrt(x+*+x+%2B+y+*+y)%3B%0A++++%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Point+p%7B3.0%2C+4.0%7D%3B%0A++++std%3A%3Acout+%3C%3C+p.distanceFromOrigin()+%3C%3C+%22%5Cn%22%3B+//+5%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aclass+Point+%7B%0Apublic%3A%0A++++double+x%3B%0A++++double+y%3B%0A%0A++++double+distanceFromOrigin()+const+%7B%0A++++++++return+std%3A%3Asqrt(x+*+x+%2B+y+*+y)%3B%0A++++%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Point+p%7B3.0%2C+4.0%7D%3B%0A++++std%3A%3Acout+%3C%3C+p.distanceFromOrigin()+%3C%3C+%22%5Cn%22%3B+//+5%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+class Point {
+public:
+    double x;
+    double y;
+
+    double distanceFromOrigin() const {
+        return std::sqrt(x * x + y * y);
+    }
+};
+
+int main() {
+    Point p{3.0, 4.0};
+    std::cout &lt;&lt; p.distanceFromOrigin() &lt;&lt; &quot;\n&quot;; // 5
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Inside <code>distanceFromOrigin</code>, <code>x</code> and <code>y</code> refer to the member variables of whichever <code>Point</code> object the function was called on. There's no explicit parameter for that object because it's passed implicitly.</p>
+					<h3>The implicit <code>this</code> pointer</h3>
+					<p>Every non-static member function secretly takes an extra parameter: a pointer to the object it was called on, named <code>this</code>. You almost never need to write <code>this</code> explicitly, but it explains a few things that otherwise look like magic: how the compiler knows which object's <code>x</code> you mean, and why a member function can return <code>*this</code> to support chaining.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Counter+%7B%0A++++int+count+%3D+0%3B%0Apublic%3A%0A++++Counter%26+increment()+%7B%0A++++++++%2B%2Bthis-%3Ecount%3B+//+%22this-%3Ecount%22+and+%22count%22+mean+the+same+thing+here%0A++++++++return+*this%3B++//+return+a+reference+to+the+current+object%0A++++%7D%0A++++int+value()+const+%7B+return+count%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Counter+c%3B%0A++++c.increment().increment().increment()%3B+//+chained+because+increment()+returns+Counter%26%0A++++std%3A%3Acout+%3C%3C+c.value()+%3C%3C+%22%5Cn%22%3B+//+3%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Counter+%7B%0A++++int+count+%3D+0%3B%0Apublic%3A%0A++++Counter%26+increment()+%7B%0A++++++++%2B%2Bthis-%3Ecount%3B+//+%22this-%3Ecount%22+and+%22count%22+mean+the+same+thing+here%0A++++++++return+*this%3B++//+return+a+reference+to+the+current+object%0A++++%7D%0A++++int+value()+const+%7B+return+count%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Counter+c%3B%0A++++c.increment().increment().increment()%3B+//+chained+because+increment()+returns+Counter%26%0A++++std%3A%3Acout+%3C%3C+c.value()+%3C%3C+%22%5Cn%22%3B+//+3%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+class Counter {
+    int count = 0;
+public:
+    Counter&amp; increment() {
+        ++this-&gt;count; // &quot;this-&gt;count&quot; and &quot;count&quot; mean the same thing here
+        return *this;  // return a reference to the current object
+    }
+    int value() const { return count; }
+};
+
+int main() {
+    Counter c;
+    c.increment().increment().increment(); // chained because increment() returns Counter&amp;
+    std::cout &lt;&lt; c.value() &lt;&lt; &quot;\n&quot;; // 3
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>Constructors</h3>
+					<p>A constructor is a special member function that runs when an object is created. Its job is to establish the object's invariants, whatever must be true about its state for the rest of the class to work correctly. If a type has no sensible &quot;default&quot; state, don't give it a default constructor; make the caller supply what's needed.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aclass+Rectangle+%7B%0A++++double+width%3B%0A++++double+height%3B%0Apublic%3A%0A++++Rectangle(double+w%2C+double+h)+%3A+width(w)%2C+height(h)+%7B%7D%0A%0A++++double+area()+const+%7B+return+width+*+height%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Rectangle+r(3.0%2C+4.0)%3B%0A++++std%3A%3Acout+%3C%3C+r.area()+%3C%3C+%22%5Cn%22%3B+//+12%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aclass+Rectangle+%7B%0A++++double+width%3B%0A++++double+height%3B%0Apublic%3A%0A++++Rectangle(double+w%2C+double+h)+%3A+width(w)%2C+height(h)+%7B%7D%0A%0A++++double+area()+const+%7B+return+width+*+height%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Rectangle+r(3.0%2C+4.0)%3B%0A++++std%3A%3Acout+%3C%3C+r.area()+%3C%3C+%22%5Cn%22%3B+//+12%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+class Rectangle {
+    double width;
+    double height;
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+
+    double area() const { return width * height; }
+};
+
+int main() {
+    Rectangle r(3.0, 4.0);
+    std::cout &lt;&lt; r.area() &lt;&lt; &quot;\n&quot;; // 12
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>Member initializer lists</strong></p>
+					<p>The <code>: width(w), height(h)</code> part is a member initializer list. It runs before the constructor body and directly initializes each member. This isn't just style. Two categories of members can only be set this way, never by assignment inside the body:</p>
+					<ul><li><code>const</code> members: once a <code>const</code> member is default-constructed (left uninitialized), you can never assign to it, so it must be initialized in the list.</li><li>Reference members: a reference must be bound to something at the moment it's created; there's no such thing as an unbound reference to assign to later.</li></ul>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Named+%7B%0A++++const+int+id%3B%0A++++std%3A%3Astring%26+logRef%3B%0Apublic%3A%0A++++Named(int+i%2C+std%3A%3Astring%26+log)+%3A+id(i)%2C+logRef(log)+%7B%0A++++++++//+id+%3D+i%3B++++++would+not+compile%3A+can%27t+assign+to+a+const+member%0A++++++++//+logRef+%3D+log%3B+would+not+compile+the+same+way+for+a+reference+member%0A++++%7D%0A++++int+getId()+const+%7B+return+id%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+log+%3D+%22log%22%3B%0A++++Named+n(42%2C+log)%3B%0A++++std%3A%3Acout+%3C%3C+n.getId()+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Named+%7B%0A++++const+int+id%3B%0A++++std%3A%3Astring%26+logRef%3B%0Apublic%3A%0A++++Named(int+i%2C+std%3A%3Astring%26+log)+%3A+id(i)%2C+logRef(log)+%7B%0A++++++++//+id+%3D+i%3B++++++would+not+compile%3A+can%27t+assign+to+a+const+member%0A++++++++//+logRef+%3D+log%3B+would+not+compile+the+same+way+for+a+reference+member%0A++++%7D%0A++++int+getId()+const+%7B+return+id%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+log+%3D+%22log%22%3B%0A++++Named+n(42%2C+log)%3B%0A++++std%3A%3Acout+%3C%3C+n.getId()+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+class Named {
+    const int id;
+    std::string&amp; logRef;
+public:
+    Named(int i, std::string&amp; log) : id(i), logRef(log) {
+        // id = i;      would not compile: can't assign to a const member
+        // logRef = log; would not compile the same way for a reference member
+    }
+    int getId() const { return id; }
+};
+
+int main() {
+    std::string log = &quot;log&quot;;
+    Named n(42, log);
+    std::cout &lt;&lt; n.getId() &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>There's a second, subtler reason to prefer the initializer list even for ordinary members: members are always initialized in the order they're declared in the class, not the order they appear in the initializer list. If member B's initialization depends on member A already having a value, list order won't save you if the declaration order is wrong. Some compilers warn about this (-Wreorder), and it's worth keeping on.</p>
+				</div>
+
+<div class="prose reveal">
+					<p><strong>Default and parameterized constructors, together</strong></p>
+					<p>A class can have multiple constructors, overloaded like any other function. If you provide a parameterized constructor and still want a no-argument way to create the object, you have to write the default constructor explicitly. It's not there for free once you've added any other constructor.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Vector2D+%7B%0A++++double+x%2C+y%3B%0Apublic%3A%0A++++Vector2D()+%3A+x(0)%2C+y(0)+%7B%7D++++++++++++++++++//+default+constructor%0A++++Vector2D(double+x_%2C+double+y_)+%3A+x(x_)%2C+y(y_)+%7B%7D+//+parameterized%0A%0A++++void+print()+const+%7B+std%3A%3Acout+%3C%3C+%22(%22+%3C%3C+x+%3C%3C+%22%2C+%22+%3C%3C+y+%3C%3C+%22)%5Cn%22%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Vector2D+origin%3B+++++++++//+uses+the+default+constructor%0A++++Vector2D+point(1.0%2C+2.0)%3B+//+uses+the+parameterized+one%0A++++origin.print()%3B%0A++++point.print()%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Vector2D+%7B%0A++++double+x%2C+y%3B%0Apublic%3A%0A++++Vector2D()+%3A+x(0)%2C+y(0)+%7B%7D++++++++++++++++++//+default+constructor%0A++++Vector2D(double+x_%2C+double+y_)+%3A+x(x_)%2C+y(y_)+%7B%7D+//+parameterized%0A%0A++++void+print()+const+%7B+std%3A%3Acout+%3C%3C+%22(%22+%3C%3C+x+%3C%3C+%22%2C+%22+%3C%3C+y+%3C%3C+%22)%5Cn%22%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Vector2D+origin%3B+++++++++//+uses+the+default+constructor%0A++++Vector2D+point(1.0%2C+2.0)%3B+//+uses+the+parameterized+one%0A++++origin.print()%3B%0A++++point.print()%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+class Vector2D {
+    double x, y;
+public:
+    Vector2D() : x(0), y(0) {}                  // default constructor
+    Vector2D(double x_, double y_) : x(x_), y(y_) {} // parameterized
+
+    void print() const { std::cout &lt;&lt; &quot;(&quot; &lt;&lt; x &lt;&lt; &quot;, &quot; &lt;&lt; y &lt;&lt; &quot;)\n&quot;; }
+};
+
+int main() {
+    Vector2D origin;         // uses the default constructor
+    Vector2D point(1.0, 2.0); // uses the parameterized one
+    origin.print();
+    point.print();
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>Access specifiers</h3>
+					<p><code>public</code>, <code>private</code>, and <code>protected</code> control what code outside the class can touch. <code>public</code> members are part of the class's interface, anyone can use them. <code>private</code> members are implementation detail, only the class's own member functions (and friends, covered later) can touch them. <code>protected</code> is like <code>private</code> but also visible to derived classes; it matters once you get to inheritance.</p>
+					<p>Encapsulation isn't about hiding data for its own sake. It's about controlling the ways an object's state can change, so the class can guarantee its own invariants. If every member is public, any code anywhere can put the object into a state the class never intended, and there's no single place left to enforce correctness.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstdexcept%3E%0A%0Aclass+BankAccount+%7B%0A++++double+balance%3B%0Apublic%3A%0A++++BankAccount(double+initial)+%3A+balance(initial)+%7B%0A++++++++if+(initial+%3C+0)+throw+std%3A%3Ainvalid_argument(%22initial+balance+can%27t+be+negative%22)%3B%0A++++%7D%0A%0A++++void+deposit(double+amount)+%7B%0A++++++++if+(amount+%3C+0)+throw+std%3A%3Ainvalid_argument(%22can%27t+deposit+a+negative+amount%22)%3B%0A++++++++balance+%2B%3D+amount%3B%0A++++%7D%0A%0A++++double+getBalance()+const+%7B+return+balance%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++BankAccount+acc(100.0)%3B%0A++++acc.deposit(50.0)%3B%0A++++std%3A%3Acout+%3C%3C+acc.getBalance()+%3C%3C+%22%5Cn%22%3B+//+150%0A%0A++++//+acc.balance+%3D+-1000%3B+would+not+compile%3A+balance+is+private.%0A++++//+The+only+way+to+change+it+is+through+deposit()%2C+which+enforces+the+invariant.%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstdexcept%3E%0A%0Aclass+BankAccount+%7B%0A++++double+balance%3B%0Apublic%3A%0A++++BankAccount(double+initial)+%3A+balance(initial)+%7B%0A++++++++if+(initial+%3C+0)+throw+std%3A%3Ainvalid_argument(%22initial+balance+can%27t+be+negative%22)%3B%0A++++%7D%0A%0A++++void+deposit(double+amount)+%7B%0A++++++++if+(amount+%3C+0)+throw+std%3A%3Ainvalid_argument(%22can%27t+deposit+a+negative+amount%22)%3B%0A++++++++balance+%2B%3D+amount%3B%0A++++%7D%0A%0A++++double+getBalance()+const+%7B+return+balance%3B+%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++BankAccount+acc(100.0)%3B%0A++++acc.deposit(50.0)%3B%0A++++std%3A%3Acout+%3C%3C+acc.getBalance()+%3C%3C+%22%5Cn%22%3B+//+150%0A%0A++++//+acc.balance+%3D+-1000%3B+would+not+compile%3A+balance+is+private.%0A++++//+The+only+way+to+change+it+is+through+deposit()%2C+which+enforces+the+invariant.%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+
+class BankAccount {
+    double balance;
+public:
+    BankAccount(double initial) : balance(initial) {
+        if (initial &lt; 0) throw std::invalid_argument(&quot;initial balance can't be negative&quot;);
+    }
+
+    void deposit(double amount) {
+        if (amount &lt; 0) throw std::invalid_argument(&quot;can't deposit a negative amount&quot;);
+        balance += amount;
+    }
+
+    double getBalance() const { return balance; }
+};
+
+int main() {
+    BankAccount acc(100.0);
+    acc.deposit(50.0);
+    std::cout &lt;&lt; acc.getBalance() &lt;&lt; &quot;\n&quot;; // 150
+
+    // acc.balance = -1000; would not compile: balance is private.
+    // The only way to change it is through deposit(), which enforces the invariant.
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>If <code>balance</code> were public, nothing would stop <code>acc.balance = -1000;</code> from running, and the class's promise that balance never goes negative through <code>deposit</code> would be meaningless, because there'd be a second door into the object that skips the check entirely.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: a class with a broken invariant<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>The <code>Temperature</code> class below is supposed to only ever store a value in Celsius, and always report it correctly in both Celsius and Fahrenheit. Something's wrong. Find it, then fix it so the invariant actually holds no matter how the object is used.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Temperature+%7B%0Apublic%3A%0A++++double+celsius%3B%0A%0A++++double+fahrenheit()+const+%7B%0A++++++++return+celsius+*+9.0+/+5.0+%2B+32.0%3B%0A++++%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Temperature+t%7B20.0%7D%3B%0A++++std%3A%3Acout+%3C%3C+t.fahrenheit()+%3C%3C+%22%5Cn%22%3B+//+68%2C+looks+fine+so+far%0A%0A++++t.celsius+%3D+-300%3B+//+physically+impossible%2C+but+nothing+stops+this%0A++++std%3A%3Acout+%3C%3C+t.fahrenheit()+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Temperature+%7B%0Apublic%3A%0A++++double+celsius%3B%0A%0A++++double+fahrenheit()+const+%7B%0A++++++++return+celsius+*+9.0+/+5.0+%2B+32.0%3B%0A++++%7D%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Temperature+t%7B20.0%7D%3B%0A++++std%3A%3Acout+%3C%3C+t.fahrenheit()+%3C%3C+%22%5Cn%22%3B+//+68%2C+looks+fine+so+far%0A%0A++++t.celsius+%3D+-300%3B+//+physically+impossible%2C+but+nothing+stops+this%0A++++std%3A%3Acout+%3C%3C+t.fahrenheit()+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+class Temperature {
+public:
+    double celsius;
+
+    double fahrenheit() const {
+        return celsius * 9.0 / 5.0 + 32.0;
+    }
+};
+
+int main() {
+    Temperature t{20.0};
+    std::cout &lt;&lt; t.fahrenheit() &lt;&lt; &quot;\n&quot;; // 68, looks fine so far
+
+    t.celsius = -300; // physically impossible, but nothing stops this
+    std::cout &lt;&lt; t.fahrenheit() &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>The problem: <code>celsius</code> is public, so anything can set it to an impossible value, and the class has no way to reject it. Making <code>celsius</code> private and only allowing changes through a setter that validates the range (absolute zero is -273.15°C) closes the gap. This is exactly the encapsulation argument from above, not an abstract rule, an actual bug you can trigger.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

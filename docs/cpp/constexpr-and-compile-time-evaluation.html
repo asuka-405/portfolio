@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Constexpr and Compile-Time Evaluation: C++, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Constexpr and Compile-Time Evaluation · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/cpp/constexpr-and-compile-time-evaluation.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Constexpr and Compile-Time Evaluation" />
+		<meta property="og:description" content="Constexpr and Compile-Time Evaluation: C++, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/cpp/constexpr-and-compile-time-evaluation.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Constexpr and Compile-Time Evaluation" />
+		<meta name="twitter:description" content="Constexpr and Compile-Time Evaluation: C++, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C++, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="functions-and-program-structure.html" class="">Functions and Program Structure</a>
+					</li>
+					<li>
+						<a href="debugging-c-programs.html" class="">Debugging C++ Programs</a>
+					</li>
+					<li>
+						<a href="fundamental-data-types.html" class="">Fundamental Data Types</a>
+					</li>
+					<li>
+						<a href="constants-literals-and-strings.html" class="">Constants, Literals, and Strings</a>
+					</li>
+					<li>
+						<a href="operators.html" class="">Operators</a>
+					</li>
+					<li>
+						<a href="scope-duration-and-linkage.html" class="">Scope, Duration, and Linkage</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="error-detection-and-handling.html" class="">Error Detection and Handling</a>
+					</li>
+					<li>
+						<a href="type-conversion-aliases-and-deduction.html" class="">Type Conversion, Aliases, and Deduction</a>
+					</li>
+					<li>
+						<a href="function-overloading-and-function-templates.html" class="">Function Overloading and Function Templates</a>
+					</li>
+					<li>
+						<a href="constexpr-and-compile-time-evaluation.html" class="active">Constexpr and Compile-Time Evaluation</a>
+					</li>
+					<li>
+						<a href="references-and-pointers.html" class="">References and Pointers</a>
+					</li>
+					<li>
+						<a href="enums-and-structs.html" class="">Enums and Structs</a>
+					</li>
+					<li>
+						<a href="compile-time-and-runtime-polymorphism-previewed.html" class="">Compile-Time and Runtime Polymorphism, Previewed</a>
+					</li>
+					<li>
+						<a href="introduction-to-classes.html" class="">Introduction to Classes</a>
+					</li>
+					<li>
+						<a href="more-on-classes.html" class="">More on Classes</a>
+					</li>
+					<li>
+						<a href="dynamic-arrays-std-vector.html" class="">Dynamic Arrays: std::vector</a>
+					</li>
+					<li>
+						<a href="fixed-size-arrays-std-array-and-c-style-arrays.html" class="">Fixed-Size Arrays: std::array and C-style Arrays</a>
+					</li>
+					<li>
+						<a href="iterators-and-algorithms.html" class="">Iterators and Algorithms</a>
+					</li>
+					<li>
+						<a href="dynamic-memory-allocation.html" class="">Dynamic Memory Allocation</a>
+					</li>
+					<li>
+						<a href="lambdas-and-function-objects.html" class="">Lambdas and Function Objects</a>
+					</li>
+					<li>
+						<a href="operator-overloading.html" class="">Operator Overloading</a>
+					</li>
+					<li>
+						<a href="move-semantics-and-smart-pointers.html" class="">Move Semantics and Smart Pointers</a>
+					</li>
+					<li>
+						<a href="object-relationships.html" class="">Object Relationships</a>
+					</li>
+					<li>
+						<a href="inheritance.html" class="">Inheritance</a>
+					</li>
+					<li>
+						<a href="virtual-functions-and-polymorphism.html" class="">Virtual Functions and Polymorphism</a>
+					</li>
+					<li>
+						<a href="templates-and-generic-classes.html" class="">Templates and Generic Classes</a>
+					</li>
+					<li>
+						<a href="exceptions.html" class="">Exceptions</a>
+					</li>
+					<li>
+						<a href="input-and-output-streams.html" class="">Input and Output Streams</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-c-11-through-23.html" class="">A Tour of Modern C++ (11 Through 23)</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-and-common-pitfalls.html" class="">Idiomatic C++ and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← C++, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C++, End to End</p>
+							<h1>Constexpr and Compile-Time Evaluation</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Most computation in a C++ program happens when the program runs. Some of it can happen while the program is being *compiled* instead, which means it costs nothing at runtime and, for things like array sizes, can unlock language features that need a compile-time constant in the first place. This chapter is about the tools that make that possible.</p>
+					<h3>constexpr variables</h3>
+					<p>A <code>constexpr</code> variable's value must be computable at compile time, and the compiler enforces that: if you try to initialize one with something that isn't knowable until runtime, it's a compile error, not a runtime one.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++constexpr+int+max_players+%3D+4%3B%0A++++int+scores%5Bmax_players%5D%3B+//+fine%3A+max_players+is+a+compile-time+constant%0A%0A++++int+runtime_value+%3D+4%3B%0A++++//+int+bad%5Bruntime_value%5D%3B+//+not+standard+C%2B%2B%2C+this+needs+a+compile-time+constant%0A%0A++++std%3A%3Acout+%3C%3C+max_players+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++constexpr+int+max_players+%3D+4%3B%0A++++int+scores%5Bmax_players%5D%3B+//+fine%3A+max_players+is+a+compile-time+constant%0A%0A++++int+runtime_value+%3D+4%3B%0A++++//+int+bad%5Bruntime_value%5D%3B+//+not+standard+C%2B%2B%2C+this+needs+a+compile-time+constant%0A%0A++++std%3A%3Acout+%3C%3C+max_players+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int main() {
+    constexpr int max_players = 4;
+    int scores[max_players]; // fine: max_players is a compile-time constant
+
+    int runtime_value = 4;
+    // int bad[runtime_value]; // not standard C++, this needs a compile-time constant
+
+    std::cout &lt;&lt; max_players &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>This is stricter than plain <code>const</code>. A <code>const int</code> can be initialized from a runtime value (<code>const int x = some_function();</code> compiles fine, <code>x</code> just can't be reassigned afterward). <code>constexpr</code> additionally demands the value be known at compile time.</p>
+					<h3>constexpr functions</h3>
+					<p>A function marked <code>constexpr</code> *can* run at compile time, if all of its arguments are compile-time constants and its body is simple enough (no undefined behavior, since the compiler has to actually evaluate it). Called with runtime values instead, the exact same function just runs normally at runtime. It's one function definition serving both cases.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aconstexpr+int+factorial(int+n)+%7B%0A++++return+(n+%3C%3D+1)+%3F+1+%3A+n+*+factorial(n+-+1)%3B%0A%7D%0A%0Aint+main()+%7B%0A++++constexpr+int+compile_time_result+%3D+factorial(5)%3B+//+computed+during+compilation%0A++++std%3A%3Acout+%3C%3C+compile_time_result+%3C%3C+%22%5Cn%22%3B%0A%0A++++int+n%3B%0A++++std%3A%3Acin+%3E%3E+n%3B+//+hypothetically%3A+a+value+only+known+at+runtime%0A++++//+factorial(n)+here+would+run+as+a+normal+recursive+function+call+instead%0A++++std%3A%3Acout+%3C%3C+factorial(10)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aconstexpr+int+factorial(int+n)+%7B%0A++++return+(n+%3C%3D+1)+%3F+1+%3A+n+*+factorial(n+-+1)%3B%0A%7D%0A%0Aint+main()+%7B%0A++++constexpr+int+compile_time_result+%3D+factorial(5)%3B+//+computed+during+compilation%0A++++std%3A%3Acout+%3C%3C+compile_time_result+%3C%3C+%22%5Cn%22%3B%0A%0A++++int+n%3B%0A++++std%3A%3Acin+%3E%3E+n%3B+//+hypothetically%3A+a+value+only+known+at+runtime%0A++++//+factorial(n)+here+would+run+as+a+normal+recursive+function+call+instead%0A++++std%3A%3Acout+%3C%3C+factorial(10)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+constexpr int factorial(int n) {
+    return (n &lt;= 1) ? 1 : n * factorial(n - 1);
+}
+
+int main() {
+    constexpr int compile_time_result = factorial(5); // computed during compilation
+    std::cout &lt;&lt; compile_time_result &lt;&lt; &quot;\n&quot;;
+
+    int n;
+    std::cin &gt;&gt; n; // hypothetically: a value only known at runtime
+    // factorial(n) here would run as a normal recursive function call instead
+    std::cout &lt;&lt; factorial(10) &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>&quot;Can run at compile time&quot; is not the same as &quot;always runs at compile time&quot;. Whether a particular call actually gets evaluated at compile time depends on context (is the result being used somewhere that demands a compile-time constant, like an array bound or another <code>constexpr</code> variable's initializer) and, in some cases, is left up to the compiler to decide as an optimization.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>consteval: forcing compile-time evaluation</h3>
+					<p>C++20 added <code>consteval</code>, which is stricter still: a <code>consteval</code> function (an &quot;immediate function&quot;) must always be evaluated at compile time. Calling it with anything that isn't a compile-time constant is a compile error, not a fallback to runtime execution.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'//+godbolt-run+-std%3Dc%2B%2B20%0Aconsteval+int+square(int+x)+%7B%0A++++return+x+*+x%3B%0A%7D%0A%0Aint+main()+%7B%0A++++constexpr+int+result+%3D+square(5)%3B+//+fine%2C+compile-time%0A++++//+int+n%3B%0A++++//+std%3A%3Acin+%3E%3E+n%3B%0A++++//+int+bad+%3D+square(n)%3B+//+compile+error%3A+n+isn%27t+known+at+compile+time%0A++++return+result%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'//+godbolt-run+-std%3Dc%2B%2B20%0Aconsteval+int+square(int+x)+%7B%0A++++return+x+*+x%3B%0A%7D%0A%0Aint+main()+%7B%0A++++constexpr+int+result+%3D+square(5)%3B+//+fine%2C+compile-time%0A++++//+int+n%3B%0A++++//+std%3A%3Acin+%3E%3E+n%3B%0A++++//+int+bad+%3D+square(n)%3B+//+compile+error%3A+n+isn%27t+known+at+compile+time%0A++++return+result%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>// godbolt-run -std=c++20
+consteval int square(int x) {
+    return x * x;
+}
+
+int main() {
+    constexpr int result = square(5); // fine, compile-time
+    // int n;
+    // std::cin &gt;&gt; n;
+    // int bad = square(n); // compile error: n isn't known at compile time
+    return result;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Use <code>consteval</code> when a function genuinely only makes sense at compile time (generating a lookup table baked into the binary, validating a format string) and you want the compiler to guarantee that rather than silently falling back to a runtime call.</p>
+					<h3>if constexpr: compile-time branching</h3>
+					<p>Ordinary <code>if</code> picks a branch at runtime, but both branches still have to compile even if one is never taken for a given type. <code>if constexpr</code> (C++17) discards the untaken branch entirely at compile time, which matters most inside templates, where the discarded branch might not even be valid code for the type actually being used.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Ctype_traits%3E%0A%0Atemplate%3Ctypename+T%3E%0Avoid+describe(T+value)+%7B%0A++++if+constexpr+(std%3A%3Ais_integral_v%3CT%3E)+%7B%0A++++++++std%3A%3Acout+%3C%3C+value+%3C%3C+%22+is+an+integer%5Cn%22%3B%0A++++%7D+else+if+constexpr+(std%3A%3Ais_floating_point_v%3CT%3E)+%7B%0A++++++++std%3A%3Acout+%3C%3C+value+%3C%3C+%22+is+a+floating-point+number%5Cn%22%3B%0A++++%7D+else+%7B%0A++++++++std%3A%3Acout+%3C%3C+%22some+other+type%5Cn%22%3B%0A++++%7D%0A%7D%0A%0Aint+main()+%7B%0A++++describe(42)%3B%0A++++describe(3.14)%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Ctype_traits%3E%0A%0Atemplate%3Ctypename+T%3E%0Avoid+describe(T+value)+%7B%0A++++if+constexpr+(std%3A%3Ais_integral_v%3CT%3E)+%7B%0A++++++++std%3A%3Acout+%3C%3C+value+%3C%3C+%22+is+an+integer%5Cn%22%3B%0A++++%7D+else+if+constexpr+(std%3A%3Ais_floating_point_v%3CT%3E)+%7B%0A++++++++std%3A%3Acout+%3C%3C+value+%3C%3C+%22+is+a+floating-point+number%5Cn%22%3B%0A++++%7D+else+%7B%0A++++++++std%3A%3Acout+%3C%3C+%22some+other+type%5Cn%22%3B%0A++++%7D%0A%7D%0A%0Aint+main()+%7B%0A++++describe(42)%3B%0A++++describe(3.14)%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;type_traits&gt;
+
+template&lt;typename T&gt;
+void describe(T value) {
+    if constexpr (std::is_integral_v&lt;T&gt;) {
+        std::cout &lt;&lt; value &lt;&lt; &quot; is an integer\n&quot;;
+    } else if constexpr (std::is_floating_point_v&lt;T&gt;) {
+        std::cout &lt;&lt; value &lt;&lt; &quot; is a floating-point number\n&quot;;
+    } else {
+        std::cout &lt;&lt; &quot;some other type\n&quot;;
+    }
+}
+
+int main() {
+    describe(42);
+    describe(3.14);
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>static_assert: compile-time checks</h3>
+					<p>Covered in more depth in the error-handling chapter, but worth repeating here since it's the natural companion to everything above: <code>static_assert(condition, &quot;message&quot;)</code> fails the *build* if <code>condition</code> isn't true, checked entirely at compile time. It's the standard way to validate assumptions about <code>constexpr</code> computations, type sizes, or template parameters before the program ever runs.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: make a runtime function compile-time capable<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>This function works fine, but it can only ever run at runtime. Add <code>constexpr</code> to its signature, then declare a <code>constexpr</code> variable that calls it, forcing compile-time evaluation, and confirm it still works correctly when called with a genuinely runtime value too.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+sum_up_to(int+n)+%7B%0A++++int+total+%3D+0%3B%0A++++for+(int+i+%3D+1%3B+i+%3C%3D+n%3B+%2B%2Bi)+total+%2B%3D+i%3B%0A++++return+total%3B%0A%7D%0A%0Aint+main()+%7B%0A++++std%3A%3Acout+%3C%3C+sum_up_to(10)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+sum_up_to(int+n)+%7B%0A++++int+total+%3D+0%3B%0A++++for+(int+i+%3D+1%3B+i+%3C%3D+n%3B+%2B%2Bi)+total+%2B%3D+i%3B%0A++++return+total%3B%0A%7D%0A%0Aint+main()+%7B%0A++++std%3A%3Acout+%3C%3C+sum_up_to(10)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int sum_up_to(int n) {
+    int total = 0;
+    for (int i = 1; i &lt;= n; ++i) total += i;
+    return total;
+}
+
+int main() {
+    std::cout &lt;&lt; sum_up_to(10) &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

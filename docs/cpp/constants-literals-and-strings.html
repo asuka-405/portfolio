@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Constants, Literals, and Strings: C++, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Constants, Literals, and Strings · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/cpp/constants-literals-and-strings.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Constants, Literals, and Strings" />
+		<meta property="og:description" content="Constants, Literals, and Strings: C++, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/cpp/constants-literals-and-strings.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Constants, Literals, and Strings" />
+		<meta name="twitter:description" content="Constants, Literals, and Strings: C++, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C++, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="functions-and-program-structure.html" class="">Functions and Program Structure</a>
+					</li>
+					<li>
+						<a href="debugging-c-programs.html" class="">Debugging C++ Programs</a>
+					</li>
+					<li>
+						<a href="fundamental-data-types.html" class="">Fundamental Data Types</a>
+					</li>
+					<li>
+						<a href="constants-literals-and-strings.html" class="active">Constants, Literals, and Strings</a>
+					</li>
+					<li>
+						<a href="operators.html" class="">Operators</a>
+					</li>
+					<li>
+						<a href="scope-duration-and-linkage.html" class="">Scope, Duration, and Linkage</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="error-detection-and-handling.html" class="">Error Detection and Handling</a>
+					</li>
+					<li>
+						<a href="type-conversion-aliases-and-deduction.html" class="">Type Conversion, Aliases, and Deduction</a>
+					</li>
+					<li>
+						<a href="function-overloading-and-function-templates.html" class="">Function Overloading and Function Templates</a>
+					</li>
+					<li>
+						<a href="constexpr-and-compile-time-evaluation.html" class="">Constexpr and Compile-Time Evaluation</a>
+					</li>
+					<li>
+						<a href="references-and-pointers.html" class="">References and Pointers</a>
+					</li>
+					<li>
+						<a href="enums-and-structs.html" class="">Enums and Structs</a>
+					</li>
+					<li>
+						<a href="compile-time-and-runtime-polymorphism-previewed.html" class="">Compile-Time and Runtime Polymorphism, Previewed</a>
+					</li>
+					<li>
+						<a href="introduction-to-classes.html" class="">Introduction to Classes</a>
+					</li>
+					<li>
+						<a href="more-on-classes.html" class="">More on Classes</a>
+					</li>
+					<li>
+						<a href="dynamic-arrays-std-vector.html" class="">Dynamic Arrays: std::vector</a>
+					</li>
+					<li>
+						<a href="fixed-size-arrays-std-array-and-c-style-arrays.html" class="">Fixed-Size Arrays: std::array and C-style Arrays</a>
+					</li>
+					<li>
+						<a href="iterators-and-algorithms.html" class="">Iterators and Algorithms</a>
+					</li>
+					<li>
+						<a href="dynamic-memory-allocation.html" class="">Dynamic Memory Allocation</a>
+					</li>
+					<li>
+						<a href="lambdas-and-function-objects.html" class="">Lambdas and Function Objects</a>
+					</li>
+					<li>
+						<a href="operator-overloading.html" class="">Operator Overloading</a>
+					</li>
+					<li>
+						<a href="move-semantics-and-smart-pointers.html" class="">Move Semantics and Smart Pointers</a>
+					</li>
+					<li>
+						<a href="object-relationships.html" class="">Object Relationships</a>
+					</li>
+					<li>
+						<a href="inheritance.html" class="">Inheritance</a>
+					</li>
+					<li>
+						<a href="virtual-functions-and-polymorphism.html" class="">Virtual Functions and Polymorphism</a>
+					</li>
+					<li>
+						<a href="templates-and-generic-classes.html" class="">Templates and Generic Classes</a>
+					</li>
+					<li>
+						<a href="exceptions.html" class="">Exceptions</a>
+					</li>
+					<li>
+						<a href="input-and-output-streams.html" class="">Input and Output Streams</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-c-11-through-23.html" class="">A Tour of Modern C++ (11 Through 23)</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-and-common-pitfalls.html" class="">Idiomatic C++ and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← C++, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C++, End to End</p>
+							<h1>Constants, Literals, and Strings</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>const and constexpr both promise a value won't change after initialization, but they promise it at different times, and mixing them up leads to real confusion about what the compiler can and can't do with a value.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">const</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> a </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 5</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">        // cannot be reassigned; a's value might still only be known at runtime</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">constexpr</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> b </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 5</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">    // cannot be reassigned, AND must be computable at compile time</span></span></code></pre></div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+getUserAge()%3B++//+imagine+this+reads+from+a+file+or+asks+the+user%0A%0Aint+main()+%7B%0A++++const+int+age+%3D+getUserAge()%3B++++++//+fine%3A+const+just+means+%22won%27t+change+again%22%0A++++//+constexpr+int+age2+%3D+getUserAge()%3B++//+error%3A+not+knowable+at+compile+time%0A++++std%3A%3Acout+%3C%3C+%22const+compiles+fine+here%5Cn%22%3B%0A%7D%0A%0Aint+getUserAge()+%7B+return+30%3B+%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+getUserAge()%3B++//+imagine+this+reads+from+a+file+or+asks+the+user%0A%0Aint+main()+%7B%0A++++const+int+age+%3D+getUserAge()%3B++++++//+fine%3A+const+just+means+%22won%27t+change+again%22%0A++++//+constexpr+int+age2+%3D+getUserAge()%3B++//+error%3A+not+knowable+at+compile+time%0A++++std%3A%3Acout+%3C%3C+%22const+compiles+fine+here%5Cn%22%3B%0A%7D%0A%0Aint+getUserAge()+%7B+return+30%3B+%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int getUserAge();  // imagine this reads from a file or asks the user
+
+int main() {
+    const int age = getUserAge();      // fine: const just means &quot;won't change again&quot;
+    // constexpr int age2 = getUserAge();  // error: not knowable at compile time
+    std::cout &lt;&lt; &quot;const compiles fine here\n&quot;;
+}
+
+int getUserAge() { return 30; }
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Reach for const by default on any variable you don't intend to modify after initialization, which in well-written C++ is most of them: it documents intent, and it lets the compiler catch an accidental reassignment as an error instead of a silent bug. Reach for constexpr specifically when the value genuinely is known at compile time and you want the compiler to be able to use it in contexts that require that (array sizes, template arguments, other constexpr computations).</p>
+					<h3>const and pointers/references: a preview</h3>
+					<p>const's placement relative to * matters, and this trips up nearly everyone the first time. Full treatment of pointers and references, and this exact rule, gets its own chapter later; for now, just the shape of the rule:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">const</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int*</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> p1;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">   // pointer to a const int: can't modify *p1, CAN reassign p1 to point elsewhere</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int*</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> const</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> p2 </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x26;</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">x;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">  // const pointer to int: CAN modify *p2, can't reassign p2 itself</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">const</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int*</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> const</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> p3 </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x26;</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">x;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">  // both: neither the pointee nor the pointer can change</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Read it right to left from the variable name: p1 is &quot;a pointer to a const int,&quot; p2 is &quot;a const pointer to int.&quot; That reading trick generalizes to much hairier declarations later on.</p>
+					<h3>std::string versus C-style strings</h3>
+					<p>A C-style string is just a pointer to the first char of a sequence terminated by a null byte ('\0'), and it inherits every sharp edge that comes with manual memory and manual bounds (a full treatment of those specific footguns, buffer overflows and off-by-one termination bugs, already lives in this site's C course, since C strings are actually a C concept C++ inherited). C++ gives you a real alternative: std::string, from &lt;string&gt;, which owns its own memory, tracks its own length, resizes itself automatically, and is the type you should reach for by default.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+name+%3D+%22Ada%22%3B%0A++++name+%2B%3D+%22+Lovelace%22%3B++++++++++++++//+grows+automatically%2C+no+manual+buffer+management%0A++++std%3A%3Acout+%3C%3C+name+%3C%3C+%22%5Cn%22%3B%0A++++std%3A%3Acout+%3C%3C+%22length%3A+%22+%3C%3C+name.length()+%3C%3C+%22%5Cn%22%3B%0A++++std%3A%3Acout+%3C%3C+%22first+char%3A+%22+%3C%3C+name%5B0%5D+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+name+%3D+%22Ada%22%3B%0A++++name+%2B%3D+%22+Lovelace%22%3B++++++++++++++//+grows+automatically%2C+no+manual+buffer+management%0A++++std%3A%3Acout+%3C%3C+name+%3C%3C+%22%5Cn%22%3B%0A++++std%3A%3Acout+%3C%3C+%22length%3A+%22+%3C%3C+name.length()+%3C%3C+%22%5Cn%22%3B%0A++++std%3A%3Acout+%3C%3C+%22first+char%3A+%22+%3C%3C+name%5B0%5D+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string name = &quot;Ada&quot;;
+    name += &quot; Lovelace&quot;;              // grows automatically, no manual buffer management
+    std::cout &lt;&lt; name &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; &quot;length: &quot; &lt;&lt; name.length() &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; &quot;first char: &quot; &lt;&lt; name[0] &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>A few operations worth knowing immediately because they come up constantly: comparing two strings with ==, concatenating with + or +=, checking emptiness with .empty() (faster and clearer than checking .length() == 0), and .substr(start, count) for extracting a piece.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+a+%3D+%22hello%22%3B%0A++++std%3A%3Astring+b+%3D+%22hello%22%3B%0A++++std%3A%3Acout+%3C%3C+std%3A%3Aboolalpha+%3C%3C+(a+%3D%3D+b)+%3C%3C+%22%5Cn%22%3B+++//+true%2C+compares+content%0A%0A++++std%3A%3Astring+full+%3D+%22hello+world%22%3B%0A++++std%3A%3Acout+%3C%3C+full.substr(6%2C+5)+%3C%3C+%22%5Cn%22%3B++++++++++++++//+%22world%22%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+a+%3D+%22hello%22%3B%0A++++std%3A%3Astring+b+%3D+%22hello%22%3B%0A++++std%3A%3Acout+%3C%3C+std%3A%3Aboolalpha+%3C%3C+(a+%3D%3D+b)+%3C%3C+%22%5Cn%22%3B+++//+true%2C+compares+content%0A%0A++++std%3A%3Astring+full+%3D+%22hello+world%22%3B%0A++++std%3A%3Acout+%3C%3C+full.substr(6%2C+5)+%3C%3C+%22%5Cn%22%3B++++++++++++++//+%22world%22%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string a = &quot;hello&quot;;
+    std::string b = &quot;hello&quot;;
+    std::cout &lt;&lt; std::boolalpha &lt;&lt; (a == b) &lt;&lt; &quot;\n&quot;;   // true, compares content
+
+    std::string full = &quot;hello world&quot;;
+    std::cout &lt;&lt; full.substr(6, 5) &lt;&lt; &quot;\n&quot;;              // &quot;world&quot;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>std::string can still hand you a raw C-style string when an older API demands one, via .c_str(), which returns a pointer valid only as long as the std::string itself isn't modified or destroyed afterward. That's a real lifetime hazard worth remembering, but it's an edge case you reach for, not the default way of working with text.</p>
+					<h3>String literals and raw strings</h3>
+					<p>A string literal in double quotes is, by default, a const char array (a C-style string) under the hood, not a std::string, even though C++ makes it easy to construct a std::string from one. Two conveniences worth knowing:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">using</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> namespace</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> std</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">::</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">string_literals</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">auto</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> s </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "hello"</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">s</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">   // the s suffix makes this a real std::string literal, not a const char*</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>And raw string literals (R&quot;(...)&quot;) turn off escape-sequence processing entirely, which is a genuine relief for anything containing backslashes or quotes, regex patterns and file paths especially.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+normal+%3D+%22C%3A%5C%5CUsers%5C%5Cname%5C%5Cfile.txt%22%3B++//+every+backslash+needs+escaping%0A++++std%3A%3Astring+raw++++%3D+R%22(C%3A%5CUsers%5Cname%5Cfile.txt)%22%3B+++//+no+escaping+needed+at+all%0A++++std%3A%3Acout+%3C%3C+normal+%3C%3C+%22%5Cn%22+%3C%3C+raw+%3C%3C+%22%5Cn%22%3B+++++++++++//+identical+output%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cstring%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+normal+%3D+%22C%3A%5C%5CUsers%5C%5Cname%5C%5Cfile.txt%22%3B++//+every+backslash+needs+escaping%0A++++std%3A%3Astring+raw++++%3D+R%22(C%3A%5CUsers%5Cname%5Cfile.txt)%22%3B+++//+no+escaping+needed+at+all%0A++++std%3A%3Acout+%3C%3C+normal+%3C%3C+%22%5Cn%22+%3C%3C+raw+%3C%3C+%22%5Cn%22%3B+++++++++++//+identical+output%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string normal = &quot;C:\\Users\\name\\file.txt&quot;;  // every backslash needs escaping
+    std::string raw    = R&quot;(C:\Users\name\file.txt)&quot;;   // no escaping needed at all
+    std::cout &lt;&lt; normal &lt;&lt; &quot;\n&quot; &lt;&lt; raw &lt;&lt; &quot;\n&quot;;           // identical output
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: write a function that takes a std::string and returns it with the first letter uppercased (std::toupper from &lt;cctype&gt; handles one char at a time). Then write a small main that reads a name with std::getline (not std::cin &gt;&gt;, which stops at the first whitespace) and prints it back capitalized.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
