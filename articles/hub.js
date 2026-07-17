@@ -14,7 +14,7 @@
 	});
 
 	var index = {};
-	fetch("generated/search-index.json")
+	fetch("search-index.json")
 		.then(function (r) {
 			return r.ok ? r.json() : [];
 		})

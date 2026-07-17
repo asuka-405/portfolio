@@ -18,8 +18,8 @@ function extFromUrl(url) {
 
 /**
  * Downloads a Notion-hosted image (its URL is a presigned S3 link that expires) to a
- * local file under articles/generated/img/<slug>/, so generated pages never hotlink Notion.
- * Returns the relative src to use from articles/generated/<slug>.html.
+ * local file under articles/img/<slug>/, so generated pages never hotlink Notion.
+ * Returns the relative src to use from articles/<slug>.html.
  */
 export async function downloadArticleImage(url, slug, index) {
 	const destDir = path.join(IMG_DIR, slug);

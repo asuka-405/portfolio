@@ -4,7 +4,6 @@ import path from "node:path";
 import {
 	ROOT,
 	ARTICLES_DIR,
-	GENERATED_DIR,
 	HUB_PATH,
 	HOMEPAGE_PATH,
 	LEGACY_DATA_PATH,
@@ -80,7 +79,7 @@ async function buildNotionArticle(client, meta) {
 	let ogImage = null;
 	if (meta.cover) {
 		const localSrc = await downloadArticleImage(meta.cover, meta.slug, "cover");
-		ogImage = `${SITE_URL}/articles/generated/${localSrc}`;
+		ogImage = `${SITE_URL}/articles/${localSrc}`;
 	} else {
 		ogImage = await defaultOgImageUrl();
 	}
@@ -96,20 +95,20 @@ async function buildNotionArticle(client, meta) {
 		taglineHtml: escapeHtml(meta.summary),
 		sectionsHtml: sections,
 		adsConfig,
-		canonicalPath: `articles/generated/${meta.slug}.html`,
+		canonicalPath: `articles/${meta.slug}.html`,
 		ogImage,
 		publishedTimeIso: meta.publishDate,
 		tags: meta.tags,
 	});
 
-	await fs.mkdir(GENERATED_DIR, { recursive: true });
-	await fs.writeFile(path.join(GENERATED_DIR, `${meta.slug}.html`), html, "utf8");
+	await fs.mkdir(ARTICLES_DIR, { recursive: true });
+	await fs.writeFile(path.join(ARTICLES_DIR, `${meta.slug}.html`), html, "utf8");
 
 	return {
 		kind: "notion",
 		title: meta.title,
-		hrefRoot: `articles/generated/${meta.slug}.html`,
-		hrefArticles: `generated/${meta.slug}.html`,
+		hrefRoot: `articles/${meta.slug}.html`,
+		hrefArticles: `${meta.slug}.html`,
 		tag: tagsLabel || "Article",
 		tags: meta.tags,
 		readTime,
@@ -172,9 +171,8 @@ async function main() {
 		"utf8"
 	);
 
-	await fs.mkdir(GENERATED_DIR, { recursive: true });
 	await fs.writeFile(
-		path.join(GENERATED_DIR, "search-index.json"),
+		path.join(ARTICLES_DIR, "search-index.json"),
 		JSON.stringify(buildSearchIndex(forArticlesDir)),
 		"utf8"
 	);
