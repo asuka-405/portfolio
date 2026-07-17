@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Input and Output Streams: C++, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Input and Output Streams · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/cpp/input-and-output-streams.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Input and Output Streams" />
+		<meta property="og:description" content="Input and Output Streams: C++, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/cpp/input-and-output-streams.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Input and Output Streams" />
+		<meta name="twitter:description" content="Input and Output Streams: C++, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C++, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="functions-and-program-structure.html" class="">Functions and Program Structure</a>
+					</li>
+					<li>
+						<a href="debugging-c-programs.html" class="">Debugging C++ Programs</a>
+					</li>
+					<li>
+						<a href="fundamental-data-types.html" class="">Fundamental Data Types</a>
+					</li>
+					<li>
+						<a href="constants-literals-and-strings.html" class="">Constants, Literals, and Strings</a>
+					</li>
+					<li>
+						<a href="operators.html" class="">Operators</a>
+					</li>
+					<li>
+						<a href="scope-duration-and-linkage.html" class="">Scope, Duration, and Linkage</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="error-detection-and-handling.html" class="">Error Detection and Handling</a>
+					</li>
+					<li>
+						<a href="type-conversion-aliases-and-deduction.html" class="">Type Conversion, Aliases, and Deduction</a>
+					</li>
+					<li>
+						<a href="function-overloading-and-function-templates.html" class="">Function Overloading and Function Templates</a>
+					</li>
+					<li>
+						<a href="constexpr-and-compile-time-evaluation.html" class="">Constexpr and Compile-Time Evaluation</a>
+					</li>
+					<li>
+						<a href="references-and-pointers.html" class="">References and Pointers</a>
+					</li>
+					<li>
+						<a href="enums-and-structs.html" class="">Enums and Structs</a>
+					</li>
+					<li>
+						<a href="compile-time-and-runtime-polymorphism-previewed.html" class="">Compile-Time and Runtime Polymorphism, Previewed</a>
+					</li>
+					<li>
+						<a href="introduction-to-classes.html" class="">Introduction to Classes</a>
+					</li>
+					<li>
+						<a href="more-on-classes.html" class="">More on Classes</a>
+					</li>
+					<li>
+						<a href="dynamic-arrays-std-vector.html" class="">Dynamic Arrays: std::vector</a>
+					</li>
+					<li>
+						<a href="fixed-size-arrays-std-array-and-c-style-arrays.html" class="">Fixed-Size Arrays: std::array and C-style Arrays</a>
+					</li>
+					<li>
+						<a href="iterators-and-algorithms.html" class="">Iterators and Algorithms</a>
+					</li>
+					<li>
+						<a href="dynamic-memory-allocation.html" class="">Dynamic Memory Allocation</a>
+					</li>
+					<li>
+						<a href="lambdas-and-function-objects.html" class="">Lambdas and Function Objects</a>
+					</li>
+					<li>
+						<a href="operator-overloading.html" class="">Operator Overloading</a>
+					</li>
+					<li>
+						<a href="move-semantics-and-smart-pointers.html" class="">Move Semantics and Smart Pointers</a>
+					</li>
+					<li>
+						<a href="object-relationships.html" class="">Object Relationships</a>
+					</li>
+					<li>
+						<a href="inheritance.html" class="">Inheritance</a>
+					</li>
+					<li>
+						<a href="virtual-functions-and-polymorphism.html" class="">Virtual Functions and Polymorphism</a>
+					</li>
+					<li>
+						<a href="templates-and-generic-classes.html" class="">Templates and Generic Classes</a>
+					</li>
+					<li>
+						<a href="exceptions.html" class="">Exceptions</a>
+					</li>
+					<li>
+						<a href="input-and-output-streams.html" class="active">Input and Output Streams</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-c-11-through-23.html" class="">A Tour of Modern C++ (11 Through 23)</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-and-common-pitfalls.html" class="">Idiomatic C++ and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← C++, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C++, End to End</p>
+							<h1>Input and Output Streams</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>std::cin, std::cout, and std::cerr have shown up throughout this course already. This chapter covers the parts of iostream that matter beyond the basics: formatting output precisely, reading input without your program falling over on bad data, and parsing text with string streams.</p>
+					<h3>Stream manipulators</h3>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Ciomanip%3E%0A%0Aint+main()+%7B%0A++++double+pi+%3D+3.14159265%3B%0A++++std%3A%3Acout+%3C%3C+std%3A%3Afixed+%3C%3C+std%3A%3Asetprecision(2)+%3C%3C+pi+%3C%3C+%22%5Cn%22%3B+//+3.14%0A++++std%3A%3Acout+%3C%3C+std%3A%3Asetw(10)+%3C%3C+std%3A%3Asetfill(%27*%27)+%3C%3C+42+%3C%3C+%22%5Cn%22%3B+//+******+++42%2C+right-aligned%0A++++std%3A%3Acout+%3C%3C+std%3A%3Ahex+%3C%3C+255+%3C%3C+%22%5Cn%22%3B+//+ff%0A++++std%3A%3Acout+%3C%3C+std%3A%3Adec+%3C%3C+255+%3C%3C+%22%5Cn%22%3B+//+back+to+decimal%3A+255%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Ciomanip%3E%0A%0Aint+main()+%7B%0A++++double+pi+%3D+3.14159265%3B%0A++++std%3A%3Acout+%3C%3C+std%3A%3Afixed+%3C%3C+std%3A%3Asetprecision(2)+%3C%3C+pi+%3C%3C+%22%5Cn%22%3B+//+3.14%0A++++std%3A%3Acout+%3C%3C+std%3A%3Asetw(10)+%3C%3C+std%3A%3Asetfill(%27*%27)+%3C%3C+42+%3C%3C+%22%5Cn%22%3B+//+******+++42%2C+right-aligned%0A++++std%3A%3Acout+%3C%3C+std%3A%3Ahex+%3C%3C+255+%3C%3C+%22%5Cn%22%3B+//+ff%0A++++std%3A%3Acout+%3C%3C+std%3A%3Adec+%3C%3C+255+%3C%3C+%22%5Cn%22%3B+//+back+to+decimal%3A+255%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+
+int main() {
+    double pi = 3.14159265;
+    std::cout &lt;&lt; std::fixed &lt;&lt; std::setprecision(2) &lt;&lt; pi &lt;&lt; &quot;\n&quot;; // 3.14
+    std::cout &lt;&lt; std::setw(10) &lt;&lt; std::setfill('*') &lt;&lt; 42 &lt;&lt; &quot;\n&quot;; // ******   42, right-aligned
+    std::cout &lt;&lt; std::hex &lt;&lt; 255 &lt;&lt; &quot;\n&quot;; // ff
+    std::cout &lt;&lt; std::dec &lt;&lt; 255 &lt;&lt; &quot;\n&quot;; // back to decimal: 255
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Manipulators like std::fixed and std::hex are sticky: they change the stream's state until you change it again. setw is the exception, it only applies to the very next thing written, which trips people up the first time they use it inside a loop and forget to repeat it.</p>
+					<h3>Reading input safely</h3>
+					<p>std::cin &gt;&gt; someInt fails cleanly (sets a fail flag) if the input isn't actually a valid integer, but it does NOT throw or crash, and the leftover bad input stays in the stream's buffer waiting to break your very next read too, unless you clear the state and discard it.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Climits%3E%0A%0Aint+main()+%7B%0A++++int+value%3B%0A++++std%3A%3Acout+%3C%3C+%22enter+a+number%3A+%22%3B%0A++++while+(!(std%3A%3Acin+%3E%3E+value))+%7B%0A++++++++std%3A%3Acout+%3C%3C+%22that+wasn%27t+a+number%2C+try+again%3A+%22%3B%0A++++++++std%3A%3Acin.clear()%3B+//+clear+the+fail+flag%0A++++++++std%3A%3Acin.ignore(std%3A%3Anumeric_limits%3Cstd%3A%3Astreamsize%3E%3A%3Amax()%2C+%27%5Cn%27)%3B+//+discard+the+bad+input%0A++++%7D%0A++++std%3A%3Acout+%3C%3C+%22got%3A+%22+%3C%3C+value+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Climits%3E%0A%0Aint+main()+%7B%0A++++int+value%3B%0A++++std%3A%3Acout+%3C%3C+%22enter+a+number%3A+%22%3B%0A++++while+(!(std%3A%3Acin+%3E%3E+value))+%7B%0A++++++++std%3A%3Acout+%3C%3C+%22that+wasn%27t+a+number%2C+try+again%3A+%22%3B%0A++++++++std%3A%3Acin.clear()%3B+//+clear+the+fail+flag%0A++++++++std%3A%3Acin.ignore(std%3A%3Anumeric_limits%3Cstd%3A%3Astreamsize%3E%3A%3Amax()%2C+%27%5Cn%27)%3B+//+discard+the+bad+input%0A++++%7D%0A++++std%3A%3Acout+%3C%3C+%22got%3A+%22+%3C%3C+value+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;limits&gt;
+
+int main() {
+    int value;
+    std::cout &lt;&lt; &quot;enter a number: &quot;;
+    while (!(std::cin &gt;&gt; value)) {
+        std::cout &lt;&lt; &quot;that wasn't a number, try again: &quot;;
+        std::cin.clear(); // clear the fail flag
+        std::cin.ignore(std::numeric_limits&lt;std::streamsize&gt;::max(), '\n'); // discard the bad input
+    }
+    std::cout &lt;&lt; &quot;got: &quot; &lt;&lt; value &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>If you skip the clear()/ignore() pair after a failed read, the stream stays in a failed state forever: every subsequent &gt;&gt; silently does nothing, and you get an infinite loop that never actually prompts again. This is one of the most common real bugs in beginner C++ input code.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>String streams for parsing</h3>
+					<p>std::stringstream lets you use the exact same &gt;&gt; and &lt;&lt; operators you already know, but against an in-memory string instead of the console. It's the standard tool for splitting a line into fields:</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Csstream%3E%0A%23include+%3Cstring%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+line+%3D+%2242+3.14+hello%22%3B%0A++++std%3A%3Astringstream+ss(line)%3B%0A%0A++++int+i%3B%0A++++double+d%3B%0A++++std%3A%3Astring+s%3B%0A++++ss+%3E%3E+i+%3E%3E+d+%3E%3E+s%3B%0A%0A++++std%3A%3Acout+%3C%3C+%22int%3A+%22+%3C%3C+i+%3C%3C+%22%2C+double%3A+%22+%3C%3C+d+%3C%3C+%22%2C+string%3A+%22+%3C%3C+s+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Csstream%3E%0A%23include+%3Cstring%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+line+%3D+%2242+3.14+hello%22%3B%0A++++std%3A%3Astringstream+ss(line)%3B%0A%0A++++int+i%3B%0A++++double+d%3B%0A++++std%3A%3Astring+s%3B%0A++++ss+%3E%3E+i+%3E%3E+d+%3E%3E+s%3B%0A%0A++++std%3A%3Acout+%3C%3C+%22int%3A+%22+%3C%3C+i+%3C%3C+%22%2C+double%3A+%22+%3C%3C+d+%3C%3C+%22%2C+string%3A+%22+%3C%3C+s+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string line = &quot;42 3.14 hello&quot;;
+    std::stringstream ss(line);
+
+    int i;
+    double d;
+    std::string s;
+    ss &gt;&gt; i &gt;&gt; d &gt;&gt; s;
+
+    std::cout &lt;&lt; &quot;int: &quot; &lt;&lt; i &lt;&lt; &quot;, double: &quot; &lt;&lt; d &lt;&lt; &quot;, string: &quot; &lt;&lt; s &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>File I/O basics</h3>
+					<p>std::ifstream and std::ofstream work like cin/cout once opened, since they're all built on the same iostream hierarchy. Always check whether the open actually succeeded before reading or writing; a missing file is a normal, expected failure mode, not an exceptional one.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Cfstream%3E%0A%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++%7B%0A++++++++std%3A%3Aofstream+out(%22example.txt%22)%3B%0A++++++++if+(!out)+%7B%0A++++++++++++std%3A%3Acerr+%3C%3C+%22couldn%27t+open+file+for+writing%5Cn%22%3B%0A++++++++++++return+1%3B%0A++++++++%7D%0A++++++++out+%3C%3C+%22line+one%5Cn%22+%3C%3C+%22line+two%5Cn%22%3B%0A++++%7D+//+out+closed+automatically+here%2C+RAII+again%0A%0A++++std%3A%3Aifstream+in(%22example.txt%22)%3B%0A++++std%3A%3Astring+line%3B%0A++++while+(std%3A%3Agetline(in%2C+line))+%7B%0A++++++++std%3A%3Acout+%3C%3C+%22read%3A+%22+%3C%3C+line+%3C%3C+%22%5Cn%22%3B%0A++++%7D%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Cfstream%3E%0A%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++%7B%0A++++++++std%3A%3Aofstream+out(%22example.txt%22)%3B%0A++++++++if+(!out)+%7B%0A++++++++++++std%3A%3Acerr+%3C%3C+%22couldn%27t+open+file+for+writing%5Cn%22%3B%0A++++++++++++return+1%3B%0A++++++++%7D%0A++++++++out+%3C%3C+%22line+one%5Cn%22+%3C%3C+%22line+two%5Cn%22%3B%0A++++%7D+//+out+closed+automatically+here%2C+RAII+again%0A%0A++++std%3A%3Aifstream+in(%22example.txt%22)%3B%0A++++std%3A%3Astring+line%3B%0A++++while+(std%3A%3Agetline(in%2C+line))+%7B%0A++++++++std%3A%3Acout+%3C%3C+%22read%3A+%22+%3C%3C+line+%3C%3C+%22%5Cn%22%3B%0A++++%7D%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+
+int main() {
+    {
+        std::ofstream out(&quot;example.txt&quot;);
+        if (!out) {
+            std::cerr &lt;&lt; &quot;couldn't open file for writing\n&quot;;
+            return 1;
+        }
+        out &lt;&lt; &quot;line one\n&quot; &lt;&lt; &quot;line two\n&quot;;
+    } // out closed automatically here, RAII again
+
+    std::ifstream in(&quot;example.txt&quot;);
+    std::string line;
+    while (std::getline(in, line)) {
+        std::cout &lt;&lt; &quot;read: &quot; &lt;&lt; line &lt;&lt; &quot;\n&quot;;
+    }
+}
+</pre></noscript></div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: parse comma-separated values<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Use a stringstream and std::getline with a custom delimiter to split a comma-separated line into individual fields.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Csstream%3E%0A%23include+%3Cstring%3E%0A%23include+%3Cvector%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+csv+%3D+%22apple%2Cbanana%2Ccherry%22%3B%0A++++std%3A%3Astringstream+ss(csv)%3B%0A++++std%3A%3Astring+field%3B%0A++++std%3A%3Avector%3Cstd%3A%3Astring%3E+fields%3B%0A%0A++++while+(std%3A%3Agetline(ss%2C+field%2C+%27%2C%27))+%7B%0A++++++++fields.push_back(field)%3B%0A++++%7D%0A%0A++++for+(const+auto%26+f+%3A+fields)+std%3A%3Acout+%3C%3C+%22field%3A+%22+%3C%3C+f+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Csstream%3E%0A%23include+%3Cstring%3E%0A%23include+%3Cvector%3E%0A%0Aint+main()+%7B%0A++++std%3A%3Astring+csv+%3D+%22apple%2Cbanana%2Ccherry%22%3B%0A++++std%3A%3Astringstream+ss(csv)%3B%0A++++std%3A%3Astring+field%3B%0A++++std%3A%3Avector%3Cstd%3A%3Astring%3E+fields%3B%0A%0A++++while+(std%3A%3Agetline(ss%2C+field%2C+%27%2C%27))+%7B%0A++++++++fields.push_back(field)%3B%0A++++%7D%0A%0A++++for+(const+auto%26+f+%3A+fields)+std%3A%3Acout+%3C%3C+%22field%3A+%22+%3C%3C+f+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+int main() {
+    std::string csv = &quot;apple,banana,cherry&quot;;
+    std::stringstream ss(csv);
+    std::string field;
+    std::vector&lt;std::string&gt; fields;
+
+    while (std::getline(ss, field, ',')) {
+        fields.push_back(field);
+    }
+
+    for (const auto&amp; f : fields) std::cout &lt;&lt; &quot;field: &quot; &lt;&lt; f &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Enums and Structs: C++, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Enums and Structs · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/cpp/enums-and-structs.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Enums and Structs" />
+		<meta property="og:description" content="Enums and Structs: C++, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/cpp/enums-and-structs.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Enums and Structs" />
+		<meta name="twitter:description" content="Enums and Structs: C++, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C++, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="functions-and-program-structure.html" class="">Functions and Program Structure</a>
+					</li>
+					<li>
+						<a href="debugging-c-programs.html" class="">Debugging C++ Programs</a>
+					</li>
+					<li>
+						<a href="fundamental-data-types.html" class="">Fundamental Data Types</a>
+					</li>
+					<li>
+						<a href="constants-literals-and-strings.html" class="">Constants, Literals, and Strings</a>
+					</li>
+					<li>
+						<a href="operators.html" class="">Operators</a>
+					</li>
+					<li>
+						<a href="scope-duration-and-linkage.html" class="">Scope, Duration, and Linkage</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="error-detection-and-handling.html" class="">Error Detection and Handling</a>
+					</li>
+					<li>
+						<a href="type-conversion-aliases-and-deduction.html" class="">Type Conversion, Aliases, and Deduction</a>
+					</li>
+					<li>
+						<a href="function-overloading-and-function-templates.html" class="">Function Overloading and Function Templates</a>
+					</li>
+					<li>
+						<a href="constexpr-and-compile-time-evaluation.html" class="">Constexpr and Compile-Time Evaluation</a>
+					</li>
+					<li>
+						<a href="references-and-pointers.html" class="">References and Pointers</a>
+					</li>
+					<li>
+						<a href="enums-and-structs.html" class="active">Enums and Structs</a>
+					</li>
+					<li>
+						<a href="compile-time-and-runtime-polymorphism-previewed.html" class="">Compile-Time and Runtime Polymorphism, Previewed</a>
+					</li>
+					<li>
+						<a href="introduction-to-classes.html" class="">Introduction to Classes</a>
+					</li>
+					<li>
+						<a href="more-on-classes.html" class="">More on Classes</a>
+					</li>
+					<li>
+						<a href="dynamic-arrays-std-vector.html" class="">Dynamic Arrays: std::vector</a>
+					</li>
+					<li>
+						<a href="fixed-size-arrays-std-array-and-c-style-arrays.html" class="">Fixed-Size Arrays: std::array and C-style Arrays</a>
+					</li>
+					<li>
+						<a href="iterators-and-algorithms.html" class="">Iterators and Algorithms</a>
+					</li>
+					<li>
+						<a href="dynamic-memory-allocation.html" class="">Dynamic Memory Allocation</a>
+					</li>
+					<li>
+						<a href="lambdas-and-function-objects.html" class="">Lambdas and Function Objects</a>
+					</li>
+					<li>
+						<a href="operator-overloading.html" class="">Operator Overloading</a>
+					</li>
+					<li>
+						<a href="move-semantics-and-smart-pointers.html" class="">Move Semantics and Smart Pointers</a>
+					</li>
+					<li>
+						<a href="object-relationships.html" class="">Object Relationships</a>
+					</li>
+					<li>
+						<a href="inheritance.html" class="">Inheritance</a>
+					</li>
+					<li>
+						<a href="virtual-functions-and-polymorphism.html" class="">Virtual Functions and Polymorphism</a>
+					</li>
+					<li>
+						<a href="templates-and-generic-classes.html" class="">Templates and Generic Classes</a>
+					</li>
+					<li>
+						<a href="exceptions.html" class="">Exceptions</a>
+					</li>
+					<li>
+						<a href="input-and-output-streams.html" class="">Input and Output Streams</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-c-11-through-23.html" class="">A Tour of Modern C++ (11 Through 23)</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-and-common-pitfalls.html" class="">Idiomatic C++ and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← C++, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C++, End to End</p>
+							<h1>Enums and Structs</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Enums give a name to a small, fixed set of values. Structs bundle related data together. Both are simple on the surface, and both have a modern-vs-legacy version worth knowing the difference between.</p>
+					<h3>Unscoped enums</h3>
+					<p>The original C-style enum. Its values live in the surrounding scope, not inside the enum's own namespace, which means they can collide with other names and, worse, implicitly convert to <code>int</code> without any cast.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aenum+Color+%7B+red%2C+green%2C+blue+%7D%3B+//+red%2C+green%2C+blue+are+now+names+in+the+enclosing+scope%0A%0Aint+main()+%7B%0A++++Color+c+%3D+red%3B%0A++++int+as_int+%3D+c%3B+//+implicit+conversion+to+int%2C+no+cast+needed%2C+easy+to+do+by+accident%0A++++std%3A%3Acout+%3C%3C+as_int+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aenum+Color+%7B+red%2C+green%2C+blue+%7D%3B+//+red%2C+green%2C+blue+are+now+names+in+the+enclosing+scope%0A%0Aint+main()+%7B%0A++++Color+c+%3D+red%3B%0A++++int+as_int+%3D+c%3B+//+implicit+conversion+to+int%2C+no+cast+needed%2C+easy+to+do+by+accident%0A++++std%3A%3Acout+%3C%3C+as_int+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+enum Color { red, green, blue }; // red, green, blue are now names in the enclosing scope
+
+int main() {
+    Color c = red;
+    int as_int = c; // implicit conversion to int, no cast needed, easy to do by accident
+    std::cout &lt;&lt; as_int &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>Scoped enums (enum class)</h3>
+					<p>C++11's <code>enum class</code> fixes both problems: values are scoped to the enum's own name (<code>Color::red</code>, not just <code>red</code>), and there's no implicit conversion to <code>int</code>, an explicit <code>static_cast</code> is required if you actually want the underlying integer.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aenum+class+Color+%7B+red%2C+green%2C+blue+%7D%3B%0A%0Aint+main()+%7B%0A++++Color+c+%3D+Color%3A%3Ared%3B%0A++++//+int+as_int+%3D+c%3B+//+compile+error%3A+no+implicit+conversion%0A++++int+as_int+%3D+static_cast%3Cint%3E(c)%3B+//+explicit%2C+and+visibly+intentional%0A++++std%3A%3Acout+%3C%3C+as_int+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aenum+class+Color+%7B+red%2C+green%2C+blue+%7D%3B%0A%0Aint+main()+%7B%0A++++Color+c+%3D+Color%3A%3Ared%3B%0A++++//+int+as_int+%3D+c%3B+//+compile+error%3A+no+implicit+conversion%0A++++int+as_int+%3D+static_cast%3Cint%3E(c)%3B+//+explicit%2C+and+visibly+intentional%0A++++std%3A%3Acout+%3C%3C+as_int+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+enum class Color { red, green, blue };
+
+int main() {
+    Color c = Color::red;
+    // int as_int = c; // compile error: no implicit conversion
+    int as_int = static_cast&lt;int&gt;(c); // explicit, and visibly intentional
+    std::cout &lt;&lt; as_int &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Default to <code>enum class</code> in new code. The only reason to reach for the older unscoped <code>enum</code> is interfacing with an existing API that already uses one, or the rare case where you genuinely want the implicit int conversion (bit flags combined with <code>|</code>, for instance, though a scoped enum with explicit casts is usually still clearer).</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Underlying types</h3>
+					<p>Every enum has an underlying integer type, <code>int</code> by default for unscoped enums, and also <code>int</code> by default for scoped enums, though you can specify a smaller one explicitly if the value range doesn't need it, which can matter for memory layout in large arrays of enum values.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'enum+class+StatusCode+%3A+unsigned+char+%7B+ok+%3D+0%2C+not_found+%3D+1%2C+error+%3D+2+%7D%3B%0A%0Aint+main()+%7B%0A++++static_assert(sizeof(StatusCode)+%3D%3D+1%2C+%22expected+a+1-byte+underlying+type%22)%3B%0A++++return+0%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'enum+class+StatusCode+%3A+unsigned+char+%7B+ok+%3D+0%2C+not_found+%3D+1%2C+error+%3D+2+%7D%3B%0A%0Aint+main()+%7B%0A++++static_assert(sizeof(StatusCode)+%3D%3D+1%2C+%22expected+a+1-byte+underlying+type%22)%3B%0A++++return+0%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>enum class StatusCode : unsigned char { ok = 0, not_found = 1, error = 2 };
+
+int main() {
+    static_assert(sizeof(StatusCode) == 1, &quot;expected a 1-byte underlying type&quot;);
+    return 0;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>Structs and aggregate initialization</h3>
+					<p>A <code>struct</code> bundles related fields together. When a struct has no constructors, no private/protected members, and no virtual functions (an &quot;aggregate&quot;), you can initialize all its members directly with brace initialization, in declaration order:</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Astruct+Point+%7B%0A++++int+x%3B%0A++++int+y%3B%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Point+p%7B3%2C+4%7D%3B+//+aggregate+initialization%3A+x+%3D+3%2C+y+%3D+4%2C+in+declaration+order%0A++++std%3A%3Acout+%3C%3C+p.x+%3C%3C+%22%2C+%22+%3C%3C+p.y+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Astruct+Point+%7B%0A++++int+x%3B%0A++++int+y%3B%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Point+p%7B3%2C+4%7D%3B+//+aggregate+initialization%3A+x+%3D+3%2C+y+%3D+4%2C+in+declaration+order%0A++++std%3A%3Acout+%3C%3C+p.x+%3C%3C+%22%2C+%22+%3C%3C+p.y+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    Point p{3, 4}; // aggregate initialization: x = 3, y = 4, in declaration order
+    std::cout &lt;&lt; p.x &lt;&lt; &quot;, &quot; &lt;&lt; p.y &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>Designated initializers (C++20)</h3>
+					<p>C++20 lets you name which member you're initializing, matching a feature C has had for a while. This makes initialization order-independent and self-documenting, especially valuable once a struct has more than two or three fields.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'//+godbolt-run+-std%3Dc%2B%2B20%0A%23include+%3Ciostream%3E%0A%0Astruct+Config+%7B%0A++++int+width%3B%0A++++int+height%3B%0A++++bool+fullscreen%3B%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Config+cfg%7B.width+%3D+1920%2C+.height+%3D+1080%2C+.fullscreen+%3D+true%7D%3B%0A++++std%3A%3Acout+%3C%3C+cfg.width+%3C%3C+%22x%22+%3C%3C+cfg.height+%3C%3C+(cfg.fullscreen+%3F+%22+fullscreen%22+%3A+%22%22)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'//+godbolt-run+-std%3Dc%2B%2B20%0A%23include+%3Ciostream%3E%0A%0Astruct+Config+%7B%0A++++int+width%3B%0A++++int+height%3B%0A++++bool+fullscreen%3B%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Config+cfg%7B.width+%3D+1920%2C+.height+%3D+1080%2C+.fullscreen+%3D+true%7D%3B%0A++++std%3A%3Acout+%3C%3C+cfg.width+%3C%3C+%22x%22+%3C%3C+cfg.height+%3C%3C+(cfg.fullscreen+%3F+%22+fullscreen%22+%3A+%22%22)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>// godbolt-run -std=c++20
+#include &lt;iostream&gt;
+
+struct Config {
+    int width;
+    int height;
+    bool fullscreen;
+};
+
+int main() {
+    Config cfg{.width = 1920, .height = 1080, .fullscreen = true};
+    std::cout &lt;&lt; cfg.width &lt;&lt; &quot;x&quot; &lt;&lt; cfg.height &lt;&lt; (cfg.fullscreen ? &quot; fullscreen&quot; : &quot;&quot;) &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>struct vs. class: the only real difference</h3>
+					<p>This surprises a lot of people coming from languages where <code>struct</code> and <code>class</code> mean genuinely different things: in C++, they compile to the exact same kind of type, with exactly one difference. Members and base classes default to <strong>public</strong> in a <code>struct</code>, and to <strong>private</strong> in a <code>class</code>. That's it. Everything else, constructors, methods, inheritance, virtual functions, works identically for both keywords.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'struct+S+%7B%0A++++int+x%3B+//+public+by+default%0A%7D%3B%0A%0Aclass+C+%7B%0A++++int+x%3B+//+private+by+default%0A%7D%3B%0A%0Aint+main()+%7B%0A++++S+s%3B%0A++++s.x+%3D+5%3B+//+fine%2C+public%0A%0A++++C+c%3B%0A++++//+c.x+%3D+5%3B+//+compile+error%3A+x+is+private%0A++++return+0%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'struct+S+%7B%0A++++int+x%3B+//+public+by+default%0A%7D%3B%0A%0Aclass+C+%7B%0A++++int+x%3B+//+private+by+default%0A%7D%3B%0A%0Aint+main()+%7B%0A++++S+s%3B%0A++++s.x+%3D+5%3B+//+fine%2C+public%0A%0A++++C+c%3B%0A++++//+c.x+%3D+5%3B+//+compile+error%3A+x+is+private%0A++++return+0%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>struct S {
+    int x; // public by default
+};
+
+class C {
+    int x; // private by default
+};
+
+int main() {
+    S s;
+    s.x = 5; // fine, public
+
+    C c;
+    // c.x = 5; // compile error: x is private
+    return 0;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>In practice, most code uses <code>struct</code> for simple data-holding types with no invariants to protect (plain aggregates like the <code>Point</code> and <code>Config</code> above), and <code>class</code> for types with real behavior, private state, and constructors that enforce invariants. That's a convention, not a language rule, but it's a strong and nearly universal one, and deviating from it without a good reason will confuse anyone reading your code.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: convert an unscoped enum and add designated initializers<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Convert <code>Direction</code> below to a scoped <code>enum class</code>, fix the resulting compile errors at each use site, then add a <code>Player</code> struct with at least three fields and construct one using designated initializers.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aenum+Direction+%7B+north%2C+south%2C+east%2C+west+%7D%3B%0A%0Aint+main()+%7B%0A++++Direction+d+%3D+north%3B%0A++++int+as_int+%3D+d%3B%0A++++std%3A%3Acout+%3C%3C+as_int+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aenum+Direction+%7B+north%2C+south%2C+east%2C+west+%7D%3B%0A%0Aint+main()+%7B%0A++++Direction+d+%3D+north%3B%0A++++int+as_int+%3D+d%3B%0A++++std%3A%3Acout+%3C%3C+as_int+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+enum Direction { north, south, east, west };
+
+int main() {
+    Direction d = north;
+    int as_int = d;
+    std::cout &lt;&lt; as_int &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Type Conversion, Aliases, and Deduction: C++, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Type Conversion, Aliases, and Deduction · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/cpp/type-conversion-aliases-and-deduction.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Type Conversion, Aliases, and Deduction" />
+		<meta property="og:description" content="Type Conversion, Aliases, and Deduction: C++, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/cpp/type-conversion-aliases-and-deduction.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Type Conversion, Aliases, and Deduction" />
+		<meta name="twitter:description" content="Type Conversion, Aliases, and Deduction: C++, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C++, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="functions-and-program-structure.html" class="">Functions and Program Structure</a>
+					</li>
+					<li>
+						<a href="debugging-c-programs.html" class="">Debugging C++ Programs</a>
+					</li>
+					<li>
+						<a href="fundamental-data-types.html" class="">Fundamental Data Types</a>
+					</li>
+					<li>
+						<a href="constants-literals-and-strings.html" class="">Constants, Literals, and Strings</a>
+					</li>
+					<li>
+						<a href="operators.html" class="">Operators</a>
+					</li>
+					<li>
+						<a href="scope-duration-and-linkage.html" class="">Scope, Duration, and Linkage</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="error-detection-and-handling.html" class="">Error Detection and Handling</a>
+					</li>
+					<li>
+						<a href="type-conversion-aliases-and-deduction.html" class="active">Type Conversion, Aliases, and Deduction</a>
+					</li>
+					<li>
+						<a href="function-overloading-and-function-templates.html" class="">Function Overloading and Function Templates</a>
+					</li>
+					<li>
+						<a href="constexpr-and-compile-time-evaluation.html" class="">Constexpr and Compile-Time Evaluation</a>
+					</li>
+					<li>
+						<a href="references-and-pointers.html" class="">References and Pointers</a>
+					</li>
+					<li>
+						<a href="enums-and-structs.html" class="">Enums and Structs</a>
+					</li>
+					<li>
+						<a href="compile-time-and-runtime-polymorphism-previewed.html" class="">Compile-Time and Runtime Polymorphism, Previewed</a>
+					</li>
+					<li>
+						<a href="introduction-to-classes.html" class="">Introduction to Classes</a>
+					</li>
+					<li>
+						<a href="more-on-classes.html" class="">More on Classes</a>
+					</li>
+					<li>
+						<a href="dynamic-arrays-std-vector.html" class="">Dynamic Arrays: std::vector</a>
+					</li>
+					<li>
+						<a href="fixed-size-arrays-std-array-and-c-style-arrays.html" class="">Fixed-Size Arrays: std::array and C-style Arrays</a>
+					</li>
+					<li>
+						<a href="iterators-and-algorithms.html" class="">Iterators and Algorithms</a>
+					</li>
+					<li>
+						<a href="dynamic-memory-allocation.html" class="">Dynamic Memory Allocation</a>
+					</li>
+					<li>
+						<a href="lambdas-and-function-objects.html" class="">Lambdas and Function Objects</a>
+					</li>
+					<li>
+						<a href="operator-overloading.html" class="">Operator Overloading</a>
+					</li>
+					<li>
+						<a href="move-semantics-and-smart-pointers.html" class="">Move Semantics and Smart Pointers</a>
+					</li>
+					<li>
+						<a href="object-relationships.html" class="">Object Relationships</a>
+					</li>
+					<li>
+						<a href="inheritance.html" class="">Inheritance</a>
+					</li>
+					<li>
+						<a href="virtual-functions-and-polymorphism.html" class="">Virtual Functions and Polymorphism</a>
+					</li>
+					<li>
+						<a href="templates-and-generic-classes.html" class="">Templates and Generic Classes</a>
+					</li>
+					<li>
+						<a href="exceptions.html" class="">Exceptions</a>
+					</li>
+					<li>
+						<a href="input-and-output-streams.html" class="">Input and Output Streams</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-c-11-through-23.html" class="">A Tour of Modern C++ (11 Through 23)</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-and-common-pitfalls.html" class="">Idiomatic C++ and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← C++, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C++, End to End</p>
+							<h1>Type Conversion, Aliases, and Deduction</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>C++ will convert between types for you constantly, sometimes usefully, sometimes in ways that quietly change what your program does. Knowing which conversions are automatic and which need an explicit cast is one of the fastest ways to stop fighting the type system.</p>
+					<h3>Implicit conversions</h3>
+					<p>An <code>int</code> assigned to a <code>double</code> converts automatically (safe: no information is lost). A <code>double</code> assigned to an <code>int</code> also converts automatically, but truncates the fractional part, which is a <strong>narrowing conversion</strong>: information can be lost, and the compiler usually still allows it with at most a warning.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++double+d+%3D+3.99%3B%0A++++int+i+%3D+d%3B+//+implicit+narrowing%3A+i+becomes+3%2C+not+4%2C+no+rounding%0A++++std%3A%3Acout+%3C%3C+i+%3C%3C+%22%5Cn%22%3B%0A%0A++++int+small+%3D+300%3B%0A++++char+c+%3D+small%3B+//+char+is+often+8-bit+signed%3A+this+can+overflow+silently%0A++++std%3A%3Acout+%3C%3C+static_cast%3Cint%3E(c)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++double+d+%3D+3.99%3B%0A++++int+i+%3D+d%3B+//+implicit+narrowing%3A+i+becomes+3%2C+not+4%2C+no+rounding%0A++++std%3A%3Acout+%3C%3C+i+%3C%3C+%22%5Cn%22%3B%0A%0A++++int+small+%3D+300%3B%0A++++char+c+%3D+small%3B+//+char+is+often+8-bit+signed%3A+this+can+overflow+silently%0A++++std%3A%3Acout+%3C%3C+static_cast%3Cint%3E(c)+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int main() {
+    double d = 3.99;
+    int i = d; // implicit narrowing: i becomes 3, not 4, no rounding
+    std::cout &lt;&lt; i &lt;&lt; &quot;\n&quot;;
+
+    int small = 300;
+    char c = small; // char is often 8-bit signed: this can overflow silently
+    std::cout &lt;&lt; static_cast&lt;int&gt;(c) &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Brace initialization (<code>int i{d};</code> instead of <code>int i = d;</code>) refuses to compile narrowing conversions at all, catching this class of bug at compile time. Prefer braces for exactly this reason when the value isn't already known to fit.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Integer promotion</h3>
+					<p>Before most arithmetic happens, small integer types (<code>bool</code>, <code>char</code>, <code>short</code>) get promoted to <code>int</code> (or <code>unsigned int</code>) automatically. This is why <code>char c1 = 'a'; char c2 = 'b'; auto sum = c1 + c2;</code> gives you an <code>int</code>, not a <code>char</code>: the addition happens on promoted <code>int</code>s, and only assigning back into a smaller type would truncate again.</p>
+					<h3>Explicit casts</h3>
+					<p>When you want a conversion the compiler wouldn't do implicitly (or want to make an implicit one explicit and visible in the code), C++ gives you four distinct cast operators, each with a narrower job than the old C-style <code>(Type)value</code> cast:</p>
+					<ul><li><strong>static_cast&lt;T&gt;(value)</strong>: the everyday cast, for conversions the language already understands (numeric conversions, pointer conversions within a class hierarchy, explicit constructor calls). Checked at compile time, no runtime cost.</li><li><strong>dynamic_cast&lt;T&gt;(ptr)</strong>: safely casts within a polymorphic class hierarchy (a base pointer to a derived pointer), returning <code>nullptr</code> if the object isn't actually of that derived type. Has a real runtime cost (it uses RTTI, run-time type information) and requires the base class to be polymorphic (have at least one virtual function).</li><li><strong>const_cast&lt;T&gt;(value)</strong>: adds or removes <code>const</code>/<code>volatile</code>. Almost never the right tool; if you're removing <code>const</code> to mutate something, you're very likely about to invoke undefined behavior unless you're certain the underlying object wasn't actually declared <code>const</code>.</li><li><strong>reinterpret_cast&lt;T&gt;(value)</strong>: reinterprets the raw bits of one type as another, unrelated type. Legitimately needed sometimes (low-level bit manipulation, interfacing with hardware or C APIs), but it bypasses the type system's safety entirely.</li></ul>
+					<p>The old C-style cast <code>(int)x</code> still compiles and silently picks whichever of the four above would apply, which is exactly the problem: reading <code>(SomeType)value</code> tells you nothing about which of those four very different operations is actually happening. The C++ casts are more to type, but they're <code>grep</code>-able, and each one documents its own intent at the call site.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Astruct+Base+%7B+virtual+~Base()+%3D+default%3B+%7D%3B%0Astruct+Derived+%3A+Base+%7B+void+hello()+%7B+std%3A%3Acout+%3C%3C+%22derived+hello%5Cn%22%3B+%7D+%7D%3B%0A%0Aint+main()+%7B%0A++++Base*+b+%3D+new+Derived()%3B%0A++++if+(Derived*+d+%3D+dynamic_cast%3CDerived*%3E(b))+%7B%0A++++++++d-%3Ehello()%3B%0A++++%7D%0A++++delete+b%3B%0A%0A++++double+pi+%3D+3.14159%3B%0A++++int+truncated+%3D+static_cast%3Cint%3E(pi)%3B%0A++++std%3A%3Acout+%3C%3C+truncated+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Astruct+Base+%7B+virtual+~Base()+%3D+default%3B+%7D%3B%0Astruct+Derived+%3A+Base+%7B+void+hello()+%7B+std%3A%3Acout+%3C%3C+%22derived+hello%5Cn%22%3B+%7D+%7D%3B%0A%0Aint+main()+%7B%0A++++Base*+b+%3D+new+Derived()%3B%0A++++if+(Derived*+d+%3D+dynamic_cast%3CDerived*%3E(b))+%7B%0A++++++++d-%3Ehello()%3B%0A++++%7D%0A++++delete+b%3B%0A%0A++++double+pi+%3D+3.14159%3B%0A++++int+truncated+%3D+static_cast%3Cint%3E(pi)%3B%0A++++std%3A%3Acout+%3C%3C+truncated+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+struct Base { virtual ~Base() = default; };
+struct Derived : Base { void hello() { std::cout &lt;&lt; &quot;derived hello\n&quot;; } };
+
+int main() {
+    Base* b = new Derived();
+    if (Derived* d = dynamic_cast&lt;Derived*&gt;(b)) {
+        d-&gt;hello();
+    }
+    delete b;
+
+    double pi = 3.14159;
+    int truncated = static_cast&lt;int&gt;(pi);
+    std::cout &lt;&lt; truncated &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>Type aliases: typedef and using</h3>
+					<p>Both <code>typedef</code> and the newer <code>using</code> create an alternate name for an existing type. They're equivalent in what they can express for simple cases, but <code>using</code> also handles templated aliases, which <code>typedef</code> can't do at all.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ccstdint%3E%0A%0Atypedef+std%3A%3Auint32_t+old_style_alias%3B%0Ausing+new_style_alias+%3D+std%3A%3Auint32_t%3B%0A%0Atemplate%3Ctypename+T%3E%0Ausing+Vec2+%3D+std%3A%3Apair%3CT%2C+T%3E%3B+//+typedef+literally+cannot+express+this%0A%0Aint+main()+%7B%0A++++Vec2%3Cint%3E+point%7B3%2C+4%7D%3B%0A++++return+0%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ccstdint%3E%0A%0Atypedef+std%3A%3Auint32_t+old_style_alias%3B%0Ausing+new_style_alias+%3D+std%3A%3Auint32_t%3B%0A%0Atemplate%3Ctypename+T%3E%0Ausing+Vec2+%3D+std%3A%3Apair%3CT%2C+T%3E%3B+//+typedef+literally+cannot+express+this%0A%0Aint+main()+%7B%0A++++Vec2%3Cint%3E+point%7B3%2C+4%7D%3B%0A++++return+0%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;cstdint&gt;
+
+typedef std::uint32_t old_style_alias;
+using new_style_alias = std::uint32_t;
+
+template&lt;typename T&gt;
+using Vec2 = std::pair&lt;T, T&gt;; // typedef literally cannot express this
+
+int main() {
+    Vec2&lt;int&gt; point{3, 4};
+    return 0;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Prefer <code>using</code> in new code. It reads left-to-right like a normal declaration (<code>using Name = Type;</code>), and you'll eventually want a templated alias somewhere, at which point <code>typedef</code> simply isn't an option.</p>
+					<h3>auto and type deduction</h3>
+					<p><code>auto</code> asks the compiler to deduce a variable's type from its initializer. It's not &quot;dynamic typing&quot;, the type is fixed at compile time exactly as if you'd spelled it out, <code>auto</code> just saves you from spelling it. The rules have a few sharp edges worth knowing:</p>
+					<ul><li><code>auto x = expr;</code> deduces a plain value type, dropping top-level <code>const</code> and references. If <code>expr</code> is a <code>const int&amp;</code>, <code>x</code> is just <code>int</code>.</li><li><code>auto&amp; x = expr;</code> deduces a reference, and top-level <code>const</code> is preserved this time (<code>const auto&amp;</code> explicitly keeps it and additionally allows binding to temporaries).</li><li><code>auto</code> deduces the *declared* type of the initializer, not necessarily what you'd guess. <code>auto x = {1, 2, 3};</code> deduces <code>std::initializer_list&lt;int&gt;</code>, not an array or vector, a common surprise.</li></ul>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cvector%3E%0A%0Aint+main()+%7B%0A++++const+std%3A%3Avector%3Cint%3E+v%7B1%2C+2%2C+3%7D%3B%0A%0A++++auto+a+%3D+v%5B0%5D%3B+++++++//+int+(copy%2C+const+and+reference+both+dropped)%0A++++auto%26+b+%3D+v%5B0%5D%3B++++++//+const+int%26+(reference+preserved%2C+and+it+was+const+to+begin+with)%0A++++const+auto%26+c+%3D+v%5B0%5D%3B+//+const+int%26%2C+explicit+and+safest+default+for+read-only+access%0A%0A++++std%3A%3Acout+%3C%3C+a+%3C%3C+%27+%27+%3C%3C+b+%3C%3C+%27+%27+%3C%3C+c+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%23include+%3Cvector%3E%0A%0Aint+main()+%7B%0A++++const+std%3A%3Avector%3Cint%3E+v%7B1%2C+2%2C+3%7D%3B%0A%0A++++auto+a+%3D+v%5B0%5D%3B+++++++//+int+(copy%2C+const+and+reference+both+dropped)%0A++++auto%26+b+%3D+v%5B0%5D%3B++++++//+const+int%26+(reference+preserved%2C+and+it+was+const+to+begin+with)%0A++++const+auto%26+c+%3D+v%5B0%5D%3B+//+const+int%26%2C+explicit+and+safest+default+for+read-only+access%0A%0A++++std%3A%3Acout+%3C%3C+a+%3C%3C+%27+%27+%3C%3C+b+%3C%3C+%27+%27+%3C%3C+c+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main() {
+    const std::vector&lt;int&gt; v{1, 2, 3};
+
+    auto a = v[0];       // int (copy, const and reference both dropped)
+    auto&amp; b = v[0];      // const int&amp; (reference preserved, and it was const to begin with)
+    const auto&amp; c = v[0]; // const int&amp;, explicit and safest default for read-only access
+
+    std::cout &lt;&lt; a &lt;&lt; ' ' &lt;&lt; b &lt;&lt; ' ' &lt;&lt; c &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>decltype</h3>
+					<p>Where <code>auto</code> deduces a type from a value you're initializing with, <code>decltype(expr)</code> gives you back the exact type of an expression without evaluating it or requiring an initializer, useful in template code and when declaring a variable whose type should exactly match another variable or expression, including its reference-ness and const-ness (which plain <code>auto</code> would strip).</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++int+x+%3D+5%3B%0A++++int%26+ref+%3D+x%3B%0A++++decltype(ref)+another_ref+%3D+x%3B+//+decltype(ref)+is+int%26%2C+exactly%2C+unlike+auto%0A++++another_ref+%3D+10%3B%0A++++std%3A%3Acout+%3C%3C+x+%3C%3C+%22%5Cn%22%3B+//+10%2C+because+another_ref+really+is+a+reference+to+x%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++int+x+%3D+5%3B%0A++++int%26+ref+%3D+x%3B%0A++++decltype(ref)+another_ref+%3D+x%3B+//+decltype(ref)+is+int%26%2C+exactly%2C+unlike+auto%0A++++another_ref+%3D+10%3B%0A++++std%3A%3Acout+%3C%3C+x+%3C%3C+%22%5Cn%22%3B+//+10%2C+because+another_ref+really+is+a+reference+to+x%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int main() {
+    int x = 5;
+    int&amp; ref = x;
+    decltype(ref) another_ref = x; // decltype(ref) is int&amp;, exactly, unlike auto
+    another_ref = 10;
+    std::cout &lt;&lt; x &lt;&lt; &quot;\n&quot;; // 10, because another_ref really is a reference to x
+}
+</pre></noscript></div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: pick the right cast<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Replace the C-style cast below with the correct C++ cast for what's actually happening (a numeric conversion), then try changing it to a <code>dynamic_cast</code> scenario: add a <code>Derived</code> class inheriting from <code>Base</code> with a virtual destructor, and safely downcast a <code>Base*</code> to <code>Derived*</code>.</p>
+				</div>
+
+<div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++double+d+%3D+9.7%3B%0A++++int+i+%3D+(int)d%3B+//+replace+with+the+correct+C%2B%2B-style+cast%0A++++std%3A%3Acout+%3C%3C+i+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++double+d+%3D+9.7%3B%0A++++int+i+%3D+(int)d%3B+//+replace+with+the+correct+C%2B%2B-style+cast%0A++++std%3A%3Acout+%3C%3C+i+%3C%3C+%22%5Cn%22%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
+
+int main() {
+    double d = 9.7;
+    int i = (int)d; // replace with the correct C++-style cast
+    std::cout &lt;&lt; i &lt;&lt; &quot;\n&quot;;
+}
+</pre></noscript></div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
