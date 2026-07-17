@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="All articles by Suryansh Kapil — identity, AI, Linux, and where the craft is heading." />
+		<meta name="color-scheme" content="dark light" />
+		<title>Writing · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+		<link rel="canonical" href="https://archdev.in/articles/index.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Writing" />
+		<meta property="og:description" content="All articles by Suryansh Kapil — identity, AI, Linux, and where the craft is heading." />
+		<meta property="og:url" content="https://archdev.in/articles/index.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Writing" />
+		<meta name="twitter:description" content="All articles by Suryansh Kapil — identity, AI, Linux, and where the craft is heading." />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../index.html#writing">Writing</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section" id="writing" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<div class="section-head reveal">
+					<a class="back-link reveal" href="../index.html#writing">← Home</a>
+					<p class="section-eyebrow">Writing</p>
+					<h2>All articles</h2>
+					<p class="section-intro">Everything I've written — identity, AI, Linux, and where the craft is heading. Search by phrase or filter by tag.</p>
+				</div>
+				<div class="article-search">
+					<input type="search" id="article-search-input" placeholder="Search articles…" aria-label="Search articles" />
+				</div>
+				<div class="tag-filter-bar" id="tag-filter-bar">
+					<button type="button" class="tag-chip tag-chip--all active" data-tag="">All</button>
+					<button type="button" class="tag-chip" data-tag="Arch">Arch</button>
+					<button type="button" class="tag-chip" data-tag="Filesystems">Filesystems</button>
+					<button type="button" class="tag-chip" data-tag="Fundamentals → IAM">Fundamentals → IAM</button>
+					<button type="button" class="tag-chip" data-tag="IGA">IGA</button>
+					<button type="button" class="tag-chip" data-tag="Industry">Industry</button>
+					<button type="button" class="tag-chip" data-tag="Linux">Linux</button>
+					<button type="button" class="tag-chip" data-tag="Opinion">Opinion</button>
+					<button type="button" class="tag-chip" data-tag="SailPoint">SailPoint</button>
+				</div>
+				<p class="search-empty" id="search-empty" hidden>No articles match your search.</p>
+
+				<div class="article-list" id="article-list">
+		<a class="article-card reveal" href="generated/ai-in-iam.html" data-tags="Fundamentals → IAM" data-title="ai, end to end — from how models work to running it in iam">
+			<div class="a-meta">
+				<span class="tag">Fundamentals → IAM</span><span>45 min</span>
+			</div>
+			<h3>AI, end to end — from how models work to running it in IAM</h3>
+			<p>A complete tour in plain language: what AI actually is, how a language model works inside, how we prompt it, give it knowledge, turn it into agents — and finally how all of that becomes a real, safe architecture for identity and access management.</p>
+			<span class="a-more">Read →</span>
+		</a>
+		<a class="article-card reveal" href="generated/sailpoint-isc-vs-iiq.html" data-tags="IGA,SailPoint" data-title="sailpoint isc vs identityiq">
+			<div class="a-meta">
+				<span class="tag">IGA · SailPoint</span><span>7 min</span>
+			</div>
+			<h3>SailPoint ISC vs IdentityIQ</h3>
+			<p>I've spent real time in both. Here's the honest version of why Identity Security Cloud is the better bet for most teams — and the cases where IdentityIQ still earns its keep.</p>
+			<span class="a-more">Read →</span>
+		</a>
+		<a class="article-card reveal" href="generated/state-of-software.html" data-tags="Industry,Opinion" data-title="the state of software, and where it's going">
+			<div class="a-meta">
+				<span class="tag">Industry · Opinion</span><span>8 min</span>
+			</div>
+			<h3>The state of software, and where it's going</h3>
+			<p>I've been writing code for about six years, two and a half of them professionally — which means my whole working career has happened inside this AI shift. This is my honest read from that vantage: what has actually changed, what hasn't, and the bets I'm making.</p>
+			<span class="a-more">Read →</span>
+		</a>
+		<a class="article-card reveal" href="generated/arch-linux.html" data-tags="Linux,Arch" data-title="arch linux, and why i keep coming back">
+			<div class="a-meta">
+				<span class="tag">Linux · Arch</span><span>9 min</span>
+			</div>
+			<h3>Arch Linux, and why I keep coming back</h3>
+			<p>Arch has a reputation for being hard. It isn't, really — it's just honest. Here's what makes it different, and how to install it end to end, finishing with the script I use every time.</p>
+			<span class="a-more">Read →</span>
+		</a>
+		<a class="article-card reveal" href="generated/btrfs-snapshots.html" data-tags="Linux,Filesystems" data-title="an un-brickable linux with btrfs">
+			<div class="a-meta">
+				<span class="tag">Linux · Filesystems</span><span>8 min</span>
+			</div>
+			<h3>An un-brickable Linux with Btrfs</h3>
+			<p>A rolling-release system that's always current sounds scary until you have an undo button. Btrfs snapshots give you exactly that — roll a bad update back in seconds, and back up so the machine is never truly beyond repair.</p>
+			<span class="a-more">Read →</span>
+		</a>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../index.html#writing">More writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+		<script src="hub.js" defer></script>
+	</body>
+</html>

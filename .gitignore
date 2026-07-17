@@ -1,6 +1,2 @@
 node_modules/
 .env
-articles/generated/
-articles/index.html
-articles/featured.html
-sitemap.xml
