@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="darkreader-lock" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="description" content="A complete tour in plain language: what AI actually is, how a language model works inside, how we prompt it, give it knowledge, turn it into agents — and finally how all of that becomes a real, safe architecture for identity and access management." />
+		<meta name="description" content="A full crash course in plain language: AI vs ML vs DL, how a language model works inside, prompting and RAG, agent frameworks and multi-agent systems, optimization and guardrails — and how it all becomes a real, safe, compliant architecture for identity and access management." />
 		<meta name="color-scheme" content="dark light" />
 		<title>AI, end to end — from how models work to running it in IAM · Suryansh Kapil</title>
 		<script>
@@ -22,13 +22,14 @@
 		<meta property="og:site_name" content="Suryansh Kapil" />
 		<meta property="og:type" content="article" />
 		<meta property="og:title" content="AI, end to end — from how models work to running it in IAM" />
-		<meta property="og:description" content="A complete tour in plain language: what AI actually is, how a language model works inside, how we prompt it, give it knowledge, turn it into agents — and finally how all of that becomes a real, safe architecture for identity and access management." />
+		<meta property="og:description" content="A full crash course in plain language: AI vs ML vs DL, how a language model works inside, prompting and RAG, agent frameworks and multi-agent systems, optimization and guardrails — and how it all becomes a real, safe, compliant architecture for identity and access management." />
 		<meta property="og:url" content="https://archdev.in/articles/ai-in-iam.html" />
 		<meta property="article:published_time" content="2026-07-17" />
 		<meta property="article:tag" content="Fundamentals → IAM" />
+		<meta property="article:tag" content="Agents" />
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:title" content="AI, end to end — from how models work to running it in IAM" />
-		<meta name="twitter:description" content="A complete tour in plain language: what AI actually is, how a language model works inside, how we prompt it, give it knowledge, turn it into agents — and finally how all of that becomes a real, safe architecture for identity and access management." />
+		<meta name="twitter:description" content="A full crash course in plain language: AI vs ML vs DL, how a language model works inside, prompting and RAG, agent frameworks and multi-agent systems, optimization and guardrails — and how it all becomes a real, safe, compliant architecture for identity and access management." />
 	</head>
 	<body>
 		<div class="bg-stack" aria-hidden="true">
@@ -59,8 +60,8 @@
 				<a class="back-link reveal" href="../index.html#writing">← Writing</a>
 				<p class="doc-status reveal" style="--d: 0.04s">AI · Identity · Deep dive</p>
 				<h1 class="doc-title reveal" style="--d: 0.08s">AI, end to end — from how models work to running it in IAM</h1>
-				<p class="doc-tagline reveal" style="--d: 0.12s">A complete tour in plain language: what AI actually is, how a language model works inside, how we prompt it, give it knowledge, turn it into agents — and finally how all of that becomes a real, safe architecture for identity and access management.</p>
-				<div class="article-meta reveal" style="--d: 0.16s"><span>July 2026</span><span class="sep">·</span><span>45 min</span><span class="sep">·</span><span>Fundamentals → IAM</span></div>
+				<p class="doc-tagline reveal" style="--d: 0.12s">A full crash course in plain language: AI vs ML vs DL, how a language model works inside, prompting and RAG, agent frameworks and multi-agent systems, optimization and guardrails — and how it all becomes a real, safe, compliant architecture for identity and access management.</p>
+				<div class="article-meta reveal" style="--d: 0.16s"><span>July 2026</span><span class="sep">·</span><span>37 min</span><span class="sep">·</span><span>Fundamentals → IAM · Agents</span></div>
 			</section>
 
 
@@ -179,6 +180,13 @@
 
 <div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Family</th><th>Known for</th><th>Typical use</th></tr></thead><tbody><tr><td><strong>Anthropic (Claude)</strong></td><td>Reliable agents &amp; coding, disciplined instruction-following, long-run coherence</td><td>Coding agents, enterprise automation, regulated industries</td></tr><tr><td><strong>OpenAI (GPT)</strong></td><td>Biggest ecosystem, broad multimodal (voice, images)</td><td>Consumer chat products, Microsoft-stack shops</td></tr><tr><td><strong>Google (Gemini)</strong></td><td>Price-performance at the cheap tier, huge context, video/audio input</td><td>High-volume cheap inference, massive-document work</td></tr><tr><td><strong>Open-weight</strong>(Llama, Qwen, Mistral, DeepSeek)</td><td>Full data control, no per-token cost at scale, ~6–12 months behind frontier</td><td>On-prem, air-gapped, data-residency, custom tuning</td></tr></tbody></table></div>
 
+				<details class="cmd-explain reveal">
+					<summary>Current flagships, as of writing (check before you trust this)<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>As of mid-2026: Anthropic's <strong>Claude Opus 4.8</strong> (plus Sonnet 4.6 and Haiku 4.5 for cheaper tiers), OpenAI's <strong>GPT-5.5</strong> family, and Google's <strong>Gemini 3.1 Pro</strong> (plus 3.5 Flash and 3.1 Flash-Lite) are the three frontier lines, separated by single-digit percentage points on most benchmarks. On the harder SWE-bench Pro coding benchmark, Opus 4.8 leads at roughly 69% against GPT-5.5's ~59% and Gemini 3.1 Pro's ~54% — illustrative of the pattern (Claude ahead on hard coding, Gemini cheapest at volume, GPT-5.5 pushing hardest on agentic tool use), not a number worth memorizing. This entire paragraph will be stale within a couple of quarters — that's the point made two sections up. Check a live leaderboard before you plan around any of it.</p>
+				</div></div>
+				</details>
+
 <div class="prose reveal">
 					<h3>Why the leaderboards lie</h3>
 					<p>Public benchmark scores are mostly marketing. Test questions leak into training data (so scores are inflated), and &quot;which answer do people prefer&quot; rewards confident, verbose, nicely-formatted answers over correct ones.<strong>The only number that predicts your result is your own eval</strong>: 20–50 real examples from your actual task, run against a few candidate models, graded with a rubric. Half a day of work, and it beats every public chart. Re-run it on every upgrade — models sometimes get<em>worse</em>at your specific task even as the public scores rise.</p>
@@ -203,6 +211,18 @@
 					<p>Asking a model to &quot;think step by step&quot; genuinely helps on hard reasoning, because it forces the model to spend more computation and make its intermediate steps explicit. But here's the catch that matters enormously for audit trails:</p>
 					<blockquote>The reasoning a model shows you is a plausible story it generates — not a truthful log of how it actually reached the answer.</blockquote>
 					<p>Studies show you can secretly bias a model's answer and its written &quot;reasoning&quot; will never mention the bias. So treat an AI's explanation as<strong>a justification a human can check</strong>(do the cited facts hold up?), never as proof of its process. This single point reshapes how you record &quot;AI rationale&quot; in compliance systems later.</p>
+					<h3>The ReAct pattern: reasoning and acting in a loop</h3>
+					<p>Chain of thought gets a model to <strong>think</strong>. <strong>ReAct</strong> (Reason + Act) is what happens when you let it think <strong>and</strong> act, one step at a time, reading its own tool results before deciding the next move. It's not a separate technique so much as the name for the loop underneath almost every real agent — you've already met the mechanics in the tool-calling section below, this is the pattern that makes them cohere.</p>
+					<ul><li><strong>Thought.</strong> The model reasons, out loud, about what it needs to do next.</li><li><strong>Action.</strong> It calls one tool based on that reasoning.</li><li><strong>Observation.</strong> The tool's result gets appended to the context, and the loop repeats — new thought, informed by what just happened, until the model decides it's done.</li></ul>
+					<p>Two examples of the same loop in different domains:</p>
+					<ul><li><strong>Access-request triage.</strong> Thought: &quot;need to confirm manager approval before I can recommend anything.&quot; Action: call get_pending_approvals(ticket_id). Observation: approved, 3 days ago. Thought: &quot;now check for segregation-of-duties conflicts with their existing roles.&quot; Action: call check_sod_conflicts(user, role). Observation: none found. Thought: &quot;safe to recommend approval.&quot;</li><li><strong>Debugging a failing build.</strong> Thought: &quot;the error mentions a missing dependency.&quot; Action: run npm ls &lt;package&gt;. Observation: it's present but wrong version. Thought: &quot;pin the version and retry.&quot; Action: edit the lockfile, rerun the build.</li></ul>
+				</div>
+
+				<div class="callout reveal">
+					<p>Why ReAct beats &quot;think first, then act once&quot;: the model gets to react to reality instead of planning blind. A plan made before seeing any tool output is a guess; a plan revised after each observation is closer to how a careful human actually works through a problem.</p>
+				</div>
+
+<div class="prose reveal">
 					<h3>Giving models actions: tool calling</h3>
 					<p>A model can't<em>do</em>anything by itself — it can only output text. To let it act, you define<strong>tools</strong>(functions), the model outputs a structured request to call one, your code runs it, and you feed the result back. The pattern that works is a loop: reason, act, look at the real result, adjust.</p>
 				</div>
@@ -269,6 +289,12 @@
 
 <div class="prose reveal">
 					<p><em>RAG is two pipelines: one prepares your knowledge, the other answers questions from it.</em></p>
+					<h3>Vector databases: where retrieval actually lives</h3>
+					<p>Embeddings (from the model-internals part) turn text into a list of numbers positioned so that similar meaning sits close together in that number-space. A <strong>vector database</strong> is what stores millions of those number-lists and answers one question fast: &quot;which of these are closest to this new vector?&quot; Doing that by brute-force comparison doesn't scale, so vector databases build an approximate-nearest-neighbour index — trading a small amount of accuracy for search that stays fast at millions of documents.</p>
+					<ul><li><strong>Purpose-built options</strong> — Pinecone, Weaviate, Qdrant, Milvus: managed or self-hosted, built for this one job.</li><li><strong>Bolt-on options</strong> — pgvector on Postgres, or OpenSearch/Elasticsearch with a vector field: you add a vector index to a database you already run and already have audit and backup processes for.</li></ul>
+					<p>For enterprise identity work specifically, the bolt-on route usually wins: reusing the Postgres instance you already back up, encrypt, and have a data-residency story for is one less new vendor to run risk assessment on — see the compliance part later for why that matters.</p>
+					<p>Three concrete uses:</p>
+					<ul><li><strong>A helpdesk agent's policy search.</strong> The access-policy wiki, embedded once and re-embedded on edit, searched live per question — the retrieval half of RAG, made concrete.</li><li><strong>Similar-case lookup for access reviews.</strong> Embedding past reviewers' written justifications lets a new reviewer search &quot;has anyone approved something like this before&quot; instead of starting from a blank page.</li><li><strong>Deduplicating tickets.</strong> Embedding incoming access-request tickets and searching for near-duplicates before routing catches the same request filed twice under different wording.</li></ul>
 					<h3>The parts that make it actually work</h3>
 					<p>Naive RAG (chop docs into fixed blocks, grab the closest matches, stuff them in) demos nicely and then stalls around 70% quality. The improvements each fix a specific failure:</p>
 					<ul><li><strong>Smart splitting.</strong>Split along the document's real structure (headings, sections), not blindly every N words. A chunk that cuts a table in half is poison. Add a breadcrumb (doc title, section, date) to every chunk so it isn't stranded without context.</li><li><strong>Hybrid search.</strong>Pure semantic search misses exact codes and negations; old-fashioned keyword search misses synonyms. Use<em>both</em>and merge the results. This alone fixes a lot.</li><li><strong>Re-ranking.</strong>Retrieve ~100 candidates cheaply, then use a slower, sharper model to re-score and keep the best 5–10. Best value-for-effort upgrade in the whole stack.</li></ul>
@@ -323,6 +349,16 @@
 					<h3>Beating the reliability math</h3>
 					<p>Remember that 98%-per-step → 67%-per-task problem? The cure is<strong>verification</strong>, and it's worth more than a smarter model:</p>
 					<ul><li><strong>Check the effect, not the acknowledgement.</strong>After a write, independently read the system back: &quot;is the account<em>actually</em>disabled?&quot; Never trust the &quot;success&quot; response alone. (Identity people already know this as provision-then-verify.)</li><li><strong>Use a fresh-context reviewer.</strong>A second pass by a model that didn't do the work, holding only the requirements, catches mistakes the author can't see. This is the best quality-per-dollar trick in the whole field.</li><li><strong>Detect stuck loops and cap budgets.</strong>If it repeats a failing action, stop and escalate. Iteration/token/time limits are correctness tools, not just cost controls.</li></ul>
+					<h3>Making agents fast, not just cheap</h3>
+					<p>Cost optimization (a few parts back) and speed optimization are related but distinct — a cheap agent that takes 90 seconds to answer still gets abandoned. A few techniques that target latency specifically:</p>
+					<ol><li><strong>Parallelize independent tool calls.</strong> If step 2 and step 3 don't depend on each other's output, fire them concurrently instead of serially. Most agent frameworks, LangGraph included, support this as a first-class pattern rather than something you bolt on.</li><li><strong>Stream partial output.</strong> Showing the model's answer — and its intermediate tool calls — as they happen makes a 20-second task <strong>feel</strong> instant, even though total latency hasn't changed. Silence is what makes users assume something broke.</li><li><strong>Route per step, not just per request.</strong> One agent run can call a cheap model for mechanical sub-steps (&quot;extract this field,&quot; &quot;summarize this ticket&quot;) and reserve the frontier model for the one step that actually needs judgment.</li><li><strong>Cache semantically, not just exactly.</strong> For read-heavy agents — an IAM helpdesk answering the same handful of policy questions worded differently every time — cache by embedding similarity, not just byte-identical matches.</li></ol>
+				</div>
+
+				<div class="callout reveal">
+					<p>Two before/after examples: an access-request triage agent that ran its entitlement lookup and its risk-score lookup serially — 45 seconds — dropped to 12 by parallelizing the two. A JML mover agent that used to go silent for two minutes while it worked now streams its checklist progress live, and the support tickets asking &quot;is this stuck?&quot; stopped.</p>
+				</div>
+
+<div class="prose reveal">
 					<h3>How agents fail (naming them helps fix them)</h3>
 				</div>
 
@@ -332,6 +368,10 @@
 					<h3>The security model, in one breath</h3>
 					<p>Break the lethal trifecta per workflow; let an agent act with the<em>requester's</em>permissions rather than a powerful shared account (so it can never do more than the person it's helping); give each agent least-privilege tools with writes behind approval; and treat every agent as a<strong>first-class identity</strong>— its own account, short-lived credentials, its own audit trail, and subject to access reviews like any employee. Hold that thought; it's the heart of the IAM section.</p>
 				</div>
+
+				<div class="callout reveal">
+					<p><strong>The five guardrails every production agent needs, in one place: </strong>(1) scoped permissions — the agent acts as the requester, never as itself with elevated rights; (2) a hard action budget — cap tool calls per run, kill runaway loops before they compound; (3) dry-run before write — every mutating action previewable before it executes; (4) independent verification — check the effect, not the agent's own claim of success; (5) a human-approval gate on anything irreversible or above a defined blast-radius threshold. Miss any one of these and the other four don't save you.</p>
+				</div>
 			</section>
 
 			<section class="doc-section">
@@ -339,7 +379,7 @@
 				<h2>The plumbing: frameworks &amp; MCP</h2>
 <div class="prose reveal">
 					<p>You don't have to build all this from scratch. A few tools matter, and one standard is quietly changing everything.</p>
-					<ul><li><strong>LangGraph</strong>— think of your agent as a flowchart where some steps are the model deciding what's next. Its superpower is<em>durable pause-and-resume</em>: a step can pause for an approval and wait days — surviving restarts — then continue. That is<em>exactly</em>the shape of an approval workflow, which is why it fits IAM so well.</li><li><strong>LangChain</strong>— a big library of connectors and helpers; useful for wiring, but read what its convenience wrappers actually send (they can bloat your prompt).</li><li><strong>Copilot Studio</strong>— Microsoft's low-code agent builder. You trade control over the loop for enterprise plumbing (Teams, sign-in, data policies). The pattern that works: use it as the friendly front door, and have it call your real code agent for anything with state or writes.</li><li><strong>MCP (Model Context Protocol)</strong>— the big one. Instead of building a custom integration for every combination of AI × system, you wrap each system (identity platform, ticketing, GitHub) in one<em>MCP server</em>, and every AI client can use it. It turns an M×N integration mess into M+N. Treat each server as a security boundary with its own limited credentials.</li></ul>
+					<ul><li><strong>LangGraph</strong>— think of your agent as a flowchart where some steps are the model deciding what's next. Its superpower is<em>durable pause-and-resume</em>: a step can pause for an approval and wait days — surviving restarts — then continue. That is<em>exactly</em>the shape of an approval workflow, which is why it fits IAM so well.</li><li><strong>LangChain</strong>— a big library of connectors and helpers; useful for wiring, but read what its convenience wrappers actually send (they can bloat your prompt).</li><li><strong>Copilot Studio</strong>— Microsoft's low-code agent builder. You trade control over the loop for enterprise plumbing (Teams, sign-in, data policies). The pattern that works: use it as the friendly front door, and have it call your real code agent for anything with state or writes.</li><li><strong>MCP (Model Context Protocol)</strong>— the big one. Instead of building a custom integration for every combination of AI × system, you wrap each system (identity platform, ticketing, GitHub) in one<em>MCP server</em>, and every AI client can use it. It turns an M×N integration mess into M+N. Treat each server as a security boundary with its own limited credentials.</li><li><strong>Microsoft Agent Framework (MAF)</strong> — Microsoft's newer, protocol-first successor unifying Semantic Kernel and AutoGen, built around A2A (agent-to-agent communication) and MCP for cross-runtime interoperability. It's becoming the foundation under Copilot Studio's agent layer — if you're already on Entra ID and Azure, this is where Microsoft is pushing governance and identity integration, and it's worth watching even if you're not ready to adopt it yet.</li></ul>
 					<p>The meta-advice: start with the<em>simplest</em>thing that works — often a couple hundred lines over the raw API — and reach for a heavy framework only when durable state and approvals are the actual problem. Your lasting assets are your evals, prompts, tool definitions and traces; frameworks are swappable plumbing around them.</p>
 				</div>
 			</section>
@@ -354,6 +394,7 @@
 <div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Role</th><th>Job</th><th>Can it write?</th></tr></thead><tbody><tr><td><strong>Orchestrator</strong></td><td>Owns the goal, splits it up, hands out briefs, merges results</td><td>No — only delegates</td></tr><tr><td><strong>Researcher</strong></td><td>Gathers evidence and returns structured findings</td><td>No — read-only</td></tr><tr><td><strong>Worker</strong></td><td>Executes one specific task</td><td>Yes — the only role with write tools</td></tr><tr><td><strong>Reviewer</strong></td><td>Checks the work against requirements, with fresh eyes</td><td>No — validate only</td></tr></tbody></table></div>
 
 <div class="prose reveal">
+					<p>Some architectures split what the table above merges: a <strong>Planner Agent</strong> decides <strong>what</strong> should happen — breaking a goal into an ordered plan — while a separate <strong>Orchestrator</strong> executes that plan, coordinating the other agents and re-routing when a step fails. Smaller systems fold planning into the Orchestrator's job, like the table above; bigger ones split them because a plan is worth reviewing (by a human, or a Reviewer agent) <strong>before</strong> anything starts executing. Both terms show up in vendor docs — worth knowing which one a given system means. A quarterly access review is a clean example: the Planner decides the shape of the run (pull entitlements → group by risk → route to managers → escalate anything stale after 5 days), and the Orchestrator is what actually runs that plan and babysits it to completion.</p>
 					<p>Notice the pattern: researchers read, workers write, reviewers check, the orchestrator coordinates. That's separation of duties enforced by<em>what tools each agent is allowed</em>— not by a promise in a prompt.</p>
 					<p>But multi-agent is not free. A well-known figure: one production multi-agent research system used about<strong>15× the tokens</strong>of a single chat. It only paid off because the task genuinely split into independent parallel pieces. The honest rule is<strong>single-agent until proven otherwise</strong>— and the most common<em>legitimate</em>reason to split is simply to keep a messy 200-step investigation out of the main agent's context, returning only a clean summary.</p>
 					<p>When you do split, the hard part is the<strong>contract between agents</strong>. Most multi-agent failures are communication failures. &quot;Research vendor X&quot; is a bug; &quot;Return<code>{pricing, deployment_options[], compliance[]}</code>for vendor X, at most 10 searches, cite sources&quot; is an interface. Force structured results with explicit confidence and gaps, so a worker can't quietly return a plausible-but-empty answer that the orchestrator then builds on.</p>
@@ -431,6 +472,17 @@
 					<p><em>Systems become tools; a durable graph reasons across them; governance wraps everything. Swap the vendors and only the bottom layer changes.</em></p>
 					<h3>Governance: IAM eating its own cooking</h3>
 					<p>This is the most compelling part. Every AI agent you deploy is treated as a<strong>non-human identity governed inside the identity platform itself</strong>: its own service account, short-lived credentials (no static keys), permissions granted through roles, and included in the same certification campaigns as everyone else. When an agent acts for a person, it's limited to<em>that person's</em>access. Every write waits for a human. And you keep a full<strong>decision trace</strong>— what it read, which tools it called, what it recommended, what the human decided — replayable for an auditor. (Remember: present the AI's rationale as a justification to verify, not as proof of its thinking.)</p>
+					<h3>Compliance: what regulators will actually ask for</h3>
+					<p>If you're deploying agents touching EU users, the AI Act's high-risk provisions become enforceable <strong>2 August 2026</strong> (with some use-based Annex III systems on a later 2027 track after the recent Omnibus agreement). Access and employment decisions sit close to — and sometimes inside — the explicitly listed high-risk categories (credit, hiring, benefits eligibility); it's a real legal question worth a real legal read, not a guess made by the engineering team.</p>
+					<ul><li><strong>Tamper-evident audit logs.</strong> Article 12 requires automatic logging of every event relevant to tracing a decision, retained a minimum of 6 months. Your agent's tool calls and outputs need to write to a log the agent itself has no permission to edit.</li><li><strong>A human-oversight mechanism.</strong> Someone must be able to see what the agent is doing and halt it mid-run — not just review a transcript afterward.</li><li><strong>A continuous risk assessment.</strong> Documented and re-run as the system changes, not a one-time sign-off at launch.</li><li><strong>Classification first.</strong> Know whether your specific use case is high-risk before you build the rest of the compliance story around a guess.</li></ul>
+					<p>None of this is IAM-specific, but IAM is the natural place to enforce it — you're already the system of record for &quot;who did what, as whom.&quot; Extend that same spine to &quot;which agent did what, as whom,&quot; and most of the audit-log requirement falls out for free rather than becoming a separate project. Two examples: a provisioning agent's every grant or deny already flows through the same event log used for human-initiated access, satisfying traceability without new plumbing; a review agent's escalation decisions get routed through the same manager-approval gate a human reviewer's decisions require, satisfying human oversight by construction.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Don't bolt compliance on at the end. If the agent-as-non-human-identity governance from the section above already logs every action an agent takes, most of Article 12 is satisfied by how the system is built, not by a separate compliance sprint.</p>
+				</div>
+
+<div class="prose reveal">
 					<h3>Build vs buy, and the never-automate list</h3>
 					<p><strong>Buy</strong>your vendor's built-in AI — it's trained on cross-customer signal you can't reproduce — and use it as one input.<strong>Build</strong>the reasoning loop that spans<em>all</em>your systems at once (identity + privileged access + ticketing + security tooling), because that's what no vendor sells and where the differentiated value is. And publish, up front, the list of things AI will never do alone. Saying that out loud is what earns credibility for everything else. Earn autonomy step by step, gated on measured accuracy — not on how good the demo looked.</p>
 					<p>One more reassurance: this design is portable. Swap the identity vendor or PAM vendor and only the bottom &quot;tools&quot; layer changes; the search shapes, event triggers and write-gates all have equivalents everywhere. Your durable assets are the evals, prompts, tool schemas, decision-trace store, and governance model.</p>
