@@ -18,6 +18,7 @@
 		"Segoe UI", Roboto, sans-serif;
 	--mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 	--shadow-tile: 0 12px 40px rgba(250, 98, 95, 0.14);
+	--shadow-code: 0 14px 34px rgba(0, 0, 0, 0.38);
 	--ease-emph: cubic-bezier(0.22, 1, 0.36, 1);
 	--ease-hover: cubic-bezier(0.4, 0, 0.2, 1);
 	--dur-fast: 180ms;
@@ -36,6 +37,7 @@ html[data-theme="light"] {
 	--accent-soft: rgba(232, 85, 82, 0.12);
 	--accent-hover: #d44441;
 	--shadow-tile: 0 10px 36px rgba(22, 18, 40, 0.09);
+	--shadow-code: 0 10px 28px rgba(22, 18, 40, 0.14);
 	--focus-ring: 0 0 0 3px rgba(232, 85, 82, 0.22);
 }
 
@@ -2014,19 +2016,52 @@ table.tbl code {
 
 /* ————— Code blocks (Shiki, build-time highlighted) ————— */
 .code-block {
-	margin: 1.25rem 0;
-	padding: 1rem;
-	border: 1px solid var(--line);
-	border-radius: var(--radius-sm);
+	margin: 1.5rem 0;
+	border-radius: var(--radius);
 	background: var(--surface);
+	box-shadow: var(--shadow-code);
 	font-family: var(--mono);
 	font-size: 0.85rem;
 	line-height: 1.6;
-	overflow-x: auto;
+	overflow: hidden;
+}
+.code-block-head {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.6rem 1rem;
+	border-bottom: 1px solid var(--line);
+}
+.code-dots {
+	display: inline-flex;
+	gap: 0.32rem;
+}
+.code-dots span {
+	width: 0.6rem;
+	height: 0.6rem;
+	border-radius: 50%;
+	opacity: 0.55;
+}
+.code-dots span:nth-child(1) {
+	background: #ff5f56;
+}
+.code-dots span:nth-child(2) {
+	background: #ffbd2e;
+}
+.code-dots span:nth-child(3) {
+	background: #27c93f;
+}
+.code-lang {
+	font-size: 0.72rem;
+	color: var(--muted);
+	text-transform: lowercase;
+	letter-spacing: 0.02em;
 }
 .code-block pre {
 	margin: 0;
+	padding: 1rem;
 	background: transparent !important;
+	overflow-x: auto;
 }
 .shiki,
 .shiki span {
