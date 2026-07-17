@@ -25,7 +25,7 @@ const SITE_HEADER = `\t\t<header class="site-header">
 \t\t\t\t<nav class="site-nav">
 \t\t\t\t\t<a href="../index.html#about">About</a>
 \t\t\t\t\t<a href="../index.html#projects">Projects</a>
-\t\t\t\t\t<a href="../index.html#writing">Writing</a>
+\t\t\t\t\t<a href="index.html">Writing</a>
 \t\t\t\t\t<a href="../docs/index.html">Docs</a>
 \t\t\t\t\t<a href="../index.html#contact">Contact</a>
 \t\t\t\t</nav>
@@ -107,7 +107,7 @@ ${SITE_HEADER}
 \t\t<main>
 \t\t\t<section class="doc-hero">
 \t\t\t\t<div class="hero-ambient" aria-hidden="true"><div class="hero-orbit"></div></div>
-\t\t\t\t<a class="back-link reveal" href="../index.html#writing">← Writing</a>
+\t\t\t\t<a class="back-link reveal" href="index.html">← Writing</a>
 \t\t\t\t<p class="doc-status reveal" style="--d: 0.04s">${escapeHtml(eyebrowLabel)}</p>
 \t\t\t\t<h1 class="doc-title reveal" style="--d: 0.08s">${escapeHtml(title)}</h1>
 \t\t\t\t<p class="doc-tagline reveal" style="--d: 0.12s">${taglineHtml}</p>
