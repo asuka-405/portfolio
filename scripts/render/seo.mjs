@@ -23,7 +23,7 @@ export async function defaultOgImageUrl() {
 
 /**
  * Builds <link rel="canonical"> + Open Graph + Twitter Card tags for one <head>.
- * canonicalPath is site-root-relative, no leading slash, e.g. "articles/generated/foo.html".
+ * canonicalPath is site-root-relative, no leading slash, e.g. "articles/foo.html".
  */
 export function buildSeoTags({ title, description, canonicalPath, ogImage, type = "website", publishedTime, tags }) {
 	const url = `${SITE_URL}/${canonicalPath}`;

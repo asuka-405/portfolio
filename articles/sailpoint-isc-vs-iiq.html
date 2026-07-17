@@ -4,10 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="darkreader-lock" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta
-			name="description"
-			content="Having worked on both, here's an honest take on why SailPoint's Identity Security Cloud (ISC) beats IdentityIQ for most teams — and where IIQ still wins."
-		/>
+		<meta name="description" content="I've spent real time in both. Here's the honest version of why Identity Security Cloud is the better bet for most teams — and the cases where IdentityIQ still earns its keep." />
 		<meta name="color-scheme" content="dark light" />
 		<title>SailPoint ISC vs IdentityIQ · Suryansh Kapil</title>
 		<script>
@@ -21,6 +18,18 @@
 			})();
 		</script>
 		<link rel="stylesheet" href="../styles.css" />
+		<link rel="canonical" href="https://archdev.in/articles/sailpoint-isc-vs-iiq.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="SailPoint ISC vs IdentityIQ" />
+		<meta property="og:description" content="I've spent real time in both. Here's the honest version of why Identity Security Cloud is the better bet for most teams — and the cases where IdentityIQ still earns its keep." />
+		<meta property="og:url" content="https://archdev.in/articles/sailpoint-isc-vs-iiq.html" />
+		<meta property="article:published_time" content="2026-07-16" />
+		<meta property="article:tag" content="IGA" />
+		<meta property="article:tag" content="SailPoint" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="SailPoint ISC vs IdentityIQ" />
+		<meta name="twitter:description" content="I've spent real time in both. Here's the honest version of why Identity Security Cloud is the better bet for most teams — and the cases where IdentityIQ still earns its keep." />
 	</head>
 	<body>
 		<div class="bg-stack" aria-hidden="true">
@@ -50,200 +59,53 @@
 				<div class="hero-ambient" aria-hidden="true"><div class="hero-orbit"></div></div>
 				<a class="back-link reveal" href="../index.html#writing">← Writing</a>
 				<p class="doc-status reveal" style="--d: 0.04s">Identity &amp; access</p>
-				<h1 class="doc-title reveal" style="--d: 0.08s">
-					SailPoint <span class="text-accent">ISC</span> vs IdentityIQ
-				</h1>
-				<p class="doc-tagline reveal" style="--d: 0.12s">
-					I've spent real time in both. Here's the honest version of why
-					Identity Security Cloud is the better bet for most teams — and the
-					cases where IdentityIQ still earns its keep.
-				</p>
-				<div class="article-meta reveal" style="--d: 0.16s">
-					<span>July 2026</span><span class="sep">·</span>
-					<span>7 min read</span><span class="sep">·</span>
-					<span>IGA · SailPoint</span>
-				</div>
+				<h1 class="doc-title reveal" style="--d: 0.08s">SailPoint ISC vs IdentityIQ</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">I've spent real time in both. Here's the honest version of why Identity Security Cloud is the better bet for most teams — and the cases where IdentityIQ still earns its keep.</p>
+				<div class="article-meta reveal" style="--d: 0.16s"><span>July 2026</span><span class="sep">·</span><span>7 min</span><span class="sep">·</span><span>IGA · SailPoint</span></div>
 			</section>
 
+
+
 			<section class="doc-section">
-				<div class="prose reveal">
-					<p>
-						SailPoint sells two identity-governance products that look like
-						cousins and behave like different generations.
-						<strong>IdentityIQ</strong> (IIQ) is the on-prem workhorse a lot of
-						large enterprises still run. <strong>Identity Security Cloud</strong>
-						(ISC, once called IdentityNow) is the SaaS platform SailPoint now
-						builds most of its future on. If you're choosing today, I think ISC
-						wins for the large majority of teams — not because IIQ is bad, but
-						because the model underneath it has aged.
-					</p>
-
+<div class="prose reveal">
+					<p>SailPoint sells two identity-governance products that look like cousins and behave like different generations.<strong>IdentityIQ</strong>(IIQ) is the on-prem workhorse a lot of large enterprises still run.<strong>Identity Security Cloud</strong>(ISC, once called IdentityNow) is the SaaS platform SailPoint now builds most of its future on. If you're choosing today, I think ISC wins for the large majority of teams — not because IIQ is bad, but because the model underneath it has aged.</p>
 					<h3>IIQ is a toolkit; ISC is a product</h3>
-					<p>
-						IIQ is astonishingly flexible. It's a Java application you host
-						yourself, and almost anything can be customized — rules in
-						BeanShell, workflows in XML, provisioning logic tuned to the exact
-						shape of your org. That power is real, and for a genuinely unusual
-						environment it can be the only thing that fits.
-					</p>
-					<p>
-						But that flexibility is also the bill. You own the servers, the
-						database, the app tier, the upgrades. A major version upgrade is a
-						project, not a Tuesday. All that custom BeanShell becomes yours to
-						maintain forever, and the person who wrote it eventually leaves.
-						I've watched teams spend more energy keeping IIQ running than
-						governing identity with it.
-					</p>
-					<blockquote>
-						The question isn't "can IIQ do this?" It almost always can. It's
-						"who's going to maintain the thing you built to make it do this?"
-					</blockquote>
-
+					<p>IIQ is astonishingly flexible. It's a Java application you host yourself, and almost anything can be customized — rules in BeanShell, workflows in XML, provisioning logic tuned to the exact shape of your org. That power is real, and for a genuinely unusual environment it can be the only thing that fits.</p>
+					<p>But that flexibility is also the bill. You own the servers, the database, the app tier, the upgrades. A major version upgrade is a project, not a Tuesday. All that custom BeanShell becomes yours to maintain forever, and the person who wrote it eventually leaves. I've watched teams spend more energy keeping IIQ running than governing identity with it.</p>
+					<blockquote>The question isn't &quot;can IIQ do this?&quot; It almost always can. It's &quot;who's going to maintain the thing you built to make it do this?&quot;</blockquote>
 					<h3>What you actually operate</h3>
-					<p>
-						The clearest way to see the difference is to draw the box around
-						"stuff you have to run and maintain." With <strong>IdentityIQ</strong>,
-						that box is enormous:
-					</p>
+					<p>The clearest way to see the difference is to draw the box around &quot;stuff you have to run and maintain.&quot; With<strong>IdentityIQ</strong>, that box is enormous:</p>
 				</div>
-				<div class="arch reveal">
-					<div class="arch-tier">
-						<div class="arch-node">
-							<span class="n">You / your team</span>
-							<span class="d">Own and operate the entire stack below</span>
-							<span class="tech">on-premises</span>
-						</div>
-					</div>
-					<div class="arch-flow">↓ &nbsp;host &amp; maintain everything&nbsp; ↓</div>
-					<div class="arch-tier">
-						<div class="arch-node">
-							<span class="n">IIQ app servers</span>
-							<span class="d">The Java application, on your machines</span>
-							<span class="tech">your servers</span>
-						</div>
-						<div class="arch-node">
-							<span class="n">Database</span>
-							<span class="d">The identity warehouse</span>
-							<span class="tech">your DB</span>
-						</div>
-						<div class="arch-node">
-							<span class="n">Connectors + custom code</span>
-							<span class="d">BeanShell rules, XML workflows</span>
-							<span class="tech">yours to maintain forever</span>
-						</div>
-					</div>
-					<div class="arch-flow">＋</div>
-					<div class="arch-tier">
-						<div class="arch-node arch-node--accent">
-							<span class="n">Upgrades · patching · scaling · backups</span>
-							<span class="d">A planned project every single time</span>
-							<span class="tech">the hidden cost</span>
-						</div>
-					</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Architecture diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<ul><li>You / your team Own and operate the entire stack below on-premises</li><li>You / your team Own and operate the entire stack below on-premises</li><li>on-premises</li><li>IIQ app servers The Java application, on your machines your servers Database The identity warehouse your DB Connectors + custom code BeanShell rules, XML workflows yours to maintain forever</li><li>IIQ app servers The Java application, on your machines your servers</li><li>your servers</li><li>Database The identity warehouse your DB</li><li>your DB</li><li>Connectors + custom code BeanShell rules, XML workflows yours to maintain forever</li><li>yours to maintain forever</li><li>Upgrades · patching · scaling · backups A planned project every single time the hidden cost</li><li>Upgrades · patching · scaling · backups A planned project every single time the hidden cost</li><li>the hidden cost</li></ul>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<p><em>IdentityIQ: total control, and total operational ownership. Everything in these boxes is yours.</em></p>
+					<p>With<strong>Identity Security Cloud</strong>, most of that box belongs to SailPoint, and you're left with the part that's actually about governance:</p>
 				</div>
-				<p class="fig-cap reveal">IdentityIQ: total control, and total operational ownership. Everything in these boxes is yours.</p>
-				<div class="prose reveal">
-					<p>
-						With <strong>Identity Security Cloud</strong>, most of that box
-						belongs to SailPoint, and you're left with the part that's actually
-						about governance:
-					</p>
-				</div>
-				<div class="arch reveal">
-					<div class="arch-tier">
-						<div class="arch-node arch-node--accent">
-							<span class="n">SailPoint · multi-tenant cloud</span>
-							<span class="d">Hosts, patches, scales, and continuously ships new features</span>
-							<span class="tech">not your problem</span>
-						</div>
-					</div>
-					<div class="arch-flow">↓ &nbsp;you connect through&nbsp; ↓</div>
-					<div class="arch-tier">
-						<div class="arch-node">
-							<span class="n">V3 &amp; Search APIs</span>
-							<span class="d">A real first-class interface to automate and build on</span>
-							<span class="tech">API-first</span>
-						</div>
-						<div class="arch-node">
-							<span class="n">Configuration</span>
-							<span class="d">Sources, roles, policies — configured, not coded</span>
-							<span class="tech">no servers to run</span>
-						</div>
-						<div class="arch-node">
-							<span class="n">Built-in AI</span>
-							<span class="d">Recommendations trained on cross-customer signal</span>
-							<span class="tech">a cloud-only edge</span>
-						</div>
-					</div>
-					<div class="arch-flow">↓</div>
-					<div class="arch-tier">
-						<div class="arch-node">
-							<span class="n">You own: configuration &amp; integrations only</span>
-							<span class="d">Time goes to governance, not infrastructure</span>
-							<span class="tech">weeks to value, not months</span>
-						</div>
-					</div>
-				</div>
-				<p class="fig-cap reveal">ISC: you give up some deep customization and get back your whole operations budget.</p>
-				<div class="prose reveal">
+
+				<details class="cmd-explain reveal">
+					<summary>Architecture diagram (originally a visual diagram — see git history for the exact layout)<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<ul><li>SailPoint · multi-tenant cloud Hosts, patches, scales, and continuously ships new features not your problem</li><li>SailPoint · multi-tenant cloud Hosts, patches, scales, and continuously ships new features not your problem</li><li>not your problem</li><li>V3 &amp; Search APIs A real first-class interface to automate and build on API-first Configuration Sources, roles, policies — configured, not coded no servers to run Built-in AI Recommendations trained on cross-customer signal a cloud-only edge</li><li>V3 &amp; Search APIs A real first-class interface to automate and build on API-first</li><li>API-first</li><li>Configuration Sources, roles, policies — configured, not coded no servers to run</li><li>no servers to run</li><li>Built-in AI Recommendations trained on cross-customer signal a cloud-only edge</li><li>a cloud-only edge</li><li>You own: configuration &amp; integrations only Time goes to governance, not infrastructure weeks to value, not months</li><li>You own: configuration &amp; integrations only Time goes to governance, not infrastructure weeks to value, not months</li><li>weeks to value, not months</li></ul>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<p><em>ISC: you give up some deep customization and get back your whole operations budget.</em></p>
 					<h3>Where ISC pulls ahead</h3>
-					<p>
-						ISC is multi-tenant SaaS, and that one fact cascades into most of
-						its advantages:
-					</p>
-					<ul>
-						<li>
-							<strong>No infrastructure tax.</strong> SailPoint runs it. You
-							stop patching servers and start configuring governance. Time to
-							first value drops from months to weeks.
-						</li>
-						<li>
-							<strong>Continuous delivery.</strong> Features land automatically
-							instead of waiting for a heavyweight upgrade you have to plan and
-							test. You're always on current.
-						</li>
-						<li>
-							<strong>API-first by design.</strong> ISC's V3 and search APIs
-							are the real interface, not an afterthought bolted onto a UI.
-							That makes it far easier to automate, integrate, and build on
-							top of — which matters more every year.
-						</li>
-						<li>
-							<strong>Cross-tenant intelligence.</strong> Because it's cloud,
-							SailPoint can train access recommendations and outlier detection
-							on signal from across its customer base. That's data no single
-							on-prem IIQ install can ever see.
-						</li>
-					</ul>
-
+					<p>ISC is multi-tenant SaaS, and that one fact cascades into most of its advantages:</p>
+					<ul><li><strong>No infrastructure tax.</strong>SailPoint runs it. You stop patching servers and start configuring governance. Time to first value drops from months to weeks.</li><li><strong>Continuous delivery.</strong>Features land automatically instead of waiting for a heavyweight upgrade you have to plan and test. You're always on current.</li><li><strong>API-first by design.</strong>ISC's V3 and search APIs are the real interface, not an afterthought bolted onto a UI. That makes it far easier to automate, integrate, and build on top of — which matters more every year.</li><li><strong>Cross-tenant intelligence.</strong>Because it's cloud, SailPoint can train access recommendations and outlier detection on signal from across its customer base. That's data no single on-prem IIQ install can ever see.</li></ul>
 					<h3>The honest caveats</h3>
-					<p>
-						ISC trades some of IIQ's deep customizability for that simplicity.
-						If your governance genuinely needs bespoke, deeply-nested workflow
-						logic that the platform doesn't model, you'll feel the guardrails.
-						IIQ also remains the answer for organizations that, for regulatory
-						or sovereignty reasons, cannot run identity in someone else's
-						cloud. And migrating years of IIQ customization to ISC is a real
-						piece of work — SaaS doesn't mean "free lunch."
-					</p>
-					<p>
-						So the honest framing isn't "ISC good, IIQ bad." It's this: IIQ
-						was built for a world where you ran everything yourself and
-						customization was the whole point. ISC is built for a world where
-						you'd rather spend your team's time on outcomes than on
-						infrastructure, and where an API and a stream of improvements beat
-						a folder of BeanShell. For most teams starting today, that second
-						world is simply the one we live in.
-					</p>
-
+					<p>ISC trades some of IIQ's deep customizability for that simplicity. If your governance genuinely needs bespoke, deeply-nested workflow logic that the platform doesn't model, you'll feel the guardrails. IIQ also remains the answer for organizations that, for regulatory or sovereignty reasons, cannot run identity in someone else's cloud. And migrating years of IIQ customization to ISC is a real piece of work — SaaS doesn't mean &quot;free lunch.&quot;</p>
+					<p>So the honest framing isn't &quot;ISC good, IIQ bad.&quot; It's this: IIQ was built for a world where you ran everything yourself and customization was the whole point. ISC is built for a world where you'd rather spend your team's time on outcomes than on infrastructure, and where an API and a stream of improvements beat a folder of BeanShell. For most teams starting today, that second world is simply the one we live in.</p>
 					<h3>My take</h3>
-					<p>
-						If you're greenfield, start on ISC and don't look back. If you're
-						on IIQ and it's stable, don't rip it out on principle — but do plan
-						the direction of travel, because that's where SailPoint's attention
-						and its AI features are going. I wrote more about that AI shift in
-						<a href="ai-in-iam.html">how AI actually fits into IAM</a>.
-					</p>
+					<p>If you're greenfield, start on ISC and don't look back. If you're on IIQ and it's stable, don't rip it out on principle — but do plan the direction of travel, because that's where SailPoint's attention and its AI features are going. I wrote more about that AI shift in<a href="https://archdev.in/articles/ai-in-iam.html" target="_blank" rel="noopener">how AI actually fits into IAM</a>.</p>
 				</div>
 			</section>
 		</main>
@@ -252,7 +114,6 @@
 			<div class="footer-links">
 				<a href="../index.html#writing">More writing</a>
 				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
-				<a href="mailto:suryansh@archdev.in">Email</a>
 			</div>
 			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
 		</footer>

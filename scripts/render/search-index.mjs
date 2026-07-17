@@ -1,5 +1,5 @@
 /**
- * Builds the client-side search index (articles/generated/search-index.json).
+ * Builds the client-side search index (articles/search-index.json).
  * Notion-sourced articles include full body text (phrase-searchable); legacy hand-written
  * articles only index title/summary/tags since their HTML isn't parsed by the build.
  */
