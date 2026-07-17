@@ -2529,18 +2529,22 @@ html.js .reveal.in {
 }
 
 /* ————— Docs section (sidebar + content layout) ————— */
+.section.docs-page {
+	padding-top: 2rem;
+}
 .docs-layout {
 	display: grid;
 	grid-template-columns: 240px minmax(0, 1fr);
 	gap: clamp(1.5rem, 4vw, 3rem);
 	align-items: start;
-	margin-top: 1.5rem;
+	margin-top: 0;
 }
 .docs-sidebar {
 	position: sticky;
 	top: 5.5rem;
 	max-height: calc(100vh - 7rem);
 	overflow-y: auto;
+	overscroll-behavior: contain;
 	padding-right: 0.5rem;
 }
 .docs-sidebar-topic-title {
@@ -2598,6 +2602,9 @@ html.js .reveal.in {
 }
 .docs-content {
 	min-width: 0;
+}
+.docs-content > .back-link {
+	margin-bottom: 1.25rem;
 }
 .docs-page-head {
 	margin-bottom: 1.5rem;

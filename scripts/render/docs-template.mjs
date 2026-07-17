@@ -27,7 +27,7 @@ function siteHeader(rootPrefix) {
 \t\t\t\t<nav class="site-nav">
 \t\t\t\t\t<a href="${rootPrefix}index.html#about">About</a>
 \t\t\t\t\t<a href="${rootPrefix}index.html#projects">Projects</a>
-\t\t\t\t\t<a href="${rootPrefix}index.html#writing">Writing</a>
+\t\t\t\t\t<a href="${rootPrefix}articles/index.html">Writing</a>
 \t\t\t\t\t<a href="${rootPrefix}docs/index.html">Docs</a>
 \t\t\t\t\t<a href="${rootPrefix}index.html#contact">Contact</a>
 \t\t\t\t</nav>
@@ -164,14 +164,14 @@ ${BG_STACK}
 ${siteHeader(rootPrefix)}
 
 \t\t<main>
-\t\t\t<section class="section docs-page" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
-\t\t\t\t<a class="back-link reveal" href="${isOverview ? "../index.html" : "index.html"}">← ${
-		isOverview ? "All docs" : escapeHtml(topic.title)
-	}</a>
+\t\t\t<section class="section docs-page">
 \t\t\t\t<div class="docs-layout">
 ${sidebarHtml(topicRoot, node.id)}
 \t\t\t\t\t<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
 \t\t\t\t\t<div class="docs-content">
+\t\t\t\t\t\t<a class="back-link reveal" href="${isOverview ? "../index.html" : "index.html"}">← ${
+		isOverview ? "All docs" : escapeHtml(topic.title)
+	}</a>
 \t\t\t\t\t\t<header class="docs-page-head reveal">
 \t\t\t\t\t\t\t<p class="doc-kicker">${escapeHtml(topic.title)}</p>
 \t\t\t\t\t\t\t<h1>${escapeHtml(pageTitle)}</h1>
