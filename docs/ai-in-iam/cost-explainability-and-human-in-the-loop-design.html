@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Cost, Explainability, and Human-in-the-Loop Design: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Cost, Explainability, and Human-in-the-Loop Design · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/cost-explainability-and-human-in-the-loop-design.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Cost, Explainability, and Human-in-the-Loop Design" />
+		<meta property="og:description" content="Cost, Explainability, and Human-in-the-Loop Design: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/cost-explainability-and-human-in-the-loop-design.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Cost, Explainability, and Human-in-the-Loop Design" />
+		<meta name="twitter:description" content="Cost, Explainability, and Human-in-the-Loop Design: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="active">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Cost, Explainability, and Human-in-the-Loop Design</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>A cost-saving claim that only holds up in a demo is not a cost saving, it is a liability with a delay on it. This page is about the parts of AI-in-IAM that decide whether a saving survives contact with an actual audit: what &quot;explainable&quot; needs to mean to a reviewer rather than an engineer, what an audit trail actually has to capture, how to pick the right amount of human oversight for a given task, and the specific ways teams over-automate identity governance and regret it.</p>
+					<h3>Explainability means something different to an auditor than to you</h3>
+					<p>An engineer's idea of an explanation is often a confidence score or a feature-attribution chart. An auditor's idea of an explanation is a sentence a non-technical reviewer can read and agree or disagree with, tied to a specific, checkable fact. &quot;87% confidence&quot; satisfies nobody in a compliance review. &quot;Unused for 140 days, not part of this person's current role&quot; does.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>If your AI component cannot produce a plain-language reason a manager could repeat in a meeting, it is not ready to influence an access decision, no matter how good its accuracy metric looks.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>What an audit trail actually has to capture</h3>
+					<p>The governance page covered the principle: every agent is a first-class identity with a full decision trace. Operationally, that trace needs four specific things, and it is common to ship with only the first.</p>
+					<ol><li>What the agent read: which API calls, which documents, which records, at what time.</li><li>What it recommended or drafted, verbatim, before any human touched it.</li><li>What the human decided, and whether they accepted, modified, or rejected the AI's output.</li><li>Where that log lives, and confirmation the agent itself has no permission to edit or delete it.</li></ol>
+					<p>Miss step 3 and you cannot answer the single question every audit eventually asks: did a human actually review this, or did they rubber-stamp it? A log that only shows the AI's output and a timestamp cannot distinguish genuine review from a reflexive click.</p>
+					<h3>Choosing the right amount of human oversight</h3>
+					<p>Not every task deserves the same oversight level. The L0 to L5 ladder from earlier in this course applies directly here, and the right level is a function of two things: how often the task fails, and how bad a single failure is.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Oversight pattern</th><th>When it fits</th><th>The failure mode if you pick wrong</th></tr></thead><tbody><tr><td>Every action confirmed (L1-L2)</td><td>Low volume, high stakes: privileged grants, SOD overrides</td><td>Too slow for high-volume work, reviewers start rubber-stamping</td></tr><tr><td>Sampled review (L3)</td><td>High volume, moderate stakes: routine joiner access proposals</td><td>Sample size too small to catch a systematic error early</td></tr><tr><td>Escalation only (L4)</td><td>Very high volume, well-understood failure signatures: leaver verification</td><td>Anomaly detection isn't sharp enough, real problems slip through as &quot;normal&quot;</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>The trap is picking the oversight level based on how confident the AI seems in a demo rather than on the actual cost of the two kinds of mistake: approving something that should have been blocked, and blocking or delaying something that was actually fine. Price both before choosing.</p>
+					<h3>How teams over-automate identity governance, in order of how often it happens</h3>
+					<p><strong>1. Automating the exception path before the common path</strong></p>
+					<p>The unusual, high-judgment 10% of cases (a contractor with three concurrent roles, a re-hire with old orphaned accounts) is the tempting one to show off in a demo, and the worst place to start. It has the least volume, the least standardized data, and the highest cost per mistake. Automate the boring, high-volume, well-understood 90% first, earn trust and evals on that, then move up.</p>
+					<p><strong>2. Silent scope creep in an agent's own permissions</strong></p>
+					<p>An agent's tool access tends to only grow: someone adds one more API scope to unblock a feature, nobody removes it when the feature ships. Six months later the agent can do more than anyone remembers approving. The fix is mechanical, not cultural: the agent is a governed identity, so put it in the same certification campaigns as a human, its access gets reviewed on the same schedule as everyone else's, not on a separate track that quietly never happens.</p>
+					<p><strong>3. Treating an unvalidated confidence score as calibrated</strong></p>
+					<p>A model saying &quot;92% confident&quot; does not mean it is right 92% of the time unless someone has actually checked that against outcomes. Most teams never do this check, and act on the number anyway. If a confidence score is going to gate an oversight level (sampled review below some threshold, full review above it), validate that the number means what you are assuming it means, on your own data, before trusting it.</p>
+					<p><strong>4. No kill switch</strong></p>
+					<p>Ask, out loud, before launch: if this agent starts doing something wrong at 3am, who notices, and how do they stop it in under five minutes, without needing the one engineer who built it? If the honest answer is &quot;we would have to page the person who wrote the code,&quot; the system is not ready for anything touching real access.</p>
+					<p><strong>5. Optimizing for the demo distribution, not the production one</strong></p>
+					<p>The examples used to build confidence in a demo are almost always cleaner than what production actually contains: incomplete HR records, entitlements with names that mean something different than they say, a source system aggregation that silently failed last Tuesday. An accuracy number measured on curated examples tells you nothing about the messy 20% of real identity data every enterprise actually has.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: price your own automation candidate<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick one of the patterns from the previous page, or a real automation candidate at your own organization. Estimate three numbers: hours saved per month if it works as intended, hours added per month for the review or oversight layer it needs, and a rough cost estimate if it fails once in a way that reaches an auditor's attention. If the third number alone exceeds a year of the first number's savings, the oversight level is wrong, not the idea.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<blockquote>The teams that get this right are not the ones with the best model. They are the ones who can answer, precisely, who reviewed this, what would have happened if they hadn't, and how we would know if it went wrong.</blockquote>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

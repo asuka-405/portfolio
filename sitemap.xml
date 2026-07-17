@@ -71,4 +71,46 @@
 	<url>
 		<loc>https://archdev.in/docs/c/idiomatic-c-patterns.html</loc>
 	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/index.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/ai-vs-machine-learning-vs-deep-learning.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/inside-a-language-model.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/choosing-and-running-models.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/prompting-models-effectively.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/giving-models-knowledge-rag.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/agents-models-that-do-things.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/frameworks-mcp-and-multi-agent-systems.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/reference-architecture-governance-and-compliance.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/automating-the-joiner-mover-leaver-lifecycle.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/enterprise-iam-automation-patterns.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/cost-explainability-and-human-in-the-loop-design.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/ai-in-iam/reference-architecture-walkthroughs.html</loc>
+	</url>
 </urlset>

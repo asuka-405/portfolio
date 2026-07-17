@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Reference Architecture, Governance, and Compliance: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Reference Architecture, Governance, and Compliance · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/reference-architecture-governance-and-compliance.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Reference Architecture, Governance, and Compliance" />
+		<meta property="og:description" content="Reference Architecture, Governance, and Compliance: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/reference-architecture-governance-and-compliance.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Reference Architecture, Governance, and Compliance" />
+		<meta name="twitter:description" content="Reference Architecture, Governance, and Compliance: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="active">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Reference Architecture, Governance, and Compliance</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>First, what IAM is</h3>
+					<p>Identity and Access Management is the machinery that decides<em>who is allowed to touch what</em>in an organization. When someone joins they need accounts and permissions; when they change roles their access should change; when they leave it should all be removed. And periodically someone reviews the whole pile to confirm it still makes sense (an<strong>access certification</strong>). PAM (Privileged Access Management) is the higher-stakes cousin dealing with admin and &quot;root&quot; access. At real scale (tens of thousands of people, millions of individual permissions) this is a grind, and that's exactly the shape AI is good at.</p>
+					<h3>The best and worst domain for AI, at once</h3>
+					<p>Identity is the<strong> best</strong> fit because the work matches what models do well: enormous volumes of small, explainable decisions; a permanent translation problem (turning<code> SAP_FI_AP_POST</code> into &quot;can post payments in finance&quot;); policies written as prose; and an approval-and-audit culture that maps perfectly onto AI guardrails.</p>
+					<p>It's also the<strong> worst</strong>, because mistakes are maximal: a wrong grant can<em> be</em> the breach: the data is crown-jewels sensitive, and (the part most people miss) identity systems are full of attacker-writable free text, i.e. a built-in injection surface. Both halves belong in any honest pitch.</p>
+					<h3>Where to start: read-only copilots</h3>
+					<p>The first deployments should touch nothing: read, explain, rank, and leave the decision to a human. Ranked by value-over-risk:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Use case</th><th>What it does</th><th>Level</th></tr></thead><tbody><tr><td><strong>Certification copilot</strong></td><td>Per item: translate the permission, show if it's actually used, flag conflicts, rank by risk. Attacks rubber-stamping directly: win is measurable in one review cycle</td><td>L1–L2 read</td></tr><tr><td><strong>Approval copilot</strong></td><td>Same analysis at request time, with the relevant policy and similar past decisions pulled up</td><td>L1–L2 read</td></tr><tr><td><strong>Privileged-session triage</strong></td><td>Summarize what happened in an admin session, flag anything off-ticket (strictly read-only: untrusted text!)</td><td>L1 read</td></tr><tr><td><strong>Access-request assistant</strong></td><td>Find the right entitlement, pre-check policy, draft the request</td><td>L2 draft</td></tr><tr><td><strong>Role mining &amp; cleanup</strong></td><td>Cluster real access into proposed roles; the AI writes the human-readable descriptions</td><td>L2 draft</td></tr><tr><td><strong>Never</strong></td><td>Privileged grants, separation-of-duty overrides, break-glass, anything irreversible</td><td>stays human</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3>The one rule that decides success</h3>
+				</div>
+
+				<div class="callout reveal">
+					<p><strong>Query facts, embed judgment.</strong> Always fetch &quot;who has what access, now&quot; live from the identity platform's API: never from a memorized copy. But<em> do</em> feed the AI the judgment context: policies, the reasoning behind rules, and above all your history of past decisions and outcomes. That last corpus is unique to you and turns every recommendation into &quot;here's what we decided in cases like this, and what happened.&quot;</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>The reference architecture</h3>
+					<p>Everything from the earlier parts assembles into a layered system. Read it bottom-up: your real systems become tools, an orchestration layer reasons across them, and governance wraps the whole thing.</p>
+				</div>
+
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Interaction</span>
+							<span class="d">A Teams/Slack bot for questions, plus event- and schedule-triggered runs</span>
+							<span class="tech">how work arrives</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Orchestration (the brain)</span>
+							<span class="d">A durable, checkpointed graph: a smart orchestrator, cheap parallel workers, and a fresh-context reviewer, with human approval gates that can wait days</span>
+							<span class="tech">reads auto · writes gated</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;uses&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Knowledge index</span>
+							<span class="d">Policies, SoD rationale, past decisions, permission-filtered</span>
+							<span class="tech">RAG</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">Systems of record, as MCP tools</span>
+							<span class="d">Identity platform (live search + gated writes), PAM, ticketing, directory</span>
+							<span class="tech">MCP servers</span>
+						</div>
+					</div>
+					<div class="arch-flow">↑ &nbsp;wrapped by&nbsp; ↑</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Governance (cross-cutting)</span>
+							<span class="d">Each agent is its own identity · acts with the requester's scope · reads free / writes gated · every decision traced &amp; replayable</span>
+							<span class="tech">the part that earns trust</span>
+						</div>
+					</div>
+				</div>
+
+<div class="prose reveal">
+					<p><em>Systems become tools; a durable graph reasons across them; governance wraps everything. Swap the vendors and only the bottom layer changes.</em></p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Sketch your own reference architecture<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>On paper, name what the three layers: systems/tools, orchestration, governance: would actually be for your own organization (or a hypothetical one). Which real systems become 'tools'? What would the orchestration layer coordinate? Who owns governance? A rough sketch here is worth more than re-reading the diagram a second time.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Governance: IAM eating its own cooking</h3>
+					<p>This is the most compelling part. Every AI agent you deploy is treated as a <strong>non-human identity governed inside the identity platform itself</strong>: its own service account, short-lived credentials (no static keys), permissions granted through roles, and included in the same certification campaigns as everyone else. When an agent acts for a person, it's limited to <em>that person's </em>access. Every write waits for a human. And you keep a full <strong>decision trace</strong>: what it read, which tools it called, what it recommended, what the human decided, replayable for an auditor. (Remember: present the AI's rationale as a justification to verify, not as proof of its thinking.)</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Check one real AI tool against this bar<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick one AI tool or agent already running somewhere in your org (or your own workflow). Check: does it have its own service account? Short-lived credentials, or a static key that never rotates? Would it show up if an access review ran today? Most tools people already use fail at least one of these, which is exactly the gap this section is describing.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Compliance: what regulators will actually ask for</h3>
+					<p>If you're deploying agents touching EU users, the AI Act's high-risk provisions become enforceable <strong>2 August 2026</strong> (with some use-based Annex III systems on a later 2027 track after the recent Omnibus agreement). Access and employment decisions sit close to (and sometimes inside) the explicitly listed high-risk categories (credit, hiring, benefits eligibility); it's a real legal question worth a real legal read, not a guess made by the engineering team.</p>
+					<ul><li><strong>Tamper-evident audit logs.</strong> Article 12 requires automatic logging of every event relevant to tracing a decision, retained a minimum of 6 months. Your agent's tool calls and outputs need to write to a log the agent itself has no permission to edit.</li><li><strong>A human-oversight mechanism.</strong> Someone must be able to see what the agent is doing and halt it mid-run: not just review a transcript afterward.</li><li><strong>A continuous risk assessment.</strong> Documented and re-run as the system changes, not a one-time sign-off at launch.</li><li><strong>Classification first.</strong> Know whether your specific use case is high-risk before you build the rest of the compliance story around a guess.</li></ul>
+					<p>None of this is IAM-specific, but IAM is the natural place to enforce it: you're already the system of record for &quot;who did what, as whom.&quot; Extend that same spine to &quot;which agent did what, as whom,&quot; and most of the audit-log requirement falls out for free rather than becoming a separate project. Two examples: a provisioning agent's every grant or deny already flows through the same event log used for human-initiated access, satisfying traceability without new plumbing; a review agent's escalation decisions get routed through the same manager-approval gate a human reviewer's decisions require, satisfying human oversight by construction.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Don't bolt compliance on at the end. If the agent-as-non-human-identity governance from the section above already logs every action an agent takes, most of Article 12 is satisfied by how the system is built, not by a separate compliance sprint.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Check your own high-risk classification<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Spend 15 minutes reading a summary of the EU AI Act's high-risk categories (or your own jurisdiction's equivalent, if applicable) and check whether an AI system touching hiring, access, or employment decisions in your context would plausibly be classified as high-risk. This is genuinely worth doing before building anything like this for real, not just for this article.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Build vs buy, and the never-automate list</h3>
+					<p><strong>Buy</strong> your vendor's built-in AI: it's trained on cross-customer signal you can't reproduce, and use it as one input.<strong> Build</strong> the reasoning loop that spans<em> all</em> your systems at once (identity + privileged access + ticketing + security tooling), because that's what no vendor sells and where the differentiated value is. And publish, up front, the list of things AI will never do alone. Saying that out loud is what earns credibility for everything else. Earn autonomy step by step, gated on measured accuracy: not on how good the demo looked.</p>
+					<p>One more reassurance: this design is portable. Swap the identity vendor or PAM vendor and only the bottom &quot;tools&quot; layer changes; the search shapes, event triggers and write-gates all have equivalents everywhere. Your durable assets are the evals, prompts, tool schemas, decision-trace store, and governance model.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

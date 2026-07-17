@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Frameworks, MCP, and Multi-Agent Systems: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Frameworks, MCP, and Multi-Agent Systems · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/frameworks-mcp-and-multi-agent-systems.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Frameworks, MCP, and Multi-Agent Systems" />
+		<meta property="og:description" content="Frameworks, MCP, and Multi-Agent Systems: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/frameworks-mcp-and-multi-agent-systems.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Frameworks, MCP, and Multi-Agent Systems" />
+		<meta name="twitter:description" content="Frameworks, MCP, and Multi-Agent Systems: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="active">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Frameworks, MCP, and Multi-Agent Systems</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>You don't have to build all this from scratch. A few tools matter, and one standard is quietly changing everything.</p>
+					<ul><li><strong>LangGraph</strong>: think of your agent as a flowchart where some steps are the model deciding what's next. Its superpower is<em> durable pause-and-resume</em>: a step can pause for an approval and wait days, surviving restarts: then continue. That is<em> exactly</em> the shape of an approval workflow, which is why it fits IAM so well.</li><li><strong>LangChain</strong>: a big library of connectors and helpers; useful for wiring, but read what its convenience wrappers actually send (they can bloat your prompt).</li><li><strong>Copilot Studio</strong>. Microsoft's low-code agent builder. You trade control over the loop for enterprise plumbing (Teams, sign-in, data policies). The pattern that works: use it as the friendly front door, and have it call your real code agent for anything with state or writes.</li><li><strong>MCP (Model Context Protocol)</strong>: the big one. Instead of building a custom integration for every combination of AI × system, you wrap each system (identity platform, ticketing, GitHub) in one<em> MCP server</em>, and every AI client can use it. It turns an M×N integration mess into M+N. Treat each server as a security boundary with its own limited credentials.</li><li><strong>Microsoft Agent Framework (MAF)</strong>. Microsoft's newer, protocol-first successor unifying Semantic Kernel and AutoGen, built around A2A (agent-to-agent communication) and MCP for cross-runtime interoperability. It's becoming the foundation under Copilot Studio's agent layer: if you're already on Entra ID and Azure, this is where Microsoft is pushing governance and identity integration, and it's worth watching even if you're not ready to adopt it yet.</li></ul>
+					<p>The meta-advice: start with the<em> simplest</em> thing that works: often a couple hundred lines over the raw API, and reach for a heavy framework only when durable state and approvals are the actual problem. Your lasting assets are your evals, prompts, tool definitions and traces; frameworks are swappable plumbing around them.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Clone a LangGraph quickstart<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Clone LangGraph's official quickstart repository (free, open source, runs locally with just an API key) and modify the agent's system prompt: change what it's told to prioritize: then re-run the same task and see how its tool-selection behavior shifts. Requires a model API key (a few cents of usage), but nothing else.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Many agents working together</h3>
+					<p>Sometimes one agent isn't enough and you split the work across several. There's a standard cast, and, crucially, the roles map onto a familiar security idea:<strong>separation of duties</strong>.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Role</th><th>Job</th><th>Can it write?</th></tr></thead><tbody><tr><td><strong>Orchestrator</strong></td><td>Owns the goal, splits it up, hands out briefs, merges results</td><td>No: only delegates</td></tr><tr><td><strong>Researcher</strong></td><td>Gathers evidence and returns structured findings</td><td>No: read-only</td></tr><tr><td><strong>Worker</strong></td><td>Executes one specific task</td><td>Yes: the only role with write tools</td></tr><tr><td><strong>Reviewer</strong></td><td>Checks the work against requirements, with fresh eyes</td><td>No: validate only</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Some architectures split what the table above merges: a <strong>Planner Agent</strong> decides <strong>what</strong> should happen: breaking a goal into an ordered plan, while a separate <strong>Orchestrator</strong> executes that plan, coordinating the other agents and re-routing when a step fails. Smaller systems fold planning into the Orchestrator's job, like the table above; bigger ones split them because a plan is worth reviewing (by a human, or a Reviewer agent) <strong>before</strong> anything starts executing. Both terms show up in vendor docs: worth knowing which one a given system means. A quarterly access review is a clean example: the Planner decides the shape of the run (pull entitlements → group by risk → route to managers → escalate anything stale after 5 days), and the Orchestrator is what actually runs that plan and babysits it to completion.</p>
+					<p>Notice the pattern: researchers read, workers write, reviewers check, the orchestrator coordinates. That's separation of duties enforced by<em>what tools each agent is allowed</em>, not by a promise in a prompt.</p>
+					<p>But multi-agent is not free. A well-known figure: one production multi-agent research system used about <strong>15× the tokens </strong>of a single chat. It only paid off because the task genuinely split into independent parallel pieces. The honest rule is <strong>single-agent until proven otherwise</strong>, and the most common <em>legitimate </em>reason to split is simply to keep a messy 200-step investigation out of the main agent's context, returning only a clean summary.</p>
+					<p>When you do split, the hard part is the<strong> contract between agents</strong>. Most multi-agent failures are communication failures. &quot;Research vendor X&quot; is a bug; &quot;Return<code>{pricing, deployment_options[], compliance[]}</code>for vendor X, at most 10 searches, cite sources&quot; is an interface. Force structured results with explicit confidence and gaps, so a worker can't quietly return a plausible-but-empty answer that the orchestrator then builds on.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Write a real inter-agent contract<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick any task you'd split across two people (or two AI agents): a researcher and a writer, say. Instead of writing 'research vendor X' as the handoff, write the literal structured interface: exact fields, types, and constraints the researcher must return (e.g. {pricing, deployment_options: [], compliance: [], sources: [], confidence: 'high'|'low'}). Notice how much harder, and more valuable: this is than the vague version.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

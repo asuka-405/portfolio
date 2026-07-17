@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Agents: Models That Do Things: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Agents: Models That Do Things · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/agents-models-that-do-things.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Agents: Models That Do Things" />
+		<meta property="og:description" content="Agents: Models That Do Things: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/agents-models-that-do-things.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Agents: Models That Do Things" />
+		<meta name="twitter:description" content="Agents: Models That Do Things: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="active">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Agents: Models That Do Things</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>What an agent actually is</h3>
+					<p>Strip away the hype and an agent is a simple formula:<strong> agent = model + tools + memory + a loop.</strong> The model decides the next step (but can only ever<em> emit a request</em>, never act); your program runs the tool; the result gets added to the context; the model is called again. Repeat until it's done.</p>
+				</div>
+
+<div class="dgm reveal">
+					<div class="dgm-scroll">
+						<div class="dgm-flow dgm-flow--row">
+							<div class="dgm-box"><span class="dgm-bt">Perceive</span><span class="dgm-bd">goal + context</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Plan next step</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box dgm-box--accent"><span class="dgm-bt">Act</span><span class="dgm-bd">call a tool</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box dgm-box--gold"><span class="dgm-bt">Observe</span><span class="dgm-bd">real result appended</span></div>
+							<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+							<div class="dgm-box"><span class="dgm-bt">Reflect</span><span class="dgm-tag">↺ loops back to plan</span></div>
+						</div>
+					</div>
+					<div class="dgm-box dgm-box--ghost" style="margin-top:.55rem">
+						<span class="dgm-bt">Stop when</span>
+						<span class="dgm-bd">goal achieved ✓ &nbsp;·&nbsp; budget used up &nbsp;·&nbsp; needs a human &nbsp;·&nbsp; stuck</span>
+					</div>
+				</div>
+
+<div class="prose reveal">
+					<p>Two facts follow. First,<strong> whatever you put in the context IS the decision-making process</strong>: the tool descriptions, the observations, the task. Second, since your program (not the model) runs the tools,<strong> your program is the security boundary</strong>. Treat the model as an untrusted advisor inside a trusted executor.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Sketch your own agent loop on paper<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick one task you currently do manually and repeatedly (triaging your inbox, checking a dashboard each morning). Write down 3–5 tools it would need as function signatures (e.g. list_unread(), archive(id), flag_urgent(id)). Then trace one example by hand: model decides → tool runs → result comes back → model decides again. You've just designed an agent without writing a line of code.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Tools are APIs for an unusual user</h3>
+					<p>The model picks tools by reading their names and descriptions, so your tool list is really a prompt. What works:</p>
+					<ul><li><strong>Say when to use a tool,</strong> not just what it does. &quot;Call this when the answer depends on current access data&quot; beats &quot;Searches identities.&quot;</li><li><strong>Bundle a workflow into one tool.</strong> One<code> investigate_user(id)</code>that returns access + recent logins + recent changes beats ten tiny tools the model has to orchestrate (ten chances to slip).</li><li><strong>Return only what matters</strong>: the five useful fields, not a 40-field API dump, and always require a<code> reason</code> argument on anything sensitive, which gives you a built-in audit note.</li><li><strong>Support &quot;dry run.&quot;</strong>A preview of what a write would do doubles as the thing you show a human for approval.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Rewrite a tool description two ways<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Write two descriptions for the same imaginary tool: one that just states what it does ('Searches identities'), one that also states when to use it ('Call this when the answer depends on current access data, not historical'). Imagine skimming a list of 20 such tools quickly: notice which phrasing you'd trust faster to pick correctly.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Beating the reliability math</h3>
+					<p>Remember that 98%-per-step → 67%-per-task problem? The cure is <strong>verification</strong>, and it's worth more than a smarter model:</p>
+					<ul><li><strong>Check the effect, not the acknowledgement.</strong> After a write, independently read the system back: &quot;is the account<em> actually</em> disabled?&quot; Never trust the &quot;success&quot; response alone. (Identity people already know this as provision-then-verify.)</li><li><strong>Use a fresh-context reviewer.</strong> A second pass by a model that didn't do the work, holding only the requirements, catches mistakes the author can't see. This is the best quality-per-dollar trick in the whole field.</li><li><strong>Detect stuck loops and cap budgets.</strong> If it repeats a failing action, stop and escalate. Iteration/token/time limits are correctness tools, not just cost controls.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Add a verification step to your next AI task<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Next time you use an AI tool for anything multi-step, add one deliberate extra step: after it reports success, independently check the actual result yourself instead of trusting the claim. Track, over your next 10 uses, how often that check catches something the model's own report missed.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Making agents fast, not just cheap</h3>
+					<p>Cost optimization (a few parts back) and speed optimization are related but distinct: a cheap agent that takes 90 seconds to answer still gets abandoned. A few techniques that target latency specifically:</p>
+					<ol><li><strong>Parallelize independent tool calls.</strong> If step 2 and step 3 don't depend on each other's output, fire them concurrently instead of serially. Most agent frameworks, LangGraph included, support this as a first-class pattern rather than something you bolt on.</li><li><strong>Stream partial output.</strong> Showing the model's answer, and its intermediate tool calls: as they happen makes a 20-second task <strong>feel</strong> instant, even though total latency hasn't changed. Silence is what makes users assume something broke.</li><li><strong>Route per step, not just per request.</strong> One agent run can call a cheap model for mechanical sub-steps (&quot;extract this field,&quot; &quot;summarize this ticket&quot;) and reserve the frontier model for the one step that actually needs judgment.</li><li><strong>Cache semantically, not just exactly.</strong> For read-heavy agents: an IAM helpdesk answering the same handful of policy questions worded differently every time: cache by embedding similarity, not just byte-identical matches.</li></ol>
+				</div>
+
+				<div class="callout reveal">
+					<p>Two before/after examples: an access-request triage agent that ran its entitlement lookup and its risk-score lookup serially, 45 seconds: dropped to 12 by parallelizing the two. A JML mover agent that used to go silent for two minutes while it worked now streams its checklist progress live, and the support tickets asking &quot;is this stuck?&quot; stopped.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Time sequential vs. parallel calls<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>If you have API access to any model, fire two independent prompts at once (using async calls, or just two browser tabs started at the same second) versus running them one after another and timing both. The wall-clock gap you measure is exactly the effect parallelizing independent tool calls has on an agent's total latency.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>How agents fail (naming them helps fix them)</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Failure</th><th>What it looks like</th><th>Fix</th></tr></thead><tbody><tr><td><strong>Under-specified goal</strong></td><td>It follows the letter, not the intent</td><td>Give the full spec and &quot;definition of done&quot; up front</td></tr><tr><td><strong>Acting on assumptions</strong></td><td>&quot;The request was probably approved…&quot;</td><td>Require reads before writes</td></tr><tr><td><strong>Compounding drift</strong></td><td>A small early error snowballs</td><td>Verification checkpoints; fresh restarts</td></tr><tr><td><strong>Over-eagerness</strong></td><td>Unrequested &quot;helpful&quot; extra actions</td><td>Explicit boundaries; gate writes</td></tr><tr><td><strong>False success</strong></td><td>&quot;All done!&quot;: but it isn't</td><td>Demand evidence for each claim</td></tr></tbody></table></div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Read a real failure post-mortem<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Search for a public write-up of an AI agent going wrong in production (several well-known ones exist from coding agents and customer-support bots). Try to match what happened to one of the named failure modes in the table above. Most real incidents map cleanly onto one or two of them.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>The security model, in one breath</h3>
+					<p>Break the lethal trifecta per workflow; let an agent act with the <em>requester's </em>permissions rather than a powerful shared account (so it can never do more than the person it's helping); give each agent least-privilege tools with writes behind approval; and treat every agent as a <strong>first-class identity</strong>: its own account, short-lived credentials, its own audit trail, and subject to access reviews like any employee. Hold that thought; it's the heart of the IAM section.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p><strong>The five guardrails every production agent needs, in one place: </strong>(1) scoped permissions: the agent acts as the requester, never as itself with elevated rights; (2) a hard action budget: cap tool calls per run, kill runaway loops before they compound; (3) dry-run before write: every mutating action previewable before it executes; (4) independent verification: check the effect, not the agent's own claim of success; (5) a human-approval gate on anything irreversible or above a defined blast-radius threshold. Miss any one of these and the other four don't save you.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Audit a tool you actually use<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick one AI tool you use that can take real actions: an IDE coding agent, a browser-automation agent, anything that writes or clicks, not just chats. List out what it can actually access and do. Check it against the lethal trifecta: does it have private-data access, exposure to untrusted text, and an unsupervised way to act, all three at once? If yes, that's a real gap, not a hypothetical one.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

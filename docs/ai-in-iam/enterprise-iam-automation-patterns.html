@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Enterprise IAM Automation Patterns: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Enterprise IAM Automation Patterns · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/enterprise-iam-automation-patterns.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Enterprise IAM Automation Patterns" />
+		<meta property="og:description" content="Enterprise IAM Automation Patterns: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/enterprise-iam-automation-patterns.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Enterprise IAM Automation Patterns" />
+		<meta name="twitter:description" content="Enterprise IAM Automation Patterns: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="active">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Enterprise IAM Automation Patterns</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>The reference architecture page listed read-only copilots in a single ranked table. This page goes deeper on four of those patterns specifically, the ones with the clearest cost and compliance payoff once you actually build them out. All company, system, and tenant names below are fictional.</p>
+					<h3>Pattern 1: certification copilots that explain, not just recommend</h3>
+					<p>Turning on a certification platform's native recommendation flag is the starting point, not the destination. The gap a native recommendation usually leaves is explanation: a reviewer sees &quot;recommended: revoke&quot; with no reason they can act on with confidence. A copilot closes that gap by translating the entitlement's technical name into plain language, showing whether the access has actually been used recently, and surfacing similar past decisions by the same reviewer or team.</p>
+					<ul><li>Input: the entitlement's raw name and description, recent usage signal if the source system has one, and the reviewer's own certification history.</li><li>Output: one sentence a human reads in under five seconds, not a paragraph. &quot;Unused in 140 days, last used for a project that ended in March&quot; beats a wall of text every time.</li><li>Guardrail: the copilot never decides. autoRevokeAllowed stays off until a reviewer's actual override rate on the AI's suggestions has been measured for at least one full campaign cycle.</li></ul>
+					<h3>Pattern 2: natural-language access request agents</h3>
+					<p>The self-service access request catalog is usually a wall of cryptically-named access profiles nobody outside IT can parse. A natural-language front end lets someone type &quot;I need to run payroll reports&quot; and get back the two or three access profiles that plausibly match, pre-checked against policy, with a draft justification already filled in.</p>
+					<p>The architecture is a thin retrieval layer in front of the existing request flow, not a replacement for it: embed every requestable access profile's name and description once, embed the user's free-text request, find the nearest matches, then run the same policy and SOD checks the manual request path already runs before anything reaches an approver. The agent finds the request, it does not grant it.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>The negation weakness from the RAG page bites here specifically: &quot;access to submit expense reports&quot; and &quot;access to approve expense reports&quot; embed suspiciously close together despite being opposite in risk. Never skip the SOD and policy check just because retrieval found a confident match.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Pattern 3: SOD anomaly detection beyond your written policies</h3>
+					<p>A segregation-of-duties engine only catches conflicts you already thought to write down as a policy. The gap is everything you have not codified yet: two access profiles that are functionally conflicting but were never paired into an explicit rule, often because they were created months apart by different teams who never talked to each other.</p>
+				</div>
+
+<div class="arch reveal">
+	<div class="arch-tier"><div class="arch-node"><span class="n">Access profile catalog</span><span class="d">Every access profile's name, description, and entitlement membership, embedded as vectors</span></div></div>
+	<div class="arch-flow">↓</div>
+	<div class="arch-tier"><div class="arch-node arch-node--accent"><span class="n">Similarity scan (scheduled)</span><span class="d">Find access-profile pairs that are semantically close (both sound like conflicting financial controls) but have no SOD policy linking them</span></div></div>
+	<div class="arch-flow">↓</div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Candidate list, ranked by risk</span><span class="d">A human reviews each candidate and either drafts a real SOD policy or dismisses it</span><span class="tech">never auto-created as ENFORCED</span></div></div>
+</div>
+
+<div class="prose reveal">
+					<p>Embed every access profile's name, description, and entitlement list, then periodically scan for pairs that sit close together in that embedding space (both sound like financial controls, both sound like production database access) without an existing SOD policy connecting them. The output is a ranked candidate list for a human to review and turn into a real policy, or dismiss with a reason. This never runs as ENFORCED on its own, an unreviewed anomaly detector blocking real access requests is a worse outcome than the gap it was meant to catch.</p>
+					<h3>Pattern 4: role mining and cleanup</h3>
+					<p>Roles decay. Access profiles get bundled into a role for one team's specific need, the team's need changes, and the role keeps existing, requested by people it no longer accurately describes. Role mining clusters what people in similar jobs actually hold today, compares that to what your existing roles claim to bundle, and flags the drift.</p>
+					<ul><li>Where AI genuinely helps: writing the human-readable description of a discovered access cluster. &quot;These 40 people in Finance all hold these 6 access profiles&quot; is a fact a clustering algorithm finds for free, but someone still has to name it something a requester and an auditor both understand.</li><li>Where AI should not decide: whether the cluster becomes a real, assignable role. That is a business decision about who should get automatic access to what, made by the role's owner, not inferred from what people happen to have accumulated.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: rank these four patterns for your own organization<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>For a real or hypothetical enterprise, rank these four patterns (certification copilot, access request agent, SOD anomaly detection, role mining) by which would save the most reviewer or approver hours per quarter. Then rank them again by blast radius if the AI component were simply wrong for a week. The pattern with the best ratio of the first ranking to the second is usually where to start.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Measuring whether any of this actually worked</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Pattern</th><th>The metric that matters</th><th>Not this metric</th></tr></thead><tbody><tr><td>Certification copilot</td><td>Reviewer time per certification item</td><td>How many revokes the AI recommended</td></tr><tr><td>Access request agent</td><td>Time from request to approved, correctly-scoped grant</td><td>How many requests the agent handled</td></tr><tr><td>SOD anomaly detection</td><td>New SOD policies written per quarter from candidates</td><td>Number of anomalies flagged</td></tr><tr><td>Role mining</td><td>Reduction in access profiles requested outside any role</td><td>Number of roles created</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Every row on the right column is a vanity metric: easy to report, disconnected from whether the organization is actually safer or cheaper to audit. The left column is harder to measure and the only one worth reporting to whoever is funding this.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

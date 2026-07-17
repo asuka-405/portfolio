@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Automating the Joiner-Mover-Leaver Lifecycle: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Automating the Joiner-Mover-Leaver Lifecycle · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/ai-in-iam/automating-the-joiner-mover-leaver-lifecycle.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Automating the Joiner-Mover-Leaver Lifecycle" />
+		<meta property="og:description" content="Automating the Joiner-Mover-Leaver Lifecycle: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+		<meta property="og:url" content="https://archdev.in/docs/ai-in-iam/automating-the-joiner-mover-leaver-lifecycle.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Automating the Joiner-Mover-Leaver Lifecycle" />
+		<meta name="twitter:description" content="Automating the Joiner-Mover-Leaver Lifecycle: AI in IAM: Automating the Enterprise Without Breaking Compliance" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+				</div>
+				<ul>
+					<li>
+						<a href="ai-vs-machine-learning-vs-deep-learning.html" class="">AI vs Machine Learning vs Deep Learning</a>
+					</li>
+					<li>
+						<a href="inside-a-language-model.html" class="">Inside a Language Model</a>
+					</li>
+					<li>
+						<a href="choosing-and-running-models.html" class="">Choosing and Running Models</a>
+					</li>
+					<li>
+						<a href="prompting-models-effectively.html" class="">Prompting Models Effectively</a>
+					</li>
+					<li>
+						<a href="giving-models-knowledge-rag.html" class="">Giving Models Knowledge: RAG</a>
+					</li>
+					<li>
+						<a href="agents-models-that-do-things.html" class="">Agents: Models That Do Things</a>
+					</li>
+					<li>
+						<a href="frameworks-mcp-and-multi-agent-systems.html" class="">Frameworks, MCP, and Multi-Agent Systems</a>
+					</li>
+					<li>
+						<a href="reference-architecture-governance-and-compliance.html" class="">Reference Architecture, Governance, and Compliance</a>
+					</li>
+					<li>
+						<a href="automating-the-joiner-mover-leaver-lifecycle.html" class="active">Automating the Joiner-Mover-Leaver Lifecycle</a>
+					</li>
+					<li>
+						<a href="where-ai-actually-plugs-into-a-sailpoint-isc-implementation.html" class="">Where AI Actually Plugs Into a SailPoint ISC Implementation</a>
+					</li>
+					<li>
+						<a href="enterprise-iam-automation-patterns.html" class="">Enterprise IAM Automation Patterns</a>
+					</li>
+					<li>
+						<a href="cost-explainability-and-human-in-the-loop-design.html" class="">Cost, Explainability, and Human-in-the-Loop Design</a>
+					</li>
+					<li>
+						<a href="reference-architecture-walkthroughs.html" class="">Reference Architecture Walkthroughs</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← AI in IAM: Automating the Enterprise Without Breaking Compliance</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">AI in IAM: Automating the Enterprise Without Breaking Compliance</p>
+							<h1>Automating the Joiner-Mover-Leaver Lifecycle</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>Why JML is the perfect job for agents</h3>
+					<p>Most AI-in-IAM talk starts with chatbots. The better fit is the opposite shape: the<strong>joiner–mover–leaver</strong>lifecycle. When someone is hired, transfers, or leaves, an event arrives from an authoritative source (usually HR), it's high-volume, deadline-bound, and every run has a checkable &quot;definition of done.&quot; No human is asking a question, a state change just needs to be driven to completion and<em>verified</em>. That's exactly where agents beat copilots.</p>
+					<p>It's also where the pain lives: joiners wait days for access; movers quietly pile up permissions across transfers (the biggest source of access creep); leavers leave behind live accounts and credentials, the first thing auditors flag and attackers hunt for.</p>
+					<h3>The rule that makes it safe</h3>
+				</div>
+
+				<div class="callout reveal">
+					<p><strong>Deterministic core, AI at the edges.</strong> The reliable machinery: creating identities, birthright access, and above all the<em> leaver disable path</em>: stays plain, fast, testable code with no AI in it. The AI works only at the<em> edges</em>, where humans currently do slow judgment work. The slogan:<strong> the AI proposes and verifies; the deterministic engine executes.</strong></p>
+				</div>
+
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Authoritative sources</span>
+							<span class="d">HR (hire / transfer / termination), contingent-worker systems with end dates</span>
+							<span class="tech">events in</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">Deterministic core</span>
+							<span class="d">Aggregation → lifecycle states → birthright roles &amp; provisioning. No AI.</span>
+							<span class="tech">plain, fast, testable</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;event triggers&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Joiner agent</span>
+							<span class="d">Peer-based access proposals; day-one readiness check</span>
+						</div>
+						<div class="arch-node arch-node--accent">
+							<span class="n">Mover agent</span>
+							<span class="d">The access diff: what to add, and what to remove</span>
+						</div>
+						<div class="arch-node arch-node--accent">
+							<span class="n">Leaver agent</span>
+							<span class="d">Verify, rotate, triage, chase, transfer ownership</span>
+						</div>
+					</div>
+				</div>
+
+<div class="prose reveal">
+					<p><em>Events flow through deterministic machinery; agents are triggered at the judgment edges and propose changes back through normal approvals.</em></p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: Split one of your own processes this way<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Pick any automated process you rely on, AI or not. Identify, which part is pure deterministic logic (if this, then that), and which part, if any: involves a judgment call that a human currently makes slowly. That's the exact lens the callout above applies to JML, just pointed at something you already run.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Joiner</h3>
+					<p>Deterministic parts (account creation, birthright roles, mailbox, badge) stay as-is. The agent proposes the <em>rest</em>, the 20-40% of access birthright doesn't cover, by looking at what the person's peers have and recently used, filtered against policy, submitted as <em>draft </em>requests the manager approves in one pass. A key guardrail: peer copying faithfully replicates the team's accumulated creep, so only propose access that's both common <em>and </em>recently used, and never auto-grant from peer evidence alone. The evening before day one, the agent verifies effect (account enabled? mailbox live?) and chases anything broken before the person sits down.</p>
+					<h3>Mover (the highest-value piece)</h3>
+					<p>Transfers are where the industry actually fails: role assignment adds the new access, but nothing systematically removes the old. So access piles up forever. The agent computes a<strong>diff</strong>: access justified by the old role, by the new role, and the overlap. It turns new-minus-old into draft grants and old-minus-new into<em>revoke proposals</em>, each annotated with &quot;unused for 90 days and not justified by your new role&quot; (an easy approval; a bare revoke list gets ignored). It also watches the dangerous overlap window where someone briefly holds both sets, and checks that combination against separation-of-duty rules before anything is granted.</p>
+					<h3>Leaver</h3>
+					<p><strong>The disable path contains no AI</strong>: termination event, disable accounts, kill sessions, block privileged access, all within minutes by plain code. The agent's job starts one second later, and it's five read-heavy jobs:</p>
+					<ol><li><strong>Verify</strong> each account is actually disabled in every target system, not just that the &quot;disable&quot; command reported success.</li><li><strong>Rotate</strong> every shared and service-account credential the person<em> knew</em>, because knowledge survives termination.</li><li><strong>Triage</strong> their last 30 days of privileged sessions for pre-departure mischief (bulk exports, new rules). Read-only: this path reads untrusted text, so it holds no write tools at all.</li><li><strong>Chase</strong> disconnected apps (the ones not wired to the identity platform) via tickets, tracked to closure: the usual source of orphaned accounts.</li><li><strong>Transfer ownership</strong> of what the person<em> owned</em>(not just accessed): service accounts, shared mailboxes, scheduled jobs. Skipping this is how orgs end up with ownerless service accounts.</li></ol>
+					<p>The run ends with an<strong> evidence pack</strong>: verified-complete, or a named list of gaps with owners and deadlines. That's your leaver-audit answer, generated per departure instead of reconstructed per audit.</p>
+					<h3>The guardrails specific to JML</h3>
+					<ul><li><strong>HR data quality is the ceiling</strong>: the agent inherits every upstream error, so it should sanity-check events (&quot;a termination for someone hired last week?&quot;) before acting.</li><li><strong>Serialize events per person</strong>: a rehire racing a leaver, or a mover-then-leaver in one week, needs careful ordering, never parallel runs on the same identity.</li><li><strong>Circuit-break bulk events</strong>: a reorg firing thousands of transfers at once should route to a human (&quot;4,200 mover events since midnight: confirm the reorg is real&quot;) before processing.</li><li><strong>Never let AI gate a disable</strong>: the termination path must work even if the AI provider is down. Agents clean up<em> after</em> it; they are never<em> in</em> it.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
