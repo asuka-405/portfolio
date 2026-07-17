@@ -133,8 +133,16 @@ async function renderSectionBody(client, blocks, slug, imageCounter, warnings) {
 			case "code": {
 				flushProse();
 				const code = richTextToPlain(block.code.rich_text);
-				const html = await renderCodeBlock(code, block.code.language);
-				output.push(html);
+				if (block.code.language === "html") {
+					// Escape hatch: a code block set to the "HTML" language is injected verbatim,
+					// unescaped — lets an article embed custom markup (e.g. hand-built diagrams
+					// using the site's own .dgm/.arch/.ladder components) that Notion has no
+					// native block for, while staying real HTML/CSS instead of a static image.
+					output.push(code);
+				} else {
+					const html = await renderCodeBlock(code, block.code.language);
+					output.push(html);
+				}
 				break;
 			}
 			case "table": {

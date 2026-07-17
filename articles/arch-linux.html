@@ -75,9 +75,27 @@
 					<ul><li><strong>Rolling release.</strong>There's no &quot;Arch 24.04.&quot; You install once and update forever; packages arrive continuously, close to upstream. You're always on the latest, which is wonderful and occasionally requires you to read a news post before updating.</li><li><strong>You assemble it.</strong>A base Arch install is a terminal. Desktop, audio, drivers — you choose and add them. The result is a system with exactly what you need and nothing you don't.</li><li><strong>pacman + the AUR.</strong>pacman is a fast, no-nonsense package manager, and the Arch User Repository is a community collection that puts almost any piece of software one command away.</li><li><strong>The Arch Wiki.</strong>Honestly one of the best technical resources on the internet, for any distro. Half of &quot;learning Arch&quot; is really just learning to read the wiki.</li></ul>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/arch-linux/1.png" alt="Figure in arch-linux" loading="lazy" />
-				</figure>
+<div class="dgm dgm-compare reveal">
+					<div class="dgm-panel">
+						<h4>Other distros · a finished house</h4>
+						<div class="dgm-mini">
+							<div class="m">desktop + apps &nbsp;(chosen for you)</div>
+							<div class="m">drivers + services &nbsp;(pre-set)</div>
+							<div class="m">base system</div>
+							<div class="sep">▶ boots to someone's defaults</div>
+						</div>
+					</div>
+					<div class="dgm-panel dgm-panel--accent">
+						<h4>Arch · you add each layer</h4>
+						<div class="dgm-mini">
+							<div class="m keep">+ desktop &nbsp;(or none at all)</div>
+							<div class="m keep">+ apps &nbsp;(only what you use)</div>
+							<div class="m keep">+ drivers &nbsp;(only yours)</div>
+							<div class="m">base system &nbsp;(just a terminal)</div>
+							<div class="sep">▶ boots to exactly what you picked</div>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>The core difference: other distros hand you a pre-assembled stack; Arch hands you the parts and the best manual on the internet.</em></p>
@@ -86,9 +104,41 @@
 					<p>You boot the live ISO and do a handful of deliberate steps. Here's the whole map before we walk it — it's shorter than its reputation.</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/arch-linux/2.png" alt="Figure in arch-linux" loading="lazy" />
-				</figure>
+<div class="dgm dgm-scroll reveal">
+					<div class="dgm-flow dgm-flow--row">
+						<div class="dgm-box">
+							<span class="dgm-bt">Boot live USB</span>
+							<span class="dgm-bd">Connect &amp; partition the disk</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box">
+							<span class="dgm-bt">pacstrap</span>
+							<span class="dgm-bd">Install the base system</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box">
+							<span class="dgm-bt">genfstab</span>
+							<span class="dgm-bd">Record how disks mount</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box">
+							<span class="dgm-bt">arch-chroot</span>
+							<span class="dgm-bd">Step into the new system</span>
+							<span class="dgm-tag">manual part ends here</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box dgm-box--accent">
+							<span class="dgm-bt">★ arch-setup.sh</span>
+							<span class="dgm-bd">locale · user · services · bootloader · KDE · yay</span>
+							<span class="dgm-tag">my script takes over</span>
+						</div>
+						<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+						<div class="dgm-box">
+							<span class="dgm-bt">Reboot</span>
+							<span class="dgm-bd">Into a working desktop</span>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>The full install, end to end. The manual part stops at arch-chroot; the highlighted step is where my script takes over.</em></p>

@@ -77,18 +77,82 @@
 					<p>The clearest way to see the difference is to draw the box around &quot;stuff you have to run and maintain.&quot; With<strong>IdentityIQ</strong>, that box is enormous:</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/sailpoint-isc-vs-iiq/1.png" alt="Figure in sailpoint-isc-vs-iiq" loading="lazy" />
-				</figure>
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">You / your team</span>
+							<span class="d">Own and operate the entire stack below</span>
+							<span class="tech">on-premises</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;host &amp; maintain everything&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">IIQ app servers</span>
+							<span class="d">The Java application, on your machines</span>
+							<span class="tech">your servers</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">Database</span>
+							<span class="d">The identity warehouse</span>
+							<span class="tech">your DB</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">Connectors + custom code</span>
+							<span class="d">BeanShell rules, XML workflows</span>
+							<span class="tech">yours to maintain forever</span>
+						</div>
+					</div>
+					<div class="arch-flow">＋</div>
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">Upgrades · patching · scaling · backups</span>
+							<span class="d">A planned project every single time</span>
+							<span class="tech">the hidden cost</span>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>IdentityIQ: total control, and total operational ownership. Everything in these boxes is yours.</em></p>
 					<p>With<strong>Identity Security Cloud</strong>, most of that box belongs to SailPoint, and you're left with the part that's actually about governance:</p>
 				</div>
 
-				<figure class="reveal">
-					<img src="img/sailpoint-isc-vs-iiq/2.png" alt="Figure in sailpoint-isc-vs-iiq" loading="lazy" />
-				</figure>
+<div class="arch reveal">
+					<div class="arch-tier">
+						<div class="arch-node arch-node--accent">
+							<span class="n">SailPoint · multi-tenant cloud</span>
+							<span class="d">Hosts, patches, scales, and continuously ships new features</span>
+							<span class="tech">not your problem</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓ &nbsp;you connect through&nbsp; ↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">V3 &amp; Search APIs</span>
+							<span class="d">A real first-class interface to automate and build on</span>
+							<span class="tech">API-first</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">Configuration</span>
+							<span class="d">Sources, roles, policies — configured, not coded</span>
+							<span class="tech">no servers to run</span>
+						</div>
+						<div class="arch-node">
+							<span class="n">Built-in AI</span>
+							<span class="d">Recommendations trained on cross-customer signal</span>
+							<span class="tech">a cloud-only edge</span>
+						</div>
+					</div>
+					<div class="arch-flow">↓</div>
+					<div class="arch-tier">
+						<div class="arch-node">
+							<span class="n">You own: configuration &amp; integrations only</span>
+							<span class="d">Time goes to governance, not infrastructure</span>
+							<span class="tech">weeks to value, not months</span>
+						</div>
+					</div>
+				</div>
 
 <div class="prose reveal">
 					<p><em>ISC: you give up some deep customization and get back your whole operations budget.</em></p>
