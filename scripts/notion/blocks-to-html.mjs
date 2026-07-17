@@ -2,7 +2,7 @@ import { richTextToHtml, richTextToPlain } from "../lib/html.mjs";
 import { downloadArticleImage } from "./download-images.mjs";
 import { renderCodeBlock } from "../render/code-block.mjs";
 
-async function fetchChildren(client, blockId) {
+export async function fetchChildren(client, blockId) {
 	const results = [];
 	let cursor = undefined;
 	do {
@@ -62,7 +62,14 @@ async function renderTable(client, block) {
  * (images, tables, code, embeds, callouts, toggles) as their own top-level elements —
  * matching how the hand-written articles interleave `.prose` with `.cmd`/`.callout`/etc.
  */
-async function renderSectionBody(client, blocks, slug, imageCounter, warnings) {
+export async function renderSectionBody(
+	client,
+	blocks,
+	slug,
+	imageCounter,
+	warnings,
+	downloadImage = (src, index) => downloadArticleImage(src, slug, index)
+) {
 	const output = [];
 	let proseBuffer = [];
 	let listBuffer = null; // { type: 'ul'|'ol', items: [] }
@@ -124,7 +131,7 @@ async function renderSectionBody(client, blocks, slug, imageCounter, warnings) {
 				flushProse();
 				const summary = richTextToHtml(block.toggle.rich_text);
 				const children = await fetchChildren(client, block.id);
-				const nested = await renderSectionBody(client, children, slug, imageCounter, warnings);
+				const nested = await renderSectionBody(client, children, slug, imageCounter, warnings, downloadImage);
 				output.push(
 					`\t\t\t\t<details class="cmd-explain reveal">\n\t\t\t\t\t<summary>${summary}<span class="chev">›</span></summary>\n\t\t\t\t\t<div class="body">${nested}</div>\n\t\t\t\t</details>`
 				);
@@ -154,7 +161,7 @@ async function renderSectionBody(client, blocks, slug, imageCounter, warnings) {
 				flushProse();
 				const src = block.image.type === "external" ? block.image.external.url : block.image.file.url;
 				imageCounter.n += 1;
-				const localSrc = await downloadArticleImage(src, slug, imageCounter.n);
+				const localSrc = await downloadImage(src, imageCounter.n);
 				const caption = richTextToPlain(block.image.caption) || `Figure in ${slug}`;
 				const captionHtml = richTextToHtml(block.image.caption);
 				output.push(

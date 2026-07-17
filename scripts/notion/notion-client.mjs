@@ -23,3 +23,11 @@ export function getDatabaseId() {
 	}
 	return id;
 }
+
+export function getDocsDatabaseId() {
+	const id = process.env.NOTION_DOCS_DATABASE_ID;
+	if (!id) {
+		throw new Error("NOTION_DOCS_DATABASE_ID is not set (see .env.example).");
+	}
+	return id;
+}
