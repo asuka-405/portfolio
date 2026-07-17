@@ -1978,6 +1978,156 @@ table.tbl code {
 	text-align: center;
 }
 
+/* ————— Article body: images ————— */
+.prose figure {
+	margin: 1.5rem 0;
+}
+.prose figure img {
+	display: block;
+	width: 100%;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-sm);
+}
+.prose hr {
+	border: 0;
+	border-top: 1px solid var(--line);
+	margin: 2rem 0;
+}
+
+/* ————— Embeds (video, charts, flowcharts) ————— */
+.embed-wrap {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	margin: 1.5rem 0;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-sm);
+	background: var(--canvas);
+	overflow: hidden;
+}
+.embed-wrap iframe {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+/* ————— Code blocks (Shiki, build-time highlighted) ————— */
+.code-block {
+	margin: 1.25rem 0;
+	padding: 1rem;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-sm);
+	background: var(--surface);
+	font-family: var(--mono);
+	font-size: 0.85rem;
+	line-height: 1.6;
+	overflow-x: auto;
+}
+.code-block pre {
+	margin: 0;
+	background: transparent !important;
+}
+.shiki,
+.shiki span {
+	color: var(--shiki-dark, var(--text));
+	background: transparent !important;
+}
+html[data-theme="light"] .shiki,
+html[data-theme="light"] .shiki span {
+	color: var(--shiki-light, var(--text));
+}
+
+/* ————— Article search + tag filters (hub/featured pages) ————— */
+.article-search {
+	margin: 1.25rem 0 1rem;
+}
+.article-search input {
+	width: 100%;
+	max-width: 28rem;
+	padding: 0.7rem 1rem;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-sm);
+	background: var(--surface);
+	color: var(--ink);
+	font-family: var(--font);
+	font-size: 0.92rem;
+}
+.article-search input:focus-visible {
+	outline: var(--focus-ring);
+}
+.tag-filter-bar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 1.75rem;
+}
+.tag-chip {
+	padding: 0.4rem 0.85rem;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--muted);
+	font-size: 0.78rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: border-color var(--dur-fast) var(--ease-emph), color var(--dur-fast) var(--ease-emph);
+}
+.tag-chip:hover {
+	border-color: rgba(250, 98, 95, 0.42);
+	color: var(--text);
+}
+.tag-chip.active {
+	border-color: var(--accent);
+	background: var(--accent-soft);
+	color: var(--accent);
+}
+.search-empty {
+	color: var(--muted);
+	font-size: 0.92rem;
+	margin: 1rem 0 1.5rem;
+}
+
+/* ————— Featured badge ————— */
+.featured-badge {
+	color: var(--gold);
+}
+
+/* ————— Homepage view-all / featured links ————— */
+.view-all-link {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem 1.25rem;
+	margin-top: 1.25rem;
+}
+.view-all-link a {
+	color: var(--accent);
+	font-weight: 700;
+	font-size: 0.92rem;
+	text-decoration: none;
+}
+.view-all-link a:hover {
+	text-decoration: underline;
+}
+
+/* ————— Ad slots ————— */
+.ad-slot {
+	margin: 1.75rem 0;
+	padding: 0.75rem;
+	border: 1px dashed var(--line);
+	border-radius: var(--radius-sm);
+	text-align: center;
+}
+.ad-slot-label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-size: 0.65rem;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
 /* ————— Nested containment box ————— */
 .nest {
 	margin: 1.5rem 0;

@@ -1,0 +1,9 @@
+{
+	"enabled": false,
+	"clientId": "ca-pub-0000000000000000",
+	"slots": {
+		"hero": "0000000000",
+		"midArticle": "0000000000",
+		"hub": "0000000000"
+	}
+}

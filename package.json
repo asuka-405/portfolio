@@ -1,0 +1,12 @@
+{
+	"name": "archdev-portfolio",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "node scripts/build-articles.mjs"
+	},
+	"dependencies": {
+		"@notionhq/client": "^2.2.15",
+		"shiki": "^1.24.0"
+	}
+}
