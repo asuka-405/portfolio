@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Memory Model and Undefined Behavior: C" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Memory Model and Undefined Behavior · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/c/memory-model-and-undefined-behavior.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Memory Model and Undefined Behavior" />
+		<meta property="og:description" content="Memory Model and Undefined Behavior: C" />
+		<meta property="og:url" content="https://archdev.in/docs/c/memory-model-and-undefined-behavior.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Memory Model and Undefined Behavior" />
+		<meta name="twitter:description" content="Memory Model and Undefined Behavior: C" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../index.html#writing">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<a class="back-link reveal" href="index.html">← C</a>
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C</a>
+				</div>
+				<ul>
+					<li>
+						<a href="memory-model-and-undefined-behavior.html" class="active">Memory Model and Undefined Behavior</a>
+					</li>
+					<li>
+						<a href="pointers-and-arrays.html" class="">Pointers and Arrays</a>
+					</li>
+					<li>
+						<a href="integer-promotion-and-overflow.html" class="">Integer Promotion and Overflow</a>
+					</li>
+					<li>
+						<a href="strings-and-buffer-footguns.html" class="">Strings and Buffer Footguns</a>
+					</li>
+					<li>
+						<a href="structs-padding-and-alignment.html" class="">Structs, Padding and Alignment</a>
+					</li>
+					<li>
+						<a href="the-preprocessor.html" class="">The Preprocessor</a>
+					</li>
+					<li>
+						<a href="build-toolchain-basics.html" class="">Build Toolchain Basics</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-patterns.html" class="">Idiomatic C Patterns</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C</p>
+							<h1>Memory Model and Undefined Behavior</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>The layout your program actually gets</h3>
+					<p>Before you can reason about a dangling pointer, it helps to know what's actually sitting in memory. A running process's address space is divided into a handful of regions, and where a value lives determines its whole lifetime story.</p>
+				</div>
+
+<div class="arch reveal">
+	<div class="arch-tier"><div class="arch-node"><span class="n">Text / code segment</span><span class="d">The compiled instructions themselves. Read-only, shared between processes running the same binary.</span></div></div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Initialized data (.data)</span><span class="d">Globals and statics you gave a non-zero initial value to.</span></div></div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Uninitialized data (.bss)</span><span class="d">Globals and statics left at their default of zero. Takes no space in the binary, just a size the OS zero-fills at load.</span></div></div>
+	<div class="arch-flow">↕ heap grows this way</div>
+	<div class="arch-tier"><div class="arch-node arch-node--accent"><span class="n">Heap</span><span class="d">malloc/free territory. Grows toward higher addresses as you allocate.</span><span class="tech">lifetime: until you free it</span></div></div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Unmapped gap</span><span class="d">Free address space between the two growing regions. Touch it and you segfault.</span></div></div>
+	<div class="arch-tier"><div class="arch-node arch-node--accent"><span class="n">Stack</span><span class="d">Local variables and call frames. Grows toward lower addresses as functions call deeper.</span><span class="tech">lifetime: until the function returns</span></div></div>
+	<div class="arch-flow">↕ stack grows this way</div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Args, environment, auxv</span><span class="d">argv/envp strings and the kernel's auxiliary vector. Set up once before main() runs.</span></div></div>
+</div>
+
+<div class="prose reveal">
+					<p>Two of these move: the <strong>heap</strong> grows as you <code>malloc</code>, the <strong>stack</strong> grows as functions call deeper. Everything else is fixed at load time. The gap between them is why a runaway recursive function and a runaway allocation loop eventually collide in the same crash: they're growing toward each other.</p>
+					<p><strong>Stack vs heap, concretely</strong></p>
+					<p>A local variable's storage is reclaimed the instant its function returns, whether or not anything still points at it. This is legal C that produces a dangling pointer:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">make_counter</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">void</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> counter </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x26;</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">counter;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // counter's storage is gone the moment this returns</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>The returned address isn't null and the compiler won't stop you. It's a pointer to a stack slot that now belongs to whatever gets called next. Reading through it is undefined behavior, not &quot;probably still zero.&quot; If you need the value to outlive the function, it has to live on the heap (<code>malloc</code>) or be passed in by the caller.</p>
+					<h3>What &quot;undefined behavior&quot; actually means</h3>
+					<p>It's tempting to read &quot;undefined behavior&quot; as &quot;the result is unspecified, but reasonable.&quot; That's not what the standard says, and it's not how compilers treat it. The standard says a program that triggers UB has no meaning at all. Compilers use that as license to assume it never happens, then optimize as if the code that would trigger it is unreachable.</p>
+					<p>Signed integer overflow is the clearest example. It's UB, full stop, on every C compiler that matters. So a compiler is free to assume a signed loop counter never overflows. If your loop's termination depends on it overflowing, the compiler can delete the check:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// looks like it terminates when i wraps negative, but it might not.</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">>=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; i</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">++</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	sum </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+=</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> arr</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[i];</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: watch a compiler exploit signed overflow UB<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Compile the loop above at <code>-O0</code> and <code>-O2</code> (or paste it into Compiler Explorer) and compare the generated assembly. At higher optimization the compiler may assume <code>i &gt;= 0</code> is always true and turn this into something that never checks the bound at all, because it's reasoned that a loop relying on overflow to terminate cannot legally exist.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<p><strong>Sequence points: the <code>i = i++ + ++i</code> trap</strong></p>
+					<p>Modifying the same variable twice with no sequence point between the modifications is undefined, regardless of what &quot;left to right&quot; intuition tells you:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> i</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">++</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> +</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> ++</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">i;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // undefined behavior, not "some particular surprising number"</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>There's no correct answer to print here. Different compilers, or the same compiler at different optimization levels, can legitimately produce different results. The fix isn't to memorize evaluation order, it's to never write more than one unsequenced modification to the same object in one expression.</p>
+					<h3>Every category of UB worth keeping in your head</h3>
+					<ul><li>Dereferencing a null, dangling, or uninitialized pointer.</li><li>Signed integer overflow (unsigned overflow is well-defined wraparound, see the integers page).</li><li>Reading or writing past the end of an array, including computing a pointer more than one-past-the-end, even if you never dereference it.</li><li>Reading a value before it's initialized.</li><li>Violating strict aliasing (below).</li><li>A data race: two threads accessing the same object where at least one write isn't synchronized.</li><li>Shifting by a negative amount or by ≥ the width of the type (<code>x &lt;&lt; 32</code> on a 32-bit <code>int</code>).</li><li>Calling a function through a pointer of an incompatible type.</li></ul>
+					<h3>Strict aliasing: the UB nobody warns you about</h3>
+					<p>The compiler assumes two pointers of unrelated types never point at the same memory: that's the strict aliasing rule. It uses this assumption to reorder and cache reads/writes for speed. Casting a pointer to an unrelated type and dereferencing it breaks that assumption:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">float</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> f </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 3.14</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">f</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">p </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x26;</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">f;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> bits </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">p;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // strict-aliasing violation: reading a float object through an int*</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>The fix that's actually portable is <code>memcpy</code> into a same-sized destination. It gets optimized down to a plain load/store by any competent compiler, with none of the UB:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">float</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> f </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 3.14</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">f</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> bits;</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">memcpy</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x26;</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">bits</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x26;</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">f</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">sizeof</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> bits</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>A <code>union</code> is the other common answer, and it's worth being precise here since C and C++ disagree: reading a union member other than the one most recently written is, strictly speaking, implementation-defined by the ISO C standard, but GCC and Clang both explicitly document it as supported, and it's the idiomatic way to type-pun in C. It is not legal in C++, despite looking identical.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: see a strict-aliasing violation get flagged<span class="chev">›</span></summary>
+					<div class="body"><div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">gcc</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -O2</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -Wall</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -Wextra</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -Wstrict-aliasing</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -c</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> aliasing.c</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Try the raw-cast version above and the <code>memcpy</code> version, both at <code>-O2</code>. If your target has ever needed <code>-fno-strict-aliasing</code> to &quot;fix&quot; a bug, that flag didn't fix the bug. It just told the compiler to stop assuming the rule, at a real performance cost. The actual fix is removing the violation.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

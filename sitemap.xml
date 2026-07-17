@@ -44,4 +44,31 @@
 	<url>
 		<loc>https://archdev.in/docs/index.html</loc>
 	</url>
+	<url>
+		<loc>https://archdev.in/docs/c/index.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/c/memory-model-and-undefined-behavior.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/c/pointers-and-arrays.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/c/integer-promotion-and-overflow.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/c/strings-and-buffer-footguns.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/c/structs-padding-and-alignment.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/c/the-preprocessor.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/c/build-toolchain-basics.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/docs/c/idiomatic-c-patterns.html</loc>
+	</url>
 </urlset>

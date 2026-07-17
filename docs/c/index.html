@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="A crash course in the parts of C that bite experienced programmers coming from any other language: undefined behavior, memory layout, integer and string footguns, structs, the preprocessor, and the build toolchain." />
+		<meta name="color-scheme" content="dark light" />
+		<title>C · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/c/index.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="C" />
+		<meta property="og:description" content="A crash course in the parts of C that bite experienced programmers coming from any other language: undefined behavior, memory layout, integer and string footguns, structs, the preprocessor, and the build toolchain." />
+		<meta property="og:url" content="https://archdev.in/docs/c/index.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="C" />
+		<meta name="twitter:description" content="A crash course in the parts of C that bite experienced programmers coming from any other language: undefined behavior, memory layout, integer and string footguns, structs, the preprocessor, and the build toolchain." />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../index.html#writing">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<a class="back-link reveal" href="../index.html">← All docs</a>
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="active">📄 C</a>
+				</div>
+				<ul>
+					<li>
+						<a href="memory-model-and-undefined-behavior.html" class="">Memory Model and Undefined Behavior</a>
+					</li>
+					<li>
+						<a href="pointers-and-arrays.html" class="">Pointers and Arrays</a>
+					</li>
+					<li>
+						<a href="integer-promotion-and-overflow.html" class="">Integer Promotion and Overflow</a>
+					</li>
+					<li>
+						<a href="strings-and-buffer-footguns.html" class="">Strings and Buffer Footguns</a>
+					</li>
+					<li>
+						<a href="structs-padding-and-alignment.html" class="">Structs, Padding and Alignment</a>
+					</li>
+					<li>
+						<a href="the-preprocessor.html" class="">The Preprocessor</a>
+					</li>
+					<li>
+						<a href="build-toolchain-basics.html" class="">Build Toolchain Basics</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-patterns.html" class="">Idiomatic C Patterns</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C</p>
+							<h1>C</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>This is a crash course in the parts of C that are easy to get wrong even after you already know the syntax. It assumes you can program in Go, Java, JavaScript, Rust, Python, whatever, and skips past <code>for</code> loops and function declarations straight to the stuff that actually breaks production code.</p>
+					<p>C's syntax is small enough to learn in an afternoon. What takes longer, and what this course is actually about, is the list of things the language lets you do that it does not check for you: reading past the end of an array, using a value before it's initialized, letting an integer wrap around when you meant it not to. None of that raises an exception. Most of it compiles clean, runs fine on your machine, and fails somewhere else, later, differently.</p>
+					<h3>What makes C different from the language you already know</h3>
+					<ul><li>No bounds checking. <code>arr[10]</code> on a 10-element array is not an exception, it's an address the language will happily compute and let you write to.</li><li>No garbage collector. Every <code>malloc</code> is a debt; nobody pays it but you.</li><li>The compiler assumes undefined behavior never happens and optimizes on that assumption, not &quot;probably safe&quot; but actively hostile to code that depends on UB behaving a particular way.</li><li>Types are a compile-time convenience the runtime has mostly forgotten about by the time your program executes.</li></ul>
+					<blockquote>Everything in this course exists because it broke something for someone. Treat each section as a bug report, not trivia.</blockquote>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: confirm your toolchain before going further<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Compile this with warnings turned all the way up, and don't move on until it builds clean:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">gcc</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -Wall</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -Wextra</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -Wpedantic</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -g</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -o</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> hello</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> hello.c</span></span></code></pre></div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#include</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> &#x3C;stdio.h></span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> main</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">void</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	printf</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"hello, undefined behavior</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\n</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Keep <code>-Wall -Wextra -Wpedantic</code> on for every example in this course. Several of them are designed to trigger a warning, and that warning is half the lesson.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Build Toolchain Basics: C" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Build Toolchain Basics · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/c/build-toolchain-basics.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Build Toolchain Basics" />
+		<meta property="og:description" content="Build Toolchain Basics: C" />
+		<meta property="og:url" content="https://archdev.in/docs/c/build-toolchain-basics.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Build Toolchain Basics" />
+		<meta name="twitter:description" content="Build Toolchain Basics: C" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../index.html#writing">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<a class="back-link reveal" href="index.html">← C</a>
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C</a>
+				</div>
+				<ul>
+					<li>
+						<a href="memory-model-and-undefined-behavior.html" class="">Memory Model and Undefined Behavior</a>
+					</li>
+					<li>
+						<a href="pointers-and-arrays.html" class="">Pointers and Arrays</a>
+					</li>
+					<li>
+						<a href="integer-promotion-and-overflow.html" class="">Integer Promotion and Overflow</a>
+					</li>
+					<li>
+						<a href="strings-and-buffer-footguns.html" class="">Strings and Buffer Footguns</a>
+					</li>
+					<li>
+						<a href="structs-padding-and-alignment.html" class="">Structs, Padding and Alignment</a>
+					</li>
+					<li>
+						<a href="the-preprocessor.html" class="">The Preprocessor</a>
+					</li>
+					<li>
+						<a href="build-toolchain-basics.html" class="active">Build Toolchain Basics</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-patterns.html" class="">Idiomatic C Patterns</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C</p>
+							<h1>Build Toolchain Basics</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>Four programs are hiding behind one <code>gcc</code> invocation</h3>
+					<p><code>gcc file.c -o program</code> looks like one step. It's actually a pipeline of four, and knowing which stage produced an error tells you immediately what kind of mistake you're looking at.</p>
+				</div>
+
+<div class="dgm dgm-scroll reveal">
+	<div class="dgm-flow dgm-flow--row">
+		<div class="dgm-box"><span class="dgm-bt">Preprocessor</span><span class="dgm-bd">Expand macros, #include, #if</span><span class="dgm-tag">gcc -E</span></div>
+		<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+		<div class="dgm-box"><span class="dgm-bt">Compiler proper</span><span class="dgm-bd">Source → assembly for one translation unit</span><span class="dgm-tag">gcc -S</span></div>
+		<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+		<div class="dgm-box"><span class="dgm-bt">Assembler</span><span class="dgm-bd">Assembly → object file (.o), machine code plus an unresolved symbol table</span><span class="dgm-tag">gcc -c</span></div>
+		<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+		<div class="dgm-box dgm-box--accent"><span class="dgm-bt">★ Linker</span><span class="dgm-bd">Merge every .o and library, resolve every symbol reference to an address</span><span class="dgm-tag">ld, invoked by gcc</span></div>
+		<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
+		<div class="dgm-box"><span class="dgm-bt">Executable</span><span class="dgm-bd">Ready to load and run</span></div>
+	</div>
+</div>
+
+<div class="prose reveal">
+					<h3>Translation units and the linker's actual job</h3>
+					<p>Each <code>.c</code> file compiles independently. It's a <strong>translation unit</strong>, and the compiler proper never looks at any other <code>.c</code> file while compiling it. Every reference to something defined elsewhere (another file, a library) becomes a placeholder the object file's symbol table records but doesn't resolve. The <strong>linker</strong>'s entire job is walking every object file and library you hand it and matching those placeholders to real addresses.</p>
+					<h3>Reading a linker error without panicking</h3>
+					<ul><li><code>undefined reference to 'foo'</code>: the linker never found a definition for <code>foo</code> anywhere it looked. You declared it (a header, a prototype) but never linked the <code>.o</code> or library that defines it, or you never defined it at all.</li><li><code>multiple definition of 'foo'</code>: the linker found <code>foo</code> defined more than once across the object files it's merging. Usually a non-<code>static</code>, non-<code>inline</code> function or a non-<code>extern</code> global variable sitting in a header that got included into more than one <code>.c</code> file.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: produce and read both linker errors yourself<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Declare a function in a header, call it from <code>main.c</code>, but don't define it anywhere. Link and read the <code>undefined reference</code> error. Then define a non-static <code>int counter;</code> in a header included by two different <code>.c</code> files, and read the <code>multiple definition</code> error that follows. Recognizing these two error shapes on sight saves real debugging time.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Static vs dynamic linking, the short version</h3>
+					<p>A static library (<code>.a</code>) gets copied bodily into your executable at link time: bigger binary, but it runs with zero dependency on that library being present later. A dynamic/shared library (<code>.so</code> on Linux, <code>.dll</code> on Windows) stays a separate file, resolved when the program loads (or on first call, for lazy binding): smaller binary, shared memory across processes using the same library, and a security patch to the library reaches every program using it without a rebuild. The cost is exactly that: the program now depends on the right version of that <code>.so</code> existing on whatever machine runs it.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

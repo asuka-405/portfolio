@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Structs, Padding and Alignment: C" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Structs, Padding and Alignment · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/c/structs-padding-and-alignment.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Structs, Padding and Alignment" />
+		<meta property="og:description" content="Structs, Padding and Alignment: C" />
+		<meta property="og:url" content="https://archdev.in/docs/c/structs-padding-and-alignment.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Structs, Padding and Alignment" />
+		<meta name="twitter:description" content="Structs, Padding and Alignment: C" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../index.html#writing">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<a class="back-link reveal" href="index.html">← C</a>
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C</a>
+				</div>
+				<ul>
+					<li>
+						<a href="memory-model-and-undefined-behavior.html" class="">Memory Model and Undefined Behavior</a>
+					</li>
+					<li>
+						<a href="pointers-and-arrays.html" class="">Pointers and Arrays</a>
+					</li>
+					<li>
+						<a href="integer-promotion-and-overflow.html" class="">Integer Promotion and Overflow</a>
+					</li>
+					<li>
+						<a href="strings-and-buffer-footguns.html" class="">Strings and Buffer Footguns</a>
+					</li>
+					<li>
+						<a href="structs-padding-and-alignment.html" class="active">Structs, Padding and Alignment</a>
+					</li>
+					<li>
+						<a href="the-preprocessor.html" class="">The Preprocessor</a>
+					</li>
+					<li>
+						<a href="build-toolchain-basics.html" class="">Build Toolchain Basics</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-patterns.html" class="">Idiomatic C Patterns</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C</p>
+							<h1>Structs, Padding and Alignment</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>The compiler pads your struct behind your back</h3>
+					<p>Every type has an alignment requirement: the addresses it's allowed to start at. The compiler inserts padding bytes between (and sometimes after) struct members so each one lands on a legal address for its type, and so arrays of the struct keep every element aligned too. <code>sizeof(struct)</code> is essentially never just the sum of its members' sizes.</p>
+				</div>
+
+<div class="dgm dgm-compare reveal">
+	<div class="dgm-panel">
+		<h4>Worst-to-best order · wastes 6 bytes</h4>
+		<div class="dgm-mini">
+			<div class="m keep">char a &nbsp;(1 byte)</div>
+			<div class="m strike">padding &nbsp;(3 bytes)</div>
+			<div class="m keep">int b &nbsp;(4 bytes)</div>
+			<div class="m keep">char c &nbsp;(1 byte)</div>
+			<div class="m strike">padding &nbsp;(3 bytes)</div>
+			<div class="sep">sizeof(struct) = 12</div>
+		</div>
+	</div>
+	<div class="dgm-panel dgm-panel--accent">
+		<h4>Fields reordered largest-first</h4>
+		<div class="dgm-mini">
+			<div class="m keep">int b &nbsp;(4 bytes)</div>
+			<div class="m keep">char a &nbsp;(1 byte)</div>
+			<div class="m keep">char c &nbsp;(1 byte)</div>
+			<div class="m strike">padding &nbsp;(2 bytes)</div>
+			<div class="sep">sizeof(struct) = 8</div>
+		</div>
+	</div>
+</div>
+
+<div class="prose reveal">
+					<p>Same three fields, same total useful data, four fewer bytes just from ordering members largest-alignment-first. This isn't a micro-optimization exclusive to embedded work. A struct like this repeated across a large array is the difference between fitting in cache and not.</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> bad  { </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">char</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> a; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> b; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">char</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> c; };</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">  // sizeof == 12 on a typical 64-bit target</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> good { </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> b; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">char</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> a; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">char</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> c; };</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">  // sizeof == 8: same fields, better order</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">printf</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">%zu</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> vs </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">%zu\n</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">sizeof</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> bad), </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">sizeof</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> good));</span></span></code></pre></div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: measure it on your own struct<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Take any struct in a project you actually work on with more than two fields, <code>printf(&quot;%zu\n&quot;, sizeof(...))</code> it, then reorder fields largest-alignment-first and compare. It's a five-minute change with a real, measurable effect.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Alignment requirements, and forcing them with <code>_Alignas</code></h3>
+					<p><code>&lt;stdalign.h&gt;</code> (C11) gives you <code>alignof(T)</code> to query a type's natural alignment and <code>_Alignas(N)</code> to force a stricter one than the compiler would otherwise pick. You reach for this rarely: SIMD buffers that need 16/32-byte alignment, DMA buffers with hardware alignment requirements, or lock-free structures that need to land on their own cache line to avoid false sharing between threads.</p>
+					<h3>Flexible array members beat the old &quot;struct hack&quot;</h3>
+					<p>C99 standardized a trailing unsized array as the last struct member: the idiomatic way to allocate a header plus a variable-length payload in one contiguous block, replacing the old undefined-behavior-adjacent <code>int data[1]</code> trick:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> packet {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	size_t</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> len;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	unsigned</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> char</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> data</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">[]</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // flexible array member, must be last, contributes 0 to sizeof(struct packet)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> packet </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">pk </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> malloc</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">sizeof</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> packet) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> payload_len);</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">pk</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">-></span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">len </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> payload_len;</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">memcpy</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(pk</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">-></span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">data</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, payload, payload_len);</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>Bitfields: real memory savings, implementation-defined layout</h3>
+					<p><code>unsigned flag1 : 1; unsigned flag2 : 1;</code> packs multiple small fields into shared storage, but the standard does not pin down bit order, padding between fields, or whether they pack across a byte boundary. Two different compilers (or the same compiler on two architectures) are allowed to lay the same bitfield struct out differently. Fine for in-process flags you never serialize; dangerous the moment that struct's raw bytes cross a compiler boundary: a network protocol, a file format, a different build target.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Pointers and Arrays: C" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Pointers and Arrays · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/c/pointers-and-arrays.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Pointers and Arrays" />
+		<meta property="og:description" content="Pointers and Arrays: C" />
+		<meta property="og:url" content="https://archdev.in/docs/c/pointers-and-arrays.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Pointers and Arrays" />
+		<meta name="twitter:description" content="Pointers and Arrays: C" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../index.html#writing">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<a class="back-link reveal" href="index.html">← C</a>
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C</a>
+				</div>
+				<ul>
+					<li>
+						<a href="memory-model-and-undefined-behavior.html" class="">Memory Model and Undefined Behavior</a>
+					</li>
+					<li>
+						<a href="pointers-and-arrays.html" class="active">Pointers and Arrays</a>
+					</li>
+					<li>
+						<a href="integer-promotion-and-overflow.html" class="">Integer Promotion and Overflow</a>
+					</li>
+					<li>
+						<a href="strings-and-buffer-footguns.html" class="">Strings and Buffer Footguns</a>
+					</li>
+					<li>
+						<a href="structs-padding-and-alignment.html" class="">Structs, Padding and Alignment</a>
+					</li>
+					<li>
+						<a href="the-preprocessor.html" class="">The Preprocessor</a>
+					</li>
+					<li>
+						<a href="build-toolchain-basics.html" class="">Build Toolchain Basics</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-patterns.html" class="">Idiomatic C Patterns</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C</p>
+							<h1>Pointers and Arrays</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>Arrays decay, pointers don't grow back</h3>
+					<p>An array expression, almost anywhere it's used, silently converts to a pointer to its first element. This is called array decay, and the classic place it bites is <code>sizeof</code>:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">void</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> f</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> arr</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">10</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">]) {</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	printf</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">%zu\n</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">sizeof</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(arr));</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // prints 8 (or 4): sizeof(int*), NOT 40</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> main</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">void</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	int</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> arr</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">10</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">];</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	printf</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">%zu\n</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">sizeof</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(arr));</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // prints 40: the real array size, here in its defining scope</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><code>int arr[10]</code> as a function parameter is quietly rewritten by the compiler to <code>int *arr</code>. The <code>[10]</code> is documentation, not enforcement. Any bound checking has to be passed in separately (an explicit length parameter) because the function has no way to recover it from the pointer.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: watch sizeof change the moment an array crosses a function boundary<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Write a function taking <code>int arr[10]</code> and print <code>sizeof(arr)</code> inside it, then print <code>sizeof</code> of the same array in <code>main</code>. Confirm the numbers don't match, and that <code>-Wall</code> doesn't warn you about it. This one is by design, not a bug the compiler can catch.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<p><strong>Pointer arithmetic only has meaning inside (and one past) an array</strong></p>
+					<p><code>ptr + 1</code> is only defined if <code>ptr</code> points within an array (or one element type) and <code>ptr + 1</code> lands within the array or exactly one element past its end. Computing anything further, even without dereferencing it, is undefined behavior:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> arr</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">5</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">];</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">p </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> arr </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 5</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">   // legal: one-past-the-end, may be compared but not dereferenced</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">q </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> arr </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 6</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">   // UB the moment this pointer is *computed*, even if you never touch *q</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>Multi-dimensional arrays vs arrays of pointers</h3>
+					<p><code>int grid[3][4]</code> is one contiguous 48-byte block. <code>int *grid[3]</code> is three separately-allocated rows reachable through an array of pointers. They're both &quot;2D&quot; in casual conversation and completely different in memory, which matters the moment you write a function signature for one:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// correct: the compiler needs the inner dimension to compute row strides</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">void</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> sum_rows</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> arr</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">[]</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">4</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">], </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> rows</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x3C;</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> rows; i</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">++</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">		for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> j </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; j </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x3C;</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 4</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; j</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">++</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">			/* arr[i][j] */</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// this does NOT work for a true 2D array, it's the signature for an array of pointers</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">void</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> wrong</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> **</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">arr</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> rows</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>Reading pointer declarations right to left</h3>
+					<p><code>const</code> next to a pointer means different things depending on which side of the <code>*</code> it's on. Read the declaration starting from the variable name, moving outward:</p>
+					<ul><li><code>const int *p</code>: pointer to a const int. You can repoint <code>p</code>, you can't modify <code>*p</code>.</li><li><code>int *const p</code>: const pointer to an int. You can modify <code>*p</code>, you can't repoint <code>p</code>.</li><li><code>const int *const p</code>: both. Can't repoint, can't modify what it points to.</li></ul>
+					<h3>Function pointers, briefly</h3>
+					<p>A <code>typedef</code> makes these tolerable to read, and they're the backbone of any callback or dispatch-table pattern in C: there's no closures, no first-class functions, just addresses of functions with a matching signature:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">typedef</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">binop_fn)(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> add</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> a</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> b</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) { </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> a </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> b; }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">binop_fn op </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> add;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> result </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> op</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">2</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">3</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // 5</span></span></code></pre></div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: build a tiny opcode dispatch table<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Define <code>binop_fn add</code>, <code>sub</code>, <code>mul</code> functions, put them in an array indexed by an <code>enum { OP_ADD, OP_SUB, OP_MUL }</code>, and call through <code>table[op](a, b)</code> instead of writing a <code>switch</code>. This pattern is how a lot of real interpreters and VMs dispatch instructions.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

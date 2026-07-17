@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Integer Promotion and Overflow: C" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Integer Promotion and Overflow · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/c/integer-promotion-and-overflow.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Integer Promotion and Overflow" />
+		<meta property="og:description" content="Integer Promotion and Overflow: C" />
+		<meta property="og:url" content="https://archdev.in/docs/c/integer-promotion-and-overflow.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Integer Promotion and Overflow" />
+		<meta name="twitter:description" content="Integer Promotion and Overflow: C" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../index.html#writing">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<a class="back-link reveal" href="index.html">← C</a>
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C</a>
+				</div>
+				<ul>
+					<li>
+						<a href="memory-model-and-undefined-behavior.html" class="">Memory Model and Undefined Behavior</a>
+					</li>
+					<li>
+						<a href="pointers-and-arrays.html" class="">Pointers and Arrays</a>
+					</li>
+					<li>
+						<a href="integer-promotion-and-overflow.html" class="active">Integer Promotion and Overflow</a>
+					</li>
+					<li>
+						<a href="strings-and-buffer-footguns.html" class="">Strings and Buffer Footguns</a>
+					</li>
+					<li>
+						<a href="structs-padding-and-alignment.html" class="">Structs, Padding and Alignment</a>
+					</li>
+					<li>
+						<a href="the-preprocessor.html" class="">The Preprocessor</a>
+					</li>
+					<li>
+						<a href="build-toolchain-basics.html" class="">Build Toolchain Basics</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-patterns.html" class="">Idiomatic C Patterns</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C</p>
+							<h1>Integer Promotion and Overflow</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>Every small integer becomes an int before you can blink</h3>
+					<p><code>char</code> and <code>short</code> operands are promoted to <code>int</code> (or <code>unsigned int</code>, if <code>int</code> can't hold all their values) before any arithmetic or comparison happens. This is invisible almost all the time, and then it isn't:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">char</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> c </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> -</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (c </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">==</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 255</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> /* ... */</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> }</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // false on platforms where char is signed:</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">							// c promotes to int -1, not unsigned 255</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Whether plain <code>char</code> is signed or unsigned is itself implementation-defined (it's a distinct type from both <code>signed char</code> and <code>unsigned char</code>, whichever behavior it happens to have). Comparisons and arithmetic on raw byte data should use <code>unsigned char</code> explicitly if you actually mean 0–255.</p>
+					<h3>Signed vs unsigned comparison is a minefield</h3>
+					<p>When a signed and unsigned value of the same rank are compared or combined, the signed one converts to unsigned, not the other way around. <code>len</code> from <code>strlen</code>/<code>sizeof</code> is <code>size_t</code>, unsigned, and this is the single most common way that bites:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">size_t</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> len </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> strlen</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(s);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">size_t</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> len </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">-</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">>=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; i</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">--</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">	// if len == 0, len - 1 wraps to SIZE_MAX (not -1), and i >= 0 is ALWAYS true</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">	// for an unsigned i, this doesn't terminate the way it looks like it should</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: get the compiler to warn you about this exact bug<span class="chev">›</span></summary>
+					<div class="body"><div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">gcc</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -Wall</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -Wextra</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -Wsign-compare</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -c</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> loop.c</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Write the loop above and compile it. <code>-Wsign-compare</code> (included in <code>-Wextra</code>) should flag the <code>i &gt;= 0</code> comparison against an unsigned type as always true. Then fix it: check <code>len == 0</code> first and loop with a signed index, or restructure as <code>for (size_t i = len; i-- &gt; 0;)</code>, which sidesteps the underflow entirely.</p>
+				</div></div>
+				</details>
+
+<div class="prose reveal">
+					<h3>Signed overflow is undefined; unsigned overflow is not</h3>
+					<p>Unsigned arithmetic wraps modulo 2ⁿ by definition in the standard. <code>UINT_MAX + 1 == 0</code> is guaranteed, well-defined, portable behavior. Signed overflow has no such guarantee anywhere, for any operation, including the one case people assume is safe: <code>INT_MIN / -1</code> and <code>INT_MIN * -1</code> are both undefined too, not just addition past <code>INT_MAX</code>.</p>
+					<ul><li>Code that wants deliberate wraparound (hashing, PRNGs, checksums) should use an unsigned type or a fixed-width type like <code>uint32_t</code>, never plain signed <code>int</code> relying on overflow to &quot;just wrap.&quot;</li><li>Mixed <code>int</code>/<code>size_t</code> arithmetic in size calculations (<code>malloc(count * sizeof(T))</code>) is a frequent overflow source. Check for overflow before multiplying, or use a widening type, if <code>count</code> comes from anywhere untrusted.</li><li>Off-by-one loop bounds compound with this: an overflowing bound check can turn a supposedly-safe loop into one with no working upper bound at all.</li></ul>
+					<h3>The <code>-1</code> into <code>size_t</code> trap</h3>
+					<p>A function signaling &quot;not found&quot; by returning <code>-1</code>, assigned into a <code>size_t</code> (or any unsigned) variable, doesn't produce -1. It produces <code>SIZE_MAX</code>. Every check like <code>if (index &gt;= 0)</code> after that assignment is dead code. The value was never going to be negative, because the type can't represent negative numbers:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">size_t</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> index </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> find_item</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(list, target);</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // returns (size_t)-1 on "not found"</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (index </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">>=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">	// always true: this is not the check you meant to write</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<blockquote>Prefer a signed return type (or an explicit <code>bool found</code> out-parameter) for anything that needs a &quot;not found&quot; sentinel. Overloading an unsigned return with -1 is a bug waiting for someone to write <code>&gt;= 0</code>.</blockquote>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
