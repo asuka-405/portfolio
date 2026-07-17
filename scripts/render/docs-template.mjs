@@ -103,7 +103,7 @@ ${siteHeader(rootPrefix)}
 \t\t\t\t\t<p class="section-intro">Deep-dive notes, full courses, and documentation for things I build.</p>
 \t\t\t\t</div>
 \t\t\t\t<div class="article-list" id="docs-topic-list">
-${cards || "\t\t\t\t\t<p class=\"section-intro\">Nothing published yet — check back soon.</p>"}
+${cards || "\t\t\t\t\t<p class=\"section-intro\">Nothing published yet, check back soon.</p>"}
 \t\t\t\t</div>
 \t\t\t</section>
 \t\t</main>
@@ -146,7 +146,7 @@ export function renderDocsPage({ topic, topicRoot, node, bodyHtml, ogImage = nul
 	const isOverview = node.id === topicRoot.id;
 	const filename = isOverview ? "index.html" : `${node.slug}.html`;
 	const pageTitle = isOverview ? topic.title : node.title;
-	const description = isOverview ? topic.summary : `${node.title} — ${topic.title}`;
+	const description = isOverview ? topic.summary : `${node.title}: ${topic.title}`;
 	const seo = {
 		title: pageTitle,
 		description,

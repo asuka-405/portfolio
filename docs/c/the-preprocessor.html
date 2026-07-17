@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="The Preprocessor: C" />
+		<meta name="color-scheme" content="dark light" />
+		<title>The Preprocessor · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/c/the-preprocessor.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="The Preprocessor" />
+		<meta property="og:description" content="The Preprocessor: C" />
+		<meta property="og:url" content="https://archdev.in/docs/c/the-preprocessor.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="The Preprocessor" />
+		<meta name="twitter:description" content="The Preprocessor: C" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../index.html#writing">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<a class="back-link reveal" href="index.html">← C</a>
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C</a>
+				</div>
+				<ul>
+					<li>
+						<a href="memory-model-and-undefined-behavior.html" class="">Memory Model and Undefined Behavior</a>
+					</li>
+					<li>
+						<a href="pointers-and-arrays.html" class="">Pointers and Arrays</a>
+					</li>
+					<li>
+						<a href="integer-promotion-and-overflow.html" class="">Integer Promotion and Overflow</a>
+					</li>
+					<li>
+						<a href="strings-and-buffer-footguns.html" class="">Strings and Buffer Footguns</a>
+					</li>
+					<li>
+						<a href="structs-padding-and-alignment.html" class="">Structs, Padding and Alignment</a>
+					</li>
+					<li>
+						<a href="the-preprocessor.html" class="active">The Preprocessor</a>
+					</li>
+					<li>
+						<a href="build-toolchain-basics.html" class="">Build Toolchain Basics</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-patterns.html" class="">Idiomatic C Patterns</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C</p>
+							<h1>The Preprocessor</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>It runs before the compiler even knows what a type is</h3>
+					<p>Macro expansion is textual substitution. It happens in a pass before parsing, so a macro has no idea what a function, a type, or an expression even is. It's find-and-replace with parameters. Most preprocessor bugs come from forgetting that and treating a macro like a function.</p>
+					<p><strong>Always parenthesize macro arguments, and the whole expansion</strong></p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#define</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> SQUARE</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">x</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) x</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">x</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">SQUARE</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(a </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> b)</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // expands to: a + b*a + b, not (a+b)*(a+b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#define</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> SQUARE_FIXED</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">x</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) ((x) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (x))</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">SQUARE_FIXED</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(a </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> b)</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // expands to: ((a + b) * (a + b)), correct</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>A macro isn't a function: arguments can be evaluated more than once</strong></p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#define</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> MAX</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">a</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">b</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) ((a) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (b) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">?</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (a) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (b))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 5</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, j </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 3</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> m </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> MAX</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(i</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">++</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, j);</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // i++ appears twice in the expansion, i gets incremented TWICE</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>There's no fix that keeps this a macro. This is exactly the class of bug that <code>static inline</code> functions exist to solve in C99+. If you need type-generic behavior a function can't give you, a macro is still the tool, but document loudly that arguments must be side-effect-free.</p>
+					<h3>Header guards and <code>#pragma once</code></h3>
+					<p>Both solve the same problem: a header included twice in one translation unit re-declaring everything and breaking the build. <code>#pragma once</code> is one line, universally supported by every compiler that matters, but not part of the ISO standard. A guard is fully portable but needs a genuinely unique macro name (collision between two headers both named <code>UTILS_H</code> is a real, if rare, bug):</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#ifndef</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> MYLIB_WIDGET_H</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#define</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> MYLIB_WIDGET_H</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// declarations</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#endif</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // MYLIB_WIDGET_H</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>The transitive-include trap</h3>
+					<p>If your <code>.c</code> file uses <code>size_t</code> because some header you included happens to include <code>&lt;stddef.h&gt;</code> itself, your file compiles today and breaks the moment that header's internals change and stop pulling it in, through no change of your own. Include what you use, directly, every time, regardless of what currently happens to work by accident.</p>
+					<h3>X-macros: a pattern you'll meet in real code even if you never write one</h3>
+					<p>An X-macro is a single list, defined once, expanded multiple times against different macro definitions: a compact way to keep an enum and its string names (or any other parallel table) from drifting apart:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#define</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> COLOR_LIST</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> \</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	X</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(RED) </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	X</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(GREEN) </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	X</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(BLUE)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">enum</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> color { </span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#define</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> X</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">name</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) COLOR_##name,</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	COLOR_LIST</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#undef</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> X</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">static</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> const</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> char</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">color_names</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">[]</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> =</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#define</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> X</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">name</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) #name,</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	COLOR_LIST</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">#undef</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> X</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">};</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Add one entry to <code>COLOR_LIST</code> and both the enum and the name table update together. Ugly to read the first time, genuinely useful the moment you have more than one table that has to stay in sync with an enum by hand.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Idiomatic C Patterns: C" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Idiomatic C Patterns · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/c/idiomatic-c-patterns.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Idiomatic C Patterns" />
+		<meta property="og:description" content="Idiomatic C Patterns: C" />
+		<meta property="og:url" content="https://archdev.in/docs/c/idiomatic-c-patterns.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Idiomatic C Patterns" />
+		<meta name="twitter:description" content="Idiomatic C Patterns: C" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../index.html#writing">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page" style="padding-top: clamp(2rem, 5vw, 3.5rem)">
+				<a class="back-link reveal" href="index.html">← C</a>
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 C</a>
+				</div>
+				<ul>
+					<li>
+						<a href="memory-model-and-undefined-behavior.html" class="">Memory Model and Undefined Behavior</a>
+					</li>
+					<li>
+						<a href="pointers-and-arrays.html" class="">Pointers and Arrays</a>
+					</li>
+					<li>
+						<a href="integer-promotion-and-overflow.html" class="">Integer Promotion and Overflow</a>
+					</li>
+					<li>
+						<a href="strings-and-buffer-footguns.html" class="">Strings and Buffer Footguns</a>
+					</li>
+					<li>
+						<a href="structs-padding-and-alignment.html" class="">Structs, Padding and Alignment</a>
+					</li>
+					<li>
+						<a href="the-preprocessor.html" class="">The Preprocessor</a>
+					</li>
+					<li>
+						<a href="build-toolchain-basics.html" class="">Build Toolchain Basics</a>
+					</li>
+					<li>
+						<a href="idiomatic-c-patterns.html" class="active">Idiomatic C Patterns</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">C</p>
+							<h1>Idiomatic C Patterns</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>Error handling without exceptions</h3>
+					<p>C has no exceptions, so the convention is explicit: a return code (0 for success, negative for a specific error, mirroring <code>errno</code>), an explicit enum, or an out-parameter for the actual result while the return value carries success/failure. Whichever you pick, pick one convention per codebase and hold to it. Mixing &quot;0 is success&quot; functions with &quot;0 is failure&quot; functions in the same project is a reliable source of bugs.</p>
+					<p><strong>The goto-cleanup pattern</strong></p>
+					<p><code>goto</code> has exactly one common, genuinely idiomatic use in C: unwinding partially-acquired resources on an error path without duplicating the cleanup code at every possible failure point.</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> process_file</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">const</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> char</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">path</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	FILE </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">f </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> NULL</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	char</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">buf </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> NULL</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> rc </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> -</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	f </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> fopen</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(path, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"r"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">!</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">f) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">goto</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> cleanup;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	buf </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> malloc</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(BUF_SIZE);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">!</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">buf) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">goto</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> cleanup;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">fread</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(buf, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, BUF_SIZE, f) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">==</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">goto</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> cleanup;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	rc </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // success</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">cleanup:</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	free</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(buf);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (f) </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">fclose</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(f);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> rc;</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>One exit point, every resource freed exactly once, no duplicated <code>fclose</code>/<code>free</code> calls scattered across every early-return. This is the pattern RAII and <code>defer</code> exist to replace in other languages. In C, this is the replacement.</p>
+					<h3>Ownership conventions when there's no destructor</h3>
+					<p>Nothing in the language tracks who's responsible for freeing a pointer. That has to be a convention you document and a naming scheme you keep consistent: a function that allocates and returns an owned pointer paired with a <code>_free</code> function for it (<code>widget_new()</code> / <code>widget_free()</code>), and a hard rule: set a pointer to <code>NULL</code> immediately after freeing it, so a stray use is a clean null-pointer-dereference crash instead of a silent use-after-free.</p>
+					<h3>Header/translation-unit hygiene</h3>
+					<ul><li>Headers declare, they don't define. No non-<code>inline</code> function bodies, no non-<code>const</code> global variable definitions, or you'll hit <code>multiple definition</code> the moment two <code>.c</code> files include it.</li><li><code>static</code> at file scope means internal linkage: this name is invisible outside this translation unit. Use it for anything that isn't part of your module's public API.</li><li><code>extern</code> in a header plus exactly one real definition in exactly one <code>.c</code> file is the correct shape for a genuinely shared global.</li></ul>
+					<h3>Designated initializers and compound literals (C99)</h3>
+					<p>Two conveniences that make modern C noticeably more pleasant than the C89 you might be picturing:</p>
+				</div>
+
+<div class="code-block reveal"><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> point p </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> { .x </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, .y </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 2</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> };</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // designated initializer, order-independent, self-documenting</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">void</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> draw</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> point </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">p</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">draw</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">((</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> point){ .x </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, .y </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 2</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> });</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // compound literal, an anonymous struct value, no named variable needed</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>A short checklist before you ship any C</h3>
+					<ul><li>Compile with <code>-Wall -Wextra -Wpedantic</code> and treat every warning as a bug report, not noise to silence.</li><li>Run the test suite under <code>-fsanitize=address,undefined</code> during development. It catches the exact bugs this course is about, while they're still cheap to fix.</li><li>Run a static analyzer (<code>clang --analyze</code>, <code>cppcheck</code>) occasionally, especially before a release.</li><li>Never trust a length or index that came from outside your program without an explicit, checked conversion: that's where the integer-overflow and buffer-overflow sections of this course come from, in practice.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
