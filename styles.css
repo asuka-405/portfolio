@@ -2081,6 +2081,44 @@ html[data-theme="light"] .shiki span {
 	color: var(--shiki-light, var(--text));
 }
 
+/* ————— Live, editable, runnable C++ examples (Compiler Explorer embed) ————— */
+.godbolt-embed {
+	margin: 1.5rem 0;
+	border-radius: var(--radius);
+	background: var(--surface);
+	box-shadow: var(--shadow-code);
+	overflow: hidden;
+}
+.godbolt-embed-head {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.75rem 1rem;
+	font-family: var(--mono);
+}
+.godbolt-embed-open {
+	margin-left: auto;
+	color: var(--muted);
+	text-decoration: none;
+	font-size: 0.78rem;
+	font-family: var(--font);
+	transition: color var(--dur-fast) var(--ease-emph);
+}
+.godbolt-embed-open:hover {
+	color: var(--accent);
+}
+.godbolt-embed-frame {
+	display: block;
+	width: 100%;
+	height: 420px;
+	border: 0;
+	background: var(--canvas);
+}
+.godbolt-embed noscript pre {
+	margin: 0;
+	padding: 1rem;
+}
+
 /* ————— Article search + tag filters (hub/featured pages) ————— */
 .article-search {
 	margin: 1.25rem 0 1rem;

@@ -1,4 +1,6 @@
 import { codeToHtml } from "shiki";
+import { escapeHtml } from "../lib/html.mjs";
+import { buildGodboltEmbedUrl } from "./godbolt-embed.mjs";
 
 const LANG_ALIASES = {
 	"plain text": "text",
@@ -55,6 +57,26 @@ export async function renderCodeBlock(code, notionLanguage) {
 		`<div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span>` +
 		`<span class="code-lang">${langLabel(lang)}</span></div>` +
 		html +
+		`</div>`
+	);
+}
+
+/** Sentinel: a C/C++ Notion code block whose first line is exactly this comment renders as
+ * a live, editable, runnable Compiler Explorer embed instead of a static highlighted block. */
+export const GODBOLT_RUN_MARKER = "// godbolt-run";
+
+/** Renders a runnable C++ example: an embedded Compiler Explorer iframe (editable source +
+ * execute/output pane), with a static highlighted fallback link for no-JS/print contexts.
+ * `options` overrides the default compiler flags (e.g. to target a specific -std=). */
+export function renderGodboltEmbed(source, options) {
+	const embedUrl = buildGodboltEmbedUrl(options ? { source, options } : { source });
+	return (
+		`<div class="godbolt-embed reveal">` +
+		`<div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span>` +
+		`<span class="code-lang">c++ · live, editable, runnable</span>` +
+		`<a class="godbolt-embed-open" href="${embedUrl}" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div>` +
+		`<iframe class="godbolt-embed-frame" src="${embedUrl}" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe>` +
+		`<noscript><pre>${escapeHtml(source)}</pre></noscript>` +
 		`</div>`
 	);
 }
