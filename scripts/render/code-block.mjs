@@ -74,7 +74,8 @@ export function renderGodboltEmbed(source, options) {
 		`<div class="godbolt-embed reveal">` +
 		`<div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span>` +
 		`<span class="code-lang">c++ · live, editable, runnable</span>` +
-		`<a class="godbolt-embed-open" href="${embedUrl}" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a></div>` +
+		`<a class="godbolt-embed-open" href="${embedUrl}" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a>` +
+		`<button type="button" class="godbolt-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div>` +
 		`<iframe class="godbolt-embed-frame" src="${embedUrl}" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe>` +
 		`<noscript><pre>${escapeHtml(source)}</pre></noscript>` +
 		`</div>`

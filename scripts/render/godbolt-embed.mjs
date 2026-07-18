@@ -24,11 +24,14 @@ function ceEncode(value) {
 
 // Real, confirmed-working template (see file header). Placeholders: __SOURCE__,
 // __COMPILER__, __OPTIONS__, __EXEC_ARGS__, __EXEC_STDIN__, __EDITOR_TITLE__.
+// `wrap:'1'` on the codeEditor pane mirrors the field already present (and confirmed
+// meaningful, via CE's own "getCurrentState().wrap" usage) on the executor pane below,
+// requesting word-wrap on for the source editor by default.
 const TEMPLATE =
 	"g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B," +
 	"selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1," +
 	"selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1)," +
-	"source:'__SOURCE__'),l:'5',n:'0',o:'__EDITOR_TITLE__',t:'0'))," +
+	"source:'__SOURCE__',wrap:'1'),l:'5',n:'0',o:'__EDITOR_TITLE__',t:'0'))," +
 	"k:50,l:'4',n:'0',o:'',s:0,t:'0')," +
 	"(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:__COMPILER__," +
 	"compilerOutShown:'0',execArgs:'__EXEC_ARGS__',execStdin:'__EXEC_STDIN__',fontScale:14," +
@@ -60,5 +63,10 @@ export function buildGodboltEmbedUrl({
 		.replace("__EXEC_STDIN__", ceEncode(execStdin))
 		.replace("__EDITOR_TITLE__", ceEncode(title));
 
-	return `https://godbolt.org/e#${hash}`;
+	// hideEditorToolbars: a real, confirmed embed option (found in Compiler Explorer's own
+	// bundle as `options.hideEditorToolbars`) that removes CE's own per-pane toolbar chrome,
+	// which is most of what would otherwise clash with this site's own theme. CE's overall
+	// color scheme itself is a local-storage setting on godbolt.org's own origin with no
+	// documented URL override, so it can't be forced to match the site's light/dark toggle.
+	return `https://godbolt.org/e?hideEditorToolbars=true#${hash}`;
 }
