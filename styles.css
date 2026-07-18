@@ -2081,15 +2081,17 @@ html[data-theme="light"] .shiki span {
 	color: var(--shiki-light, var(--text));
 }
 
-/* ————— Live, editable, runnable C++ examples (Compiler Explorer embed) ————— */
-.godbolt-embed {
+/* ————— Live, editable, runnable code examples (Compiler Explorer for C++, OneCompiler for Go) ————— */
+.godbolt-embed,
+.onecompiler-embed {
 	margin: 1.5rem 0;
 	border-radius: var(--radius);
 	background: var(--surface);
 	box-shadow: var(--shadow-code);
 	overflow: hidden;
 }
-.godbolt-embed-head {
+.godbolt-embed-head,
+.onecompiler-embed-head {
 	display: flex;
 	align-items: center;
 	gap: 0.6rem;
@@ -2107,12 +2109,14 @@ html[data-theme="light"] .shiki span {
 .godbolt-embed-open:hover {
 	color: var(--accent);
 }
-.godbolt-embed-fullscreen {
+.godbolt-embed-fullscreen,
+.onecompiler-embed-fullscreen {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	width: 1.6rem;
 	height: 1.6rem;
+	margin-left: auto;
 	border: 0;
 	border-radius: var(--radius-sm);
 	background: transparent;
@@ -2122,20 +2126,33 @@ html[data-theme="light"] .shiki span {
 	cursor: pointer;
 	transition: color var(--dur-fast) var(--ease-emph), background var(--dur-fast) var(--ease-emph);
 }
-.godbolt-embed-fullscreen:hover {
+.godbolt-embed-head .godbolt-embed-fullscreen {
+	margin-left: 0; /* .godbolt-embed-open already carries the margin-left:auto push */
+}
+.godbolt-embed-fullscreen:hover,
+.onecompiler-embed-fullscreen:hover {
 	color: var(--accent);
 	background: var(--accent-soft);
 }
-.godbolt-embed-frame {
+.godbolt-embed-frame,
+.onecompiler-embed-frame {
 	display: block;
 	width: 100%;
-	height: 420px;
 	border: 0;
 	background: var(--canvas);
 }
+.godbolt-embed-frame {
+	height: 420px;
+}
+.onecompiler-embed-frame {
+	height: 520px;
+}
 .godbolt-embed.is-fullscreen,
 .godbolt-embed:fullscreen,
-.godbolt-embed:-webkit-full-screen {
+.godbolt-embed:-webkit-full-screen,
+.onecompiler-embed.is-fullscreen,
+.onecompiler-embed:fullscreen,
+.onecompiler-embed:-webkit-full-screen {
 	display: flex;
 	flex-direction: column;
 	width: 100vw;
@@ -2145,7 +2162,10 @@ html[data-theme="light"] .shiki span {
 }
 .godbolt-embed.is-fullscreen .godbolt-embed-frame,
 .godbolt-embed:fullscreen .godbolt-embed-frame,
-.godbolt-embed:-webkit-full-screen .godbolt-embed-frame {
+.godbolt-embed:-webkit-full-screen .godbolt-embed-frame,
+.onecompiler-embed.is-fullscreen .onecompiler-embed-frame,
+.onecompiler-embed:fullscreen .onecompiler-embed-frame,
+.onecompiler-embed:-webkit-full-screen .onecompiler-embed-frame {
 	flex: 1 1 auto;
 	width: 100%;
 	height: auto;
@@ -2153,8 +2173,15 @@ html[data-theme="light"] .shiki span {
 }
 .godbolt-embed.is-fullscreen .godbolt-embed-head,
 .godbolt-embed:fullscreen .godbolt-embed-head,
-.godbolt-embed:-webkit-full-screen .godbolt-embed-head {
+.godbolt-embed:-webkit-full-screen .godbolt-embed-head,
+.onecompiler-embed.is-fullscreen .onecompiler-embed-head,
+.onecompiler-embed:fullscreen .onecompiler-embed-head,
+.onecompiler-embed:-webkit-full-screen .onecompiler-embed-head {
 	flex: 0 0 auto;
+}
+.onecompiler-embed noscript pre {
+	margin: 0;
+	padding: 1rem;
 }
 .godbolt-embed noscript pre {
 	margin: 0;
