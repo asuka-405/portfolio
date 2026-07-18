@@ -22,3 +22,24 @@
 		if (e.key === "Escape") setOpen(false);
 	});
 })();
+
+// Fullscreen toggle for embedded live C++ examples.
+(function () {
+	document.querySelectorAll(".godbolt-embed-fullscreen").forEach(function (btn) {
+		btn.addEventListener("click", function () {
+			var wrap = btn.closest(".godbolt-embed");
+			if (!wrap) return;
+			if (document.fullscreenElement === wrap) {
+				document.exitFullscreen();
+			} else if (wrap.requestFullscreen) {
+				wrap.requestFullscreen();
+			}
+		});
+	});
+
+	document.addEventListener("fullscreenchange", function () {
+		document.querySelectorAll(".godbolt-embed").forEach(function (wrap) {
+			wrap.classList.toggle("is-fullscreen", document.fullscreenElement === wrap);
+		});
+	});
+})();
