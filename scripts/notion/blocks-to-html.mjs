@@ -1,6 +1,12 @@
 import { richTextToHtml, richTextToPlain } from "../lib/html.mjs";
 import { downloadArticleImage } from "./download-images.mjs";
-import { renderCodeBlock, renderGodboltEmbed, GODBOLT_RUN_MARKER } from "../render/code-block.mjs";
+import {
+	renderCodeBlock,
+	renderGodboltEmbed,
+	GODBOLT_RUN_MARKER,
+	renderOneCompilerEmbed,
+	ONECOMPILER_RUN_MARKER,
+} from "../render/code-block.mjs";
 
 export async function fetchChildren(client, blockId) {
 	const results = [];
@@ -161,6 +167,13 @@ export async function renderSectionBody(
 					const rest = firstNewline === -1 ? "" : trimmed.slice(firstNewline + 1);
 					const optionsOverride = firstLine.slice(GODBOLT_RUN_MARKER.length).trim();
 					output.push(renderGodboltEmbed(rest, optionsOverride || undefined));
+				} else if (lang === "go" && code.trimStart().startsWith(ONECOMPILER_RUN_MARKER)) {
+					// Convention: a Go code block whose first line is the ONECOMPILER_RUN_MARKER
+					// sentinel comment renders as an embedded, editable, runnable OneCompiler
+					// iframe instead of a static highlighted block, mirroring the C++/godbolt
+					// convention above.
+					const source = code.trimStart().slice(ONECOMPILER_RUN_MARKER.length).replace(/^\r?\n/, "");
+					output.push(renderOneCompilerEmbed(source));
 				} else {
 					const html = await renderCodeBlock(code, block.code.language);
 					output.push(html);

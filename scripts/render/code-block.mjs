@@ -1,6 +1,7 @@
 import { codeToHtml } from "shiki";
 import { escapeHtml } from "../lib/html.mjs";
 import { buildGodboltEmbedUrl } from "./godbolt-embed.mjs";
+import { buildOneCompilerEmbedUrl } from "./onecompiler-embed.mjs";
 
 const LANG_ALIASES = {
 	"plain text": "text",
@@ -77,6 +78,28 @@ export function renderGodboltEmbed(source, options) {
 		`<a class="godbolt-embed-open" href="${embedUrl}" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a>` +
 		`<button type="button" class="godbolt-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div>` +
 		`<iframe class="godbolt-embed-frame" src="${embedUrl}" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe>` +
+		`<noscript><pre>${escapeHtml(source)}</pre></noscript>` +
+		`</div>`
+	);
+}
+
+/** Sentinel: a Go Notion code block whose first line is exactly this comment renders as a
+ * live, editable, runnable OneCompiler embed instead of a static highlighted block. */
+export const ONECOMPILER_RUN_MARKER = "// onecompiler-run";
+
+/** Renders a runnable Go example: an embedded OneCompiler iframe (editable source + run
+ * button + output), source delivered via postMessage after load (wired in docs/docs.js),
+ * not baked into the URL, so the iframe stays reusable across theme toggles. Real theme
+ * sync (unlike the Compiler Explorer/C++ embed) since OneCompiler exposes theme=dark|light
+ * as a documented, working query parameter. */
+export function renderOneCompilerEmbed(source) {
+	const embedUrl = buildOneCompilerEmbedUrl({ theme: "dark" });
+	return (
+		`<div class="onecompiler-embed reveal" data-oc-source="${escapeHtml(source)}">` +
+		`<div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span>` +
+		`<span class="code-lang">go · live, editable, runnable</span>` +
+		`<button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div>` +
+		`<iframe class="onecompiler-embed-frame" src="${embedUrl}" loading="lazy" title="Editable Go example on OneCompiler"></iframe>` +
 		`<noscript><pre>${escapeHtml(source)}</pre></noscript>` +
 		`</div>`
 	);
