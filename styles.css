@@ -2138,13 +2138,23 @@ html[data-theme="light"] .shiki span {
 .godbolt-embed:-webkit-full-screen {
 	display: flex;
 	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
 	border-radius: 0;
 }
 .godbolt-embed.is-fullscreen .godbolt-embed-frame,
 .godbolt-embed:fullscreen .godbolt-embed-frame,
 .godbolt-embed:-webkit-full-screen .godbolt-embed-frame {
-	flex: 1;
+	flex: 1 1 auto;
+	width: 100%;
 	height: auto;
+	min-height: 0;
+}
+.godbolt-embed.is-fullscreen .godbolt-embed-head,
+.godbolt-embed:fullscreen .godbolt-embed-head,
+.godbolt-embed:-webkit-full-screen .godbolt-embed-head {
+	flex: 0 0 auto;
 }
 .godbolt-embed noscript pre {
 	margin: 0;
