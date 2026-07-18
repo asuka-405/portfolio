@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Concurrency Patterns: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Concurrency Patterns · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/concurrency-patterns.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Concurrency Patterns" />
+		<meta property="og:description" content="Concurrency Patterns: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/concurrency-patterns.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Concurrency Patterns" />
+		<meta name="twitter:description" content="Concurrency Patterns: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="active">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Concurrency Patterns</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Goroutines and channels are primitives. This chapter is the handful of patterns built from those primitives that show up constantly in real Go code: running a fixed pool of workers, combining several producers into one stream, and cleanly cancelling work that's no longer needed.</p>
+					<h3>Worker pools</h3>
+					<p>A worker pool runs a fixed, bounded number of goroutines pulling jobs off a shared channel, instead of spawning one goroutine per job (which, under enough load, is exactly the unbounded-goroutine risk flagged in the previous chapter).</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+func worker(id int, jobs &lt;-chan int, results chan&lt;- int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for j := range jobs {
+		results &lt;- j * j // pretend this is expensive work
+	}
+	_ = id
+}
+
+func main() {
+	const numWorkers = 3
+	jobs := make(chan int, 10)
+	results := make(chan int, 10)
+	var wg sync.WaitGroup
+
+	for w := 1; w &lt;= numWorkers; w++ {
+		wg.Add(1)
+		go worker(w, jobs, results, &amp;wg)
+	}
+
+	for j := 1; j &lt;= 5; j++ {
+		jobs &lt;- j
+	}
+	close(jobs) // no more jobs coming, workers finish their range loop and exit
+
+	wg.Wait()
+	close(results)
+
+	total := 0
+	for r := range results {
+		total += r
+	}
+	fmt.Println(&quot;sum of squares:&quot;, total)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+func worker(id int, jobs &lt;-chan int, results chan&lt;- int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for j := range jobs {
+		results &lt;- j * j // pretend this is expensive work
+	}
+	_ = id
+}
+
+func main() {
+	const numWorkers = 3
+	jobs := make(chan int, 10)
+	results := make(chan int, 10)
+	var wg sync.WaitGroup
+
+	for w := 1; w &lt;= numWorkers; w++ {
+		wg.Add(1)
+		go worker(w, jobs, results, &amp;wg)
+	}
+
+	for j := 1; j &lt;= 5; j++ {
+		jobs &lt;- j
+	}
+	close(jobs) // no more jobs coming, workers finish their range loop and exit
+
+	wg.Wait()
+	close(results)
+
+	total := 0
+	for r := range results {
+		total += r
+	}
+	fmt.Println(&quot;sum of squares:&quot;, total)
+}</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Notice the channel directions in the signature: jobs &lt;-chan int means worker can only receive from jobs, results chan&lt;- int means it can only send to results. The compiler enforces this, a worker literally cannot accidentally send on jobs or receive from results, it's a real, checked contract, not just a naming convention.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Fan-in / fan-out</h3>
+					<p>Fan-out is starting multiple goroutines to process work in parallel from a shared source. Fan-in is merging multiple result channels back into a single channel. The worker pool above is fan-out; here's the fan-in half, standalone, combining two independent producers into one stream.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+func producer(id int, out chan&lt;- string, wg *sync.WaitGroup) {
+	defer wg.Done()
+	out &lt;- fmt.Sprintf(&quot;message from producer %d&quot;, id)
+}
+
+func fanIn(sources ...chan string) chan string {
+	merged := make(chan string)
+	var wg sync.WaitGroup
+	for _, s := range sources {
+		wg.Add(1)
+		go func(c chan string) {
+			defer wg.Done()
+			for msg := range c {
+				merged &lt;- msg
+			}
+		}(s)
+	}
+	go func() {
+		wg.Wait()
+		close(merged)
+	}()
+	return merged
+}
+
+func main() {
+	c1 := make(chan string)
+	c2 := make(chan string)
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go producer(1, c1, &amp;wg)
+	go producer(2, c2, &amp;wg)
+	go func() { wg.Wait(); close(c1); close(c2) }()
+
+	for msg := range fanIn(c1, c2) {
+		fmt.Println(msg)
+	}
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+func producer(id int, out chan&lt;- string, wg *sync.WaitGroup) {
+	defer wg.Done()
+	out &lt;- fmt.Sprintf(&quot;message from producer %d&quot;, id)
+}
+
+func fanIn(sources ...chan string) chan string {
+	merged := make(chan string)
+	var wg sync.WaitGroup
+	for _, s := range sources {
+		wg.Add(1)
+		go func(c chan string) {
+			defer wg.Done()
+			for msg := range c {
+				merged &lt;- msg
+			}
+		}(s)
+	}
+	go func() {
+		wg.Wait()
+		close(merged)
+	}()
+	return merged
+}
+
+func main() {
+	c1 := make(chan string)
+	c2 := make(chan string)
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go producer(1, c1, &amp;wg)
+	go producer(2, c2, &amp;wg)
+	go func() { wg.Wait(); close(c1); close(c2) }()
+
+	for msg := range fanIn(c1, c2) {
+		fmt.Println(msg)
+	}
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>context.Context for cancellation</h3>
+					<p>`context.Context` is the idiomatic way to propagate &quot;stop now&quot; (or &quot;stop after this deadline&quot;) through a call chain, especially one that spans goroutines. A function that does long-running or blocking work should accept a `Context` as its first parameter and check it periodically, so a caller further up the chain can cancel everything below it with one call.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;context&quot;
+	&quot;fmt&quot;
+	&quot;time&quot;
+)
+
+func doWork(ctx context.Context) {
+	for i := 0; ; i++ {
+		select {
+		case &lt;-ctx.Done():
+			fmt.Println(&quot;cancelled:&quot;, ctx.Err())
+			return
+		default:
+			time.Sleep(20 * time.Millisecond)
+			fmt.Println(&quot;working, step&quot;, i)
+			if i &gt;= 10 {
+				return // safety net for this demo
+			}
+		}
+	}
+}
+
+func main() {
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+	defer cancel()
+
+	doWork(ctx)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;context&quot;
+	&quot;fmt&quot;
+	&quot;time&quot;
+)
+
+func doWork(ctx context.Context) {
+	for i := 0; ; i++ {
+		select {
+		case &lt;-ctx.Done():
+			fmt.Println(&quot;cancelled:&quot;, ctx.Err())
+			return
+		default:
+			time.Sleep(20 * time.Millisecond)
+			fmt.Println(&quot;working, step&quot;, i)
+			if i &gt;= 10 {
+				return // safety net for this demo
+			}
+		}
+	}
+}
+
+func main() {
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+	defer cancel()
+
+	doWork(ctx)
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>`context.WithTimeout` (and its sibling `context.WithCancel`) returns both a context and a cancel function. Calling `cancel()`, or letting the timeout elapse, closes the context's internal Done channel, which every goroutine watching that context sees immediately via `&lt;-ctx.Done()`. This is how you cancel an entire tree of goroutines with a single function call, rather than manually threading a stop signal through every layer yourself.</p>
+					<h3>sync.WaitGroup</h3>
+					<p>A `WaitGroup` is a counter: `Add(n)` increments it by `n`, `Done()` decrements it by one (almost always called via `defer` right at the top of the goroutine), and `Wait()` blocks until it hits zero. It's the standard way to wait for a known, fixed number of goroutines to finish, seen already in both examples above.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">var</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> wg </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sync</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">WaitGroup</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">wg.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Add</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)          </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// one goroutine to wait for</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">go</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> func</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">() {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	defer</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> wg.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Done</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">() </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// always defer this, right after starting the goroutine's real work</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">	// ... do work ...</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}()</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">wg.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Wait</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">()          </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// blocks until Done() has been called once per Add()</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>Picking the right tool</strong></p>
+					<p>Worker pools bound concurrency for a stream of independent jobs. Fan-in/fan-out combine or split streams of work. WaitGroup answers &quot;wait for these N things to finish&quot;. Context answers &quot;stop everything if the caller no longer wants the result&quot;, which frequently gets combined with a WaitGroup: context cancels the work, WaitGroup confirms every goroutine actually noticed and exited.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

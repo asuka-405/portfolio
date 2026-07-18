@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Composition Over Inheritance: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Composition Over Inheritance · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/composition-over-inheritance.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Composition Over Inheritance" />
+		<meta property="og:description" content="Composition Over Inheritance: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/composition-over-inheritance.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Composition Over Inheritance" />
+		<meta name="twitter:description" content="Composition Over Inheritance: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="active">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Composition Over Inheritance</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Go has no `class` keyword, no `extends`, no `super`. This is a deliberate design choice, not a missing feature, and fighting it by trying to recreate inheritance with embedding tends to produce worse Go code than just designing around composition and interfaces from the start.</p>
+					<h3>Why Go left inheritance out</h3>
+					<p>Classic inheritance couples a type to its entire ancestor chain. Change a method on a base class, and every subclass three levels down might silently behave differently. Go's designers considered this a long-term liability for large codebases, and replaced it with two independent, more composable tools: embedding (for reusing implementation) and interfaces (for substitutability). The two together cover most of what inheritance is used for, without the coupling.</p>
+					<h3>The inheritance-shaped problem</h3>
+					<p>Say you're modeling shapes, and you want every shape to support an `Area()` method, with some shared logic for logging or comparison. In an inheritance-based language, the instinct is a base `Shape` class with `Area()` as a virtual method, and `Circle`/`Rectangle` subclasses overriding it.</p>
+					<p><strong>The Go way: interface for the contract, no shared base type at all</strong></p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math&quot;
+)
+
+type Shape interface {
+	Area() float64
+}
+
+type Circle struct {
+	Radius float64
+}
+
+func (c Circle) Area() float64 {
+	return math.Pi * c.Radius * c.Radius
+}
+
+type Rectangle struct {
+	Width, Height float64
+}
+
+func (r Rectangle) Area() float64 {
+	return r.Width * r.Height
+}
+
+func totalArea(shapes []Shape) float64 {
+	total := 0.0
+	for _, s := range shapes {
+		total += s.Area()
+	}
+	return total
+}
+
+func main() {
+	shapes := []Shape{
+		Circle{Radius: 2},
+		Rectangle{Width: 3, Height: 4},
+	}
+	fmt.Printf(&quot;%.2f\n&quot;, totalArea(shapes))
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math&quot;
+)
+
+type Shape interface {
+	Area() float64
+}
+
+type Circle struct {
+	Radius float64
+}
+
+func (c Circle) Area() float64 {
+	return math.Pi * c.Radius * c.Radius
+}
+
+type Rectangle struct {
+	Width, Height float64
+}
+
+func (r Rectangle) Area() float64 {
+	return r.Width * r.Height
+}
+
+func totalArea(shapes []Shape) float64 {
+	total := 0.0
+	for _, s := range shapes {
+		total += s.Area()
+	}
+	return total
+}
+
+func main() {
+	shapes := []Shape{
+		Circle{Radius: 2},
+		Rectangle{Width: 3, Height: 4},
+	}
+	fmt.Printf(&quot;%.2f\n&quot;, totalArea(shapes))
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>No base class exists anywhere. `Circle` and `Rectangle` share nothing but the fact that both happen to have an `Area()` method, and that's entirely sufficient for `totalArea` to treat them uniformly through the `Shape` interface.</p>
+					<h3>When you do want shared implementation: embedding</h3>
+					<p>Sometimes you genuinely want to share behavior, not just a contract, say several shapes should all log the same way when their area is computed. That's when embedding earns its keep: it reuses an implementation without pretending there's an is-a relationship.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Logger struct {
+	Prefix string
+}
+
+func (l Logger) Log(msg string) {
+	fmt.Println(l.Prefix+&quot;:&quot;, msg)
+}
+
+type Circle struct {
+	Logger  // embedded: Circle gets Log() for free, but Circle is not a kind of Logger
+	Radius float64
+}
+
+func main() {
+	c := Circle{Logger: Logger{Prefix: &quot;circle&quot;}, Radius: 2}
+	c.Log(&quot;computing area&quot;) // promoted method, reads naturally
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Logger struct {
+	Prefix string
+}
+
+func (l Logger) Log(msg string) {
+	fmt.Println(l.Prefix+&quot;:&quot;, msg)
+}
+
+type Circle struct {
+	Logger  // embedded: Circle gets Log() for free, but Circle is not a kind of Logger
+	Radius float64
+}
+
+func main() {
+	c := Circle{Logger: Logger{Prefix: &quot;circle&quot;}, Radius: 2}
+	c.Log(&quot;computing area&quot;) // promoted method, reads naturally
+}</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>The tell that separates this from real inheritance: nothing anywhere treats a Circle as substitutable for a Logger. There's no function signature anywhere that says &quot;takes a Logger&quot; and would silently also accept a Circle just because it embeds one. Embedding only promotes fields and methods, it grants zero polymorphism.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Putting both together</h3>
+					<p>The idiomatic pattern is almost always: interfaces define what a type can do (for callers who only care about behavior), embedding shares how a type does part of its work (for types that want to reuse an implementation), and the two rarely need to touch. A type can embed a helper struct for shared plumbing and independently satisfy any number of unrelated interfaces based purely on its method set.</p>
+					<p><strong>A checklist for the instinct to reach for inheritance</strong></p>
+					<ul><li>Do you actually need substitutability (treating several concrete types the same way through one abstraction)? That's an interface, full stop, not embedding.</li><li>Do you just want to avoid retyping the same three methods on five structs? That's embedding a shared helper struct, and it's fine, just don't expect it to grant any polymorphism.</li><li>Are you modeling a hierarchy because the domain genuinely has one (a Manager 'is a kind of' Employee, say)? Consider whether composition (Employee has a Manager field, or a Role interface) models it just as well without the coupling. Usually it does.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

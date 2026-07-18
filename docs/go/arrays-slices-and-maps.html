@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Arrays, Slices, and Maps: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Arrays, Slices, and Maps · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/arrays-slices-and-maps.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Arrays, Slices, and Maps" />
+		<meta property="og:description" content="Arrays, Slices, and Maps: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/arrays-slices-and-maps.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Arrays, Slices, and Maps" />
+		<meta name="twitter:description" content="Arrays, Slices, and Maps: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="active">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Arrays, Slices, and Maps</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>These three are where most of Go's genuinely surprising behavior lives, and getting a real mental model of how slices work under the hood pays off constantly.</p>
+					<p><strong>Arrays: fixed size, value semantics</strong></p>
+					<p>An array's length is part of its type: <code>[3]int</code> and <code>[5]int</code> are different types, incompatible with each other. Arrays are value types, assigning one array to another copies every element. Because of this, you'll rarely see raw arrays in idiomatic Go code outside of a few specific cases (fixed-size buffers, cryptographic hash outputs); slices do almost everything arrays do, more flexibly.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	a := [3]int{1, 2, 3}
+	b := a // this COPIES the whole array
+	b[0] = 99
+	fmt.Println(a, b) // a is unchanged
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	a := [3]int{1, 2, 3}
+	b := a // this COPIES the whole array
+	b[0] = 99
+	fmt.Println(a, b) // a is unchanged
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>Slices: the real workhorse</strong></p>
+					<p>A slice is a small struct under the hood: a pointer to an underlying array, a length, and a capacity. Slicing an existing slice or array doesn't copy data, it creates a new slice header pointing into the same backing array. This is the source of most slice surprises.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	original := []int{1, 2, 3, 4, 5}
+	sub := original[1:3] // shares original's backing array
+	sub[0] = 99
+	fmt.Println(original) // original[1] changed too: [1 99 3 4 5]
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	original := []int{1, 2, 3, 4, 5}
+	sub := original[1:3] // shares original's backing array
+	sub[0] = 99
+	fmt.Println(original) // original[1] changed too: [1 99 3 4 5]
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>append and the reallocation gotcha</strong></p>
+					<p><code>append</code> grows a slice, but whether it reuses the existing backing array or allocates a new one depends on whether there's spare capacity. If capacity is exhausted, <code>append</code> allocates a new, larger backing array and copies everything over, meaning the returned slice is now backed by different memory than the one you passed in. This is exactly why you always reassign the result of <code>append</code>, <code>s = append(s, x)</code>, never just call it and ignore the return value.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	a := make([]int, 3, 3) // len 3, cap 3: no spare room
+	b := append(a, 4)      // capacity exhausted, so append allocates a NEW array
+	b[0] = 99
+	fmt.Println(a, b) // a is untouched: [0 0 0] [99 0 0 4]
+
+	c := make([]int, 3, 5) // len 3, cap 5: spare room
+	d := append(c, 4)      // reuses the SAME backing array
+	d[0] = 99
+	fmt.Println(c, d) // a shares memory with d: [99 0 0] [99 0 0 4]
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	a := make([]int, 3, 3) // len 3, cap 3: no spare room
+	b := append(a, 4)      // capacity exhausted, so append allocates a NEW array
+	b[0] = 99
+	fmt.Println(a, b) // a is untouched: [0 0 0] [99 0 0 4]
+
+	c := make([]int, 3, 5) // len 3, cap 5: spare room
+	d := append(c, 4)      // reuses the SAME backing array
+	d[0] = 99
+	fmt.Println(c, d) // a shares memory with d: [99 0 0] [99 0 0 4]
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>This is the single most common source of &quot;why did modifying this slice change a completely different variable&quot; bugs in Go. The rule to hold onto: two slices sharing a backing array is invisible from the outside, you can't tell just by looking at a variable's declaration whether it aliases another one's memory.</p>
+				</div>
+
+<div class="prose reveal">
+					<p><strong>Maps</strong></p>
+					<p><code>map[K]V</code> is Go's hash map. Reading a missing key returns the value type's zero value, not an error, so you need the comma-ok idiom to distinguish &quot;key absent&quot; from &quot;key present with a zero value&quot;. A nil map (the zero value of a map type) can be read from safely, but writing to it panics.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	ages := map[string]int{&quot;alice&quot;: 30, &quot;bob&quot;: 25}
+
+	age, ok := ages[&quot;carol&quot;]
+	fmt.Println(age, ok) // 0 false: carol isn't in the map
+
+	var nilMap map[string]int
+	fmt.Println(nilMap[&quot;x&quot;]) // reading a nil map is fine: prints 0
+	// nilMap[&quot;x&quot;] = 1        // writing to a nil map panics
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	ages := map[string]int{&quot;alice&quot;: 30, &quot;bob&quot;: 25}
+
+	age, ok := ages[&quot;carol&quot;]
+	fmt.Println(age, ok) // 0 false: carol isn't in the map
+
+	var nilMap map[string]int
+	fmt.Println(nilMap[&quot;x&quot;]) // reading a nil map is fine: prints 0
+	// nilMap[&quot;x&quot;] = 1        // writing to a nil map panics
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Map iteration order in Go is deliberately randomized between runs, on purpose, specifically so nobody accidentally depends on an order that was never guaranteed. If you need a stable order, sort the keys yourself.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: change the append example's <code>make([]int, 3, 5)</code> to <code>make([]int, 3, 3)</code> and predict whether a and d will still share memory before you run it.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

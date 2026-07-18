@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Structs and Methods: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Structs and Methods · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/structs-and-methods.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Structs and Methods" />
+		<meta property="og:description" content="Structs and Methods: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/structs-and-methods.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Structs and Methods" />
+		<meta name="twitter:description" content="Structs and Methods: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="active">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Structs and Methods</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>A struct is a typed collection of fields. It's Go's only real way to group related data together, and once you add methods to it, it becomes the closest thing Go has to a class, minus the inheritance.</p>
+					<h3>Declaring and initializing structs</h3>
+					<p>A struct type lists its fields with names and types. You can build a value three ways: a positional literal (fragile, breaks if field order changes), a named-field literal (the one you should default to), or a zero-value declaration where every field gets its type's zero value.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Point struct {
+	X, Y int
+}
+
+func main() {
+	a := Point{3, 4}       // positional: fragile, avoid outside tiny local types
+	b := Point{X: 3, Y: 4}  // named-field: what you should reach for
+	var c Point             // zero value: X and Y are both 0
+
+	fmt.Println(a, b, c)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Point struct {
+	X, Y int
+}
+
+func main() {
+	a := Point{3, 4}       // positional: fragile, avoid outside tiny local types
+	b := Point{X: 3, Y: 4}  // named-field: what you should reach for
+	var c Point             // zero value: X and Y are both 0
+
+	fmt.Println(a, b, c)
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Named-field literals also let you skip fields you don't care about, they just take the zero value. That alone is a good reason to prefer them once a struct has more than two or three fields.</p>
+					<h3>Value receivers vs pointer receivers</h3>
+					<p>Methods in Go are just functions with an extra receiver argument bolted on before the name. The receiver can be a value or a pointer, and the choice matters more than it looks like it should.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">p </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Point</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Scaled</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">factor</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Point</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> { </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// value receiver: operates on a copy</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Point</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{p.X </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> factor, p.Y </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> factor}</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">p </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Point</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Scale</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">factor</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) { </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// pointer receiver: mutates the real thing</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	p.X </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> factor</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	p.Y </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> factor</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>A value receiver method gets a copy of the struct. If it mutates that copy, the mutation vanishes the moment the method returns, the caller's original value is untouched. This is the single most common &quot;why isn't my struct changing&quot; bug in beginner Go code.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Counter struct {
+	n int
+}
+
+func (c Counter) BrokenIncrement() { // value receiver, mutates a copy
+	c.n++
+}
+
+func (c *Counter) Increment() { // pointer receiver, mutates the real struct
+	c.n++
+}
+
+func main() {
+	c := Counter{}
+	c.BrokenIncrement()
+	fmt.Println(&quot;after BrokenIncrement:&quot;, c.n) // still 0
+
+	c.Increment()
+	fmt.Println(&quot;after Increment:&quot;, c.n) // 1
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Counter struct {
+	n int
+}
+
+func (c Counter) BrokenIncrement() { // value receiver, mutates a copy
+	c.n++
+}
+
+func (c *Counter) Increment() { // pointer receiver, mutates the real struct
+	c.n++
+}
+
+func main() {
+	c := Counter{}
+	c.BrokenIncrement()
+	fmt.Println(&quot;after BrokenIncrement:&quot;, c.n) // still 0
+
+	c.Increment()
+	fmt.Println(&quot;after Increment:&quot;, c.n) // 1
+}</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Go automatically takes the address for you when you call a pointer-receiver method on an addressable value, that's why `c.Increment()` above works even though `c` isn't literally `&amp;c`. It only fails if `c` isn't addressable, like a map value or the result of a function call.</p>
+				</div>
+
+<div class="prose reveal">
+					<p><strong>The rule of thumb</strong></p>
+					<ul><li>If any method on the type needs a pointer receiver (because it mutates), make every method on that type use a pointer receiver, for consistency.</li><li>If the struct is small (a couple of machine words, like Point above) and never mutated, value receivers are fine and slightly cheaper to reason about.</li><li>If the struct is large or you're not sure, default to a pointer receiver. Copying a big struct on every method call is wasted work for no benefit.</li></ul>
+					<h3>Struct embedding</h3>
+					<p>Go doesn't have inheritance, but it has embedding, and the two get confused constantly because the syntax looks similar to what other languages use for &quot;extends&quot;. Embedding is composition with some syntax sugar: the outer struct gets direct access to the embedded struct's fields and methods, as if they were promoted up a level.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Animal struct {
+	Name string
+}
+
+func (a Animal) Describe() string {
+	return a.Name + &quot; is an animal&quot;
+}
+
+type Dog struct {
+	Animal // embedded, no field name, just the type
+	Breed  string
+}
+
+func main() {
+	d := Dog{Animal: Animal{Name: &quot;Rex&quot;}, Breed: &quot;Labrador&quot;}
+
+	fmt.Println(d.Name)      // promoted field, reads as if Dog had a Name field directly
+	fmt.Println(d.Describe()) // promoted method
+	fmt.Println(d.Animal.Name) // the underlying struct is still there if you need it explicitly
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Animal struct {
+	Name string
+}
+
+func (a Animal) Describe() string {
+	return a.Name + &quot; is an animal&quot;
+}
+
+type Dog struct {
+	Animal // embedded, no field name, just the type
+	Breed  string
+}
+
+func main() {
+	d := Dog{Animal: Animal{Name: &quot;Rex&quot;}, Breed: &quot;Labrador&quot;}
+
+	fmt.Println(d.Name)      // promoted field, reads as if Dog had a Name field directly
+	fmt.Println(d.Describe()) // promoted method
+	fmt.Println(d.Animal.Name) // the underlying struct is still there if you need it explicitly
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>What embedding does not give you is polymorphism. There's no way to write a function that takes an `Animal` and have it accept a `Dog` in its place just because `Dog` embeds `Animal`, Go has no subtyping relationship between them at all. If you want that kind of substitutability, you want an interface, covered in the next chapter, not embedding.</p>
+					<h3>Struct tags</h3>
+					<p>A struct tag is a string literal attached to a field, sitting in backticks right after its type. The language itself does nothing with tags, they're pure metadata. Packages that use reflection, most famously `encoding/json`, read them at runtime to decide how to treat each field.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">type</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> User</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	ID    </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">    `json:"id"`</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	Name  </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">string</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> `json:"name"`</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	Email </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">string</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> `json:"email,omitempty"`</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	admin </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">bool</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">   // unexported: encoding/json will skip this entirely, no tag needed</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>The tag format itself is just a space-separated list of `key:&quot;value&quot;` pairs, and it's up to whatever library reads it to define what keys mean anything. `encoding/json` cares about `json:&quot;...&quot;`, a validation library might look for `validate:&quot;...&quot;` on the very same field, and they coexist fine since each library only reads its own key.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: value vs pointer receiver mutation<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Predict the output before running, then check yourself:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Account struct {
+	Balance int
+}
+
+func (a Account) Deposit(amount int) {
+	a.Balance += amount
+}
+
+func (a *Account) Withdraw(amount int) {
+	a.Balance -= amount
+}
+
+func main() {
+	acc := Account{Balance: 100}
+	acc.Deposit(50)
+	fmt.Println(&quot;After deposit:&quot;, acc.Balance)
+
+	acc.Withdraw(30)
+	fmt.Println(&quot;After withdraw:&quot;, acc.Balance)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Account struct {
+	Balance int
+}
+
+func (a Account) Deposit(amount int) {
+	a.Balance += amount
+}
+
+func (a *Account) Withdraw(amount int) {
+	a.Balance -= amount
+}
+
+func main() {
+	acc := Account{Balance: 100}
+	acc.Deposit(50)
+	fmt.Println(&quot;After deposit:&quot;, acc.Balance)
+
+	acc.Withdraw(30)
+	fmt.Println(&quot;After withdraw:&quot;, acc.Balance)
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>If you predicted 150 then 120, go back and fix Deposit to use a pointer receiver, then rerun.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

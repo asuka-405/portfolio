@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Goroutines: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Goroutines · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/goroutines.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Goroutines" />
+		<meta property="og:description" content="Goroutines: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/goroutines.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Goroutines" />
+		<meta name="twitter:description" content="Goroutines: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="active">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Goroutines</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>A goroutine is a function running concurrently with whatever called it. This is the feature Go is most famous for, and the reason: goroutines are cheap enough that spawning thousands of them in one program is completely normal, where spawning thousands of OS threads would bring most systems to their knees.</p>
+					<h3>The go keyword</h3>
+					<p>Put `go` in front of any function call, and it runs as a new goroutine instead of blocking the caller. That's the entire syntax.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;time&quot;
+)
+
+func sayHello() {
+	fmt.Println(&quot;hello from a goroutine&quot;)
+}
+
+func main() {
+	go sayHello() // starts running concurrently, main doesn't wait for it
+
+	time.Sleep(100 * time.Millisecond) // crude: give the goroutine time to run before main exits
+	fmt.Println(&quot;main done&quot;)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;time&quot;
+)
+
+func sayHello() {
+	fmt.Println(&quot;hello from a goroutine&quot;)
+}
+
+func main() {
+	go sayHello() // starts running concurrently, main doesn't wait for it
+
+	time.Sleep(100 * time.Millisecond) // crude: give the goroutine time to run before main exits
+	fmt.Println(&quot;main done&quot;)
+}</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>time.Sleep as a synchronization mechanism is a code smell, shown here only because you haven't seen channels or WaitGroups yet. The moment main() returns, the whole program exits immediately, goroutines that haven't finished are simply abandoned mid-execution, no warning, no cleanup. The next two chapters cover the real ways to wait for goroutines properly.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Cheap, not free</h3>
+					<p>A goroutine starts with a tiny stack (a few kilobytes) that grows and shrinks as needed, versus the megabyte-plus fixed stack an OS thread typically reserves. That's why &quot;spawn a goroutine per incoming request&quot; is a completely normal pattern in Go web servers handling thousands of concurrent connections, where the equivalent &quot;a thread per request&quot; design in other languages would exhaust memory or OS thread limits far sooner.</p>
+					<h3>The scheduler, conceptually</h3>
+					<p>Go's runtime multiplexes many goroutines onto a much smaller number of OS threads (roughly one per CPU core by default, tunable via `GOMAXPROCS`). When a goroutine blocks on something like a channel operation or I/O, the runtime parks it and lets another goroutine run on that OS thread instead, without you writing any of that scheduling logic yourself. This is often called M:N scheduling (M goroutines mapped onto N OS threads), and the exact mechanics are an implementation detail you don't need to memorize, but the conceptual model, many lightweight goroutines sharing a small pool of real OS threads, explains why concurrency in Go feels so cheap compared to threads.</p>
+				</div>
+
+<div class="dgm reveal">
+	<div class="dgm-box"><span class="dgm-bt">Goroutines (thousands, cheap)</span><span class="dgm-bd">G1  G2  G3  G4  G5  G6 ...</span></div>
+	<div class="dgm-arr">↓ scheduled onto ↓</div>
+	<div class="dgm-box dgm-box--accent"><span class="dgm-bt">OS Threads (few, expensive)</span><span class="dgm-bd">M1  M2  M3  M4</span></div>
+</div>
+
+<div class="prose reveal">
+					<h3>Goroutine leaks: a real, concrete bug</h3>
+					<p>A goroutine that blocks forever, waiting on a channel that will never receive a value or never get closed, never gets garbage collected. It just sits there, permanently, using its stack's worth of memory, for the rest of the program's life. Do this in a request handler that runs thousands of times a day, and you have a slow, silent memory leak that's brutal to diagnose in production.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func leaky() {
+	ch := make(chan int) // unbuffered, nobody will ever send on it
+	go func() {
+		val := &lt;-ch // blocks forever: nothing ever sends, and ch is never closed
+		fmt.Println(&quot;received:&quot;, val)
+	}()
+	// leaky() returns here, the goroutine above is now stuck forever
+}
+
+func main() {
+	for i := 0; i &lt; 5; i++ {
+		leaky()
+	}
+	fmt.Println(&quot;started 5 goroutines, all of them leaked&quot;)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func leaky() {
+	ch := make(chan int) // unbuffered, nobody will ever send on it
+	go func() {
+		val := &lt;-ch // blocks forever: nothing ever sends, and ch is never closed
+		fmt.Println(&quot;received:&quot;, val)
+	}()
+	// leaky() returns here, the goroutine above is now stuck forever
+}
+
+func main() {
+	for i := 0; i &lt; 5; i++ {
+		leaky()
+	}
+	fmt.Println(&quot;started 5 goroutines, all of them leaked&quot;)
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Nothing in this program crashes, nothing even prints a warning, that's exactly what makes goroutine leaks dangerous. The fix is always to make sure every goroutine has a real, guaranteed way to finish: a value it's certain to eventually receive, a channel that will definitely get closed, or a `context.Context` it's watching for cancellation (covered later in this course).</p>
+					<p><strong>A quick mental checklist before writing `go someFunc()`</strong></p>
+					<ul><li>Does this goroutine have a guaranteed way to eventually stop, under every code path, including error cases?</li><li>Does the caller need to know when it's done, or care about its result? If so, you need a channel or WaitGroup to actually wait, not just a hope that it finishes in time.</li><li>Could this spawn an unbounded number of goroutines under load (one per incoming request, with no limit)? If so, you probably want a worker pool instead, covered in the concurrency patterns chapter.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: fix the leak with a buffered channel<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>The simplest fix for this specific leak: make the channel buffered with capacity 1, so the send can complete even with nobody listening, letting the goroutine finish and exit cleanly instead of blocking forever:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func notLeaky() {
+	ch := make(chan int, 1) // buffered: a send can complete without a receiver waiting
+	go func() {
+		ch &lt;- 42 // this now succeeds immediately, the goroutine exits cleanly
+	}()
+}
+
+func main() {
+	for i := 0; i &lt; 5; i++ {
+		notLeaky()
+	}
+	fmt.Println(&quot;started 5 goroutines, none of them leak this time&quot;)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func notLeaky() {
+	ch := make(chan int, 1) // buffered: a send can complete without a receiver waiting
+	go func() {
+		ch &lt;- 42 // this now succeeds immediately, the goroutine exits cleanly
+	}()
+}
+
+func main() {
+	for i := 0; i &lt; 5; i++ {
+		notLeaky()
+	}
+	fmt.Println(&quot;started 5 goroutines, none of them leak this time&quot;)
+}</pre></noscript></div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

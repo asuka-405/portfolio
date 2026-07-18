@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Modules, Dependencies, and Versioning: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Modules, Dependencies, and Versioning · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/modules-dependencies-and-versioning.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Modules, Dependencies, and Versioning" />
+		<meta property="og:description" content="Modules, Dependencies, and Versioning: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/modules-dependencies-and-versioning.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Modules, Dependencies, and Versioning" />
+		<meta name="twitter:description" content="Modules, Dependencies, and Versioning: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="active">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Modules, Dependencies, and Versioning</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>go.mod and go.sum</h3>
+					<p><code>go.mod</code> declares your module's path, the Go version it targets, and its direct/indirect dependencies. <code>go.sum</code> records cryptographic checksums of every dependency version ever used, so builds are reproducible and a compromised package registry can't silently swap in different code under the same version number.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">module github.com</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">you</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">yourproject</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">go</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 1.22</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">require (</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	github.com</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">some</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">dependency v1.</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">4.0</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><code>go mod init github.com/you/yourproject</code> creates the initial <code>go.mod</code>. <code>go get github.com/some/dependency</code> adds or updates a dependency. <code>go mod tidy</code> reconciles <code>go.mod</code>/<code>go.sum</code> with what your code actually imports, adding anything missing and removing anything unused, worth running before every commit that touches imports.</p>
+					<h3>Semantic import versioning</h3>
+					<p>Go has a genuinely unusual convention here: when a module reaches a breaking v2 release, the module PATH itself changes to include <code>/v2</code>, not just the version number in go.mod. A module at <code>github.com/you/yourproject</code> becomes <code>github.com/you/yourproject/v2</code> for its v2+ releases, and both can be imported into the same program simultaneously without conflict, since they're literally different import paths.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">import</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	old </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">github.com/you/yourproject</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	newv </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">github.com/you/yourproject/v2</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>This solves a real problem other ecosystems handle worse: two dependencies in your tree that each need a different major version of a shared transitive dependency simply import different paths and coexist, rather than forcing a single resolved version that might break one of them.</p>
+					<h3>Vendoring</h3>
+					<p><code>go mod vendor</code> copies all dependencies into a <code>vendor/</code> directory checked into your own repository, so a build doesn't need network access to a module proxy at all. Less common now that module proxies are reliable and fast, but still used in locked-down environments (air-gapped builds, strict supply-chain requirements) where fetching anything at build time isn't acceptable.</p>
+					<h3>Go workspaces</h3>
+					<p><code>go.work</code> (introduced in Go 1.18) lets you develop against multiple local modules simultaneously without publishing intermediate versions or using <code>replace</code> directives in every consuming <code>go.mod</code>. If you're working on a library and an application that depends on it in the same local checkout, a workspace file at the top listing both module directories makes changes in the library immediately visible to the application, without a commit/tag/publish cycle in between.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// go.work</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">go</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 1.22</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">use (</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	.</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">mylib</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	.</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">myapp</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>This is a local development convenience, <code>go.work</code> is never something you'd expect consumers of your published module to need or see.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

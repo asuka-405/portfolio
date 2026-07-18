@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Control Flow: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Control Flow · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/control-flow.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Control Flow" />
+		<meta property="og:description" content="Control Flow: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/control-flow.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Control Flow" />
+		<meta name="twitter:description" content="Control Flow: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="active">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Control Flow</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Go keeps control flow deliberately small: one conditional form, one switch form, and exactly one loop keyword that covers every looping pattern other languages split across <code>for</code>/<code>while</code>/<code>do-while</code>.</p>
+					<p><strong>if / else</strong></p>
+					<p>No parentheses around the condition, and the braces are mandatory even for a single statement. An <code>if</code> can also include a short initialization statement before the condition, scoped to the <code>if</code>/<code>else</code> chain, which is the idiomatic way to check an error right where it's produced.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;strconv&quot;
+)
+
+func main() {
+	if n, err := strconv.Atoi(&quot;42&quot;); err == nil {
+		fmt.Println(&quot;parsed:&quot;, n)
+	} else {
+		fmt.Println(&quot;failed:&quot;, err)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;strconv&quot;
+)
+
+func main() {
+	if n, err := strconv.Atoi(&quot;42&quot;); err == nil {
+		fmt.Println(&quot;parsed:&quot;, n)
+	} else {
+		fmt.Println(&quot;failed:&quot;, err)
+	}
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>switch</strong></p>
+					<p>Go's <code>switch</code> doesn't fall through by default, each case implicitly breaks after its body. That's the opposite of C/C++/Java, and it removes an entire category of forgotten-break bugs. If you genuinely want fallthrough behavior, the <code>fallthrough</code> keyword asks for it explicitly on a per-case basis.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	n := 2
+	switch n {
+	case 1:
+		fmt.Println(&quot;one&quot;)
+	case 2:
+		fmt.Println(&quot;two&quot;)
+		fallthrough
+	case 3:
+		fmt.Println(&quot;three (via fallthrough or n == 3)&quot;)
+	default:
+		fmt.Println(&quot;something else&quot;)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	n := 2
+	switch n {
+	case 1:
+		fmt.Println(&quot;one&quot;)
+	case 2:
+		fmt.Println(&quot;two&quot;)
+		fallthrough
+	case 3:
+		fmt.Println(&quot;three (via fallthrough or n == 3)&quot;)
+	default:
+		fmt.Println(&quot;something else&quot;)
+	}
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>A <code>switch</code> with no expression at all works as a cleaner alternative to a long <code>if</code>/<code>else if</code> chain, each <code>case</code> is just a boolean condition.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func classify(n int) string {
+	switch {
+	case n &lt; 0:
+		return &quot;negative&quot;
+	case n == 0:
+		return &quot;zero&quot;
+	default:
+		return &quot;positive&quot;
+	}
+}
+
+func main() {
+	fmt.Println(classify(-5), classify(0), classify(5))
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func classify(n int) string {
+	switch {
+	case n &lt; 0:
+		return &quot;negative&quot;
+	case n == 0:
+		return &quot;zero&quot;
+	default:
+		return &quot;positive&quot;
+	}
+}
+
+func main() {
+	fmt.Println(classify(-5), classify(0), classify(5))
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>for: Go's only loop</strong></p>
+					<p>There's no <code>while</code> and no <code>do-while</code>. <code>for</code> covers all of it, in four shapes.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	// classic three-clause
+	for i := 0; i &lt; 3; i++ {
+		fmt.Println(&quot;classic&quot;, i)
+	}
+
+	// condition-only (this is Go's &quot;while&quot;)
+	n := 0
+	for n &lt; 3 {
+		fmt.Println(&quot;while-style&quot;, n)
+		n++
+	}
+
+	// infinite, exited with break
+	count := 0
+	for {
+		if count &gt;= 3 {
+			break
+		}
+		fmt.Println(&quot;infinite&quot;, count)
+		count++
+	}
+
+	// range-based, over a slice
+	for i, v := range []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;} {
+		fmt.Println(&quot;range&quot;, i, v)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	// classic three-clause
+	for i := 0; i &lt; 3; i++ {
+		fmt.Println(&quot;classic&quot;, i)
+	}
+
+	// condition-only (this is Go's &quot;while&quot;)
+	n := 0
+	for n &lt; 3 {
+		fmt.Println(&quot;while-style&quot;, n)
+		n++
+	}
+
+	// infinite, exited with break
+	count := 0
+	for {
+		if count &gt;= 3 {
+			break
+		}
+		fmt.Println(&quot;infinite&quot;, count)
+		count++
+	}
+
+	// range-based, over a slice
+	for i, v := range []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;} {
+		fmt.Println(&quot;range&quot;, i, v)
+	}
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>Labeled break and continue</strong></p>
+					<p>Nested loops sometimes need to break or continue an outer loop specifically, not just the innermost one. Go supports this with labels, which look unusual at first but solve a real problem cleanly (the alternative in languages without labels is usually a boolean flag variable checked in every nested loop, which is worse).</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+outer:
+	for i := 0; i &lt; 3; i++ {
+		for j := 0; j &lt; 3; j++ {
+			if j == 1 {
+				continue outer
+			}
+			fmt.Println(i, j)
+		}
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+outer:
+	for i := 0; i &lt; 3; i++ {
+		for j := 0; j &lt; 3; j++ {
+			if j == 1 {
+				continue outer
+			}
+			fmt.Println(i, j)
+		}
+	}
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: change <code>continue outer</code> to <code>break outer</code> in the example above and predict the output before running it.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

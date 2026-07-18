@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Error Handling the Go Way: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Error Handling the Go Way · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/error-handling-the-go-way.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Error Handling the Go Way" />
+		<meta property="og:description" content="Error Handling the Go Way: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/error-handling-the-go-way.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Error Handling the Go Way" />
+		<meta name="twitter:description" content="Error Handling the Go Way: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="active">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Error Handling the Go Way</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Go has no exceptions for ordinary error handling. <code>error</code> is just an interface with one method, <code>Error() string</code>, and functions that can fail return one as their last value. The calling code is expected to check it immediately, which is where the famous <code>if err != nil</code> pattern comes from.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;errors&quot;
+	&quot;fmt&quot;
+)
+
+func mustBePositive(n int) error {
+	if n &lt;= 0 {
+		return errors.New(&quot;value must be positive&quot;)
+	}
+	return nil
+}
+
+func main() {
+	if err := mustBePositive(-3); err != nil {
+		fmt.Println(&quot;validation failed:&quot;, err)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;errors&quot;
+	&quot;fmt&quot;
+)
+
+func mustBePositive(n int) error {
+	if n &lt;= 0 {
+		return errors.New(&quot;value must be positive&quot;)
+	}
+	return nil
+}
+
+func main() {
+	if err := mustBePositive(-3); err != nil {
+		fmt.Println(&quot;validation failed:&quot;, err)
+	}
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Go's designers made this choice on purpose. Exceptions create invisible control-flow paths, any line can potentially throw, and the type signature gives you no warning. A returned <code>error</code> makes failure part of the function's visible contract, at the cost of more explicit checking code. Reasonable people disagree about the tradeoff, but it's a deliberate design decision, not an oversight.</p>
+				</div>
+
+<div class="prose reveal">
+					<p><strong>Wrapping errors with fmt.Errorf and %w</strong></p>
+					<p>When an error crosses an abstraction boundary, it's common to wrap it with more context while preserving the original error so callers further up can still inspect it. <code>%w</code> (as opposed to <code>%v</code> or <code>%s</code>) is the verb that does this, it creates a wrapped error that <code>errors.Unwrap</code> (and the functions built on it) can see through.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;errors&quot;
+	&quot;fmt&quot;
+)
+
+var ErrNotFound = errors.New(&quot;not found&quot;)
+
+func lookup(id int) error {
+	if id != 1 {
+		return fmt.Errorf(&quot;lookup(%d): %w&quot;, id, ErrNotFound)
+	}
+	return nil
+}
+
+func main() {
+	err := lookup(42)
+	fmt.Println(err)
+	fmt.Println(&quot;is ErrNotFound:&quot;, errors.Is(err, ErrNotFound))
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;errors&quot;
+	&quot;fmt&quot;
+)
+
+var ErrNotFound = errors.New(&quot;not found&quot;)
+
+func lookup(id int) error {
+	if id != 1 {
+		return fmt.Errorf(&quot;lookup(%d): %w&quot;, id, ErrNotFound)
+	}
+	return nil
+}
+
+func main() {
+	err := lookup(42)
+	fmt.Println(err)
+	fmt.Println(&quot;is ErrNotFound:&quot;, errors.Is(err, ErrNotFound))
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>errors.Is and errors.As</strong></p>
+					<p><code>errors.Is(err, target)</code> checks whether <code>err</code>, or anything it wraps, matches a specific sentinel error value. <code>errors.As(err, &amp;target)</code> checks whether <code>err</code>, or anything it wraps, can be assigned to a specific error type, and if so assigns it, letting you get at fields on a custom error type buried inside a wrap chain.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;errors&quot;
+	&quot;fmt&quot;
+)
+
+type ValidationError struct {
+	Field string
+}
+
+func (e *ValidationError) Error() string {
+	return fmt.Sprintf(&quot;invalid field: %s&quot;, e.Field)
+}
+
+func validate() error {
+	return fmt.Errorf(&quot;request failed: %w&quot;, &amp;ValidationError{Field: &quot;email&quot;})
+}
+
+func main() {
+	err := validate()
+
+	var valErr *ValidationError
+	if errors.As(err, &amp;valErr) {
+		fmt.Println(&quot;bad field was:&quot;, valErr.Field)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;errors&quot;
+	&quot;fmt&quot;
+)
+
+type ValidationError struct {
+	Field string
+}
+
+func (e *ValidationError) Error() string {
+	return fmt.Sprintf(&quot;invalid field: %s&quot;, e.Field)
+}
+
+func validate() error {
+	return fmt.Errorf(&quot;request failed: %w&quot;, &amp;ValidationError{Field: &quot;email&quot;})
+}
+
+func main() {
+	err := validate()
+
+	var valErr *ValidationError
+	if errors.As(err, &amp;valErr) {
+		fmt.Println(&quot;bad field was:&quot;, valErr.Field)
+	}
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>Sentinel errors vs custom error types</strong></p>
+					<p>A sentinel error (<code>var ErrNotFound = errors.New(...)</code>) is a single shared value you compare against with <code>errors.Is</code>. A custom error type (a struct implementing the <code>error</code> interface) carries structured data and is checked with <code>errors.As</code>. Use sentinels for simple &quot;this specific known condition happened&quot; signals, and custom types when the caller needs more than a message, like which field failed validation.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: modify the ValidationError example so the error also carries the invalid value, not just the field name, and print both when you extract it with errors.As.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

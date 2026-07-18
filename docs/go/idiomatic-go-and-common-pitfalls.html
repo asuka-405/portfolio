@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Idiomatic Go and Common Pitfalls: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Idiomatic Go and Common Pitfalls · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/idiomatic-go-and-common-pitfalls.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Idiomatic Go and Common Pitfalls" />
+		<meta property="og:description" content="Idiomatic Go and Common Pitfalls: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/idiomatic-go-and-common-pitfalls.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Idiomatic Go and Common Pitfalls" />
+		<meta name="twitter:description" content="Idiomatic Go and Common Pitfalls: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="active">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Idiomatic Go and Common Pitfalls</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>A closing chapter on how experienced Go programmers actually write it day to day, and the mistakes that catch almost everyone at least once.</p>
+					<h3>gofmt and go vet are not optional</h3>
+					<p><code>gofmt</code> (or <code>go fmt</code>) reformats your code to Go's one canonical style. There's no configuration, no debate about tabs vs spaces or brace placement, because the tool decides and the entire ecosystem uses the same output. Run it on save; most editors do this automatically once configured. <code>go vet</code> catches a different class of issue: suspicious constructs that compile fine but are almost certainly bugs (a <code>Printf</code> format string that doesn't match its arguments, a struct passed by value to a method expecting a pointer receiver used via <code>sync.Mutex</code> copying). Run both, treat them as part of compiling, not an optional linting step.</p>
+					<h3>Effective Go's core conventions</h3>
+					<ul><li>Short variable names in short scopes (<code>i</code> in a five-line loop, not <code>currentLoopIndex</code>); longer, descriptive names as scope grows</li><li>Accept interfaces, return concrete structs, from the interfaces chapter: lets callers pass whatever satisfies the small interface your function needs, while giving them a concrete, fully-featured type back</li><li>Handle errors immediately after the call that can produce them, don't let them bubble past several statements unchecked</li><li>Prefer composition (embedding) over trying to simulate inheritance, this course's own composition chapter covers why</li></ul>
+					<h3>Common mistakes, in roughly the order newcomers hit them</h3>
+					<p><strong>Nil pointer dereferences</strong></p>
+					<p>A <code>nil</code> pointer's zero value is perfectly legal to hold, and only panics when you try to dereference it or call a method with a value (not pointer) receiver on it. The fix is the same discipline as anywhere: check for nil before use when a value might legitimately be nil (a function that returns <code>(*T, error)</code>, check the error first, but also don't assume a nil error always means a non-nil result if the function's contract doesn't actually guarantee that).</p>
+					<p><strong>Arrays are values, slices and maps are reference-like</strong></p>
+					<p>Assigning or passing an array copies the whole thing. Assigning or passing a slice or map copies the header (pointer, length, capacity for slices; just a pointer for maps), so mutations through either the original or the copy are visible through both, since they share the same underlying data. This distinction trips up people moving from languages where &quot;array&quot; and &quot;list&quot;/&quot;slice&quot; are the same underlying concept.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	arr := [3]int{1, 2, 3}
+	arrCopy := arr
+	arrCopy[0] = 99
+	fmt.Println(&quot;array (independent):&quot;, arr, arrCopy)
+
+	sl := []int{1, 2, 3}
+	slAlias := sl
+	slAlias[0] = 99
+	fmt.Println(&quot;slice (shared backing array):&quot;, sl, slAlias)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	arr := [3]int{1, 2, 3}
+	arrCopy := arr
+	arrCopy[0] = 99
+	fmt.Println(&quot;array (independent):&quot;, arr, arrCopy)
+
+	sl := []int{1, 2, 3}
+	slAlias := sl
+	slAlias[0] = 99
+	fmt.Println(&quot;slice (shared backing array):&quot;, sl, slAlias)
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>Shadowing with :=</strong></p>
+					<p><code>:=</code> declares a NEW variable if the name doesn't already exist in the CURRENT scope, even if a variable with the same name exists in an outer scope. Inside an <code>if</code>/<code>for</code>/block, this can silently create a shadow instead of assigning to the outer variable you meant to update:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	err := fmt.Errorf(&quot;outer error&quot;)
+	if true {
+		err := fmt.Errorf(&quot;inner error&quot;) // shadows the outer err, doesn't assign to it
+		fmt.Println(&quot;inside if:&quot;, err)
+	}
+	fmt.Println(&quot;outside if, unchanged:&quot;, err)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	err := fmt.Errorf(&quot;outer error&quot;)
+	if true {
+		err := fmt.Errorf(&quot;inner error&quot;) // shadows the outer err, doesn't assign to it
+		fmt.Println(&quot;inside if:&quot;, err)
+	}
+	fmt.Println(&quot;outside if, unchanged:&quot;, err)
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>The fix is deliberate: use <code>=</code> (not <code>:=</code>) when you mean to assign to an existing variable from an outer scope, and <code>go vet</code>/careful review catch most accidental shadowing before it ships.</p>
+					<p><strong>Closure-over-loop-variable (historical)</strong></p>
+					<p>Covered in depth in this course's Functions chapter: pre-1.22, all iterations of a <code>for</code> loop shared the same loop variable, so a closure capturing it captured whatever value it held when the closure finally RAN, usually the last one, not the value at the time the closure was created. Go 1.22 changed loop variables to be per-iteration by default, fixing this for anyone on a current toolchain, but you'll still see the old workaround pattern (shadowing the loop variable inside the loop body) in codebases and blog posts written before the change.</p>
+					<h3>If you remember five things from this course</h3>
+					<ul><li>Errors are values, checked explicitly at the call site, not exceptions caught somewhere far away</li><li>Goroutines and channels are the concurrency primitives; share memory by communicating, reach for a mutex only when you genuinely need shared mutable state</li><li>Interfaces are satisfied implicitly; design small interfaces, accept them as parameters, return concrete structs</li><li>Generics solve real duplication in container types and type-agnostic algorithms; they're not a replacement for interfaces when different types need different behavior</li><li>The standard library is unusually complete; check it before reaching for a dependency</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

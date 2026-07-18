@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Testing in Go: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Testing in Go · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/testing-in-go.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Testing in Go" />
+		<meta property="og:description" content="Testing in Go: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/testing-in-go.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Testing in Go" />
+		<meta name="twitter:description" content="Testing in Go: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="active">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Testing in Go</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Testing is built into the toolchain. There's no separate framework to install to get started, just a convention: a file named <code>foo_test.go</code> next to <code>foo.go</code>, containing functions named <code>TestXxx(t *testing.T)</code>.</p>
+					<h3>A first test</h3>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// main.go</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">package</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Add</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">a</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">b</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> a </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> b</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span></code></pre></div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// main_test.go</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">package</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">import</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">testing</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> TestAdd</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">testing</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">T</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	got </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Add</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">2</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">3</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	want </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 5</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> got </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">!=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> want {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">		t.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Errorf</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Add(2, 3) = </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">%d</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">, want </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">%d</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, got, want)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	}</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Run it with <code>go test</code> in the package directory. <code>t.Errorf</code> marks the test as failed but lets it keep running (useful for reporting multiple issues in one test); <code>t.Fatalf</code> fails and stops immediately, for when continuing wouldn't make sense (e.g. a setup step failed and nothing after it can work).</p>
+					<h3>Table-driven tests</h3>
+					<p>The dominant idiom for testing several input/output pairs against the same logic is a slice of test cases run through a loop, using <code>t.Run</code> to give each case its own named subtest:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;testing&quot;
+)
+
+func Add(a, b int) int { return a + b }
+
+func TestAddTable(t *testing.T) {
+	cases := []struct {
+		name     string
+		a, b     int
+		expected int
+	}{
+		{&quot;positives&quot;, 2, 3, 5},
+		{&quot;negative and positive&quot;, -1, 5, 4},
+		{&quot;zeros&quot;, 0, 0, 0},
+	}
+
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			got := Add(c.a, c.b)
+			if got != c.expected {
+				t.Errorf(&quot;Add(%d, %d) = %d, want %d&quot;, c.a, c.b, got, c.expected)
+			}
+		})
+	}
+}
+
+func main() {
+	fmt.Println(&quot;run this file with 'go test', not 'go run'&quot;)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;testing&quot;
+)
+
+func Add(a, b int) int { return a + b }
+
+func TestAddTable(t *testing.T) {
+	cases := []struct {
+		name     string
+		a, b     int
+		expected int
+	}{
+		{&quot;positives&quot;, 2, 3, 5},
+		{&quot;negative and positive&quot;, -1, 5, 4},
+		{&quot;zeros&quot;, 0, 0, 0},
+	}
+
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			got := Add(c.a, c.b)
+			if got != c.expected {
+				t.Errorf(&quot;Add(%d, %d) = %d, want %d&quot;, c.a, c.b, got, c.expected)
+			}
+		})
+	}
+}
+
+func main() {
+	fmt.Println(&quot;run this file with 'go test', not 'go run'&quot;)
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>This scales far better than one function per case: adding a new case is one line in the slice, and <code>t.Run</code>'s subtests show up individually in <code>go test -v</code> output and can be filtered with <code>-run TestAddTable/zeros</code>.</p>
+					<h3>Flags worth knowing</h3>
+					<ul><li><code>go test -v</code>, verbose output, shows every subtest name and pass/fail</li><li><code>go test -run Pattern</code>, only run tests whose name matches the regex</li><li><code>go test -cover</code>, report percentage of code covered by the tests that ran</li><li><code>go test -race</code>, run under the race detector (essential for anything concurrent, see the sync/data races chapter)</li></ul>
+					<h3>Benchmarks</h3>
+					<p>Benchmarks live in the same test files, named <code>BenchmarkXxx(b *testing.B)</code>, and run with <code>go test -bench=.</code>. The framework calls your function <code>b.N</code> times, adjusting <code>N</code> until the measurement is stable, so you don't hand-tune iteration counts yourself:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> BenchmarkAdd</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">b</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">testing</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">B</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x3C;</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> b.N; i</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">++</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">		Add</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">2</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">3</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	}</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>Beyond the standard library</h3>
+					<p>The <code>testing</code> package alone is genuinely enough for most Go codebases. Third-party libraries like testify add fluent assertions (<code>assert.Equal(t, want, got)</code>) and mocking helpers that plenty of teams like, but they're a preference layered on top, not something the language or ecosystem requires you to reach for.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: write a table-driven test for a small function that returns whether a number is prime, including at least one edge case (0, 1, or a negative number) in the table.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

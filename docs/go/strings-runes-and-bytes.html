@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Strings, Runes, and Bytes: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Strings, Runes, and Bytes · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/strings-runes-and-bytes.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Strings, Runes, and Bytes" />
+		<meta property="og:description" content="Strings, Runes, and Bytes: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/strings-runes-and-bytes.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Strings, Runes, and Bytes" />
+		<meta name="twitter:description" content="Strings, Runes, and Bytes: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="active">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Strings, Runes, and Bytes</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>A Go string is an immutable sequence of bytes, conventionally (but not enforced) holding UTF-8 encoded text. Once created, a string's contents can never be modified in place, any &quot;modification&quot; actually builds a new string.</p>
+					<p><strong>byte vs rune</strong></p>
+					<p>A <code>byte</code> is an alias for <code>uint8</code>, a single 8-bit value. A <code>rune</code> is an alias for <code>int32</code> and represents a single Unicode code point, which can take anywhere from 1 to 4 bytes to encode in UTF-8. Confusing the two is the source of almost every &quot;why is my string indexing broken&quot; question from newcomers.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	s := &quot;héllo&quot; // é is a 2-byte UTF-8 sequence
+	fmt.Println(len(s))          // 6: byte length, not character count
+	fmt.Println(len([]rune(s)))  // 5: actual character (rune) count
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	s := &quot;héllo&quot; // é is a 2-byte UTF-8 sequence
+	fmt.Println(len(s))          // 6: byte length, not character count
+	fmt.Println(len([]rune(s)))  // 5: actual character (rune) count
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>Indexing gives you bytes, range gives you runes</strong></p>
+					<p><code>s[i]</code> accesses the i-th byte of a string, which may be in the middle of a multi-byte character. Ranging over a string with <code>for i, r := range s</code> instead decodes UTF-8 properly and gives you full runes, with <code>i</code> as the byte offset where that rune starts (which is why the indices can skip numbers for multi-byte characters).</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	s := &quot;héllo&quot;
+	for i, r := range s {
+		fmt.Printf(&quot;byte offset %d: rune %c
+&quot;, i, r)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	s := &quot;héllo&quot;
+	for i, r := range s {
+		fmt.Printf(&quot;byte offset %d: rune %c
+&quot;, i, r)
+	}
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Notice the byte offsets jump from 1 to 3, skipping 2, because 'é' takes 2 bytes. If you'd instead looped with a plain index (<code>for i := 0; i &lt; len(s); i++</code>) and printed <code>s[i]</code>, you'd get raw bytes, and printing one half of a multi-byte character as if it were a whole one produces garbage.</p>
+				</div>
+
+<div class="prose reveal">
+					<p><strong>Building strings efficiently</strong></p>
+					<p>Since strings are immutable, repeatedly concatenating with <code>+</code> in a loop reallocates a new string every time, which is quadratic in the number of concatenations for a loop of that size. <code>strings.Builder</code> avoids this by writing into a growable internal buffer and only producing the final string once, at the end.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;strings&quot;
+)
+
+func main() {
+	var b strings.Builder
+	for i := 0; i &lt; 5; i++ {
+		fmt.Fprintf(&amp;b, &quot;line %d
+&quot;, i)
+	}
+	fmt.Print(b.String())
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;strings&quot;
+)
+
+func main() {
+	var b strings.Builder
+	for i := 0; i &lt; 5; i++ {
+		fmt.Fprintf(&amp;b, &quot;line %d
+&quot;, i)
+	}
+	fmt.Print(b.String())
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>A quick tour: strings, strconv, unicode</strong></p>
+					<ul><li><code>strings</code>: searching, splitting, joining, replacing, case conversion (<code>strings.Contains</code>, <code>strings.Split</code>, <code>strings.Join</code>, <code>strings.ToUpper</code>, and many more)</li><li><code>strconv</code>: converting between strings and other types (<code>strconv.Atoi</code>, <code>strconv.Itoa</code>, <code>strconv.ParseFloat</code>, <code>strconv.FormatBool</code>)</li><li><code>unicode</code>: classifying individual runes (<code>unicode.IsDigit</code>, <code>unicode.IsSpace</code>, <code>unicode.IsUpper</code>)</li></ul>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;strconv&quot;
+	&quot;strings&quot;
+)
+
+func main() {
+	parts := strings.Split(&quot;1,2,3,4&quot;, &quot;,&quot;)
+	total := 0
+	for _, part := range parts {
+		n, err := strconv.Atoi(part)
+		if err != nil {
+			continue
+		}
+		total += n
+	}
+	fmt.Println(total)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;strconv&quot;
+	&quot;strings&quot;
+)
+
+func main() {
+	parts := strings.Split(&quot;1,2,3,4&quot;, &quot;,&quot;)
+	total := 0
+	for _, part := range parts {
+		n, err := strconv.Atoi(part)
+		if err != nil {
+			continue
+		}
+		total += n
+	}
+	fmt.Println(total)
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: write a function that reverses a string correctly for multi-byte characters (converting to []rune first, reversing that, then converting back), and confirm it handles &quot;héllo&quot; without corrupting the é.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

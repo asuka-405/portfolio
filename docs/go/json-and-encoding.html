@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="JSON and Encoding: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>JSON and Encoding · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/json-and-encoding.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="JSON and Encoding" />
+		<meta property="og:description" content="JSON and Encoding: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/json-and-encoding.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="JSON and Encoding" />
+		<meta name="twitter:description" content="JSON and Encoding: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="active">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>JSON and Encoding</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><code>encoding/json</code> is the standard library's JSON support, and it leans entirely on struct tags and reflection rather than requiring code generation or annotations processed at build time.</p>
+					<h3>Marshal and Unmarshal</h3>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;encoding/json&quot;
+	&quot;fmt&quot;
+)
+
+type Person struct {
+	Name string
+	Age  int
+}
+
+func main() {
+	p := Person{Name: &quot;Ada&quot;, Age: 30}
+
+	data, err := json.Marshal(p)
+	if err != nil {
+		fmt.Println(&quot;marshal error:&quot;, err)
+		return
+	}
+	fmt.Println(string(data))
+
+	var decoded Person
+	if err := json.Unmarshal(data, &amp;decoded); err != nil {
+		fmt.Println(&quot;unmarshal error:&quot;, err)
+		return
+	}
+	fmt.Printf(&quot;%+v\n&quot;, decoded)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;encoding/json&quot;
+	&quot;fmt&quot;
+)
+
+type Person struct {
+	Name string
+	Age  int
+}
+
+func main() {
+	p := Person{Name: &quot;Ada&quot;, Age: 30}
+
+	data, err := json.Marshal(p)
+	if err != nil {
+		fmt.Println(&quot;marshal error:&quot;, err)
+		return
+	}
+	fmt.Println(string(data))
+
+	var decoded Person
+	if err := json.Unmarshal(data, &amp;decoded); err != nil {
+		fmt.Println(&quot;unmarshal error:&quot;, err)
+		return
+	}
+	fmt.Printf(&quot;%+v\n&quot;, decoded)
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Notice the output uses <code>Name</code> and <code>Age</code>, capitalized, matching the Go field names exactly. That's rarely what you want in a real API, which is where struct tags come in.</p>
+					<h3>Struct tags</h3>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;encoding/json&quot;
+	&quot;fmt&quot;
+)
+
+type Person struct {
+	Name string `json:&quot;name&quot;`
+	Age  int    `json:&quot;age,omitempty&quot;`
+	SSN  string `json:&quot;-&quot;`
+}
+
+func main() {
+	p := Person{Name: &quot;Grace&quot;, SSN: &quot;not-serialized&quot;}
+	data, _ := json.Marshal(p)
+	fmt.Println(string(data))
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;encoding/json&quot;
+	&quot;fmt&quot;
+)
+
+type Person struct {
+	Name string `json:&quot;name&quot;`
+	Age  int    `json:&quot;age,omitempty&quot;`
+	SSN  string `json:&quot;-&quot;`
+}
+
+func main() {
+	p := Person{Name: &quot;Grace&quot;, SSN: &quot;not-serialized&quot;}
+	data, _ := json.Marshal(p)
+	fmt.Println(string(data))
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><code>json:&quot;name&quot;</code> controls the output key. <code>omitempty</code> drops the field entirely if it's the zero value (here, <code>Age</code> is 0 and omitted). <code>json:&quot;-&quot;</code> excludes the field from JSON entirely, which is exactly what you want for something like an SSN or a password hash that should never leave the process in a JSON response.</p>
+					<h3>The unexported-fields gotcha</h3>
+					<p>This one causes real confusion: <code>encoding/json</code> silently skips any struct field that isn't exported (doesn't start with a capital letter), because reflection can't access unexported fields from outside the package. There's no error, no warning, the field is just absent from the output.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;encoding/json&quot;
+	&quot;fmt&quot;
+)
+
+type Config struct {
+	Name    string
+	timeout int // unexported: silently missing from JSON output, not an error
+}
+
+func main() {
+	c := Config{Name: &quot;svc&quot;, timeout: 30}
+	data, _ := json.Marshal(c)
+	fmt.Println(string(data)) // timeout is nowhere in here
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;encoding/json&quot;
+	&quot;fmt&quot;
+)
+
+type Config struct {
+	Name    string
+	timeout int // unexported: silently missing from JSON output, not an error
+}
+
+func main() {
+	c := Config{Name: &quot;svc&quot;, timeout: 30}
+	data, _ := json.Marshal(c)
+	fmt.Println(string(data)) // timeout is nowhere in here
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>If a field is missing from your JSON and you can't figure out why, check capitalization before anything else.</p>
+					<h3>Custom marshaling</h3>
+					<p>For types that need a JSON representation different from their natural struct shape (a custom date format, an enum serialized as a string instead of its underlying int), implement <code>MarshalJSON() ([]byte, error)</code> and <code>UnmarshalJSON([]byte) error</code> on the type. This is the escape hatch when tags alone aren't expressive enough, used sparingly since it's more code to maintain than a tag.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: define a struct with a field tagged <code>json:&quot;-&quot;</code> and confirm it never appears in the marshaled output no matter what value you set it to.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

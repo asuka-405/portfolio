@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="A Tour of Modern Go: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>A Tour of Modern Go · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/a-tour-of-modern-go.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="A Tour of Modern Go" />
+		<meta property="og:description" content="A Tour of Modern Go: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/a-tour-of-modern-go.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="A Tour of Modern Go" />
+		<meta name="twitter:description" content="A Tour of Modern Go: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="active">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>A Tour of Modern Go</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Go moves deliberately, this isn't a language that reinvents itself every release, but the last few years added real, substantial capability. Here's what's actually new and worth knowing, versus what's still settling.</p>
+					<h3>Generics (1.18)</h3>
+					<p>Already covered in depth in this course's dedicated Generics chapter. The short version: type parameters, constraints, and a handful of new standard library packages (<code>slices</code>, <code>maps</code>, <code>cmp</code>) built on top of them. This is the single biggest language-level addition in Go's history and it's fully stable, widely adopted in the ecosystem by now.</p>
+					<h3>The evolving context package</h3>
+					<p><code>context.Context</code> started as &quot;a way to propagate cancellation and deadlines through a call chain&quot; and has become the de facto standard for that across the entire ecosystem, not just concurrent code. Recent additions include <code>context.WithTimeout</code>/<code>context.WithDeadline</code> conveniences and <code>context.Cause</code>, which lets you retrieve WHY a context was canceled (not just that it was), useful when several different timeout/cancel sources might be in play and you need to distinguish them for logging or retry logic.</p>
+					<h3>slices, maps, and cmp (1.21)</h3>
+					<p>Generic helper packages for the two container types you use constantly: sorting, searching, comparing, and reversing slices without hand-writing the loop every time; extracting/comparing map keys and values. <code>cmp.Compare</code> and <code>cmp.Ordered</code> give you a generic &quot;less than&quot; you can pass to sort functions without writing a custom comparator for every type.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;cmp&quot;
+	&quot;fmt&quot;
+	&quot;slices&quot;
+)
+
+func main() {
+	people := []struct {
+		Name string
+		Age  int
+	}{
+		{&quot;Zoe&quot;, 25}, {&quot;Amir&quot;, 40}, {&quot;Ben&quot;, 30},
+	}
+
+	slices.SortFunc(people, func(a, b struct {
+		Name string
+		Age  int
+	}) int {
+		return cmp.Compare(a.Age, b.Age)
+	})
+
+	for _, person := range people {
+		fmt.Printf(&quot;%s: %d\n&quot;, person.Name, person.Age)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;cmp&quot;
+	&quot;fmt&quot;
+	&quot;slices&quot;
+)
+
+func main() {
+	people := []struct {
+		Name string
+		Age  int
+	}{
+		{&quot;Zoe&quot;, 25}, {&quot;Amir&quot;, 40}, {&quot;Ben&quot;, 30},
+	}
+
+	slices.SortFunc(people, func(a, b struct {
+		Name string
+		Age  int
+	}) int {
+		return cmp.Compare(a.Age, b.Age)
+	})
+
+	for _, person := range people {
+		fmt.Printf(&quot;%s: %d\n&quot;, person.Name, person.Age)
+	}
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>Range-over-func iterators (1.23)</h3>
+					<p>As of 1.23, <code>range</code> can iterate over a function with a specific signature (an &quot;iterator function&quot;), not just slices/maps/channels/integers. This lets library authors expose custom iteration (walking a tree, streaming results from a database cursor, lazily generating a sequence) using the same <code>for ... range</code> syntax callers already know, instead of a bespoke <code>Next()</code>/<code>HasNext()</code> pattern per library.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Count</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">start</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">end</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">bool</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> func</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">yield</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> func</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">bool</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">		for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> start; i </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x3C;=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> end; i</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">++</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">			if</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> !</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">yield</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(i) {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">				return</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">			}</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">		}</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	}</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// usage:</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// for n := range Count(1, 5) {</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">//     fmt.Println(n)</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// }</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>This is newer and the ecosystem is still working out idiomatic conventions around it (should a package expose an iterator alongside a slice-returning function, or instead of one?), worth knowing it exists, less worth building deep muscle memory around yet if you're just getting comfortable with the language.</p>
+					<blockquote>The theme across all of these: Go adds capability slowly and conservatively, and almost always by extending the standard library rather than the language grammar itself. Generics were the one true grammar-level exception in over a decade.</blockquote>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
