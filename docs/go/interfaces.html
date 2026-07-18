@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Interfaces: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Interfaces · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/interfaces.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Interfaces" />
+		<meta property="og:description" content="Interfaces: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/interfaces.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Interfaces" />
+		<meta name="twitter:description" content="Interfaces: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="active">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Interfaces</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>An interface in Go is a set of method signatures. Any type that has all those methods satisfies the interface automatically, there's no `implements` keyword, no declared relationship at all. The compiler figures it out from shape alone.</p>
+					<h3>Implicit satisfaction</h3>
+					<p>This is the single biggest mental shift coming from Java, C#, or C++. You don't write `class Dog implements Animal`. You just write a `Dog` type with the right methods, and it satisfies `Animal` whether or not you ever intended it to.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Speaker interface {
+	Speak() string
+}
+
+type Dog struct{}
+func (d Dog) Speak() string { return &quot;Woof&quot; }
+
+type Cat struct{}
+func (c Cat) Speak() string { return &quot;Meow&quot; }
+
+func announce(s Speaker) {
+	fmt.Println(s.Speak())
+}
+
+func main() {
+	announce(Dog{}) // Dog was never declared to implement Speaker, it just has the method
+	announce(Cat{})
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Speaker interface {
+	Speak() string
+}
+
+type Dog struct{}
+func (d Dog) Speak() string { return &quot;Woof&quot; }
+
+type Cat struct{}
+func (c Cat) Speak() string { return &quot;Meow&quot; }
+
+func announce(s Speaker) {
+	fmt.Println(s.Speak())
+}
+
+func main() {
+	announce(Dog{}) // Dog was never declared to implement Speaker, it just has the method
+	announce(Cat{})
+}</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>This means an interface can be satisfied by types you don't own and can't modify, including types from the standard library or a third-party package you're just consuming. That's a real strength: you can define your own small interface around someone else's type after the fact.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>The empty interface and any</h3>
+					<p>`interface{}` (or its alias `any`, added in Go 1.18) has zero methods, so literally every type satisfies it. It's the closest thing Go has to &quot;accept anything&quot;, and it shows up constantly in older code (`fmt.Println` is variadic `...any` under the hood).</p>
+					<p>The catch: once something is `any`, you've thrown away all compile-time type checking on it. You need a type assertion or type switch to get useful behavior back, and if you get the type wrong at runtime, that's a panic waiting to happen unless you use the safe two-value form.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func describe(v any) {
+	switch x := v.(type) {
+	case int:
+		fmt.Println(&quot;int:&quot;, x*2)
+	case string:
+		fmt.Println(&quot;string:&quot;, x+x)
+	default:
+		fmt.Println(&quot;unhandled type:&quot;, x)
+	}
+}
+
+func main() {
+	describe(21)
+	describe(&quot;ab&quot;)
+	describe(3.14)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func describe(v any) {
+	switch x := v.(type) {
+	case int:
+		fmt.Println(&quot;int:&quot;, x*2)
+	case string:
+		fmt.Println(&quot;string:&quot;, x+x)
+	default:
+		fmt.Println(&quot;unhandled type:&quot;, x)
+	}
+}
+
+func main() {
+	describe(21)
+	describe(&quot;ab&quot;)
+	describe(3.14)
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Before generics existed, `any` was often the only way to write a function that worked over multiple types, at the cost of runtime type switches everywhere. Now, if you're writing new code and the operation you need is the same regardless of type, reach for a generic type parameter instead (covered later in this course), and save `any`/type switches for cases where the types genuinely need different handling, like the example above.</p>
+					<h3>Type assertions</h3>
+					<p>A type assertion (`x.(T)`) tells the compiler &quot;I know this value is actually a T, let me use it as one&quot;. The single-value form panics if you're wrong. The two-value form (`v, ok := x.(T)`) never panics, it just tells you whether the assertion succeeded.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">var</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> v </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">any</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> =</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "hello"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">s </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> v.(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">string</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)         </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// ok, panics if v isn't actually a string</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">s, ok </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> v.(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">string</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)      </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// safe: ok is false instead of panicking on a mismatch</span></span></code></pre></div>
+
+				<div class="callout reveal">
+					<p>Default to the two-value form unless you have a very good reason to believe the assertion can never fail and want a hard crash if that assumption is ever wrong. A stray panic from an unchecked assertion deep in a request handler is a bad way to find out your assumption broke.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Interface composition</h3>
+					<p>Interfaces can embed other interfaces, building bigger contracts out of smaller ones. The standard library's `io` package is the textbook example, and it's worth internalizing because you'll see it everywhere.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">type</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Reader</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> interface</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	Read</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">p</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> []</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">byte</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) (</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">n</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">err</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> error</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">type</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Writer</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> interface</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	Write</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">p</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> []</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">byte</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) (</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">n</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">err</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> error</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">type</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> ReadWriter</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> interface</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	Reader</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	Writer</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Nothing implements `ReadWriter` on purpose, it just falls out automatically the moment a type has both a `Read` and a `Write` method with those exact signatures. Files, network connections, in-memory buffers: they all end up satisfying `ReadWriter` for free.</p>
+					<h3>Accept interfaces, return structs</h3>
+					<p>This is the closest thing Go has to an official API design commandment. A function's parameters should ask for the smallest interface that covers what the function actually needs, not a specific concrete type, so callers have maximum freedom to pass in anything that fits. But the function's return type should usually be a concrete struct, not an interface, so callers get full access to everything that type offers, not just whatever a narrower interface happened to expose.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;strings&quot;
+)
+
+// takes the narrowest interface that covers what it needs: just Read
+func countBytes(r interface{ Read([]byte) (int, error) }) int {
+	buf := make([]byte, 1024)
+	total := 0
+	for {
+		n, err := r.Read(buf)
+		total += n
+		if err != nil {
+			break
+		}
+	}
+	return total
+}
+
+func main() {
+	r := strings.NewReader(&quot;count these bytes&quot;)
+	fmt.Println(countBytes(r))
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;strings&quot;
+)
+
+// takes the narrowest interface that covers what it needs: just Read
+func countBytes(r interface{ Read([]byte) (int, error) }) int {
+	buf := make([]byte, 1024)
+	total := 0
+	for {
+		n, err := r.Read(buf)
+		total += n
+		if err != nil {
+			break
+		}
+	}
+	return total
+}
+
+func main() {
+	r := strings.NewReader(&quot;count these bytes&quot;)
+	fmt.Println(countBytes(r))
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Notice `countBytes` never asked for a `*strings.Reader` specifically, just &quot;something with a Read method&quot;. That means it works unchanged with a file, a network socket, an in-memory buffer, or anything else that happens to implement `Read`. Writing the parameter as `any` concrete type would have locked callers out of all of those, for no benefit.</p>
+					<p><strong>A quick gut check</strong></p>
+					<ul><li>If you're about to write &quot;implements&quot; in a comment to explain a relationship, stop, Go has no such declaration, and the comment is doing work the compiler doesn't verify.</li><li>If a function only ever gets called with one concrete type in practice, an interface parameter is probably premature, a concrete type is simpler and just as flexible until a second caller shows up.</li><li>If you're returning an interface from a constructor-style function &quot;to allow swapping implementations later&quot;, ask whether that's a real, current need or speculative flexibility you're paying complexity for today.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: define your own interface around a stdlib type<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Define a `Stringer`-shaped interface yourself (it exists in fmt already, but build your own to see the mechanism), and pass in a type that never mentions your interface at all:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Named interface {
+	Name() string
+}
+
+type Employee struct {
+	FullName string
+}
+
+func (e Employee) Name() string {
+	return e.FullName
+}
+
+func greet(n Named) {
+	fmt.Println(&quot;Hello,&quot;, n.Name())
+}
+
+func main() {
+	greet(Employee{FullName: &quot;Priya&quot;})
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Named interface {
+	Name() string
+}
+
+type Employee struct {
+	FullName string
+}
+
+func (e Employee) Name() string {
+	return e.FullName
+}
+
+func greet(n Named) {
+	fmt.Println(&quot;Hello,&quot;, n.Name())
+}
+
+func main() {
+	greet(Employee{FullName: &quot;Priya&quot;})
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Employee never references Named anywhere in its own definition. Try adding a second type of your own with a differently-shaped Name method (different return type, or extra parameter) and confirm it fails to compile as a Named.</p>
+				</div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

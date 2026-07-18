@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="The sync Package and Data Races: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>The sync Package and Data Races · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/the-sync-package-and-data-races.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="The sync Package and Data Races" />
+		<meta property="og:description" content="The sync Package and Data Races: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/the-sync-package-and-data-races.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="The sync Package and Data Races" />
+		<meta name="twitter:description" content="The sync Package and Data Races: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="active">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>The sync Package and Data Races</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Go's official concurrency slogan is &quot;don't communicate by sharing memory, share memory by communicating&quot;, meaning: prefer passing data through channels over multiple goroutines poking at the same shared variable. But shared mutable state is sometimes genuinely the right tool, and the `sync` package is what you reach for when it is.</p>
+					<h3>sync.Mutex</h3>
+					<p>A mutex (mutual exclusion lock) guarantees only one goroutine at a time can be inside the section of code between `Lock()` and `Unlock()`. It's the direct, low-level way to protect shared state, the exact thing channels exist to often let you avoid needing.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+type SafeCounter struct {
+	mu sync.Mutex
+	n  int
+}
+
+func (c *SafeCounter) Increment() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.n++
+}
+
+func main() {
+	c := SafeCounter{}
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			c.Increment()
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println(&quot;final count:&quot;, c.n) // reliably 1000, thanks to the mutex
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+type SafeCounter struct {
+	mu sync.Mutex
+	n  int
+}
+
+func (c *SafeCounter) Increment() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.n++
+}
+
+func main() {
+	c := SafeCounter{}
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			c.Increment()
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println(&quot;final count:&quot;, c.n) // reliably 1000, thanks to the mutex
+}</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Always defer the Unlock, right after Lock, on the very next line. It's tempting to Unlock manually right before a return to 'be precise', but the moment that function grows a second return path or an early error return, a manual Unlock is one of the easiest things to forget, and a forgotten Unlock means every future Lock on that mutex blocks forever.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>sync.RWMutex</h3>
+					<p>`RWMutex` splits locking into read locks and write locks: any number of readers can hold a read lock (`RLock`/`RUnlock`) simultaneously, but a writer (`Lock`/`Unlock`) needs exclusive access, blocking out both other writers and all readers. Use it when reads vastly outnumber writes and you want concurrent readers not to block each other unnecessarily.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">type</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Cache</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	mu   </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sync</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">RWMutex</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	data </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">map</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">string</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">]</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">string</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">c </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Cache</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Get</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">key</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> string</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">string</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	c.mu.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">RLock</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">()</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	defer</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> c.mu.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">RUnlock</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">()</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> c.data[key]</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">c </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Cache</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Set</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">key</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">value</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> string</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	c.mu.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Lock</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">()</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	defer</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> c.mu.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Unlock</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">()</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	c.data[key] </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> value</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>sync/atomic</h3>
+					<p>For a single counter or flag, `sync/atomic` gives you lock-free atomic operations, often cheaper than a full mutex for that narrow case. Go 1.19 added typed atomic wrappers (`atomic.Int64`, `atomic.Bool`, and friends) that are much less error-prone than the older raw-pointer-based `atomic.AddInt64(&amp;n, 1)` style.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+	&quot;sync/atomic&quot;
+)
+
+func main() {
+	var counter atomic.Int64
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			counter.Add(1)
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println(&quot;final count:&quot;, counter.Load())
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+	&quot;sync/atomic&quot;
+)
+
+func main() {
+	var counter atomic.Int64
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			counter.Add(1)
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println(&quot;final count:&quot;, counter.Load())
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>What a data race actually is</h3>
+					<p>A data race is two or more goroutines accessing the same memory at the same time, with at least one of them writing, and no synchronization between them. The outcome is officially undefined by the language spec, not just &quot;probably fine&quot;, genuinely undefined: the compiler is permitted to do things you wouldn't expect, because Go's memory model assumes races don't happen and optimizes accordingly.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+func main() {
+	counter := 0 // no mutex, no atomic, plain shared int
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			counter++ // data race: read-modify-write with no synchronization
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println(&quot;final count:&quot;, counter) // often not 1000, and which wrong number varies by run
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+func main() {
+	counter := 0 // no mutex, no atomic, plain shared int
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			counter++ // data race: read-modify-write with no synchronization
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println(&quot;final count:&quot;, counter) // often not 1000, and which wrong number varies by run
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Run this enough times and you'll often see a number less than 1000, because `counter++` isn't atomic, it's a read, an increment, and a write, and two goroutines can interleave those three steps and stomp on each other's update. The specific wrong number you get isn't even deterministic across runs, which is exactly what makes data races so miserable to debug from symptoms alone.</p>
+					<h3>The race detector</h3>
+					<p>Go ships a built-in race detector: run any program or test with `-race` (`go run -race main.go`, `go test -race ./...`) and the runtime instruments every memory access, flagging races as they actually happen during that specific execution, with a stack trace pointing at both conflicting accesses.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>The race detector only catches races that actually occur during that run, it can't prove their absence, only their presence when they happen to trigger. Run your test suite with -race routinely, not just once, especially for anything touching goroutines, and treat any race it reports as a real bug to fix immediately, never as a false positive to silence.</p>
+				</div>
+
+<div class="prose reveal">
+					<p><strong>Choosing between channels and sync</strong></p>
+					<ul><li>Default to channels when the goal is passing ownership of data between goroutines, a pipeline, a worker pool, a result being handed off. That's exactly what &quot;share memory by communicating&quot; means in practice.</li><li>Reach for a mutex when several goroutines all need to read and write the same long-lived state (a cache, an in-memory counter, connection pool bookkeeping) and there's no natural 'ownership handoff' to model with a channel.</li><li>Reach for sync/atomic only for a single simple counter or flag, the moment you need to update more than one related value together consistently, you need a mutex instead, atomics don't compose across multiple fields.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: fix the data race with a mutex<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Take the racy counter++ example above and fix it properly with a Mutex, then confirm the final count is reliably 1000 across several runs:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+func main() {
+	counter := 0
+	var mu sync.Mutex
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			mu.Lock()
+			counter++
+			mu.Unlock()
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println(&quot;final count:&quot;, counter)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;sync&quot;
+)
+
+func main() {
+	counter := 0
+	var mu sync.Mutex
+	var wg sync.WaitGroup
+
+	for i := 0; i &lt; 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			mu.Lock()
+			counter++
+			mu.Unlock()
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println(&quot;final count:&quot;, counter)
+}</pre></noscript></div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="The Absolute Basics: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>The Absolute Basics · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/the-absolute-basics.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="The Absolute Basics" />
+		<meta property="og:description" content="The Absolute Basics: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/the-absolute-basics.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="The Absolute Basics" />
+		<meta name="twitter:description" content="The Absolute Basics: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="active">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>The Absolute Basics</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Every Go program starts life as a package. The file that produces a runnable binary declares <code>package main</code> and defines a <code>func main()</code> with no parameters and no return value. That's the entire entry-point contract, nothing more to configure.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	fmt.Println(&quot;hello, go&quot;)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	fmt.Println(&quot;hello, go&quot;)
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Three commands cover almost everything you'll do day to day. <code>go run main.go</code> compiles and runs in one step, throwing away the binary afterward, good for quick iteration. <code>go build</code> compiles into a binary in the current directory and leaves it there. <code>go install</code> does the same but places the binary in your <code>GOPATH/bin</code> (or <code>GOBIN</code>), so it ends up on your <code>PATH</code> if that's configured, useful for tools you want available everywhere.</p>
+					<p><strong>Imports</strong></p>
+					<p>An <code>import</code> block lists the packages a file depends on. The standard library path is just the package name for single-word packages (<code>fmt</code>, <code>os</code>, <code>strings</code>) and a slash-separated path for nested ones (<code>net/http</code>, <code>encoding/json</code>). Go is strict about this: importing a package and not using it is a compile error, not a warning. There's no such thing as an unused import lingering in committed code.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">import</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span></span>
+<span class="line"><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">	"</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">fmt</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">	"</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">os</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">	"</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">strings</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>No semicolons, mandatory braces</strong></p>
+					<p>Go statements don't end in semicolons in the source you write. The compiler inserts them automatically based on a simple rule (a semicolon gets added at the end of a line if the last token could end a statement), which is also why the opening brace of a block has to be on the same line as whatever it belongs to. Put it on the next line and the automatic semicolon insertion breaks your function.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	// this compiles
+	if true {
+		fmt.Println(&quot;fine&quot;)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	// this compiles
+	if true {
+		fmt.Println(&quot;fine&quot;)
+	}
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Putting <code>{</code> on its own line after <code>func main()</code> or <code>if true</code> is a real compile error in Go, not a style nit. The formatter (<code>gofmt</code>) enforces brace placement along with everything else, which is part of why Go code across different codebases looks so similar.</p>
+				</div>
+
+<div class="prose reveal">
+					<p><strong>Variables and zero values</strong></p>
+					<p><code>var x int</code> declares a variable with an explicit type. Left uninitialized, it gets that type's zero value, not garbage memory: <code>0</code> for numbers, <code>&quot;&quot;</code> for strings, <code>false</code> for bools, <code>nil</code> for pointers/slices/maps/interfaces/channels/functions. This is a real safety guarantee, not a convention, every variable is always in a valid, defined state.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	var count int
+	var name string
+	var ready bool
+	fmt.Println(count, name, ready)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	var count int
+	var name string
+	var ready bool
+	fmt.Println(count, name, ready)
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Inside a function, <code>:=</code> declares and initializes in one step, inferring the type from the right-hand side. It's the idiomatic default for local variables. <code>var</code> is for when you want to be explicit about the type, when you're declaring without initializing, or at package level (<code>:=</code> only works inside functions).</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	x := 42       // inferred as int
+	name := &quot;Ada&quot; // inferred as string
+	fmt.Println(x, name)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	x := 42       // inferred as int
+	name := &quot;Ada&quot; // inferred as string
+	fmt.Println(x, name)
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>Constants and iota</strong></p>
+					<p><code>const</code> declares a compile-time constant. Constants can't be reassigned, and untyped numeric constants (like <code>const Pi = 3.14159</code>) can be used anywhere a compatible numeric type is expected without an explicit conversion, which typed variables can't do.</p>
+					<p><code>iota</code> is Go's mechanism for auto-incrementing values inside a <code>const</code> block, most commonly used to build enumerations. It resets to 0 at the start of each <code>const</code> block and increments by one on each subsequent line.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Weekday int
+
+const (
+	Sunday Weekday = iota
+	Monday
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+)
+
+func main() {
+	fmt.Println(Sunday, Wednesday, Saturday)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Weekday int
+
+const (
+	Sunday Weekday = iota
+	Monday
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+)
+
+func main() {
+	fmt.Println(Sunday, Wednesday, Saturday)
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: add a <code>String()</code> method to <code>Weekday</code> (a switch over the value returning the day's name) and print <code>Wednesday</code> again. This is the standard pattern for readable enums in Go, since Go has no built-in enum type with named printing.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

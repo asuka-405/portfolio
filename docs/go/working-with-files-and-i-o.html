@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Working with Files and I/O: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Working with Files and I/O · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/working-with-files-and-i-o.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Working with Files and I/O" />
+		<meta property="og:description" content="Working with Files and I/O: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/working-with-files-and-i-o.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Working with Files and I/O" />
+		<meta name="twitter:description" content="Working with Files and I/O: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="active">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Working with Files and I/O</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<h3>io.Reader and io.Writer</h3>
+					<p>If Go's standard library has one idea that pays for the whole design, it's these two interfaces:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">type</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Reader</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> interface</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	Read</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">p</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> []</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">byte</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) (</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">n</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">err</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> error</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">type</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Writer</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> interface</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">	Write</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">p</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> []</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">byte</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) (</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">n</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">err</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> error</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>That's it. Anything that can produce a stream of bytes implements <code>Reader</code>; anything that can consume one implements <code>Writer</code>. Files, network connections, in-memory buffers, HTTP request/response bodies, compressors, hashers, they all implement these same two interfaces, which means code written against <code>io.Reader</code>/<code>io.Writer</code> works with all of them without modification. A function that copies data doesn't need to know or care whether it's copying from a file to a network socket or from a string to an in-memory buffer.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;io&quot;
+	&quot;strings&quot;
+)
+
+func main() {
+	var sb strings.Builder
+	reader := strings.NewReader(&quot;data flows through io.Reader/io.Writer\n&quot;)
+	n, err := io.Copy(&amp;sb, reader)
+	if err != nil {
+		fmt.Println(&quot;copy error:&quot;, err)
+		return
+	}
+	fmt.Printf(&quot;copied %d bytes: %s&quot;, n, sb.String())
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;io&quot;
+	&quot;strings&quot;
+)
+
+func main() {
+	var sb strings.Builder
+	reader := strings.NewReader(&quot;data flows through io.Reader/io.Writer\n&quot;)
+	n, err := io.Copy(&amp;sb, reader)
+	if err != nil {
+		fmt.Println(&quot;copy error:&quot;, err)
+		return
+	}
+	fmt.Printf(&quot;copied %d bytes: %s&quot;, n, sb.String())
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>Working with files</h3>
+					<p>The <code>os</code> package is where file operations live: <code>os.Open</code> for reading, <code>os.Create</code> for writing (truncating if it exists), <code>os.OpenFile</code> when you need finer control over flags/permissions. Always pair opening with <code>defer f.Close()</code> right after checking the open succeeded, same pattern as the defer chapter.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">f, err </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> os.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Open</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"data.txt"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> err </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">!=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> nil</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> err</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">defer</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> f.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Close</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// f is an io.Reader, use it with anything that accepts one</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>bufio for buffered, line-based reading</h3>
+					<p>Reading a file byte by byte or in small unbuffered reads is slow (each <code>Read</code> call can mean a system call). <code>bufio.NewReader</code>/<code>bufio.NewScanner</code> wrap a reader with an internal buffer, and <code>Scanner</code> in particular makes line-by-line reading a one-liner:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;bufio&quot;
+	&quot;fmt&quot;
+	&quot;strings&quot;
+)
+
+func main() {
+	input := &quot;first line\nsecond line\nthird line\n&quot;
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	lineNum := 1
+	for scanner.Scan() {
+		fmt.Printf(&quot;%d: %s\n&quot;, lineNum, scanner.Text())
+		lineNum++
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Println(&quot;scan error:&quot;, err)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;bufio&quot;
+	&quot;fmt&quot;
+	&quot;strings&quot;
+)
+
+func main() {
+	input := &quot;first line\nsecond line\nthird line\n&quot;
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	lineNum := 1
+	for scanner.Scan() {
+		fmt.Printf(&quot;%d: %s\n&quot;, lineNum, scanner.Text())
+		lineNum++
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Println(&quot;scan error:&quot;, err)
+	}
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><code>bufio.NewWriter</code> is the write-side equivalent: batches small writes into fewer underlying system calls, but remember to call <code>Flush()</code> before the program exits or you'll lose whatever's still sitting in the buffer.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: use <code>bufio.NewScanner</code> to count how many lines in a multi-line string contain the word &quot;error&quot; (case-insensitive).</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

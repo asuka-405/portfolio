@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Channels: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Channels · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/channels.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Channels" />
+		<meta property="og:description" content="Channels: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/channels.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Channels" />
+		<meta name="twitter:description" content="Channels: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="active">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Channels</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>A channel is a typed pipe: one goroutine sends a value in, another receives it out. It's Go's primary tool for goroutines to communicate safely, and it's built into the language itself rather than being a library on top of threads.</p>
+					<h3>Unbuffered vs buffered</h3>
+					<p>An unbuffered channel (`make(chan int)`) has no internal storage. A send blocks until a receiver is ready to take the value, right at that instant, this is called a rendezvous: sender and receiver briefly synchronize. A buffered channel (`make(chan int, 3)`) has room for a fixed number of values, a send only blocks once the buffer is full, and a receive only blocks once the buffer is empty.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	unbuffered := make(chan string)
+	go func() {
+		unbuffered &lt;- &quot;hello&quot; // blocks here until main receives below
+	}()
+	fmt.Println(&lt;-unbuffered)
+
+	buffered := make(chan string, 2)
+	buffered &lt;- &quot;a&quot; // doesn't block, buffer has room
+	buffered &lt;- &quot;b&quot; // still doesn't block, buffer now full
+	fmt.Println(&lt;-buffered, &lt;-buffered)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	unbuffered := make(chan string)
+	go func() {
+		unbuffered &lt;- &quot;hello&quot; // blocks here until main receives below
+	}()
+	fmt.Println(&lt;-unbuffered)
+
+	buffered := make(chan string, 2)
+	buffered &lt;- &quot;a&quot; // doesn't block, buffer has room
+	buffered &lt;- &quot;b&quot; // still doesn't block, buffer now full
+	fmt.Println(&lt;-buffered, &lt;-buffered)
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>select</h3>
+					<p>`select` waits on multiple channel operations at once, and proceeds with whichever one is ready first. If more than one is ready simultaneously, Go picks one at random, deliberately, so you don't accidentally rely on an ordering that was never guaranteed.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;time&quot;
+)
+
+func main() {
+	c1 := make(chan string)
+	c2 := make(chan string)
+
+	go func() {
+		time.Sleep(50 * time.Millisecond)
+		c1 &lt;- &quot;from c1&quot;
+	}()
+	go func() {
+		time.Sleep(100 * time.Millisecond)
+		c2 &lt;- &quot;from c2&quot;
+	}()
+
+	for i := 0; i &lt; 2; i++ {
+		select {
+		case msg1 := &lt;-c1:
+			fmt.Println(msg1)
+		case msg2 := &lt;-c2:
+			fmt.Println(msg2)
+		}
+	}
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;time&quot;
+)
+
+func main() {
+	c1 := make(chan string)
+	c2 := make(chan string)
+
+	go func() {
+		time.Sleep(50 * time.Millisecond)
+		c1 &lt;- &quot;from c1&quot;
+	}()
+	go func() {
+		time.Sleep(100 * time.Millisecond)
+		c2 &lt;- &quot;from c2&quot;
+	}()
+
+	for i := 0; i &lt; 2; i++ {
+		select {
+		case msg1 := &lt;-c1:
+			fmt.Println(msg1)
+		case msg2 := &lt;-c2:
+			fmt.Println(msg2)
+		}
+	}
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Add a `default` case to a `select`, and it becomes non-blocking: if no channel operation is immediately ready, `default` runs instead of waiting. That's the standard way to write &quot;check this channel, but don't wait around if there's nothing there&quot;.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">select</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">case</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> msg </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;-</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">ch:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	fmt.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Println</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"got:"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, msg)</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">default</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	fmt.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Println</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"nothing ready right now"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>Closing channels</h3>
+					<p>`close(ch)` signals that no more values will ever be sent. Receivers can keep draining any values still buffered, but once the channel is fully drained, further receives return the zero value immediately instead of blocking. The two-value receive form (`v, ok := &lt;-ch`) tells you which situation you're in: `ok` is `false` once the channel is closed and drained.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	ch := make(chan int, 3)
+	ch &lt;- 1
+	ch &lt;- 2
+	ch &lt;- 3
+	close(ch)
+
+	for {
+		v, ok := &lt;-ch
+		if !ok {
+			fmt.Println(&quot;channel closed and drained&quot;)
+			break
+		}
+		fmt.Println(&quot;received:&quot;, v)
+	}
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	ch := make(chan int, 3)
+	ch &lt;- 1
+	ch &lt;- 2
+	ch &lt;- 3
+	close(ch)
+
+	for {
+		v, ok := &lt;-ch
+		if !ok {
+			fmt.Println(&quot;channel closed and drained&quot;)
+			break
+		}
+		fmt.Println(&quot;received:&quot;, v)
+	}
+}</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>Only the sender should ever close a channel, never the receiver, and never close a channel more than once (that panics). If multiple goroutines might send on the same channel, closing gets genuinely tricky, and often the cleanest fix is a separate 'done' channel purely for the shutdown signal instead of closing the data channel itself.</p>
+				</div>
+
+<div class="prose reveal">
+					<p>A `range` loop over a channel is the idiomatic way to drain it until closed, it does exactly the `v, ok := &lt;-ch; if !ok { break }` dance above, automatically:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> v </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> range</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> ch { </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// exits automatically once ch is closed and drained</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	fmt.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Println</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(v)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>The nil channel gotcha</h3>
+					<p>An uninitialized channel variable (`var ch chan int`) is `nil`, and both sending to and receiving from a nil channel block forever, not panic, just block, permanently. This is occasionally useful on purpose (disabling a `select` case by nilling out its channel), but it's a real footgun when it happens by accident, usually from forgetting to initialize a channel field with `make` before using it.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	var ch chan int // nil, never initialized with make
+	fmt.Println(&quot;about to receive from a nil channel, this will hang&quot;)
+	&lt;-ch // blocks forever, this program never finishes on its own
+	fmt.Println(&quot;this line never runs&quot;)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	var ch chan int // nil, never initialized with make
+	fmt.Println(&quot;about to receive from a nil channel, this will hang&quot;)
+	&lt;-ch // blocks forever, this program never finishes on its own
+	fmt.Println(&quot;this line never runs&quot;)
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><strong>Choosing between them at a glance</strong></p>
+					<ul><li>Unbuffered: use when you want a hard synchronization point, the sender genuinely should wait until the receiver is ready, not just fire-and-forget.</li><li>Buffered: use when the sender should be able to get a bit ahead of the receiver without blocking, a small, deliberate amount of slack, not an unbounded queue.</li><li>Never use an unbounded buffer size as a substitute for proper backpressure, a channel is not a magic infinite queue, and a producer that outpaces its consumer forever will eventually exhaust memory regardless of buffer size.</li></ul>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: fix the nil channel hang<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>The example above hangs forever. Fix it by initializing the channel with make and sending a value from a goroutine before the receive:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	ch := make(chan int) // initialized this time
+	go func() {
+		ch &lt;- 42
+	}()
+	fmt.Println(&quot;received:&quot;, &lt;-ch)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	ch := make(chan int) // initialized this time
+	go func() {
+		ch &lt;- 42
+	}()
+	fmt.Println(&quot;received:&quot;, &lt;-ch)
+}</pre></noscript></div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

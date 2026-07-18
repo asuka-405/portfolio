@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="The Standard Library Philosophy: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>The Standard Library Philosophy · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/the-standard-library-philosophy.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="The Standard Library Philosophy" />
+		<meta property="og:description" content="The Standard Library Philosophy: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/the-standard-library-philosophy.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="The Standard Library Philosophy" />
+		<meta name="twitter:description" content="The Standard Library Philosophy: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="active">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>The Standard Library Philosophy</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Go ships an unusually complete standard library for a language its age. HTTP clients and servers, JSON, XML, cryptography, compression, templating, testing, all in the box, no third-party package required to get something real running. That's a deliberate design choice, not an accident, and it changes how you evaluate whether you need a dependency at all.</p>
+					<h3>Why this matters practically</h3>
+					<p>In a lot of ecosystems, &quot;I need to make an HTTP request&quot; or &quot;I need to hash a password&quot; means picking a third-party library first, evaluating its maintenance status, and adding it to your dependency tree. In Go, the honest first move is checking whether <code>net/http</code>, <code>crypto/bcrypt</code>, or similar already does it, because it usually does, and it's maintained by the Go team with the same backward-compatibility guarantees as the language itself.</p>
+					<h3>A practical tour (not exhaustive)</h3>
+					<ul><li><code>net/http</code>, HTTP client and server, no framework needed for a basic server (see the next chapter)</li><li><code>encoding/json</code>, <code>encoding/xml</code>, <code>encoding/csv</code>, structured data formats</li><li><code>context</code>, cancellation and deadline propagation (its own dedicated coverage in the concurrency chapters)</li><li><code>crypto/*</code> (sha256, bcrypt via golang.org/x/crypto, tls), cryptography and secure connections</li><li><code>time</code>, dates, durations, timers, tickers</li><li><code>regexp</code>, regular expressions</li><li><code>os</code>, <code>io</code>, <code>bufio</code>, files and streams (previous chapter)</li><li><code>sync</code>, <code>sync/atomic</code>, concurrency primitives (previous chapters)</li><li><code>testing</code>, tests and benchmarks, no external framework (previous chapter)</li></ul>
+					<p>Notice <code>golang.org/x/crypto</code> in that list: the <code>golang.org/x/*</code> repositories are maintained by the Go team but ship outside the main standard library (usually because they need to evolve faster than the stdlib's stability guarantees allow, or because they're genuinely optional extensions). They're not third-party in the &quot;random package on the internet&quot; sense, more like an extended standard library with slightly looser guarantees.</p>
+					<blockquote>The practical habit worth building: before reaching for a dependency, spend two minutes checking the standard library and the golang.org/x/* extensions. Often the thing you need is already there, already tested, and already going to be maintained for as long as Go itself is.</blockquote>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

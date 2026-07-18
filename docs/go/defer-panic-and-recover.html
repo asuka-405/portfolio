@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Defer, Panic, and Recover: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Defer, Panic, and Recover · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/defer-panic-and-recover.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Defer, Panic, and Recover" />
+		<meta property="og:description" content="Defer, Panic, and Recover: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/defer-panic-and-recover.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Defer, Panic, and Recover" />
+		<meta name="twitter:description" content="Defer, Panic, and Recover: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="active">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Defer, Panic, and Recover</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>These three are related but solve different problems, and confusing them is one of the more common ways newcomers write Go that technically works but reads oddly to anyone else.</p>
+					<h3>defer</h3>
+					<p><code>defer</code> schedules a function call to run when the surrounding function returns, regardless of how it returns (normal return, or a panic unwinding through it). The classic use is guaranteeing cleanup happens next to the code that created the thing needing cleanup, instead of scattered at every possible exit point:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func process() {
+	fmt.Println(&quot;acquiring resource&quot;)
+	defer fmt.Println(&quot;releasing resource&quot;)
+
+	fmt.Println(&quot;doing work&quot;)
+	if true {
+		fmt.Println(&quot;early return path&quot;)
+		return
+	}
+	fmt.Println(&quot;this line never runs&quot;)
+}
+
+func main() {
+	process()
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func process() {
+	fmt.Println(&quot;acquiring resource&quot;)
+	defer fmt.Println(&quot;releasing resource&quot;)
+
+	fmt.Println(&quot;doing work&quot;)
+	if true {
+		fmt.Println(&quot;early return path&quot;)
+		return
+	}
+	fmt.Println(&quot;this line never runs&quot;)
+}
+
+func main() {
+	process()
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>Multiple defers in one function run in LIFO order, last deferred, first executed, which matters when the cleanups have a dependency order (close the file you opened last, first):</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	defer fmt.Println(&quot;1: runs last&quot;)
+	defer fmt.Println(&quot;2: runs second&quot;)
+	defer fmt.Println(&quot;3: runs first&quot;)
+	fmt.Println(&quot;main body&quot;)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	defer fmt.Println(&quot;1: runs last&quot;)
+	defer fmt.Println(&quot;2: runs second&quot;)
+	defer fmt.Println(&quot;3: runs first&quot;)
+	fmt.Println(&quot;main body&quot;)
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p>In real code, <code>defer</code> is how you close files (<code>defer f.Close()</code>), unlock mutexes (<code>defer mu.Unlock()</code>), and generally pair &quot;acquire&quot; with &quot;release&quot; right next to each other instead of trusting every return path to remember.</p>
+					<h3>panic</h3>
+					<p><code>panic</code> is Go's mechanism for &quot;this program cannot continue correctly&quot;, and it's deliberately distinct from <code>error</code>. An <code>error</code> is an expected, recoverable outcome your caller should handle (a file not found, a network timeout). A panic is for programmer mistakes and truly unrecoverable states: an index out of range, a nil map write, an explicit <code>panic(&quot;invariant violated&quot;)</code> when your own code detects it's in a state that should be impossible.</p>
+					<p>Mixing these up is the actual pitfall: don't panic for things a caller could reasonably expect and handle (that's what <code>error</code> is for), and don't return an <code>error</code> for a genuine programming bug you'd rather crash loudly on during development.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func mustPositive(n int) int {
+	if n &lt; 0 {
+		panic(fmt.Sprintf(&quot;mustPositive: got negative value %d&quot;, n))
+	}
+	return n
+}
+
+func main() {
+	fmt.Println(mustPositive(5))
+	fmt.Println(mustPositive(-1))
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func mustPositive(n int) int {
+	if n &lt; 0 {
+		panic(fmt.Sprintf(&quot;mustPositive: got negative value %d&quot;, n))
+	}
+	return n
+}
+
+func main() {
+	fmt.Println(mustPositive(5))
+	fmt.Println(mustPositive(-1))
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>recover</h3>
+					<p><code>recover</code> stops a panic from propagating, but only when called directly inside a deferred function. Called anywhere else, it does nothing and returns nil.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func safeDivide(a, b int) (result int, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = fmt.Errorf(&quot;recovered from panic: %v&quot;, r)
+		}
+	}()
+	result = a / b
+	return
+}
+
+func main() {
+	result, err := safeDivide(10, 0)
+	if err != nil {
+		fmt.Println(&quot;error:&quot;, err)
+	} else {
+		fmt.Println(&quot;result:&quot;, result)
+	}
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func safeDivide(a, b int) (result int, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = fmt.Errorf(&quot;recovered from panic: %v&quot;, r)
+		}
+	}()
+	result = a / b
+	return
+}
+
+func main() {
+	result, err := safeDivide(10, 0)
+	if err != nil {
+		fmt.Println(&quot;error:&quot;, err)
+	} else {
+		fmt.Println(&quot;result:&quot;, result)
+	}
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<blockquote>Recover at most at a goroutine or request boundary (an HTTP handler, a worker goroutine's top level), so one bad input can't take down the whole process. Don't use panic/recover as a general substitute for normal error returns, that's not what it's for and it makes control flow much harder to follow.</blockquote>
+				</div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: write a function that recovers from a panic caused by indexing past the end of a slice, and returns a normal error instead. Confirm the program keeps running afterward instead of crashing.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

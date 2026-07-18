@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Building a Minimal HTTP Server: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Building a Minimal HTTP Server · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/building-a-minimal-http-server.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Building a Minimal HTTP Server" />
+		<meta property="og:description" content="Building a Minimal HTTP Server: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/building-a-minimal-http-server.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Building a Minimal HTTP Server" />
+		<meta name="twitter:description" content="Building a Minimal HTTP Server: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="active">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Building a Minimal HTTP Server</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>This is meant to be a genuinely practical walkthrough, not just syntax. Here's a real, complete, minimal HTTP server using only the standard library.</p>
+					<h3>The basics: ServeMux and handlers</h3>
+					<p>A handler is anything satisfying <code>http.Handler</code> (a <code>ServeHTTP(w http.ResponseWriter, r *http.Request)</code> method), but in practice you'll mostly write plain functions and register them with <code>http.HandleFunc</code>, which wraps them into handlers for you:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;net/http&quot;
+)
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, &quot;hello, %s\n&quot;, r.URL.Query().Get(&quot;name&quot;))
+}
+
+func main() {
+	http.HandleFunc(&quot;/hello&quot;, helloHandler)
+	fmt.Println(&quot;this would normally block on :8080, see the note below&quot;)
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;net/http&quot;
+)
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, &quot;hello, %s\n&quot;, r.URL.Query().Get(&quot;name&quot;))
+}
+
+func main() {
+	http.HandleFunc(&quot;/hello&quot;, helloHandler)
+	fmt.Println(&quot;this would normally block on :8080, see the note below&quot;)
+}
+</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>This example is meant to illustrate the pattern and won't let you actually curl it from this embedded panel (no real network access in the sandbox). Run it locally with <code>http.ListenAndServe(&quot;:8080&quot;, nil)</code> uncommented at the end of main, then visit http://localhost:8080/hello?name=World in a browser to see it respond for real.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>A slightly more complete example</h3>
+					<p>Real handlers usually need to inspect the method, read the URL path, and write a proper status code. <code>http.ResponseWriter</code>'s <code>WriteHeader</code> sets the status; if you never call it, the first <code>Write</code> implicitly sends a 200.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">package</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">import</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span></span>
+<span class="line"><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">	"</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">encoding/json</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">	"</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">net/http</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">type</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> Health</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> struct</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	Status </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">string</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> `json:"status"`</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> healthHandler</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">w</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> http</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">ResponseWriter</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">r</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">http</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Request</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> r.Method </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">!=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> http.MethodGet {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">		http.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Error</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(w, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"method not allowed"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, http.StatusMethodNotAllowed)</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">		return</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	}</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	w.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Header</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">().</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Set</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Content-Type"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"application/json"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	json.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">NewEncoder</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(w).</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Encode</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Health</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{Status: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"ok"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">})</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> main</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">() {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	mux </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> http.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">NewServeMux</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">()</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	mux.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">HandleFunc</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/health"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, healthHandler)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	http.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">ListenAndServe</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">":8080"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, mux)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Using an explicit <code>http.NewServeMux()</code> instead of the default global mux (the <code>nil</code> in the first example implicitly uses <code>http.DefaultServeMux</code>) is the better habit once a program has more than a couple routes: it avoids accidental route collisions between packages that both register against the global default.</p>
+					<h3>The flag package for CLI configuration</h3>
+					<p>Servers usually need a configurable port or a few other startup options. <code>flag</code> handles this without a third-party CLI framework:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">var</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> port </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> flag.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"port"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">8080</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"port to listen on"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> main</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">() {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	flag.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Parse</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">()</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	addr </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> fmt.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Sprintf</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">":</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">%d</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">*</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">port)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	http.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">ListenAndServe</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(addr, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">nil</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Run it as <code>./server -port 9090</code> and <code>*port</code> reflects the flag value (or the default, 8080, if the flag wasn't passed). <code>flag</code> is enough for straightforward tools; genuinely complex CLIs with subcommands often reach for a third-party library like cobra, but that's a scale decision, not a default.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: extend the health-check handler to also return the current time in the JSON response, then run it locally and hit it with curl.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

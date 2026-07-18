@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Generics: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Generics · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/generics.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Generics" />
+		<meta property="og:description" content="Generics: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/generics.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Generics" />
+		<meta name="twitter:description" content="Generics: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="active">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Generics</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>Go got generics in 1.18, later than most languages with the feature, and the design shows some restraint that's worth understanding rather than just tolerating.</p>
+					<h3>Type parameters</h3>
+					<p>A generic function declares one or more type parameters in square brackets before its normal parameter list:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func Largest[T int | float64](items []T) T {
+	largest := items[0]
+	for _, item := range items[1:] {
+		if item &gt; largest {
+			largest = item
+		}
+	}
+	return largest
+}
+
+func main() {
+	fmt.Println(Largest([]int{3, 7, 2, 9, 4}))
+	fmt.Println(Largest([]float64{1.5, 2.25, 0.75}))
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func Largest[T int | float64](items []T) T {
+	largest := items[0]
+	for _, item := range items[1:] {
+		if item &gt; largest {
+			largest = item
+		}
+	}
+	return largest
+}
+
+func main() {
+	fmt.Println(Largest([]int{3, 7, 2, 9, 4}))
+	fmt.Println(Largest([]float64{1.5, 2.25, 0.75}))
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<p><code>T</code> here is constrained to <code>int | float64</code>, an inline union of the types the function is allowed to work with. Without a constraint, the compiler has no idea whether <code>&gt;</code> is even defined for whatever <code>T</code> turns out to be, and generic code that doesn't compile for every possible <code>T</code> doesn't compile at all.</p>
+					<h3>Constraints</h3>
+					<p>Two built-in constraints cover most needs. <code>any</code> (an alias for <code>interface{}</code>) accepts literally anything, useful when your function doesn't actually operate on the values themselves (a generic <code>Filter</code> or <code>Map</code> function, say). <code>comparable</code> accepts any type that supports <code>==</code> and <code>!=</code>, which is what you need for things like a generic set or a function that checks for duplicates.</p>
+					<p>You can also write your own constraint as an interface listing the allowed types, and the <code>~</code> prefix matters: <code>~int</code> means &quot;int, or any named type whose underlying type is int&quot;, not just the literal <code>int</code> type. That distinction is the difference between a constraint that also accepts <code>type UserID int</code> and one that rejects it.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Number interface {
+	~int | ~int64 | ~float64
+}
+
+func Sum[T Number](items []T) T {
+	var total T
+	for _, item := range items {
+		total += item
+	}
+	return total
+}
+
+type Cents int64
+
+func main() {
+	fmt.Println(Sum([]int{1, 2, 3}))
+	fmt.Println(Sum([]Cents{100, 250, 75}))
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Number interface {
+	~int | ~int64 | ~float64
+}
+
+func Sum[T Number](items []T) T {
+	var total T
+	for _, item := range items {
+		total += item
+	}
+	return total
+}
+
+type Cents int64
+
+func main() {
+	fmt.Println(Sum([]int{1, 2, 3}))
+	fmt.Println(Sum([]Cents{100, 250, 75}))
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>The constraints, slices, maps, and cmp packages</h3>
+					<p>The standard library ships small packages of generic helpers built on top of this feature: <code>slices</code> (sorting, searching, comparing slices), <code>maps</code> (extracting keys/values, comparing maps), and <code>cmp</code> (an <code>Ordered</code> constraint and comparison helpers). Reach for these before writing your own generic sort or contains-check, they're maintained, tested, and idiomatic.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import (
+	&quot;fmt&quot;
+	&quot;slices&quot;
+)
+
+func main() {
+	nums := []int{5, 2, 8, 1, 9}
+	slices.Sort(nums)
+	fmt.Println(nums)
+	fmt.Println(slices.Contains(nums, 8))
+	fmt.Println(slices.Max(nums))
+}
+"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;slices&quot;
+)
+
+func main() {
+	nums := []int{5, 2, 8, 1, 9}
+	slices.Sort(nums)
+	fmt.Println(nums)
+	fmt.Println(slices.Contains(nums, 8))
+	fmt.Println(slices.Max(nums))
+}
+</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>Where generics actually help</h3>
+					<p>The honest case for generics in Go is narrow: container types (a generic <code>Stack[T]</code> or <code>Set[T]</code>), algorithms that operate identically regardless of element type (sort, filter, map, reduce over any slice), and utility functions that would otherwise be duplicated per type or written against <code>interface{}</code> with runtime type assertions scattered through the body.</p>
+					<p>Before generics, this duplication was genuinely painful:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> SumInts</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">items</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> []</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	var</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> total </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> _, item </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> range</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> items {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">		total </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> item</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	}</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> total</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">func</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> SumFloats</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">items</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> []</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">float64</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">float64</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> {</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	var</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> total </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">float64</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> _, item </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> range</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> items {</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">		total </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> item</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">	}</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">	return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> total</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// ...and again for every other numeric type you need it for</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Generics collapse that into the single <code>Sum[T Number]</code> shown above. That's the win: less duplication, not &quot;generics because other languages have them.&quot;</p>
+					<p><strong>When generics don't help</strong></p>
+					<p>If what you actually need is polymorphism over BEHAVIOR (different types that do the same kind of thing but with different logic), that's what interfaces are for, and reaching for a type parameter there usually makes the code harder to read for no real benefit. A <code>Shape</code> interface with an <code>Area()</code> method is still the right tool for a collection of different shapes; making <code>Area</code> generic over shape types wouldn't simplify anything, it would just move a runtime decision into a compile-time one that didn't need to move.</p>
+					<blockquote>Rule of thumb: if the function's logic is genuinely identical regardless of type, generics probably help. If different types need to behave differently, that's what interfaces already solve, and generics won't make it cleaner.</blockquote>
+				</div>
+
+				<div class="callout reveal">
+					<p>Try it yourself: write a generic <code>Filter[T any](items []T, keep func(T) bool) []T</code> function, then use it to filter a slice of ints for even numbers and a slice of strings for non-empty ones in the same program.</p>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

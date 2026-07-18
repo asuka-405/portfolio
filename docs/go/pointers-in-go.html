@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Pointers in Go: Go, End to End" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Pointers in Go · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/go/pointers-in-go.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Pointers in Go" />
+		<meta property="og:description" content="Pointers in Go: Go, End to End" />
+		<meta property="og:url" content="https://archdev.in/docs/go/pointers-in-go.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Pointers in Go" />
+		<meta name="twitter:description" content="Pointers in Go: Go, End to End" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">📄 Go, End to End</a>
+				</div>
+				<ul>
+					<li>
+						<a href="the-absolute-basics.html" class="">The Absolute Basics</a>
+					</li>
+					<li>
+						<a href="types-and-the-type-system.html" class="">Types and the Type System</a>
+					</li>
+					<li>
+						<a href="control-flow.html" class="">Control Flow</a>
+					</li>
+					<li>
+						<a href="functions.html" class="">Functions</a>
+					</li>
+					<li>
+						<a href="packages-and-modules.html" class="">Packages and Modules</a>
+					</li>
+					<li>
+						<a href="error-handling-the-go-way.html" class="">Error Handling the Go Way</a>
+					</li>
+					<li>
+						<a href="arrays-slices-and-maps.html" class="">Arrays, Slices, and Maps</a>
+					</li>
+					<li>
+						<a href="strings-runes-and-bytes.html" class="">Strings, Runes, and Bytes</a>
+					</li>
+					<li>
+						<a href="structs-and-methods.html" class="">Structs and Methods</a>
+					</li>
+					<li>
+						<a href="interfaces.html" class="">Interfaces</a>
+					</li>
+					<li>
+						<a href="composition-over-inheritance.html" class="">Composition Over Inheritance</a>
+					</li>
+					<li>
+						<a href="pointers-in-go.html" class="active">Pointers in Go</a>
+					</li>
+					<li>
+						<a href="goroutines.html" class="">Goroutines</a>
+					</li>
+					<li>
+						<a href="channels.html" class="">Channels</a>
+					</li>
+					<li>
+						<a href="concurrency-patterns.html" class="">Concurrency Patterns</a>
+					</li>
+					<li>
+						<a href="the-sync-package-and-data-races.html" class="">The sync Package and Data Races</a>
+					</li>
+					<li>
+						<a href="generics.html" class="">Generics</a>
+					</li>
+					<li>
+						<a href="defer-panic-and-recover.html" class="">Defer, Panic, and Recover</a>
+					</li>
+					<li>
+						<a href="testing-in-go.html" class="">Testing in Go</a>
+					</li>
+					<li>
+						<a href="json-and-encoding.html" class="">JSON and Encoding</a>
+					</li>
+					<li>
+						<a href="working-with-files-and-i-o.html" class="">Working with Files and I/O</a>
+					</li>
+					<li>
+						<a href="the-standard-library-philosophy.html" class="">The Standard Library Philosophy</a>
+					</li>
+					<li>
+						<a href="building-a-minimal-http-server.html" class="">Building a Minimal HTTP Server</a>
+					</li>
+					<li>
+						<a href="modules-dependencies-and-versioning.html" class="">Modules, Dependencies, and Versioning</a>
+					</li>
+					<li>
+						<a href="a-tour-of-modern-go.html" class="">A Tour of Modern Go</a>
+					</li>
+					<li>
+						<a href="idiomatic-go-and-common-pitfalls.html" class="">Idiomatic Go and Common Pitfalls</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← Go, End to End</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">Go, End to End</p>
+							<h1>Pointers in Go</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p>If you've written C or C++, Go pointers will feel like a relief: same core idea (a variable holding a memory address), almost none of the danger. If you haven't, the core idea is simple enough to pick up from scratch: a pointer just holds the address of another variable, instead of holding a value directly.</p>
+					<h3>The basics</h3>
+					<p>`&amp;x` gives you the address of `x`, a pointer to it. `*p` dereferences a pointer, giving you the value it points to. That's the entire vocabulary.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+func main() {
+	x := 10
+	p := &amp;x // p is a *int, pointing at x
+
+	fmt.Println(&quot;value of x:&quot;, x)
+	fmt.Println(&quot;value through pointer:&quot;, *p)
+
+	*p = 20 // writing through the pointer changes x itself
+	fmt.Println(&quot;x after writing through p:&quot;, x)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	x := 10
+	p := &amp;x // p is a *int, pointing at x
+
+	fmt.Println(&quot;value of x:&quot;, x)
+	fmt.Println(&quot;value through pointer:&quot;, *p)
+
+	*p = 20 // writing through the pointer changes x itself
+	fmt.Println(&quot;x after writing through p:&quot;, x)
+}</pre></noscript></div>
+
+<div class="prose reveal">
+					<h3>What Go leaves out, on purpose</h3>
+					<p>No pointer arithmetic. You can't do `p + 1` to walk to &quot;the next int in memory&quot; the way you can in C, that entire category of buffer-overrun bug simply doesn't compile. No pointer casting between unrelated types either, no `reinterpret_cast` equivalent for plain pointers. Go trades away some low-level control here in exchange for a much smaller footgun surface, and for the overwhelming majority of application code, you don't miss it.</p>
+					<h3>new vs &amp;T{}</h3>
+					<p>`new(T)` allocates zeroed memory for a `T` and returns a pointer to it. In practice, almost nobody writes `new` for structs, `&amp;T{}` (a composite literal, address-of) does the same job while also letting you set fields inline, and it's what you'll see in real code.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">p1 </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> new</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)     </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// *int pointing at a zeroed int, rarely used directly for structs</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">p2 </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x26;</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">Point</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{X: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}  </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// far more common: literal + address-of, and you get initialization too</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3>Pointer vs value: when to use which</h3>
+					<p>This comes down to two questions: does the function need to mutate what's passed in, and is the value expensive to copy? If either answer is yes, use a pointer. If both answers are no, a plain value is simpler and just as fast for anything small (an int, a small struct, a couple of fields).</p>
+					<ul><li>Pass by value when the function only reads the data and the type is small, copies are cheap and the code stays simpler to reason about (no aliasing to worry about).</li><li>Pass by pointer when the function needs to mutate the caller's data, or the value is large enough that copying it on every call is real, measurable overhead.</li><li>Slices, maps, and channels are already reference-like under the hood (they carry a pointer to their backing data internally), so you rarely need to pass `*[]int` or `*map[string]int`, passing the slice/map itself already shares the underlying data.</li></ul>
+					<h3>The main real danger: nil pointer dereferences</h3>
+					<p>A pointer's zero value is `nil`. Dereferencing a nil pointer panics immediately, at the exact line where you tried to use it, which is at least honest compared to some languages' more mysterious null-related failures, but it's still the most common runtime crash in real Go programs.</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Config struct {
+	Timeout int
+}
+
+func loadConfig(fromFile bool) *Config {
+	if fromFile {
+		return &amp;Config{Timeout: 30}
+	}
+	return nil // easy to forget this path exists when calling loadConfig later
+}
+
+func main() {
+	cfg := loadConfig(false)
+	fmt.Println(cfg.Timeout) // panics: nil pointer dereference
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Config struct {
+	Timeout int
+}
+
+func loadConfig(fromFile bool) *Config {
+	if fromFile {
+		return &amp;Config{Timeout: 30}
+	}
+	return nil // easy to forget this path exists when calling loadConfig later
+}
+
+func main() {
+	cfg := loadConfig(false)
+	fmt.Println(cfg.Timeout) // panics: nil pointer dereference
+}</pre></noscript></div>
+
+				<div class="callout reveal">
+					<p>The fix is always the same: check for nil before dereferencing, right at the boundary where a function might legitimately return one. `if cfg == nil { ... }` before you touch `cfg.Timeout`. There's no shortcut around this, Go doesn't have optionals or a compiler-enforced null check, it's on you to handle the nil case anywhere a pointer might genuinely be nil.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3>Escape analysis, briefly</h3>
+					<p>In C, whether a variable lives on the stack or the heap is something you control, mostly by choosing whether to use `malloc`. In Go, you never make that choice explicitly. The compiler's escape analysis decides for you: if it can prove a value never needs to outlive the function that created it, it stays on the stack (cheap). If a pointer to it escapes (gets returned, stored somewhere longer-lived, captured by a goroutine), it moves to the heap automatically.</p>
+					<p>You don't need to hand-manage this, but it's worth knowing it exists so `&amp;Config{...}` returned from a function doesn't look alarming: the compiler sees the pointer escaping the function and heap-allocates it correctly, no dangling pointer risk the way returning the address of a local variable would be in C.</p>
+				</div>
+
+				<details class="cmd-explain reveal">
+					<summary>Try it yourself: fix the nil dereference<span class="chev">›</span></summary>
+					<div class="body"><div class="prose reveal">
+					<p>Rerun the loadConfig example above, then fix main() to check for nil before printing, and rerun with fromFile set to false to confirm it no longer panics:</p>
+				</div>
+
+<div class="onecompiler-embed reveal" data-oc-source="package main
+
+import &quot;fmt&quot;
+
+type Config struct {
+	Timeout int
+}
+
+func loadConfig(fromFile bool) *Config {
+	if fromFile {
+		return &amp;Config{Timeout: 30}
+	}
+	return nil
+}
+
+func main() {
+	cfg := loadConfig(false)
+	if cfg == nil {
+		fmt.Println(&quot;no config loaded, using defaults&quot;)
+		return
+	}
+	fmt.Println(cfg.Timeout)
+}"><div class="onecompiler-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go · live, editable, runnable</span><button type="button" class="onecompiler-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="onecompiler-embed-frame" src="https://onecompiler.com/embed/go?theme=dark&listenToEvents=true&hideNew=true&hideLanguageSelection=true" loading="lazy" title="Editable Go example on OneCompiler"></iframe><noscript><pre>package main
+
+import &quot;fmt&quot;
+
+type Config struct {
+	Timeout int
+}
+
+func loadConfig(fromFile bool) *Config {
+	if fromFile {
+		return &amp;Config{Timeout: 30}
+	}
+	return nil
+}
+
+func main() {
+	cfg := loadConfig(false)
+	if cfg == nil {
+		fmt.Println(&quot;no config loaded, using defaults&quot;)
+		return
+	}
+	fmt.Println(cfg.Timeout)
+}</pre></noscript></div></div>
+				</details>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
