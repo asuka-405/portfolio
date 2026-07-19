@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <title>Sutrix</title>
+    <!--
+      Classic (non-module) script + stylesheet, deliberately without
+      `crossorigin` on either local tag: browsers require CORS for
+      `type="module"`/`crossorigin`-marked same-origin-null resources, which
+      file:// can never satisfy. This demo build is compiled to a single IIFE
+      bundle (see vite.config.ts's `mode === 'demo'` branch) specifically so
+      it still boots when the host page is opened directly from disk, not
+      just when served over http.
+    -->
+    <link rel="stylesheet" href="./assets/app.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./assets/app.js"></script>
+  </body>
+</html>
