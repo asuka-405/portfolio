@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta
 			name="description"
-			content="Sutrix by Sutrid — an enterprise OS. The vision, architecture direction, UI, and engineering challenges."
+			content="Sutrix — an enterprise OS. The vision, architecture direction, UI, and engineering challenges."
 		/>
 		<meta name="color-scheme" content="dark light" />
 		<title>Sutrix — Case study · Suryansh Kapil</title>
@@ -51,13 +51,13 @@
 				<div class="hero-ambient" aria-hidden="true"><div class="hero-orbit"></div></div>
 				<a class="back-link reveal" href="../index.html#projects">← All projects</a>
 				<p class="doc-status reveal" style="--d: 0.04s">
-					Sutrid · MVP in development
+					MVP in development
 				</p>
 				<h1 class="doc-title reveal" style="--d: 0.08s">
 					Sutri<span class="text-accent">x</span>
 				</h1>
 				<p class="doc-tagline reveal" style="--d: 0.12s">
-					An <strong>enterprise OS</strong> under Sutrid — a unified operating
+					An <strong>enterprise OS</strong> — a unified operating
 					layer that brings an organization's tools, workflows and data into
 					one coherent system.
 				</p>
@@ -68,10 +68,7 @@
 					<span class="chip chip--muted">TypeScript</span>
 				</div>
 				<div class="doc-actions reveal" style="--d: 0.2s">
-					<a class="btn btn--primary" href="https://sutrid.in" target="_blank" rel="noopener"
-						>About Sutrid</a
-					>
-					<a class="btn btn--ghost" href="../index.html#projects">Back to projects</a>
+					<a class="btn btn--primary" href="../index.html#projects">Back to projects</a>
 				</div>
 			</section>
 
@@ -82,7 +79,7 @@
 					<p>
 						Most organizations run on a patchwork of disconnected tools —
 						each with its own login, data model and idea of who a "user" is.
-						<strong>Sutrix</strong> is Sutrid's answer: an enterprise OS that
+						<strong>Sutrix</strong> is my answer: an enterprise OS that
 						hosts the pieces an organization runs on as modules over a shared
 						foundation, so data and identity are common rather than copied.
 					</p>
@@ -95,14 +92,10 @@
 				</div>
 				<div class="fact-grid">
 					<div class="fact reveal" style="--d: 0.04s">
-						<span class="k">Provider</span>
-						<span class="v">Sutrid</span>
-					</div>
-					<div class="fact reveal" style="--d: 0.09s">
 						<span class="k">Stage</span>
 						<span class="v">MVP · in development</span>
 					</div>
-					<div class="fact reveal" style="--d: 0.14s">
+					<div class="fact reveal" style="--d: 0.09s">
 						<span class="k">Type</span>
 						<span class="v">Enterprise platform</span>
 					</div>
@@ -189,14 +182,16 @@
 				<div class="mock-window reveal" style="--d: 0.08s">
 					<div class="mock-bar">
 						<div class="mock-dots"><span></span><span></span><span></span></div>
-						<div class="mock-url">app-preview/index.html</div>
+						<div class="mock-url">app.northwind.cloud/overview</div>
 					</div>
-					<div class="mock-frame-embed">
-						<iframe
-							src="../app-preview/index.html"
-							title="Sutrix live preview (mock data)"
-							loading="lazy"
-						></iframe>
+					<div class="mock-frame-scale">
+						<div class="mock-frame-scale__inner">
+							<iframe
+								src="../app-preview/sutrix-demo/index.html"
+								title="Sutrix live preview (demo data)"
+								loading="lazy"
+							></iframe>
+						</div>
 					</div>
 				</div>
 				<p class="mock-caption reveal">
@@ -276,12 +271,32 @@
 		<footer class="site-footer">
 			<div class="footer-links">
 				<a href="../index.html#projects">All projects</a>
-				<a href="https://sutrid.in" target="_blank" rel="noopener">sutrid.in</a>
 				<a href="mailto:suryansh@archdev.in">Email</a>
 			</div>
 			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
 		</footer>
 
 		<script src="../app.js" defer></script>
+		<script>
+			// Lock the live-preview iframe to a fixed 16:9 logical canvas (1440x810)
+			// and scale it as one rigid unit to whatever width it's given — so on
+			// any viewport it shrinks like a screenshot instead of reflowing the
+			// (desktop-only) app. Outer is 16:9 and inner is 16:9, so scaling by
+			// width alone makes the scaled height match the outer height exactly:
+			// no letterboxing, no cropping.
+			(function () {
+				var LOGICAL_W = 1440;
+				function fit(outer) {
+					var inner = outer.querySelector('.mock-frame-scale__inner');
+					if (inner) inner.style.transform = 'scale(' + (outer.clientWidth / LOGICAL_W) + ')';
+				}
+				var frames = document.querySelectorAll('.mock-frame-scale');
+				frames.forEach(function (outer) {
+					fit(outer);
+					if (window.ResizeObserver) new ResizeObserver(function () { fit(outer); }).observe(outer);
+				});
+				window.addEventListener('resize', function () { frames.forEach(fit); });
+			})();
+		</script>
 	</body>
 </html>
