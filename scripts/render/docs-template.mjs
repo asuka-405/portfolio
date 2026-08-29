@@ -29,6 +29,7 @@ function siteHeader(rootPrefix) {
 \t\t\t\t\t<a href="${rootPrefix}index.html#projects">Projects</a>
 \t\t\t\t\t<a href="${rootPrefix}articles/index.html">Writing</a>
 \t\t\t\t\t<a href="${rootPrefix}docs/index.html">Docs</a>
+\t\t\t\t\t<a href="https://git.archdev.in">Git</a>
 \t\t\t\t\t<a href="${rootPrefix}index.html#contact">Contact</a>
 \t\t\t\t</nav>
 \t\t\t\t<button class="site-theme" type="button" aria-label="Toggle color theme">
