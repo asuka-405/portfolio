@@ -27,6 +27,7 @@ const SITE_HEADER = `\t\t<header class="site-header">
 \t\t\t\t\t<a href="../index.html#projects">Projects</a>
 \t\t\t\t\t<a href="index.html">Writing</a>
 \t\t\t\t\t<a href="../docs/index.html">Docs</a>
+\t\t\t\t\t<a href="https://git.archdev.in">Git</a>
 \t\t\t\t\t<a href="../index.html#contact">Contact</a>
 \t\t\t\t</nav>
 \t\t\t\t<button class="site-theme" type="button" aria-label="Toggle color theme">
