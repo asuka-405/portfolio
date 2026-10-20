@@ -11,3 +11,6 @@ package.json
 package-lock.json
 netlify.toml
 .assetsignore
+.cache
+data
+.netlifyignore
