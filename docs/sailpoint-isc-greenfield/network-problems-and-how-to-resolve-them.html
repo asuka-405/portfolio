@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Network Problems and How to Resolve Them: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Network Problems and How to Resolve Them · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/network-problems-and-how-to-resolve-them.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Network Problems and How to Resolve Them" />
+		<meta property="og:description" content="Network Problems and How to Resolve Them: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/network-problems-and-how-to-resolve-them.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Network Problems and How to Resolve Them" />
+		<meta name="twitter:description" content="Network Problems and How to Resolve Them: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="active">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Network Problems and How to Resolve Them</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#the-path-and-who-owns-each-hop">The path, and who owns each hop</a></li><li><a href="#a-method-that-works">A method that works</a></li><li><a href="#required-destinations-for-the-va">Required destinations for the VA</a></li><li><a href="#ports-by-source-type">Ports by source type</a></li><li><a href="#problems-and-resolutions">Problems and resolutions</a></li><li><a href="#how-to-ask-the-network-team">How to ask the network team</a></li><li><a href="#the-evidence-bundle-for-a-support-case">The evidence bundle for a support case</a></li><li><a href="#prevention">Prevention</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Most connectivity incidents on the program traced back to the network, not to ISC, and most were resolved by asking the right question of the right team. This page gives a method for diagnosing them, the commands to use, a catalogue of the problems we met or that the community reports, and a template for the request you will send the network team. It assumes the appliance layout from the architecture and setup pages.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="the-path-and-who-owns-each-hop">The path, and who owns each hop</h3>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span>ISC tenant  &#x3C;--HTTPS 443 (outbound from VA)--  VA cluster  --source protocol-->  Source system</span></span>
+<span class="line"><span>                                                    |</span></span>
+<span class="line"><span>                                                    +--DNS 53, NTP 123--> internal servers</span></span></code></pre></div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Hop</th><th>What can break</th><th>Usual owner</th></tr></thead><tbody><tr><td>VA to ISC and its services</td><td>Firewall allow-list, proxy, TLS inspection, DNS</td><td>Network and security</td></tr><tr><td>VA to DNS and NTP</td><td>Wrong server, blocked port</td><td>Infrastructure</td></tr><tr><td>VA to source</td><td>Route, firewall, port, certificate, credentials</td><td>Network, source owner</td></tr><tr><td>Source behaviour</td><td>Timeouts, rate limits, TLS versions, service accounts</td><td>Source owner</td></tr><tr><td>Script or administrator to the ISC API</td><td>Corporate proxy, rate limit, token</td><td>Whoever runs the script</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>The VA only makes outbound connections.</strong> Nothing inside your network needs to accept a connection from ISC. When a firewall request says &quot;allow SailPoint in&quot;, it is the wrong request.</p>
+				</div>
+
+<!-- dgm:net-path-owners -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 220" role="img" aria-labelledby="net-path-owners-t net-path-owners-d" xmlns="http://www.w3.org/2000/svg"><title id="net-path-owners-t">The connectivity path and who owns each hop</title><desc id="net-path-owners-d">Tenant, appliance, source. The appliance only calls out.</desc><defs><marker id="net-path-owners-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk " style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="net-path-owners-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="box accent" x="6" y="60" width="150" height="80" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="81.0" y="103.5" text-anchor="middle">ISC tenant</text><rect class="box blue" x="330" y="60" width="150" height="80" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="405.0" y="97.0" text-anchor="middle">VA cluster</text><text class="s" x="405.0" y="112.0" text-anchor="middle">outbound only</text><rect class="box " x="660" y="60" width="154" height="80" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="737.0" y="90.5" text-anchor="middle">Source system</text><text class="s" x="737.0" y="105.5" text-anchor="middle">directory, database,</text><text class="s" x="737.0" y="118.5" text-anchor="middle">API</text><path class="ln accent  " d="M330,100.0 L156,100.0" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#net-path-owners-ar-accent)"/><text class="l" x="243" y="94" text-anchor="middle">443 out</text><path class="ln   " d="M480,100.0 L660,100.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#net-path-owners-ar)"/><text class="l" x="570" y="94" text-anchor="middle">source protocol</text><text class="h" x="243" y="180" text-anchor="middle">network and security</text><text class="h" x="570" y="180" text-anchor="middle">network and source owner</text><text class="l" x="405" y="30" text-anchor="middle">DNS 53 and NTP 123 to internal servers: infrastructure</text><text class="l" x="405" y="206" text-anchor="middle">Script or administrator to the API: whoever runs the script (proxy, rate limit, token)</text></svg></div><figcaption><b>Outbound only.</b> A request to allow SailPoint in is the wrong request; the firewall rule is from the appliance to the destination.</figcaption></figure>
+
+<div class="prose reveal">
+					<h3 id="a-method-that-works">A method that works</h3>
+					<p>Work up the stack and stop at the first failure.</p>
+					<ol><li><strong>Name resolution.</strong> Does the host name resolve, to the address you expect, from the VA's network?</li><li><strong>Route.</strong> Is there a path from the VA to that address?</li><li><strong>Port.</strong> Does the port accept a connection from the VA?</li><li><strong>Transport security.</strong> Does the TLS handshake complete, and is the certificate trusted and unexpired?</li><li><strong>Authentication.</strong> Do the credentials work from the VA?</li><li><strong>Application.</strong> Does the operation succeed, within the timeout?</li></ol>
+					<p>Test from the VA itself if you can, because the VA's DNS, route and firewall rules are the ones that count. If the image lacks a tool, test from another host in the same subnet and zone, and say so in your notes.</p>
+				</div>
+
+<!-- dgm:net-ladder -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 400" role="img" aria-labelledby="net-ladder-t net-ladder-d" xmlns="http://www.w3.org/2000/svg"><title id="net-ladder-t">Six steps for any connectivity problem</title><desc id="net-ladder-d">Name resolution, route, port, transport security, authentication, application; stop at the first failure.</desc><defs></defs><text class="h" x="110" y="18" text-anchor="middle">STEP</text><text class="h" x="410" y="18" text-anchor="middle">COMMAND, FROM THE VA OR ITS SUBNET</text><text class="h" x="700" y="18" text-anchor="middle">TYPICAL FAILURE</text><rect class="box accent" x="6" y="30" width="200" height="48" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="106.0" y="57.5" text-anchor="middle">1 Name resolution</text><rect class="box " x="222" y="30" width="340" height="48" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="392.0" y="57.5" text-anchor="middle">nslookup &lt;host&gt; dig &lt;host&gt;</text><rect class="box ghost" x="578" y="30" width="236" height="48" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="696.0" y="50.0" text-anchor="middle">wrong or no address, split</text><text class="t" x="696.0" y="65.0" text-anchor="middle">DNS</text><rect class="box accent" x="6" y="90" width="200" height="48" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="106.0" y="117.5" text-anchor="middle">2 Route</text><rect class="box " x="222" y="90" width="340" height="48" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="392.0" y="117.5" text-anchor="middle">ping &lt;host&gt; (if ICMP allowed)</text><rect class="box ghost" x="578" y="90" width="236" height="48" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="696.0" y="110.0" text-anchor="middle">no route to host, asymmetric</text><text class="t" x="696.0" y="125.0" text-anchor="middle">path</text><rect class="box accent" x="6" y="150" width="200" height="48" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="106.0" y="177.5" text-anchor="middle">3 Port</text><rect class="box " x="222" y="150" width="340" height="48" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="392.0" y="177.5" text-anchor="middle">nc -vz &lt;host&gt; &lt;port&gt;</text><rect class="box ghost" x="578" y="150" width="236" height="48" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="696.0" y="170.0" text-anchor="middle">timeout = dropped, refused =</text><text class="t" x="696.0" y="185.0" text-anchor="middle">closed</text><rect class="box blue" x="6" y="210" width="200" height="48" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="106.0" y="237.5" text-anchor="middle">4 Transport security</text><rect class="box " x="222" y="210" width="340" height="48" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="392.0" y="237.5" text-anchor="middle">openssl s_client -connect &lt;host&gt;:&lt;port&gt;</text><rect class="box ghost" x="578" y="210" width="236" height="48" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="696.0" y="230.0" text-anchor="middle">untrusted CA, inspection,</text><text class="t" x="696.0" y="245.0" text-anchor="middle">expired</text><rect class="box blue" x="6" y="270" width="200" height="48" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="106.0" y="297.5" text-anchor="middle">5 Authentication</text><rect class="box " x="222" y="270" width="340" height="48" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="392.0" y="297.5" text-anchor="middle">test connection from the source</text><rect class="box ghost" x="578" y="270" width="236" height="48" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="696.0" y="290.0" text-anchor="middle">rotated credential, wrong</text><text class="t" x="696.0" y="305.0" text-anchor="middle">account</text><rect class="box blue" x="6" y="330" width="200" height="48" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="106.0" y="357.5" text-anchor="middle">6 Application</text><rect class="box " x="222" y="330" width="340" height="48" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="392.0" y="357.5" text-anchor="middle">run the operation, read the response</text><rect class="box ghost" x="578" y="330" width="236" height="48" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="696.0" y="350.0" text-anchor="middle">rate limit, timeout, error in</text><text class="t" x="696.0" y="365.0" text-anchor="middle">a 200 body</text></svg></div><figcaption><b>Work up the stack.</b> Test from the appliance's own network where you can, because its DNS, route and firewall rules are the ones that count.</figcaption></figure>
+
+<div class="prose reveal">
+					<p><strong>Commands</strong></p>
+					<p>Tool availability varies by image, and the VA does not ship a telnet client. Community members report using these on the appliance, with a network utility run inside the appliance's toolbox where it is not on the host. Treat the toolbox detail as community-reported and check your image.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># 1. name resolution</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">nslookup</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">hos</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">dig</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">hos</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># 2-3. route and port (use ping only if ICMP is allowed)</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">nc</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -vz</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">hos</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">por</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># 4. TLS handshake and certificate</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">openssl</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> s_client</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -connect</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">hos</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">:</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">por</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -servername</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">hos</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># 4/6. HTTPS reachability (a HEAD request; connection or TLS errors fail, an HTTP error status does not)</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">curl</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -v</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -I</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> https://</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">hos</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> --connect-timeout</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 5</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># 6. which containers are up on the VA (community-reported)</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">docker</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> ps</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -a</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>A reachability loop over the SailPoint hosts:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">HOSTS</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;host 1>"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "&#x3C;host 2>"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "&#x3C;host 3>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)     </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># from the current required-URL list</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> H </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">in</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "${</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">HOSTS</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">[</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">@</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">]}"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">do</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  printf</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "%-60s "</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$H</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">  if</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> curl</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -sS</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -I</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "https://</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$H</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> --connect-timeout</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 5</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> ></span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">/dev/null</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> 2>&#x26;1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">then</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> echo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> OK</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">else</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> echo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> FAIL</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">fi</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">done</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3 id="required-destinations-for-the-va">Required destinations for the VA</h3>
+					<p>SailPoint publishes the list of hosts a VA must reach, and states that it can change without notice. Take the current list from the <strong>VA requirements page</strong> and put it under change management. As of the October 2026 documentation the groups were:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Group</th><th>Purpose</th><th>Port</th></tr></thead><tbody><tr><td>SailPoint and tenant domains (the identity cloud domains and the API domains)</td><td>Configuration, commands, updates</td><td>443</td></tr><tr><td>The VA access and secure API hosts</td><td>Control channel</td><td>443</td></tr><tr><td>Operating system update domains (Flatcar)</td><td>Security patches and updates</td><td>443</td></tr><tr><td>A feature-flag service</td><td>Feature control</td><td>443</td></tr><tr><td>Cloud service endpoints for object storage, queue, database, container registry (region-specific, and the US East ones <strong>always</strong>)</td><td>Image and update delivery</td><td>443</td></tr><tr><td>Internal DNS</td><td>Name resolution</td><td>53</td></tr><tr><td>NTP</td><td>Time (closed if you use internal NTP on every VA)</td><td>123</td></tr><tr><td>SSH, inbound, internal only</td><td>Administration</td><td>22</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>SailPoint has announced that some cloud-hosted endpoints will move to SailPoint-hosted ones. The guidance is to keep the existing entries and <strong>add</strong> the new ones as they are published. Removing the old ones before the migration finishes is what breaks a VA.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="ports-by-source-type">Ports by source type</h3>
+					<p>Confirm these with the source owner. Defaults differ by version and installation.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Source</th><th>Typical ports (from the VA)</th></tr></thead><tbody><tr><td>Active Directory (read)</td><td>389 LDAP, 636 LDAPS, 3268 and 3269 for the global catalogue, 53 DNS, 88 if Kerberos is used</td></tr><tr><td>Active Directory (write)</td><td>The directory agent's listening port on the Windows host. The program's design listed 5050 and 5051. It is set at installation, so read the installed value</td></tr><tr><td>SQL Server</td><td>1433, or the instance's port; for named instances the browser service on UDP 1434 as well</td></tr><tr><td>Oracle</td><td>1521</td></tr><tr><td>PostgreSQL</td><td>5432</td></tr><tr><td>MySQL</td><td>3306</td></tr><tr><td>REST and SaaS applications</td><td>443, to the vendor's host name, plus the vendor's token endpoint</td></tr><tr><td>SFTP file server</td><td>22</td></tr><tr><td>Another VA cluster's source</td><td>As above, from that cluster</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="problems-and-resolutions">Problems and resolutions</h3>
+					<p><strong>VA and cluster</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Likely cause</th><th>Check</th><th>Resolution</th></tr></thead><tbody><tr><td>VA shows <strong>Inactive</strong></td><td>It cannot reach the service: firewall, proxy, DNS or time</td><td>Run the reachability loop from the VA. Check that the other VA is healthy</td><td>Get the missing destination allowed. Compare the failing VA's route, proxy and DNS with the healthy one</td></tr><tr><td>Stuck at &quot;update in progress&quot;</td><td>An update download was interrupted, or credentials expired after a long outage</td><td>Look at container status and the VA logs. Look for download errors or expired credentials</td><td>Restore outbound access, avoid repeated restarts during the update, restart the cluster once. If it persists, contact support</td></tr><tr><td>&quot;VA Did Not Update&quot;</td><td>The update could not finish</td><td>Same as above</td><td>Restart the cluster, then support</td></tr><tr><td>Cluster shows &quot;Only 1 VA&quot;</td><td>A VA is down or removed</td><td>Cluster page</td><td>Restore it. A cluster with a disconnected VA receives no updates</td></tr><tr><td>Pairing fails</td><td>Code expired (4 hours), passphrase mismatch, no outbound path</td><td>Generate a new code. Confirm the same passphrase on each VA</td><td>Pair again</td></tr><tr><td>Configuration incomplete</td><td>The VA could not connect during setup</td><td>Network and time</td><td>Fix and wait up to 30 minutes</td></tr><tr><td>Warning for memory or disk</td><td>Under-sized VA or debug logging left on</td><td>Check sizing and the debug setting</td><td>Disable debugging, add resources</td></tr><tr><td>Time drift, odd TLS or token errors</td><td>NTP blocked or wrong</td><td><code>timedatectl status</code></td><td>Configure internal NTP on every VA</td></tr><tr><td>Every integration on one cluster fails</td><td>The cluster or a shared service account</td><td>Cluster status, the shared login</td><td>Fix the cluster. This was the first thing to suspect on the program</td></tr><tr><td>One integration fails while its cluster peers are fine</td><td>That integration's own route, such as egress or DNS to an external host</td><td>Test from the VA to that host</td><td>One source reached a vendor host in another geography and was the only one on its cluster that did</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Name resolution</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Likely cause</th><th>Resolution</th></tr></thead><tbody><tr><td>Every directory source fails after a DNS change</td><td>The VA's DNS servers cannot resolve the domain controllers, or the VA still holds old settings</td><td><code>nslookup</code> the controllers from the VA. Correct the VA's DNS. Reboot the VA (not only the service) so it picks up routes and resolvers</td></tr><tr><td>Works by IP, fails by name</td><td>Split-horizon DNS: internal names are not served to the VA's resolver</td><td>Point the VA at the internal resolver, or map the host in the VA's hosts file as a stopgap</td></tr><tr><td>Intermittent failures</td><td>One of several DNS servers is broken</td><td>Query each server directly</td></tr><tr><td>Case-sensitive host lookups in a component</td><td>Host name case differs from the application's</td><td>Match the case the application uses</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Firewalls and routes</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Likely cause</th><th>Resolution</th></tr></thead><tbody><tr><td>&quot;No route to host&quot;</td><td>A routing change, a missing route from the VA's subnet, or a firewall rejecting rather than dropping</td><td><code>nc -vz</code> to the host. Ask the network team for the path and the rule hit</td></tr><tr><td>Connection times out</td><td>A firewall silently dropping</td><td>Same. A timeout points to a drop, a refusal to a closed port</td></tr><tr><td>Connection refused</td><td>The service is not listening, or a host firewall</td><td>Check the service and the host firewall</td></tr><tr><td>Works from a laptop, not from the VA</td><td>The VA's zone has different rules</td><td>Test from the VA's subnet</td></tr><tr><td>Works for hours, then fails</td><td>Session or idle timeout on a firewall for long-lived or slow connections</td><td>Ask for the idle timeout, and keep calls short</td></tr><tr><td>A source in the reserved range</td><td>A VA cannot route to <code>10.255.255.241/28</code>, and a tunnel cannot to <code>172.16.0.0/22</code></td><td>Re-address the source or use another method</td></tr><tr><td>Asymmetric routing</td><td>Replies take a different path and are dropped</td><td>Network team traces both directions</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Proxies and TLS inspection</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Likely cause</th><th>Resolution</th></tr></thead><tbody><tr><td>VA cannot reach SailPoint but a browser can</td><td>The browser uses a proxy and the VA does not</td><td>Configure the proxy on the VA, or open the destinations directly</td></tr><tr><td>TLS errors, &quot;untrusted certificate&quot;, S3 download broken</td><td>A device inspecting TLS presents its own certificate</td><td>Exempt the VA's destinations from inspection, or install the inspection CA on the VA</td></tr><tr><td>Proxy returns 407</td><td>The proxy needs authentication</td><td>Use an unauthenticated rule for the VA, or the proxy configuration the VA supports</td></tr><tr><td>A web-services source works in a browser, fails in the connector</td><td>A forward proxy sits between the VA and the vendor</td><td>Add a bypass for local hosts, or allow the vendor host directly</td></tr><tr><td>Web filter blocks a category</td><td>A &quot;new or uncategorised domain&quot; rule</td><td>Allow the specific hosts</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Source-specific</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Source</th><th>Symptom</th><th>Likely cause</th><th>Resolution</th></tr></thead><tbody><tr><td>Active Directory</td><td>Cannot bind over LDAPS</td><td>The controller's certificate is not trusted, expired or has the wrong name</td><td><code>openssl s_client</code> to port 636. Trust the issuing CA and use the name on the certificate</td></tr><tr><td>Active Directory</td><td>Works for reads, fails for writes</td><td>The directory agent is unreachable or its service account lacks rights</td><td>Test the agent port from the VA, check the service and its permissions</td></tr><tr><td>SQL Server</td><td>Named instance not found</td><td>The browser service port (UDP 1434) is blocked, or the instance has a dynamic port</td><td>Use the fixed port in the URL, or allow the browser service</td></tr><tr><td>Databases</td><td>TLS or driver errors after a server upgrade</td><td>The server requires a newer protocol than the driver offers</td><td>Check the driver and server protocol versions</td></tr><tr><td>REST or SaaS</td><td>HTTP 429</td><td>A rate limit</td><td>Respect the retry header, reduce page size and concurrency</td></tr><tr><td>REST or SaaS</td><td>Token endpoint times out under load</td><td>The vendor's token service fails under concurrency</td><td>Stagger requests</td></tr><tr><td>REST or SaaS</td><td>Calls over about a minute fail and later requests from that person are cancelled for an hour</td><td>The appliance's call timeout (63 seconds in our measurement)</td><td>Keep calls short, split the work, add a timeout in the application</td></tr><tr><td>SFTP</td><td>Test connection fails</td><td>The URL, the folder permissions, the firewall</td><td>See the SFTP page</td></tr><tr><td>Any</td><td>Fails only at certain times</td><td>A maintenance window, a backup, a batch job at the target</td><td>Check the source's schedule against yours</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>From scripts and administrators to the API</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Likely cause</th><th>Resolution</th></tr></thead><tbody><tr><td>Script fails behind a corporate proxy</td><td>The proxy is not configured in the client</td><td>Set the proxy for the tool</td></tr><tr><td>HTTP 429</td><td>The 100 requests per 10 seconds per client allowance</td><td>Back off using the retry header, and use a separate client per tool</td></tr><tr><td>Intermittent 401</td><td>An expired token</td><td>Refresh the token before it lapses</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="how-to-ask-the-network-team">How to ask the network team</h3>
+					<p>Send one request that is complete, so they do not have to ask. Use this template:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Field</th><th>Example</th></tr></thead><tbody><tr><td>Purpose</td><td>Allow the identity governance appliances to reach <code>&lt;destination&gt;</code></td></tr><tr><td>Source</td><td><code>&lt;VA 1 address&gt;</code>, <code>&lt;VA 2 address&gt;</code> (cluster <code>&lt;name&gt;</code>, subnet <code>&lt;cidr&gt;</code>)</td></tr><tr><td>Destination</td><td><code>&lt;host name&gt;</code> / <code>&lt;address&gt;</code> (and the list of host names for the SailPoint services)</td></tr><tr><td>Port and protocol</td><td>TCP 443 (or the port and protocol)</td></tr><tr><td>Direction</td><td><strong>Outbound</strong> from the appliance</td></tr><tr><td>Duration</td><td>Permanent</td></tr><tr><td>Frequency and volume</td><td>Scheduled every <code>&lt;n&gt;</code> hours, <code>&lt;small&gt;</code> data</td></tr><tr><td>Business justification</td><td>Account aggregation and provisioning for <code>&lt;application&gt;</code></td></tr><tr><td>Test</td><td>The result of <code>nc -vz</code> or <code>curl</code> from the appliance's subnet, before and after</td></tr><tr><td>Owner</td><td><code>&lt;name&gt;</code></td></tr><tr><td>Change record</td><td><code>&lt;number&gt;</code></td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Attach the evidence: the command, the output, the time, and which VA ran it.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="the-evidence-bundle-for-a-support-case">The evidence bundle for a support case</h3>
+					<p>When you must involve SailPoint support, include:</p>
+					<ul><li>Tenant name and environment.</li><li>Cluster name and the VA identifiers.</li><li>The time the problem began, with the time zone.</li><li>The symptom and the exact error text.</li><li>What you tested from the VA, and the results.</li><li>Whether the VA recently updated or was rebooted.</li><li>The VA logs for the period, and the cluster status screenshot.</li><li>Recent network changes.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="prevention">Prevention</h3>
+					<ul><li>Give the network team the full destination list <strong>before</strong> the build, and add the new hosts when SailPoint publishes them.</li><li>Test from the VA's subnet as part of every source onboarding, and record the result.</li><li>Put every firewall rule in the cluster plan next to the sources it serves.</li><li>Alert on cluster status and VA inactivity.</li><li>Review the allow-list quarterly against the current requirements page.</li><li>Tell the network team before an appliance moves, is re-addressed, or its DNS changes.</li><li>Keep two VAs per cluster in different failure domains.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Adopt the six-step method and the evidence habit: command, output, time, VA.</li><li>Keep the firewall request template and use it for every request.</li><li>Hold the required-destinations list under change control.</li><li>Test every new source from the VA's network before you configure it in ISC.</li><li>Record the DNS, route and time settings of each cluster in the plan.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

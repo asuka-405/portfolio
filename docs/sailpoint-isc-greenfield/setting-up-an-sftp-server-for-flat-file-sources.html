@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Setting Up an SFTP Server for Flat-File Sources: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Setting Up an SFTP Server for Flat-File Sources · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/setting-up-an-sftp-server-for-flat-file-sources.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Setting Up an SFTP Server for Flat-File Sources" />
+		<meta property="og:description" content="Setting Up an SFTP Server for Flat-File Sources: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/setting-up-an-sftp-server-for-flat-file-sources.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Setting Up an SFTP Server for Flat-File Sources" />
+		<meta name="twitter:description" content="Setting Up an SFTP Server for Flat-File Sources: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="active">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Setting Up an SFTP Server for Flat-File Sources</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#how-a-flat-file-source-reaches-the-file">How a flat-file source reaches the file</a></li><li><a href="#design-decisions">Design decisions</a></li><li><a href="#build-recipe-the-server">Build recipe: the server</a></li><li><a href="#build-recipe-the-isc-source">Build recipe: the ISC source</a></li><li><a href="#file-hygiene">File hygiene</a></li><li><a href="#monitoring-and-operations">Monitoring and operations</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#security-notes">Security notes</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>About 120 of the 146 sources on the program were flat files, so the SFTP server behind them was one of the most important pieces of infrastructure in the estate. This page describes the design we used, a build recipe for a Linux SFTP host, the source configuration that reads from it, the file hygiene that keeps reviews correct, and what goes wrong. The commands are examples for a Linux host with OpenSSH. Adapt them to your standards and have your platform team review them.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="how-a-flat-file-source-reaches-the-file">How a flat-file source reaches the file</h3>
+					<p>On the program the flat-file sources were <strong>SQL Loader</strong> sources, not the delimited-file type. A SQL Loader source reads a CSV file through a text-file database driver and queries it with SQL, so each file is a table. The virtual appliance opens an SFTP connection to the file server, reads the file and aggregates it like any other source.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span>Application owner  ->  CSV file  ->  SFTP server  &#x3C;-- SFTP (22) --  Virtual appliance cluster  ->  ISC source</span></span>
+<span class="line"><span>                                      (one folder and one login per application)</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>The delimited-file source type is the alternative. It is loaded by uploading the file through the UI or API, with no appliance and no server, and it suits small, manual loads. The program used SQL Loader, so that a tool could drop a file and ISC could read it on a schedule. If you need neither a schedule nor an appliance, upload is simpler.</p>
+				</div>
+
+<!-- dgm:sftp-architecture -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 330" role="img" aria-labelledby="sftp-architecture-t sftp-architecture-d" xmlns="http://www.w3.org/2000/svg"><title id="sftp-architecture-t">SFTP host for flat-file sources</title><desc id="sftp-architecture-d">A tool places files in per-application folders; the appliance cluster reads them over SFTP for each SQL Loader source.</desc><defs><marker id="sftp-architecture-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk " style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="sftp-architecture-ar-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk blue" style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="sftp-architecture-ar-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk gold" style="fill:var(--gold);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="sftp-architecture-ar-violet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk violet" style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="box " x="6" y="20" width="150" height="56" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="81.0" y="45.0" text-anchor="middle">Application owner</text><text class="s" x="81.0" y="60.0" text-anchor="middle">sends the access list</text><rect class="box gold" x="6" y="130" width="150" height="66" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="81.0" y="153.5" text-anchor="middle">Placement tool</text><text class="s" x="81.0" y="168.5" text-anchor="middle">stage, install,</text><text class="s" x="81.0" y="181.5" text-anchor="middle">checksum</text><path class="ln   " d="M81,76 L81,130" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#sftp-architecture-ar)"/><rect class="grp accent" x="220" y="8" width="330" height="314" style="fill:none;stroke:var(--accent);stroke-opacity:0.6;stroke-dasharray:6 4"/><text class="h" x="230" y="23" text-anchor="start">SFTP host (firewalled)</text><rect class="box teal" x="240" y="40" width="290" height="66" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="385.0" y="70.0" text-anchor="middle">/app01/data</text><text class="s" x="385.0" y="85.0" text-anchor="middle">one login per application, file per cycle</text><rect class="box teal" x="240" y="124" width="290" height="66" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="385.0" y="154.0" text-anchor="middle">/app02/data</text><text class="s" x="385.0" y="169.0" text-anchor="middle">one login per application, file per cycle</text><rect class="box teal" x="240" y="208" width="290" height="66" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="385.0" y="238.0" text-anchor="middle">/app03/data</text><text class="s" x="385.0" y="253.0" text-anchor="middle">one login per application, file per cycle</text><path class="ln gold  " d="M156,163 L240,163" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#sftp-architecture-ar-gold)"/><text class="l" x="198" y="157" text-anchor="middle">22</text><rect class="box blue" x="620" y="40" width="194" height="66" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="717.0" y="70.0" text-anchor="middle">VA cluster</text><text class="s" x="717.0" y="85.0" text-anchor="middle">reads over SFTP</text><path class="ln blue  " d="M620,73 L530,73" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#sftp-architecture-ar-blue)"/><text class="l" x="575" y="67" text-anchor="middle">22</text><rect class="box violet" x="620" y="140" width="194" height="90" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="717.0" y="169.0" text-anchor="middle">SQL Loader source</text><text class="s" x="717.0" y="184.0" text-anchor="middle">url, login, table = file</text><text class="s" x="717.0" y="197.0" text-anchor="middle">name, merge and index</text><text class="s" x="717.0" y="210.0" text-anchor="middle">columns</text><path class="ln blue  " d="M717,106 L717,140" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#sftp-architecture-ar-blue)"/><rect class="box accent" x="620" y="260" width="194" height="52" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="717.0" y="283.0" text-anchor="middle">ISC aggregation</text><text class="s" x="717.0" y="298.0" text-anchor="middle">correlate, then review</text><path class="ln violet  " d="M717,230 L717,260" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#sftp-architecture-ar-violet)"/><text class="l" x="385" y="318" text-anchor="middle"></text></svg></div><figcaption><b>Flat-file path.</b> One shared host, one login and folder per application. Only the appliances and the placement tool connect; application owners never do.</figcaption></figure>
+
+<div class="prose reveal">
+					<h3 id="design-decisions">Design decisions</h3>
+					<p>What we observed on the program: one shared Linux SFTP host, one login and one folder per application, the login and an encrypted password stored in the source, and files placed by an administrator tool that used elevated rights on the server. The chroot, the source-address restriction and the scripts on this page are <strong>our recommended hardening</strong>, not a description of what the program had.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Decision</th><th>What we did</th><th>Why</th></tr></thead><tbody><tr><td>One server, shared</td><td>A single Linux SFTP host reachable from the appliance cluster that serves flat files</td><td>Cheap, central, one place to monitor</td></tr><tr><td>One folder and one login per application</td><td>Each source has its own SFTP user and folder</td><td>One application's credentials cannot read another's file</td></tr><tr><td>One file per source and cycle</td><td>A new, clearly named file for each review cycle</td><td>The history is explicit and a reviewer's file is never overwritten</td></tr><tr><td>File name equals table name</td><td>The SQL in the source selects from a table named like the file (without the extension)</td><td>The driver treats each file in the folder as a table</td></tr><tr><td>Password authentication, source credentials in the source</td><td>The source stores the SFTP user and an encrypted password</td><td>That is how the source authenticates. Restrict by source address (recommended)</td></tr><tr><td>Admin access by a named administrator with elevated rights</td><td>Files are put in place by an automated tool or an administrator, not by application owners</td><td>Application owners email a file, a controlled process places it</td></tr><tr><td>Placement</td><td>Reachable by the cluster that serves the source, on a network the appliances can route to</td><td>The appliance, not ISC, connects</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Several of these are choices, not rules. A cloud object store with SFTP access, a managed file transfer product, or an existing corporate SFTP service may suit you better, as long as the appliance can reach it and it supports the connection the driver needs. Confirm with a test before you commit.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="build-recipe-the-server">Build recipe: the server</h3>
+					<p><strong>1. Prepare the host</strong></p>
+					<ul><li>A hardened Linux host with time synchronised to your internal time source.</li><li>A separate data volume for the SFTP area, monitored for free space.</li><li>Backups of the data area on your normal schedule (the files are evidence for reviews).</li><li>OpenSSH server, a host firewall, and a log shipper to your central logging.</li></ul>
+					<p><strong>2. Create the group and the base directory</strong></p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># one group for every application login</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> groupadd</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> sftp-apps</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># base directory owned by root (required if you use a chroot)</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> mkdir</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -p</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> chown</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> root:root</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> chmod</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 755</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>3. Create an application login and folder</strong></p>
+					<p>Repeat for every application. Use a script (below) so the settings are identical every time.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">APP</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">app01</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">                               # lower case, no spaces</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> useradd</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -g</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> sftp-apps</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -s</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /usr/sbin/nologin</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -d</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">-M</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> $APP</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># set a long random password and store it in your vault, not in a ticket</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> passwd</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> $APP</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># chroot directory: must be owned by root and not writable by anyone else</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> mkdir</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -p</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">/data</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> chown</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> root:root</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> chmod</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 755</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">       /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># writable folder inside the chroot</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> chown</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> $APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">:sftp-apps</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">/data</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> chmod</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 750</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">            /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">/data</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>4. Configure OpenSSH for SFTP only</strong></p>
+					<p>Edit <code>/etc/ssh/sshd_config</code> (or a file in <code>sshd_config.d</code>):</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span>Subsystem sftp internal-sftp</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Match Group sftp-apps</span></span>
+<span class="line"><span>    ChrootDirectory /srv/sftp/%u</span></span>
+<span class="line"><span>    ForceCommand internal-sftp</span></span>
+<span class="line"><span>    PasswordAuthentication yes</span></span>
+<span class="line"><span>    PermitTTY no</span></span>
+<span class="line"><span>    AllowTcpForwarding no</span></span>
+<span class="line"><span>    X11Forwarding no</span></span>
+<span class="line"><span>    AllowAgentForwarding no</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Optionally restrict logins to the appliance addresses:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span>Match Group sftp-apps Address &#x3C;VA 1 address>,&#x3C;VA 2 address></span></span>
+<span class="line"><span>    ChrootDirectory /srv/sftp/%u</span></span>
+<span class="line"><span>    ForceCommand internal-sftp</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>(Combine the conditions on a single <code>Match</code> line, and keep your administrators in a different group that is not forced into <code>internal-sftp</code>.) Test the configuration, then reload:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> sshd</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -t</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> &#x26;&#x26; </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> systemctl</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> reload</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> sshd</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>5. Firewall</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>From</th><th>To</th><th>Port</th><th>Purpose</th></tr></thead><tbody><tr><td>Appliances in the cluster</td><td>SFTP host</td><td>22</td><td>The source reads the file</td></tr><tr><td>Administration host</td><td>SFTP host</td><td>22</td><td>Placing files, maintenance</td></tr><tr><td>Nothing else</td><td></td><td></td><td>Application owners do not connect</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>6. Test before you wire a source</strong></p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># from a host in the same network zone as the appliances</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sftp</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> app01@</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">sftp</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> hos</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sftp</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">> </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">ls</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sftp</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">> </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">put</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> test.csv</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> data/test.csv</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sftp</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">> </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">bye</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Then run <strong>Test Connection</strong> from the ISC source, which is the test that matters, because it uses the appliance's network path and the driver's own client.</p>
+					<p><strong>A reusable onboarding script</strong></p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">#!/bin/bash</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># add_app.sh &#x3C;name>  - creates a login and folder for one application</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">set</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -euo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> pipefail</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">APP</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">$1</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[[ </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> =~</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> ^[a-z][a-z0-9_-]{2,30}$ ]] </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">||</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">echo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "bad name"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">exit</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; }</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">id</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> &#x26;</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">/dev/null &#x26;&#x26; { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">echo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "exists"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">exit</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">useradd</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -g</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> sftp-apps</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -s</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /usr/sbin/nologin</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -d</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">-M</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">mkdir</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -p</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">/data</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">chown</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> root:root</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP &#x26;&#x26; </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">chmod</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 755</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">chown</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">":sftp-apps</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">/data</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> &#x26;&#x26; </span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">chmod</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 750</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /srv/sftp/</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">/data</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">PW</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$(</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">openssl</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> rand</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -base64</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 24</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">echo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">:</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$PW</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> |</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> chpasswd</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">echo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "Created </span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$APP</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">. Store this password in the vault now: </span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$PW</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3 id="build-recipe-the-isc-source">Build recipe: the ISC source</h3>
+					<p>The source attributes that mattered on the program (values are placeholders):</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "type"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"SQLLoader"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "connectorAttributes"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "driverClass"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"com.hxtt.sql.text.TextDriver"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "url"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"jdbc:csv:/sftp://&#x3C;sftp host>/&#x3C;folder>/"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "user"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;application login>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "password"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;set in the UI, encrypted>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "additionalConnProperties"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"_CSV_Header=true"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"lockTimeout=30000"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">],</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "SQL"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"select * from &#x3C;file name without extension> order by [&#x3C;id column>]"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "testConnSQL"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"select * from &#x3C;file name without extension> order by [&#x3C;id column>]"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "indexColumns"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;id column>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">],</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "mergeRows"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">true</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "mergeColumns"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;entitlement column>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">],</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "disableOrderingCheck"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">true</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "deleteThresholdPercentage"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">10</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "encrypted"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"password,group.password"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Setting</th><th>Meaning and advice</th></tr></thead><tbody><tr><td><code>url</code></td><td>The data-files URL. The format is <code>jdbc:csv:</code> followed by <code>/sftp://host/folder/</code>. The documentation shows a variant without the leading slash, so test which one your server needs. Use a path the SFTP login can reach from its starting directory</td></tr><tr><td><code>user</code>, <code>password</code></td><td>The application login. Set the password in the UI so it is stored encrypted</td></tr><tr><td><code>_CSV_Header=true</code></td><td>The first row is the column header</td></tr><tr><td><code>lockTimeout=30000</code></td><td>SailPoint recommends at least 30000 ms for remote connections. Without it, a default of one second caused &quot;timeout beyond 1000 ms to open a table&quot;</td></tr><tr><td><code>SQL</code></td><td>Reads the file as a table. The table is the file name without the extension</td></tr><tr><td><code>indexColumns</code>, <code>mergeRows</code>, <code>mergeColumns</code></td><td>When several rows describe one account (one row per entitlement), merge them into one account with a multi-valued attribute. <strong>These are not in the UI.</strong> Add them with the API. The query must be ordered by the index column</td></tr><tr><td><code>disableOrderingCheck</code></td><td>Skips the sorted-input check. Only safe if you sort the file yourself</td></tr><tr><td><code>deleteThresholdPercentage</code></td><td>Set it. A truncated or empty file is the commonest cause of mass removal on a flat-file source</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Add the merge attributes with a JSON patch (confirm the path syntax for your API version):</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"op"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"add"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"path"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/connectorAttributes/mergeRows"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"value"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">true</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> },</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"op"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"add"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"path"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/connectorAttributes/mergeColumns"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"value"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;entitlement column>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">] },</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"op"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"add"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"path"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/connectorAttributes/indexColumns"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"value"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;id column>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">] }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">]</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>Schema and correlation</strong></p>
+					<ul><li>Define the account schema from the column names, and mark the identifier, display name and entitlement attributes.</li><li>Correlate on one attribute (the email address or the login name), chosen by match rate against the identity cube.</li><li>Run an account aggregation and review the uncorrelated list before you build campaigns on the source.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="file-hygiene">File hygiene</h3>
+					<p>Most flat-file failures are file problems. Apply these to every file before it is placed:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Rule</th><th>Why</th></tr></thead><tbody><tr><td><strong>UTF-8 encoding</strong></td><td>Special characters otherwise appear corrupted after aggregation</td></tr><tr><td><strong>A header row</strong> that matches the schema</td><td>A new column that is not in the SQL is ignored</td></tr><tr><td><strong>Sorted by the index column</strong> when merging</td><td>The driver fails with &quot;data should be sorted in ascending order&quot;, or accounts split</td></tr><tr><td><strong>One spelling of every id</strong></td><td><code>USER01</code> and <code>user01</code> in one file made ISC drop one spelling</td></tr><tr><td><strong>No stray apostrophes or spaces in headers</strong></td><td>Header names become column names</td></tr><tr><td><strong>Consistent line endings</strong></td><td>CRLF is safe</td></tr><tr><td><strong>Atomic placement</strong></td><td>Upload under a temporary name and rename, so the appliance never reads a half-written file</td></tr><tr><td><strong>Never overwrite a different file of the same name</strong></td><td>Place the new one with a suffix and reconcile</td></tr><tr><td><strong>Record a checksum</strong></td><td>Prove later which file a campaign was built from</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>A small preparation script that fixes the common problems:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">python</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">import</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> csv, sys</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">src, dst, id_col </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> sys.argv[</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">], sys.argv[</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">2</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">], sys.argv[</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">3</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">with</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> open</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(src, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">newline</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">""</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">encoding</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"utf-8-sig"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">as</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> f:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    rows </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> list</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(csv.DictReader(f))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> not</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> rows:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    sys.exit(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"refusing to write an empty file"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> r </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">in</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> rows:</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">    for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> k </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">in</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> r:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">        r[k] </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (r[k] </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">or</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> ""</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">).strip()</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    r[id_col] </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> r[id_col].lower()          </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># one spelling of every id</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">rows.sort(</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">key</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=lambda</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> r: r[id_col])</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">with</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> open</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(dst, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"w"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">newline</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">""</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">encoding</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"utf-8"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">as</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> f:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    w </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> csv.DictWriter(f, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">fieldnames</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">list</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(rows[</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">].keys()), </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">lineterminator</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\r\n</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    w.writeheader()</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    w.writerows(rows)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">print</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"wrote"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">len</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(rows), </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"rows"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>Placing a file as an administrator</strong></p>
+					<p>On the program, an automated tool placed the files through a staging folder, with elevated rights on the server. The pattern is worth copying even if your tool is a shell script:</p>
+					<ol><li>Upload to a staging folder the administrator owns.</li><li>Use <code>sudo install -o &lt;app login&gt; -g &lt;group&gt; -m 664 &lt;staged&gt; &lt;target&gt;</code> to put the file where the application login can read it, with the right owner.</li><li>If a file of that name already exists and its checksum differs, place the new one under a different name and stop.</li><li>Remove the staged copy.</li><li>Read the file back and compare the checksum before aggregating.</li></ol>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="monitoring-and-operations">Monitoring and operations</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Check</th><th>Why</th></tr></thead><tbody><tr><td>Free space on the data volume</td><td>A full disk makes uploads fail</td></tr><tr><td>Age of the newest file per application</td><td>Stale files produce stale reviews. Compare with the aggregation schedule</td></tr><tr><td>Count of lines per file against the last</td><td>A sudden drop is a truncated file</td></tr><tr><td>Failed login attempts</td><td>Brute force against password logins</td></tr><tr><td>Connection count from unknown addresses</td><td>Anyone other than the appliances and administrators</td></tr><tr><td>Source health in ISC</td><td>The first signal that the file or the path is wrong</td></tr><tr><td>Backup success</td><td>The files are the evidence for reviews</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Housekeeping:</p>
+					<ul><li>Keep files for the retention period your audit requires, then archive.</li><li>Rotate application passwords on a schedule and when staff leave, and update the source when you do.</li><li>Review the list of logins quarterly against the list of live sources.</li><li>Treat the server as a controlled system: patched, logged, and covered by your normal access review.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="troubleshooting">Troubleshooting</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody><tr><td>Test Connection: &quot;verify that the location in the Data Files URL is correct&quot;</td><td>The URL format or the path is wrong</td><td>Use <code>jdbc:csv:/sftp://host/folder/</code>, and the complete path for the default folder. Check with a manual SFTP session</td></tr><tr><td>&quot;timeout beyond 1000 ms to open a table&quot;</td><td>The lock timeout is too short for a remote file</td><td><code>lockTimeout=30000</code> as an additional connection parameter</td></tr><tr><td>&quot;Failed to load table...: read-only file system&quot;</td><td>The login cannot write where the driver needs to</td><td>Check permissions on the folder</td></tr><tr><td>&quot;Driver is not valid&quot; with a text file</td><td>The file is a text file, not CSV</td><td>Use the text variant of the URL and the matching extension property</td></tr><tr><td>&quot;Data should be sorted in ascending order&quot;</td><td>Merging is on and the file is not sorted</td><td>Sort the file, or add an <code>order by</code> to the query</td></tr><tr><td>One entitlement per account</td><td>Rows for one account are not adjacent</td><td>Sort by account id</td></tr><tr><td>Special characters appear as symbols</td><td>Wrong encoding</td><td>Save as UTF-8 and re-run</td></tr><tr><td>A new column is not picked up</td><td>The SQL lists columns</td><td>Add the column to the query</td></tr><tr><td>A disabled account is removed after a maintenance task</td><td>The source cannot re-read a provisioned account</td><td>Add the get-object query</td></tr><tr><td>Aggregation fails after a credential change</td><td>A cached pooled connection</td><td>Disable pooling through the API, as documented for the connector</td></tr><tr><td>Intermittent timeouts or &quot;login failed&quot;</td><td>The documentation warns SFTP can fail intermittently for this connector</td><td>Retry, check server load and connection limits, and keep files small</td></tr><tr><td>The source reads an old file</td><td>A different file of the same name was not replaced</td><td>Check names and checksums, and the folder the URL points to</td></tr><tr><td>Everything fails at once</td><td>The server, the firewall or DNS</td><td>Test from a host on the appliance's network</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="security-notes">Security notes</h3>
+					<ul><li>Passwords for application logins are credentials. Store them in a vault, never in a spreadsheet or a ticket.</li><li>The file contains personal data about people and their access. Restrict who can read the folders, encrypt backups, and delete files when retention ends.</li><li>Do not let the server initiate connections to the internet.</li><li>A flat-file source is only as accurate as the file. Record who produced it and when.</li><li>Where the file is built from another system, automate it. A manual export that someone forgets to run is the commonest cause of a stale review.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Decide on SQL Loader, upload, or an existing transfer service for each application before you build the server.</li><li>Build one login and one folder per application, from a script.</li><li>Put the file hygiene rules in a script that every file passes through.</li><li>Set the delete threshold, the lock timeout and the merge attributes on every source.</li><li>Monitor file age and size as well as source health.</li><li>Keep a record of which file each campaign was built from.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

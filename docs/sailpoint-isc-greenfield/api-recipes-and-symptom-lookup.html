@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="API Recipes and Symptom Lookup: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>API Recipes and Symptom Lookup · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/api-recipes-and-symptom-lookup.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="API Recipes and Symptom Lookup" />
+		<meta property="og:description" content="API Recipes and Symptom Lookup: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/api-recipes-and-symptom-lookup.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="API Recipes and Symptom Lookup" />
+		<meta name="twitter:description" content="API Recipes and Symptom Lookup: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="active">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>API Recipes and Symptom Lookup</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#read-only-api-calls">Read-only API calls</a></li><li><a href="#symptom-lookup">Symptom lookup</a></li><li><a href="#making-a-change-safely">Making a change safely</a></li><li><a href="#added-from-sailpoint-s-documentation">Added from SailPoint's documentation</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>The last page is for the person on call. It lists the read-only API calls that explain most situations, then a symptom table generalised from the runbooks of several integrations. Everything here is safe to try first; none of the calls change anything unless marked.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="read-only-api-calls">Read-only API calls</h3>
+					<p>Use a token with read scope. Version prefixes (<code>v2025</code>, <code>beta</code>) change over time, so confirm them against the current API reference.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span>GET  /v2025/sources/{id}</span></span>
+<span class="line"><span>GET  /v2025/sources/{id}/schemas</span></span>
+<span class="line"><span>GET  /v2025/sources/{id}/provisioning-policies</span></span>
+<span class="line"><span>GET  /beta/sources/{id}/schedules</span></span>
+<span class="line"><span>GET  /v2025/connector-rules</span></span>
+<span class="line"><span>GET  /v2025/connector-rules/{id}</span></span>
+<span class="line"><span>GET  /v2025/entitlements?filters=source.id eq "{id}"</span></span>
+<span class="line"><span>GET  /v2025/access-profiles?limit=250</span></span>
+<span class="line"><span>GET  /beta/source-apps</span></span>
+<span class="line"><span>GET  /beta/source-apps/{id}/access-profiles?limit=250</span></span>
+<span class="line"><span>GET  /v2025/roles</span></span>
+<span class="line"><span>GET  /v2025/workflows</span></span>
+<span class="line"><span>GET  /v2025/workflows/{id}</span></span>
+<span class="line"><span>GET  /v2025/form-definitions</span></span>
+<span class="line"><span>GET  /v2025/form-definitions/{id}</span></span>
+<span class="line"><span>GET  /v2025/launchers</span></span>
+<span class="line"><span>GET  /v2025/identity-profiles</span></span>
+<span class="line"><span>POST /v2025/search</span></span></code></pre></div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Call</th><th>Use it to</th><th>Watch out for</th></tr></thead><tbody><tr><td>Source, schemas, provisioning policies</td><td>See what a source is configured to do</td><td>A source can be configured to do nothing while rules do the work</td></tr><tr><td>Schedules</td><td>Find sources with no aggregation schedule</td><td>An empty list is the finding</td></tr><tr><td>Connector rules, by id</td><td>Read the script</td><td><strong>Returns the script in clear text, including any embedded credential.</strong> Do not paste the output anywhere</td></tr><tr><td>Entitlements filtered by source</td><td>Count and inspect</td><td>Counts that halve between runs mean a truncated load</td></tr><tr><td>Access profiles</td><td>Inventory</td><td>Page at 250</td></tr><tr><td>Source apps and their sub-resource</td><td>See which profiles a tile holds</td><td>The list payload shows empty arrays. Use the sub-resource, and a <code>limit</code> above 250 returns an empty list silently</td></tr><tr><td>Roles</td><td>Inventory criteria roles</td><td>Read the criteria; membership is attribute-driven</td></tr><tr><td>Workflows and form definitions</td><td>Inspect triggers and steps</td><td>Secrets may be present. A launcher-driven form instance shows <code>formData</code> only in the list call</td></tr><tr><td>Launchers</td><td>See what is exposed to users</td><td>Not patchable</td></tr><tr><td>Identity profiles</td><td>Check mappings</td><td>Compare sandbox and production</td></tr><tr><td>Search (POST)</td><td>Aggregations for counts, status and freshness</td><td>The best monitoring tool in the platform</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Two calls that change things</strong></p>
+					<ul><li><strong><code>POST /v2025/accounts</code></strong> runs the connector's create operation and its before-rules. Use it to prove a create works. Use a test identity.</li><li><strong>Configuration export with type <code>RULE</code></strong> is the way to read cloud rules, which cannot be fetched with <code>GET</code>. Treat the export as sensitive.</li></ul>
+					<p><strong>Search recipes</strong></p>
+					<p>Run these through the search API against the <code>identities</code>, <code>accounts</code> and <code>entitlements</code> indices. The query strings are ideas, not tested syntax: confirm the field names on your tenant first.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Question</th><th>Query idea</th></tr></thead><tbody><tr><td>Which sources have not aggregated recently?</td><td>Aggregation on the last aggregation date attribute, sorted ascending</td></tr><tr><td>How many disabled accounts on a source?</td><td>Accounts query: <code>source.name:&quot;X&quot; AND disabled:true</code>, count only</td></tr><tr><td>Who is uncorrelated?</td><td>Accounts query: <code>uncorrelated:true</code> on the source</td></tr><tr><td>Which entitlements are directly requestable?</td><td>Entitlements query on <code>requestable:true</code> and compare with the intended set</td></tr><tr><td>Did a literal placeholder leak?</td><td>An accounts or entitlements query for the placeholder string a rule is supposed to replace</td></tr><tr><td>Who joined or left last night?</td><td>Identities query on created date or lifecycle state, with the attributes you want in the export</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="symptom-lookup">Symptom lookup</h3>
+					<p>Generalised from the runbooks of one REST integration, one JDBC integration with two instances and one REST integration for a finance system. Each row says what to suspect first, not the only possibility.</p>
+					<p><strong>Aggregation and data</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Most likely cause</th><th>Check</th></tr></thead><tbody><tr><td>Aggregation fails right at the start</td><td>Token endpoint unreachable, or the client credentials were rotated</td><td>Test the token call from the appliance's network</td></tr><tr><td>Aggregation &quot;succeeds&quot; but accounts carry error text</td><td>The error-detection settings in the source were altered, or the application changed its error wording</td><td>Compare the error strings with the source configuration</td></tr><tr><td>Some accounts missing entirely, no error</td><td>A page-size ceiling is reached; overflow is dropped</td><td>Count accounts against the source; look for a count equal to a page size</td></tr><tr><td>A whole aggregation row vanished with no error</td><td>An unguarded cast in a rule threw on a missing or null field</td><td>Read the after-rule for casts; test with null</td></tr><tr><td><strong>Every account shows as enabled</strong></td><td>A status comparison in the after-rule stopped matching, or the call that fetches disabled users could not be made</td><td>Look for a &quot;no token&quot; or &quot;skipping&quot; log line; test the comparison against a live value</td></tr><tr><td>Many uncorrelated accounts</td><td>Email or login mismatch, including case; no fallback rule</td><td>Compare the correlation attribute on both sides, case-sensitively</td></tr><tr><td>Entitlement counts halved</td><td>A truncated aggregation</td><td>Run again and compare; check paging</td></tr><tr><td>Entitlement values changed en masse</td><td>Expected when the application re-mints identifiers on edit</td><td>Confirm with the owner before assuming a fault</td></tr><tr><td>An access review shows no admin-level access</td><td>An agreed exclusion in the integration</td><td>Check the exclusion list</td></tr><tr><td>A user in the application is not in ISC</td><td>A filter restricts the integration to employees</td><td>Check the filter</td></tr><tr><td>A role exists in the application but not in ISC</td><td>Nobody holds it and groups are not aggregated</td><td>Run a group aggregation</td></tr><tr><td>Aggregation deleted accounts</td><td>The delete threshold let a partial response through</td><td>Check the threshold and the response size</td></tr><tr><td>Catalogue is out of date</td><td>Entitlement aggregation has no schedule</td><td>Check schedules; run by hand</td></tr><tr><td>A search or API call for a schema or rule returns nothing</td><td>A double space in the name</td><td>Copy the exact name from the export</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Provisioning and requests</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Most likely cause</th><th>Check</th></tr></thead><tbody><tr><td>Account creation fails or hangs with no clear reason</td><td>A debug webhook in a before-create rule is enabled and its listener is down</td><td>Look for a debug flag set true</td></tr><tr><td>A literal placeholder (for example <code>COMPUTED_BY_RULE</code>) appears in the target</td><td>The before-create rule did not run</td><td>Check rule attachment</td></tr><tr><td>Revocation reported success but the target did not change</td><td>A parse of the entitlement value failed in the before-rule</td><td>Compare the value format with what the rule expects</td></tr><tr><td>Enable failed with no useful error</td><td>A logger or webhook call in a before-enable rule</td><td>Read the rule</td></tr><tr><td>Entitlement add or remove did nothing</td><td>The rule logged &quot;empty, skipping&quot; and exited</td><td>Look for the skip message</td></tr><tr><td>Fewer assignments than requested</td><td>Malformed entries skipped, or a name contained a delimiter</td><td>Check the delimiter</td></tr><tr><td>A name or email change did not reach the application</td><td>There is no update policy or update endpoint</td><td>Check the provisioning policies</td></tr><tr><td>A group is missing from the requestable set</td><td>The catalogue is a hard-coded list</td><td>Read the query that defines it</td></tr><tr><td>An operation works on one instance but not the other</td><td>The two rules handle different operations</td><td>Compare the rule operations</td></tr><tr><td>Behaviour changed on both instances after one rule edit</td><td>The rule is shared</td><td>Look at which sources the rule is attached to</td></tr><tr><td>Delete refused although the feature list says it is supported</td><td>The rule refuses it</td><td>Read the rule</td></tr><tr><td>Reading an endpoint body does not match what the application receives</td><td>The endpoint body is dead configuration and a rule replaces it</td><td>Read the rule, not the endpoint</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Requests, forms and workflows</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Most likely cause</th><th>Check</th></tr></thead><tbody><tr><td>Several requests in a row from one person all <code>CANCELLED</code></td><td>A call exceeded the appliance timeout (63 seconds measured) and wedged that requester for about an hour</td><td>Check the earliest failing request for duration</td></tr><tr><td>An approval never appeared</td><td>The approval expired without reminders or a fallback, which looks the same as never arriving</td><td>Look at the approval's history</td></tr><tr><td>A literal <code>{{</code> in a payload or message</td><td>A template path did not resolve</td><td>Check the field name, including casing</td></tr><tr><td>The manager never received the form</td><td>The manager attribute is wrong or the notification went elsewhere</td><td>Check the manager attribute and the notification routing</td></tr><tr><td>Credentials mail went to the wrong person</td><td>Routing by role after a manager change</td><td>Check the template recipient</td></tr><tr><td>No Launch button</td><td>The launcher is not assigned or its workflow is disabled</td><td>Check the assignment and the workflow state</td></tr><tr><td>A workflow works in the UI but fails after an API edit</td><td>The PUT wiped the secrets</td><td>Re-create the secrets in the UI</td></tr><tr><td>A workflow save returns 200, but enabling fails</td><td>Validation runs on enable</td><td>Fix the named violation; check the step names</td></tr><tr><td>A form option list is empty</td><td>The data-source query does not interpolate form values</td><td>Test with a literal</td></tr><tr><td>Users ask where to request an application</td><td>There is no tile</td><td>Give them the naming convention to search</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Cluster and infrastructure</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Most likely cause</th><th>Check</th></tr></thead><tbody><tr><td>Several integrations on the same cluster fail together</td><td>The cluster, or a shared service account, is the problem</td><td>Check cluster status and the shared login</td></tr><tr><td>One integration fails while its cluster peers are fine</td><td>Its own network path, such as egress or DNS to an external host</td><td>Test the route from the appliance</td></tr><tr><td>A cluster in a warning state</td><td>A cluster with a single appliance has no redundancy</td><td>Check appliance count</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Directory and lifecycle</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Most likely cause</th><th>Check</th></tr></thead><tbody><tr><td>Group membership gone after the leaver date</td><td>No allow-list or delay in the leaver flow</td><td>Review the leaver actions</td></tr><tr><td>Leaver not disabled on an application</td><td>The application is not in the lifecycle action source list</td><td>Read the list</td></tr><tr><td>Account disabled a day early or late</td><td>The end date or the time zone is wrong</td><td>Check the HR record and the identity's time zone</td></tr><tr><td>Joiners missing from the directory</td><td>A start date outside the processing window, or a missing mandatory field</td><td>Check the joiner search export</td></tr><tr><td>A rehired person has two accounts</td><td>The rehire flow did not match the existing identity</td><td>Check the join key</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="making-a-change-safely">Making a change safely</h3>
+					<ol><li>Read the current configuration with the calls above and save a copy.</li><li>Change it in sandbox.</li><li>Test with a single object before many.</li><li>Check what else uses the thing: a rule attached to two sources, an attribute used by correlation, a form a launcher points at.</li><li>Deploy, then verify with a search, not by trusting the 200.</li><li>Update the runbook and the lifecycle source list if you added a source.</li></ol>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="added-from-sailpoint-s-documentation">Added from SailPoint's documentation</h3>
+					<p><strong>Force a re-correlation</strong></p>
+					<p>Accounts that stay uncorrelated after you fix a correlation rule or the data it matches were probably skipped by an <strong>optimized</strong> aggregation, which does not re-run correlation for unchanged accounts. The UI always runs optimized. Through the API, call the account-load endpoint for the source with <code>disableOptimization=true</code>. It applies to that run only, reprocesses every record, and keeps manually correlated accounts. Check the delete threshold first, because an unoptimized run touches everything.</p>
+					<p><strong>Pace your scripts</strong></p>
+					<p>The default allowance is 100 requests per client ID and API version per 10 seconds. A 429 response carries <code>Retry-After</code>. Sleep for that many seconds, then retry. Give automation its own API client.</p>
+					<p><strong>More symptoms</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Most likely cause</th><th>Check</th></tr></thead><tbody><tr><td>Still uncorrelated after fixing the data or the rule</td><td>Optimized aggregation skipped unchanged accounts</td><td>Run an unoptimized aggregation through the API</td></tr><tr><td>Aggregation cancelled with a warning about deletions</td><td>The delete threshold stopped a bulk delete</td><td>Compare the account count with the source before raising the threshold</td></tr><tr><td>One entitlement per account in a flat-file source</td><td>The delimited file is not sorted by account ID</td><td>Sort on the id column</td></tr><tr><td>Import reports COMPLETE but objects are missing</td><td>The object type is not importable and was skipped silently</td><td>Compare an export before and after; use <code>preview=true</code></td></tr><tr><td>A deployed non-employee source behaves like a normal source</td><td>Non-employee sources cannot be deployed</td><td>Recreate it in the target</td></tr><tr><td>Schedule fires an hour off after a clock change</td><td>Schedules follow the cluster time zone and do not shift for daylight saving</td><td>Check the cluster time zone</td></tr><tr><td>Workflow errors in the first hours after enabling the feature</td><td>First enablement can take up to two hours</td><td>Wait, then retest</td></tr><tr><td>Parallel-loop workflow fails on a large input</td><td>More than 250 items</td><td>Chunk the input or use a serial loop</td></tr><tr><td>Item reassigned to an unexpected reviewer</td><td>The four-hop reassignment limit, or the self-review check</td><td>Read the reassignment history</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Save the read-only list and the symptom tables where on-call engineers can find them.</li><li>Teach the team that a 200 on a PUT is not proof, and that the search API is the verification tool.</li><li>Add symptoms from your own incidents, with the check that found the cause.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

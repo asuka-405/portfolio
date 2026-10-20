@@ -1,0 +1,7 @@
+{
+	"title": "SailPoint ISC Greenfield Implementation Field Guide",
+	"slug": "sailpoint-isc-greenfield",
+	"icon": "🧭",
+	"order": 2.5,
+	"summary": "An end-to-end helper for greenfield SailPoint Identity Security Cloud programs: scoping, architecture, HR-driven lifecycle, connectors, access model, workflows, campaigns, go-live and hypercare, with every caveat, limit and workaround learned on a 140-application enterprise rollout."
+}

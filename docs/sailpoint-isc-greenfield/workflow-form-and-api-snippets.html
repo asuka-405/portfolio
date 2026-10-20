@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Workflow, Form and API Snippets: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Workflow, Form and API Snippets · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/workflow-form-and-api-snippets.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Workflow, Form and API Snippets" />
+		<meta property="og:description" content="Workflow, Form and API Snippets: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/workflow-form-and-api-snippets.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Workflow, Form and API Snippets" />
+		<meta name="twitter:description" content="Workflow, Form and API Snippets: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="active">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Workflow, Form and API Snippets</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#calling-the-api">Calling the API</a></li><li><a href="#workflow-expressions">Workflow expressions</a></li><li><a href="#form-logic">Form logic</a></li><li><a href="#monitoring-queries">Monitoring queries</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Reusable fragments for the parts of an ISC build that are not rules: workflow expressions and step patterns, the search queries that drive cascading forms, and the API calls an engineer reaches for. Names in angle brackets are placeholders. API paths and versions change, so confirm them against the current reference. Nothing here should be run against production before you have run it in sandbox.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="calling-the-api">Calling the API</h3>
+					<p><strong>A token</strong></p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">TENANT</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=&#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">tenant</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">TOKEN</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$(</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">curl</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -s</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -X</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> POST</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "https://</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$TENANT</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">.api.identitynow.com/oauth/token"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> \</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  -d</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "grant_type=client_credentials"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> \</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  -d</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "client_id=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$CLIENT_ID</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> \</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  -d</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "client_secret=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$CLIENT_SECRET</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> |</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> jq</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -r</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> .access_token</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Read the client id and secret from your vault or the environment, never from the script. A token is short-lived, so fetch one per run. If you loop over many objects, pace the calls: the default allowance is 100 requests per client and API version per 10 seconds, and a 429 carries a <code>Retry-After</code> header.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">api</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">() {   </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># api GET /v2025/sources</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">  local</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> m</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">$1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> p</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">$2</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">shift</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 2</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">  while</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> :</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">do</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    code</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$(</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">curl</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -s</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -o</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /tmp/resp.json</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -w</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> '%{http_code}'</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -X</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$m</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> \</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">      -H</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "Authorization: Bearer </span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$TOKEN</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -H</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "Content-Type: application/json"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> \</span></span>
+<span class="line"><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">      "https://</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$TENANT</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">.api.identitynow.com</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$p</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">$@</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">    if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> [ </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$code</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> =</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "429"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> ]; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">then</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> sleep</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 5</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">continue</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">fi</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">    cat</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /tmp/resp.json</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">; </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> $([ </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$code</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> -lt</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 400</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> ])</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">  done</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>Read-only calls you will use every week</strong></p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">api</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> GET</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "/v2025/sources?limit=250&#x26;offset=0"</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">api</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> GET</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "/v2025/sources/&#x3C;id>"</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">api</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> GET</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "/beta/sources/&#x3C;id>/schedules"</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">api</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> GET</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "/v2025/entitlements?filters=source.id eq </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">&#x3C;id></span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">&#x26;limit=250"</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">api</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> GET</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "/v2025/access-profiles?limit=250"</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">api</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> GET</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "/beta/source-apps/&#x3C;id>/access-profiles?limit=250"</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">api</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> GET</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "/v2025/workflows"</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">api</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> GET</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "/v2025/form-definitions"</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Always page at 250 or below. The source-app sub-resource returns an empty list if <code>limit</code> exceeds 250.</p>
+					<p><strong>Search</strong></p>
+					<p>The search API is the verification and monitoring tool. A request names the index and a query:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">POST /v</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">2025</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">/search</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "indices"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"accounts"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">],</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "query"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"query"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"source.name:</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">&#x3C;source name></span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> AND disabled:true"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> },</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "sort"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"id"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">],</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "limit"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">250</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Counts only, for a monitor:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">POST /v</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">2025</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">/search?count=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">true</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{ </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"indices"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"accounts"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">], </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"query"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"query"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"source.name:</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">&#x3C;source name></span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> AND uncorrelated:true"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> }, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"limit"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> }</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Page through a large result by sorting on a stable field and passing the last value of the previous page as <code>searchAfter</code>.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Question</th><th>Index</th><th>Query idea</th></tr></thead><tbody><tr><td>Disabled accounts on a source</td><td>accounts</td><td><code>source.name:&quot;X&quot; AND disabled:true</code></td></tr><tr><td>Uncorrelated accounts</td><td>accounts</td><td><code>source.name:&quot;X&quot; AND uncorrelated:true</code></td></tr><tr><td>Directly requestable entitlements</td><td>entitlements</td><td><code>requestable:true</code>, compared with your intended list</td></tr><tr><td>Who joined or left</td><td>identities</td><td>a created-date or lifecycle-state query</td></tr><tr><td>Entitlements for a cascade step</td><td>entitlements</td><td>see below</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Field names vary by index and release. Check them with a one-row query before you build a monitor on them.</p>
+					<p><strong>Force a full re-correlation of one source</strong></p>
+					<p>An optimized aggregation skips unchanged accounts, so fixed correlation logic is not re-run. The API can disable optimization for one run:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">curl</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -X</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> POST</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "https://</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$TENANT</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">.api.identitynow.com/v3/sources/&#x3C;id>/load-accounts"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> \</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  -H</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "Authorization: Bearer </span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">$TOKEN</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> \</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  -F</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "disableOptimization=true"</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>It reprocesses every record, keeps manually correlated accounts, and applies to that run only. Check the delete threshold before you run it.</p>
+					<p><strong>Patching a source</strong></p>
+					<p>Sources are changed with a JSON patch:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span>PATCH /v3/sources/&#x3C;id>      Content-Type: application/json-patch+json</span></span></code></pre></div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"op"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"replace"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"path"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/connectorAttributes/deleteThresholdPercentage"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"value"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">10</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> },</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  { </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"op"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"add"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,     </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"path"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/connectorAttributes/mergeRows"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"value"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">true</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">]</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Take a copy of the source (<code>GET /v2025/sources/&lt;id&gt;</code>) before every patch, and store it. Secrets are not returned, and some updates replace a whole attribute, so check the result by reading it back.</p>
+					<p><strong>Export cloud rules and configuration</strong></p>
+					<p>Cloud rules cannot be read with a GET. Use the configuration export:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">POST /beta/sp-config/export</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{ </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"description"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"rule export"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"includeTypes"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: [</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"RULE"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">], </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"objectOptions"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {} }</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Then poll the export job and download it. The export needs an administrator and creates a job, not a change. Treat the result as sensitive: rules can contain credentials.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="workflow-expressions">Workflow expressions</h3>
+					<p>Expressions seen in the program's workflows:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Expression</th><th>Meaning</th></tr></thead><tbody><tr><td><code>$.trigger.launchedBy.id</code></td><td>The person who launched an interactive workflow</td></tr><tr><td><code>$.interactiveForm.formData.&lt;field&gt;</code></td><td>An answer from the first form. The key is the form <strong>element</strong>, with its exact capitalisation</td></tr><tr><td><code>$.interactiveForm4.formData.&lt;field&gt;</code></td><td>An answer from a later form in the same workflow (numbered by step)</td></tr><tr><td><code>$.loop.loopInput</code></td><td>The current item inside a loop</td></tr><tr><td><code>$.loop.context.&lt;step&gt;...</code></td><td>A value from outside the loop, read from inside it</td></tr><tr><td><code>{{...}}</code></td><td>A template placeholder. If it cannot be resolved it renders as literal text, so a typo corrupts a payload silently</td></tr><tr><td><code>.JSON()</code></td><td>The only stringify function. Others render literally</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Step actions used</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Action</th><th>Used for</th></tr></thead><tbody><tr><td>Interactive form</td><td>Ask the requester. The answers return inline</td></tr><tr><td><code>sp:access:get</code></td><td>Find an access item by search. Returns id, name and type, not the value</td></tr><tr><td><code>sp:access:manage</code></td><td>Grant or revoke an access item for an identity, with comments</td></tr><tr><td><code>sp:http</code> (version 3)</td><td>Call an API, including search, returning the raw response</td></tr><tr><td><code>sp:manage-account</code></td><td>Enable or disable an existing account</td></tr><tr><td><code>sp:forms</code></td><td>Raise an approval form and wait for the result</td></tr><tr><td>Wait</td><td>Separate dependent provisioning events</td></tr><tr><td>Send email</td><td>Notify the requester and the requestee</td></tr><tr><td>Loop</td><td>Iterate a multi-select. The parallel loop accepts at most 250 items</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>A cascade, step by step</strong></p>
+					<p>This is the multi-step form pattern described in the complex applications page.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>#</th><th>Step</th><th>Configuration</th></tr></thead><tbody><tr><td>1</td><td>Interactive form</td><td>Scope, requestee, role selection</td></tr><tr><td>2</td><td>Get identities</td><td>The requestee from the form, the requester from the trigger</td></tr><tr><td>3</td><td>Compare</td><td>Branch on the scope value</td></tr><tr><td>4</td><td>HTTP search</td><td>Search entitlements for the next list (see below)</td></tr><tr><td>5</td><td>Interactive form</td><td>Populate a dropdown from the search result and let the user choose</td></tr><tr><td>6</td><td>Loop over the choices</td><td>For each: resolve the role, resolve the entity, grant the role</td></tr><tr><td>7</td><td>Wait</td><td>One minute between the role and the entity grant</td></tr><tr><td>8</td><td>Grant the entity</td><td>With comments linking it to the role</td></tr><tr><td>9</td><td>Email</td><td>Requester and requestee</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Search queries behind the dropdowns</strong></p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span># the entities for a chosen country</span></span>
+<span class="line"><span>description.exact:"&#x3C;country>" AND source.name.exact:"&#x3C;source>" AND attribute.exact:"&#x3C;entity attribute>"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># the entities for a chosen country and client, where the client is stored as a tag</span></span>
+<span class="line"><span>description.exact:"&#x3C;country>" AND source.name.exact:"&#x3C;source>" AND attribute.exact:"&#x3C;client entity attribute>" AND tags:"&#x3C;normalised client>"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># one exact access item, by name and source</span></span>
+<span class="line"><span>name.exact:"&#x3C;role name>" AND source.name.exact:"&#x3C;source>"</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Rules for building them:</p>
+					<ul><li>Quote string values and keep <code>.exact</code> where you need an exact match.</li><li>Store whatever the search must filter on in <code>description</code>, <code>attribute</code> or <code>tags</code>. Entitlement <strong>attributes</strong> are not indexed.</li><li>A list passed into the query renders like <code>[5 2]</code> and fails. Build <code>tags:(&quot;A&quot; &quot;B&quot;)</code> as an explicit OR from strings.</li><li>Normalise client names once (remove <code>&amp;</code>, <code>-</code>, spaces, brackets and full stops) and use the same rule when you create the tags.</li></ul>
+					<p><strong>The comment that carries data to a rule</strong></p>
+					<p>Set it on the grant step, and read it in the provisioning rule:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span>RoleId:&#x3C;role>, EntityID:&#x3C;entity>, Source:&#x3C;source></span></span></code></pre></div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"RequestedGroup"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;group>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"RequestedClientName"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;client>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">"TargetDatabase"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;db>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Keep one format per source. A grant by any other route carries no comment, and the rule should refuse it with a clear message.</p>
+					<p><strong>Calling the account-create API from a workflow</strong></p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span>POST /v2025/accounts</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>This runs the connector's create operation and its before rules. It is the way to create an account on demand from a workflow, since there is no create-account action. Link to the identity is by correlation, not in the call.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">json</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  "attributes"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: {</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "sourceId"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;source id>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">    "&#x3C;attribute>"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"&#x3C;value>"</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">  }</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>(Confirm the body for your release.) Use a test identity first.</p>
+					<p><strong>Secrets in workflows</strong></p>
+					<ul><li>Secrets can only be created in the UI. A literal secret written through the API is dropped silently.</li><li>A full PUT of a workflow wipes a UI-set secret. Read the workflow first and preserve the reference.</li><li>One OAuth reference per workflow: avoid two steps with different credentials in one workflow.</li><li>Never put a client secret in an HTTP body.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="form-logic">Form logic</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Need</th><th>Use</th></tr></thead><tbody><tr><td>Show a field only after another is filled</td><td>A condition on the parent element, empty or not-empty</td></tr><tr><td>Show a section</td><td><code>SHOW</code> works on a section, not on an element</td></tr><tr><td>Text the user must see</td><td>The field label. Section labels are not rendered</td></tr><tr><td>Operators</td><td><code>EQ</code>, <code>CO</code>, <code>NOT_CO</code>, <code>IN</code>, <code>NOT_IN</code>, <code>SW</code>, <code>EW</code>, on strings and booleans</td></tr><tr><td>A second dependent list</td><td>A second form, fed by the workflow</td></tr><tr><td>Retire a form</td><td>Never delete it while a launch may still point at it</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="monitoring-queries">Monitoring queries</h3>
+					<p>Build these as scheduled searches or as scripted checks, one per source:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Monitor</th><th>Query</th><th>Alert when</th></tr></thead><tbody><tr><td>Population</td><td>Count of accounts on the source</td><td>Drops sharply, or sits exactly on a page size</td></tr><tr><td>Disabled count</td><td>Accounts with <code>disabled:true</code></td><td>Moves by more than a small percentage between runs</td></tr><tr><td>Uncorrelated</td><td>Accounts with <code>uncorrelated:true</code></td><td>Grows</td></tr><tr><td>Freshness</td><td>The last aggregation date per source</td><td>Older than the schedule plus a margin</td></tr><tr><td>Entitlement count</td><td>Entitlements per source</td><td>Halves between runs</td></tr><tr><td>Failed workflow executions</td><td>The workflow executions API, by status</td><td>The rate rises</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Keep a small script library for the token, paging, backoff and the read-only calls, and have everyone use it.</li><li>Save the configuration before every patch.</li><li>Keep the cascade queries and the normalisation rule in the integration notes.</li><li>Test the comment format with the grant routes you do not expect, so you know how the rule fails.</li><li>Treat every exported rule or workflow as sensitive.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

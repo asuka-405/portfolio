@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="An end-to-end helper for greenfield SailPoint Identity Security Cloud programs: scoping, architecture, HR-driven lifecycle, connectors, access model, workflows, campaigns, go-live and hypercare, with every caveat, limit and workaround learned on a 140-application enterprise rollout." />
+		<meta name="color-scheme" content="dark light" />
+		<title>SailPoint ISC Greenfield Implementation Field Guide · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/index.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:description" content="An end-to-end helper for greenfield SailPoint Identity Security Cloud programs: scoping, architecture, HR-driven lifecycle, connectors, access model, workflows, campaigns, go-live and hypercare, with every caveat, limit and workaround learned on a 140-application enterprise rollout." />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/index.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="twitter:description" content="An end-to-end helper for greenfield SailPoint Identity Security Cloud programs: scoping, architecture, HR-driven lifecycle, connectors, access model, workflows, campaigns, go-live and hypercare, with every caveat, limit and workaround learned on a 140-application enterprise rollout." />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="active">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="../index.html">← All docs</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>SailPoint ISC Greenfield Implementation Field Guide</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#how-to-use-this-guide">How to use this guide</a></li><li><a href="#the-program-in-numbers">The program in numbers</a></li><li><a href="#rules-that-would-have-saved-us-weeks">Rules that would have saved us weeks</a></li><li><a href="#conventions-used-in-this-guide">Conventions used in this guide</a></li><li><a href="#related-reading-on-this-site">Related reading on this site</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>This guide is the document I wished existed on day one of a greenfield SailPoint Identity Security Cloud (ISC, formerly IdentityNow) program. It is written from a real enterprise rollout: a global professional-services firm with roughly 13,000 people, a legacy identity manager being retired, an HR system as the single authoritative source, and a plan to bring well over a hundred applications under governance in two phases.</p>
+					<p>It is not a tour of the product. SailPoint's own documentation does that. This guide covers what the documentation does not: the decisions you will be forced to make, the places the platform fails silently, the limits you only find by hitting them, and the workaround that finally worked.</p>
+				</div>
+
+<!-- dgm:operating-model -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 408" role="img" aria-labelledby="operating-model-t operating-model-d" xmlns="http://www.w3.org/2000/svg"><title id="operating-model-t">The operating model at a glance</title><desc id="operating-model-d">HR data flows through aggregation, the identity profile and rules to a lifecycle state; events start the joiner, mover, leaver, request and certification processes, which reach targets through appliance clusters.</desc><defs><marker id="operating-model-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk " style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="operating-model-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><text class="h" x="6" y="14" text-anchor="start">FOUNDATION</text><rect class="box blue" x="6" y="22" width="118" height="76" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="65.0" y="57.0" text-anchor="middle">HR system</text><text class="s" x="65.0" y="72.0" text-anchor="middle">authoritative</text><rect class="box " x="144" y="22" width="118" height="76" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="203.0" y="43.0" text-anchor="middle">Aggregate and</text><text class="t" x="203.0" y="58.0" text-anchor="middle">correlate</text><text class="s" x="203.0" y="73.0" text-anchor="middle">hourly,</text><text class="s" x="203.0" y="86.0" text-anchor="middle">attribute match</text><rect class="box " x="282" y="22" width="118" height="76" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="341.0" y="43.0" text-anchor="middle">Identity</text><text class="t" x="341.0" y="58.0" text-anchor="middle">profile</text><text class="s" x="341.0" y="73.0" text-anchor="middle">mappings and</text><text class="s" x="341.0" y="86.0" text-anchor="middle">transforms</text><rect class="box violet" x="420" y="22" width="118" height="76" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="479.0" y="50.5" text-anchor="middle">Cloud rules</text><text class="s" x="479.0" y="65.5" text-anchor="middle">state, dates,</text><text class="s" x="479.0" y="78.5" text-anchor="middle">names</text><rect class="box teal" x="558" y="22" width="118" height="76" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="617.0" y="43.0" text-anchor="middle">Lifecycle</text><text class="t" x="617.0" y="58.0" text-anchor="middle">state</text><text class="s" x="617.0" y="73.0" text-anchor="middle">pre joiner to</text><text class="s" x="617.0" y="86.0" text-anchor="middle">inactive</text><rect class="box accent" x="696" y="22" width="118" height="76" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="755.0" y="37.5" text-anchor="middle">Event bus</text><text class="s" x="755.0" y="52.5" text-anchor="middle">attribute</text><text class="s" x="755.0" y="65.5" text-anchor="middle">changed,</text><text class="s" x="755.0" y="78.5" text-anchor="middle">post-provisioning,</text><text class="s" x="755.0" y="91.5" text-anchor="middle">form, cron</text><path class="ln   " d="M124,60.0 L144,60.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><path class="ln   " d="M262,60.0 L282,60.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><path class="ln   " d="M400,60.0 L420,60.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><path class="ln   " d="M538,60.0 L558,60.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><path class="ln   " d="M676,60.0 L696,60.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><text class="h" x="6" y="124" text-anchor="start">PROCESSES, EACH A SET OF WORKFLOWS</text><rect class="box accent" x="6" y="134" width="150" height="70" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="81.0" y="159.5" text-anchor="middle">Joiner and rehire</text><text class="s" x="81.0" y="174.5" text-anchor="middle">accounts, mails, IT</text><text class="s" x="81.0" y="187.5" text-anchor="middle">form</text><rect class="box accent" x="169" y="134" width="150" height="70" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="244.0" y="159.5" text-anchor="middle">Mover</text><text class="s" x="244.0" y="174.5" text-anchor="middle">location and job</text><text class="s" x="244.0" y="187.5" text-anchor="middle">changes</text><rect class="box accent" x="332" y="134" width="150" height="70" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="407.0" y="159.5" text-anchor="middle">Leaver</text><text class="s" x="407.0" y="174.5" text-anchor="middle">disable, notify,</text><text class="s" x="407.0" y="187.5" text-anchor="middle">recover assets</text><rect class="box gold" x="495" y="134" width="150" height="70" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="570.0" y="159.5" text-anchor="middle">Access request</text><text class="s" x="570.0" y="174.5" text-anchor="middle">profiles, forms,</text><text class="s" x="570.0" y="187.5" text-anchor="middle">approvals</text><rect class="box gold" x="658" y="134" width="150" height="70" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="733.0" y="159.5" text-anchor="middle">Certification</text><text class="s" x="733.0" y="174.5" text-anchor="middle">campaigns,</text><text class="s" x="733.0" y="187.5" text-anchor="middle">source-owner reviews</text><path class="ln accent  " d="M755.0,98 L755.0,114 L81,114 L81,134" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#operating-model-ar-accent)"/><path class="ln accent  " d="M755.0,114 L244,114 L244,134" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#operating-model-ar-accent)"/><path class="ln accent  " d="M755.0,114 L407,114 L407,134" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#operating-model-ar-accent)"/><path class="ln accent  " d="M755.0,114 L570,114 L570,134" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#operating-model-ar-accent)"/><path class="ln accent  " d="M755.0,114 L733,114 L733,134" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#operating-model-ar-accent)"/><text class="h" x="6" y="236" text-anchor="start">REACH</text><rect class="grp " x="0" y="244" width="820" height="70" style="fill:none;stroke:var(--text);stroke-opacity:0.28;stroke-dasharray:6 4"/><text class="h" x="10" y="259" text-anchor="start">Virtual appliance clusters</text><rect class="box blue" x="20" y="262" width="176" height="40" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="108.0" y="285.5" text-anchor="middle">HR cluster</text><rect class="box blue" x="216" y="262" width="176" height="40" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="304.0" y="285.5" text-anchor="middle">Directory clusters</text><rect class="box blue" x="412" y="262" width="176" height="40" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="500.0" y="285.5" text-anchor="middle">Application cluster</text><rect class="box blue" x="608" y="262" width="176" height="40" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="696.0" y="285.5" text-anchor="middle">Application cluster</text><path class="ln   " d="M81,204 L81,244" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><path class="ln   " d="M244,204 L244,244" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><path class="ln   " d="M407,204 L407,244" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><path class="ln   " d="M570,204 L570,244" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><path class="ln   " d="M733,204 L733,244" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/><rect class="box " x="6" y="330" width="808" height="62" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="410.0" y="351.5" text-anchor="middle">Targets</text><text class="s" x="410.0" y="366.5" text-anchor="middle">directories, REST applications, SQL databases, SaaS finance and workflow products, an ITSM mailbox, and flat files for</text><text class="s" x="410.0" y="379.5" text-anchor="middle">review-only applications</text><path class="ln   " d="M410,314 L410,330" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#operating-model-ar)"/></svg></div><figcaption><b>One model, five processes.</b> Redrawn from the tenant's own overview: everything downstream depends on the HR feed and on the rules that compute the lifecycle state.</figcaption></figure>
+
+<div class="prose reveal">
+					<h3 id="how-to-use-this-guide">How to use this guide</h3>
+					<p>Read the <strong>Rules that would have saved us weeks</strong> below once, then jump to the page for whatever phase you are in. Every page ends in concrete actions, and the last pages collect checklists, a limits table and a symptom lookup so the guide works as a reference during build and support.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>If you are...</th><th>Start here</th></tr></thead><tbody><tr><td>Scoping or staffing the program</td><td>Program Setup, Scope and Governance</td></tr><tr><td>Designing the platform</td><td>Platform Architecture, VAs and Networking</td></tr><tr><td>Connecting the HR system</td><td>The HR Authoritative Source and Identity Model</td></tr><tr><td>Automating joiner, mover, leaver</td><td>Lifecycle States and Joiner Mover Leaver Automation, then Active Directory and Mailbox Provisioning</td></tr><tr><td>Integrating applications</td><td>Choosing and Building Application Connectors, then Web Services and JDBC Connector Field Notes</td></tr><tr><td>Designing what people can request</td><td>Access Model, Request Center and Approvals, then Forms, Launchers and Workflows</td></tr><tr><td>Running access reviews</td><td>Access Reviews and Campaigns at Scale</td></tr><tr><td>Preparing for go-live</td><td>Testing, Migration and Go-Live</td></tr><tr><td>Operating the platform</td><td>Hypercare, Operations and Handover</td></tr><tr><td>Looking for a specific limit or error</td><td>Limits, Caveats and Workarounds Reference, API Recipes and Symptom Lookup</td></tr><tr><td>Building a hard application (dependent entitlements, form data into a rule)</td><td>Complex Applications: Cascading Entitlements and Form-to-Rule Data</td></tr><tr><td>Writing rules</td><td>Cloud Rule and Connector Rule Templates and Snippets</td></tr><tr><td>Standing up infrastructure</td><td>Setting Up an SFTP Server for Flat-File Sources, Setting Up Virtual Appliances and Clusters</td></tr><tr><td>A connectivity problem</td><td>Network Problems and How to Resolve Them</td></tr><tr><td>Needing a snippet for a workflow, a search or an API call</td><td>Workflow, Form and API Snippets</td></tr><tr><td>Planning for the implementation team to leave</td><td>Implementation Team Offboarding and Ownership Risk</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="the-program-in-numbers">The program in numbers</h3>
+					<p>All figures are rounded and the client is deliberately not named. They are here so you can calibrate the scale of what follows.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Item</th><th>Scale</th></tr></thead><tbody><tr><td>Workforce in scope</td><td>about 13,000 people, contractors included</td></tr><tr><td>Identities in the tenant</td><td>about 43,000, because the HR feed carried years of historical leavers</td></tr><tr><td>Tenants</td><td>2 (sandbox and production), same cloud region</td></tr><tr><td>Phase 1</td><td>an HR source, three Active Directory domains and about ten crown-jewel applications</td></tr><tr><td>Phase 2 target</td><td>120 to 135 further applications over five to six quarters</td></tr><tr><td>Sources at the end</td><td>146, of which roughly 120 were flat-file sources, mostly feeding access reviews for applications with no live connector</td></tr><tr><td>Virtual appliance clusters</td><td>5 clusters, 9 appliances</td></tr><tr><td>Access profiles / roles</td><td>about 3,300 / about 280</td></tr><tr><td>Campaigns / templates</td><td>about 500 / about 520</td></tr><tr><td>Workflows</td><td>28, of which 21 enabled</td></tr><tr><td>Connector rules / cloud rules</td><td>41 / 13</td></tr><tr><td>Elapsed time</td><td>about 9 months from tenant creation to production cutover, close to 6 months from approved design to cutover</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="rules-that-would-have-saved-us-weeks">Rules that would have saved us weeks</h3>
+					<p>These are the lessons that cost the most when we learned them late. Each is expanded on its own page.</p>
+					<ol><li><strong>The HR feed is the product.</strong> Every automation downstream is only as good as the authoritative data. Budget real time for data quality, mandatory-field enforcement and an HR change process before you build a single workflow.</li><li><strong>Pick one immutable join key and never key on anything else.</strong> An employee ID that is never reused, even across rehires, is worth more than any clever correlation rule. Names, emails and login names all change.</li><li><strong>Provisioning logic lives in rules, not in source configuration.</strong> On a Web Services or JDBC source the endpoint or SQL fields can be empty or dead while a connector rule does all the real work. Review and document rules as first-class deliverables.</li><li><strong>The dangerous failures are the quiet ones.</strong> A status comparison that stops matching makes every account look enabled. A page-size ceiling silently drops accounts. A swallowed exception sends a request with blank fields. Design monitors for counts and freshness, not just for errors.</li><li><strong>Set the delete threshold deliberately on every source, and verify it.</strong> It is the only thing between an empty API response and a mass account deletion.</li><li><strong>Every source needs an aggregation schedule.</strong> Two production sources ran for months with none, so reviews and reports showed a stale view that nobody noticed.</li><li><strong>Aggregate groups before accounts.</strong> Entitlement objects should exist before accounts reference them.</li><li><strong>Lifecycle actions target an explicit list of sources.</strong> Adding a source later does not add it to your leaver disable action. Make &quot;update the lifecycle state source list&quot; a line in your onboarding checklist.</li><li><strong>Forms cannot cascade the way you expect.</strong> Dependent dropdowns driven by a search over entitlement attributes do not work. Plan the request experience around this, not against it.</li><li><strong>The workflow engine has sharp edges.</strong> Secrets can only be created in the UI, an unresolved template path renders as literal text, tier limits count loop bodies, and some approval actions are not licensed. Read the workflow limits before designing a flow.</li><li><strong>Entitlement value formats are contracts.</strong> If a rule parses an identifier out of an entitlement name, changing that format detaches every grant. Treat it like a public API.</li><li><strong>Never put credentials, or a debug webhook, in a production rule.</strong> Both ended up in ours. One makes provisioning fail whenever a diagnostic listener is down.</li><li><strong>Revocation approval is a decision, not a default.</strong> Granting needed manager approval while revoking needed none, on thousands of profiles. Decide that on purpose.</li><li><strong>Concentrated ownership becomes an outage.</strong> Thousands of access profiles owned by one person route every review and escalation through them. Use governance groups.</li><li><strong>Automate campaign creation, then verify it.</strong> Hundreds of campaigns by hand is not credible. A script that creates them staged and compares them to the source data caught real discrepancies before launch.</li><li><strong>Plan notifications and ITSM routing as carefully as provisioning.</strong> Most hypercare tickets were about who did or did not receive an email, not about accounts.</li><li><strong>Switch attribute sync on a couple of attributes at a time.</strong> A staged switch-on with validation between steps is the cheapest rollback you will ever get.</li><li><strong>Hand over with a documentation pack per integration.</strong> Five files per application (reference, tenant context, edge cases, runbook, config evidence) made knowledge transfer routine.</li></ol>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="conventions-used-in-this-guide">Conventions used in this guide</h3>
+					<ul><li>Most pages end with a section titled &quot;What SailPoint's documentation adds&quot;. Those sections were checked against SailPoint's public documentation and community in October 2026 and link to their sources.</li><li><strong>Observed</strong> means it happened on the program. Anything described as a platform limit was measured on a 2026 tenant. SailPoint changes ISC continuously, so re-check a limit before you design around it, especially anything tied to licensing or release level.</li><li>Names of internal applications, hosts, accounts, people and identifiers are removed. Commercial products such as Sage People, OneStream, Enate, Dynamics 365 and BMC Helix are named where the integration pattern matters.</li><li>Code samples are trimmed and generalised. They show the shape of a solution, not a drop-in implementation.</li><li>Dates are expressed as durations. The shape of the timeline matters more than the calendar.</li></ul>
+				</div>
+
+				<div class="callout reveal">
+					<p>The platform terms you will see throughout: <strong>VA</strong> is the virtual appliance that sits in your network and talks to your applications. A <strong>cluster</strong> is a group of VAs. <strong>Aggregation</strong> is reading accounts or groups from a source into ISC. <strong>Correlation</strong> is matching an account to an identity. A <strong>connector rule</strong> runs on the VA around a connector operation; a <strong>cloud rule</strong> runs inside ISC and has no network access. An <strong>entitlement</strong> is a single permission on a source, an <strong>access profile</strong> bundles entitlements for requesting, and a <strong>role</strong> bundles access profiles or assigns them by criteria.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="related-reading-on-this-site">Related reading on this site</h3>
+					<ul><li><a href="../../articles/sailpoint-isc-vs-iiq.html">SailPoint ISC vs IIQ</a> for the product-level comparison.</li><li><a href="../ai-in-iam/index.html">AI in IAM</a> for where AI fits into an ISC implementation, including why cloud rules cannot call out to a model.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

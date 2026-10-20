@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Limits, Caveats and Workarounds Reference: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Limits, Caveats and Workarounds Reference · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/limits-caveats-and-workarounds-reference.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Limits, Caveats and Workarounds Reference" />
+		<meta property="og:description" content="Limits, Caveats and Workarounds Reference: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/limits-caveats-and-workarounds-reference.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Limits, Caveats and Workarounds Reference" />
+		<meta name="twitter:description" content="Limits, Caveats and Workarounds Reference: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="active">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Limits, Caveats and Workarounds Reference</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#search-api-and-listing">Search, API and listing</a></li><li><a href="#aggregation-and-paging">Aggregation and paging</a></li><li><a href="#connectors-and-rules">Connectors and rules</a></li><li><a href="#lifecycle-and-identity">Lifecycle and identity</a></li><li><a href="#access-model-and-requests">Access model and requests</a></li><li><a href="#forms-and-launchers">Forms and launchers</a></li><li><a href="#workflows">Workflows</a></li><li><a href="#campaigns">Campaigns</a></li><li><a href="#configuration-and-promotion">Configuration and promotion</a></li><li><a href="#how-to-use-this-table">How to use this table</a></li><li><a href="#documented-by-sailpoint">Documented by SailPoint</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>One table per area, for use during build and support. Each row says what happens, what to do instead and which page of the guide explains it. Items are <strong>Observed</strong> on the program unless marked otherwise. Limits tied to licensing or release level (the workflow tier limit, unlicensed actions, the VA timeout) were measured on a 2026 tenant: re-test on yours before designing around them.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="search-api-and-listing">Search, API and listing</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caveat</th><th>Workaround</th><th>Page</th></tr></thead><tbody><tr><td>A <code>limit</code> above 250 on the source-app access-profile sub-resource returns an empty list, silently</td><td>Page at 250</td><td>Access Model</td></tr><tr><td>The source-app list payload shows an empty <code>accessProfiles</code> array for apps that have profiles</td><td>Read the app's own sub-resource</td><td>Access Model</td></tr><tr><td>Entitlement <strong>attributes are not indexed</strong>; only name, value, attribute, schema and source are searchable</td><td>Put the context in the display name or in tags</td><td>Forms and Workflows</td></tr><tr><td>Values containing hyphens tokenise, so wildcard prefix queries on them fail</td><td>Query on another field, or use tags</td><td>Forms and Workflows</td></tr><tr><td><code>GET /connector-rules/{id}</code> returns the script in clear text, including any embedded credential</td><td>Never put credentials in rules; restrict who can call it</td><td>Security</td></tr><tr><td>Cloud rules cannot be read with <code>GET</code></td><td>Use the configuration export with type <code>RULE</code></td><td>Security</td></tr><tr><td><code>GET /sources/{id}</code> returns attributes not on the <code>encrypted</code> list in clear</td><td>Audit the <code>encrypted</code> list</td><td>Security</td></tr><tr><td>A list rendered into a Lucene query appears as <code>[5 2]</code> and gives HTTP 400</td><td>Build <code>tags:(&quot;A&quot; &quot;B&quot;)</code> as an OR</td><td>Forms and Workflows</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="aggregation-and-paging">Aggregation and paging</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caveat</th><th>Workaround</th><th>Page</th></tr></thead><tbody><tr><td>A single large page with no paging steps drops the overflow silently, and the dropped accounts later look deleted</td><td>Implement paging; monitor population per run and alert on a drop or a count equal to a page size</td><td>Web Services and JDBC</td></tr><tr><td>An expired token returning an HTTP 200 body is not an error to the connector</td><td>Detect in the rule and refresh</td><td>Connector Patterns</td></tr><tr><td>Aggregate groups before accounts, or entitlement references dangle</td><td>Order the aggregations</td><td>Connector Patterns</td></tr><tr><td>Every source needs a schedule. Two production sources ran for months without one</td><td>Make the schedule a line on the onboarding checklist and monitor last aggregation date</td><td>Hypercare</td></tr><tr><td>Delete threshold defaults can allow a mass delete if a source returns nothing</td><td>Set it deliberately on every source (10 percent on the directories) and verify; an early document and a later one disagreed on one source, so verify rather than trust</td><td>Active Directory</td></tr><tr><td>Entitlement counts halving between runs</td><td>A truncated aggregation: check paging and the delete threshold</td><td>Symptom Lookup</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="connectors-and-rules">Connectors and rules</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caveat</th><th>Workaround</th><th>Page</th></tr></thead><tbody><tr><td>A status comparison that stops matching makes every account look enabled</td><td>Set <code>IIQDisabled</code> in both directions in every rule</td><td>Connector Patterns</td></tr><tr><td><code>HttpURLConnection</code> cannot send PATCH</td><td>GET then PUT, or use the connector's own HTTP helper</td><td>Web Services and JDBC</td></tr><tr><td>An Apache HTTP client inside a rule produced consecutive aggregation errors and was reverted</td><td>Use the connector's own helper</td><td>Web Services and JDBC</td></tr><tr><td>Cloud rules have no network access</td><td>Move lookups to a workflow or a connector rule</td><td>Identity Model</td></tr><tr><td>A cloud rule cannot call an external model or service</td><td>Run the call elsewhere and hand the result in</td><td>Identity Model</td></tr><tr><td>Rule changes may need SailPoint to deploy them</td><td>Plan release time for it</td><td>Security</td></tr><tr><td>Rules that parse identifiers out of entitlement names depend on the name format</td><td>Treat the format as a contract; never rename</td><td>Access Model</td></tr><tr><td>Double spaces or case differences in names (two rules in one set had a double space)</td><td>Look up by exact name and normalise</td><td>Web Services and JDBC</td></tr><tr><td>Correlation is case-sensitive</td><td>Normalise case, or correlate on a normalised attribute</td><td>Identity Model</td></tr><tr><td>Two rule variants left in the tenant (four near-identical lifecycle rules)</td><td>Keep one, archive the rest outside</td><td>Identity Model</td></tr><tr><td>Debug webhook helpers in production rules fail provisioning when the listener is down</td><td>Remove, or gate behind a false flag and swallow failure</td><td>Security</td></tr><tr><td>IQService before and after scripts run on the Windows host, outside the cloud sandbox</td><td>Use sparingly and document</td><td>Active Directory</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="lifecycle-and-identity">Lifecycle and identity</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caveat</th><th>Workaround</th><th>Page</th></tr></thead><tbody><tr><td>Lifecycle state actions name target sources by explicit list. Only 13 of 146 sources were in the disable action at the end</td><td>Add &quot;update the lifecycle source list&quot; to every onboarding checklist</td><td>Lifecycle</td></tr><tr><td>An organisation setting controls whether lifecycle changes honour a source's &quot;can enable&quot; flag</td><td>Know its value</td><td>Lifecycle</td></tr><tr><td>Account creation happens in the user's local time zone, and the termination cut-off is local</td><td>Document the time zones (organisation, workflow schedule, identity)</td><td>Architecture</td></tr><tr><td>The HR feed carried years of leavers: about 43,000 identities for about 13,000 people</td><td>Filter or treat as inactive by design</td><td>Identity Model</td></tr><tr><td>More than 1,300 directory accounts had no employee id</td><td>Clean up before the first production aggregation</td><td>Testing and Go-Live</td></tr><tr><td>A predictable initial password built from HR attribute slices</td><td>Generate randomly</td><td>Active Directory</td></tr><tr><td>A last day wrongly entered in HR disables the wrong day</td><td>Mandatory fields and an HR change process</td><td>Lifecycle</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="access-model-and-requests">Access model and requests</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caveat</th><th>Workaround</th><th>Page</th></tr></thead><tbody><tr><td>Entitlements requestable directly bypass the approval scheme</td><td>Make entitlements non-requestable by default; search for exceptions</td><td>Access Model</td></tr><tr><td>One person owning thousands of profiles routes every review through them</td><td>Governance groups</td><td>Access Model</td></tr><tr><td>Governing profiles over a huge catalogue (tens of thousands of role assignments) is not worth it</td><td>Review the catalogue; request only what is asked for</td><td>Access Model</td></tr><tr><td>Approvals with no reminders or fallback sit forever</td><td>Set reminders and a fallback approver</td><td>Access Model</td></tr><tr><td>Revocation approval defaults to none</td><td>Decide and record per application</td><td>Access Model</td></tr><tr><td>Role propagation was disabled</td><td>Know the setting</td><td>Access Model</td></tr><tr><td>Empty placeholder roles clutter reports</td><td>Fill or remove</td><td>Access Model</td></tr><tr><td>Applications with no tile are discoverable only by search</td><td>Publish the naming convention</td><td>Access Model</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="forms-and-launchers">Forms and launchers</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caveat</th><th>Workaround</th><th>Page</th></tr></thead><tbody><tr><td>Dependent dropdowns cannot cascade through search data sources</td><td>Multi-step interactive forms</td><td>Forms and Workflows</td></tr><tr><td>Data-source queries do not interpolate form values</td><td>Use workflow-built option lists</td><td>Forms and Workflows</td></tr><tr><td>A condition on a form <strong>input</strong> did nothing; element conditions work</td><td>Test in a browser</td><td>Forms and Workflows</td></tr><tr><td><code>SHOW</code> only works on a section</td><td>Invert to hides</td><td>Forms and Workflows</td></tr><tr><td>Section labels are not rendered</td><td>Put text in field labels</td><td>Forms and Workflows</td></tr><tr><td>Operators other than <code>EQ</code>, <code>CO</code>, <code>NOT_CO</code>, <code>IN</code>, <code>NOT_IN</code>, <code>SW</code>, <code>EW</code> are rejected; string and boolean only</td><td>Restructure the condition</td><td>Forms and Workflows</td></tr><tr><td>No repeatable group</td><td>Fixed blocks revealed by condition, or loop over a multi-select</td><td>Forms and Workflows</td></tr><tr><td>Conditions address elements by numeric id</td><td>Preserve ids when editing</td><td>Forms and Workflows</td></tr><tr><td>Input and element casing can differ (<code>userSailpointId</code> and <code>userSailPointId</code>)</td><td>Read the element's casing downstream</td><td>Forms and Workflows</td></tr><tr><td>Launcher-driven forms leave <code>formData</code> empty in execution history</td><td>List form instances; a GET by id omits <code>formData</code></td><td>Forms and Workflows</td></tr><tr><td>Deleting a form while a launch is open breaks it with a 404</td><td>Retire it instead</td><td>Forms and Workflows</td></tr><tr><td>A launcher is not patchable (405) and is visible only when assigned and its workflow is enabled</td><td>Assign through an entitlement or a role</td><td>Forms and Workflows</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="workflows">Workflows</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caveat</th><th>Workaround</th><th>Page</th></tr></thead><tbody><tr><td>Secrets written through the API are silently dropped; the reference form comes only from the UI</td><td>Create secrets in the UI</td><td>Forms and Workflows</td></tr><tr><td>A full PUT wipes a UI-set secret</td><td>Read back and preserve the reference</td><td>Forms and Workflows</td></tr><tr><td>One OAuth reference per workflow</td><td>Avoid two credentialed HTTP steps in one workflow</td><td>Forms and Workflows</td></tr><tr><td>An unresolved template path renders as literal <code>{{...}}</code></td><td>Verify field names; never assume an error</td><td>Forms and Workflows</td></tr><tr><td><code>.JSON()</code> is the only stringify function</td><td>Use it</td><td>Forms and Workflows</td></tr><tr><td>Define Variable and Update Variable allow at most 50 operations per variable (documented)</td><td>Group</td><td>Forms and Workflows</td></tr><tr><td>The workflow tier limit is 50 steps after the trigger, counting loop bodies</td><td>Split workflows</td><td>Forms and Workflows</td></tr><tr><td>Validation happens on enable; step display names must be under 65 characters</td><td>Enable to validate</td><td>Forms and Workflows</td></tr><tr><td>An enabled workflow cannot be PUT</td><td>Disable, PUT, enable</td><td>Forms and Workflows</td></tr><tr><td><code>sp:generic-approval</code> was not licensed</td><td>Form-based approval</td><td>Forms and Workflows</td></tr><tr><td><code>sp:interactive-form</code> does not reliably raise <code>sp:form-submitted</code></td><td>Trigger on the approval form</td><td>Forms and Workflows</td></tr><tr><td>There is no create-account action</td><td><code>POST /accounts</code>, which runs the connector create and its before-rules</td><td>Forms and Workflows</td></tr><tr><td>Inner loop steps are missing from the parent history</td><td>Debug the inner execution</td><td>Forms and Workflows</td></tr><tr><td>A call that exceeds the VA timeout (63 seconds, measured) wedged a requester for about an hour</td><td>Keep calls short and asynchronous</td><td>Web Services and JDBC</td></tr><tr><td>Workflow definitions can carry secrets</td><td>Reference, not literal</td><td>Security</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="campaigns">Campaigns</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caveat</th><th>Workaround</th><th>Page</th></tr></thead><tbody><tr><td>Uncorrelated accounts are never in an access campaign</td><td>A source-owner campaign</td><td>Campaigns</td></tr><tr><td>Reviewers cannot review their own access; ISC moves the item to the manager</td><td>Tell reviewers</td><td>Campaigns</td></tr><tr><td>User ids differing only in case make ISC drop one spelling</td><td>Unify them when writing the file</td><td>Campaigns</td></tr><tr><td>Reviewer display names must be unique</td><td>Use email</td><td>Campaigns</td></tr><tr><td>Attributes used by correlation or a profile cannot be deleted or renamed</td><td>Add new first, remove old last</td><td>Campaigns</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="configuration-and-promotion">Configuration and promotion</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caveat</th><th>Workaround</th><th>Page</th></tr></thead><tbody><tr><td>Source secrets do not move with Config Hub</td><td>Re-enter in the target tenant</td><td>Testing and Go-Live</td></tr><tr><td>VAs and clusters are per tenant</td><td>Build them</td><td>Testing and Go-Live</td></tr><tr><td>JDBC URLs, hostnames and rule literals differ per environment</td><td>An environment table; search rules for sandbox values</td><td>Testing and Go-Live</td></tr><tr><td>Mail routing differs per environment</td><td>A notification matrix</td><td>Hypercare</td></tr><tr><td>The <code>encrypted</code> list can drift or hold duplicates</td><td>Audit it</td><td>Security</td></tr><tr><td>The <code>features</code> list can overstate capability</td><td>Run the operation and record what works</td><td>Security</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="how-to-use-this-table">How to use this table</h3>
+					<ol><li>Before designing a form, workflow or connector, read the matching section.</li><li>When something misbehaves, search this page for the symptom, then the last page for the diagnostic.</li><li>Add a row when you find a new limit, with the date measured and the tenant release.</li></ol>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="documented-by-sailpoint">Documented by SailPoint</h3>
+					<p>Limits and behaviours taken from SailPoint's own documentation (checked October 2026) rather than from our measurements. Each links to the page of the guide where it is discussed.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Area</th><th>Documented limit or behaviour</th><th>Page</th></tr></thead><tbody><tr><td>API</td><td>100 requests per client ID and API version per 10 seconds; HTTP 429 with a <code>Retry-After</code> header</td><td>Web Services and JDBC</td></tr><tr><td>Aggregation</td><td>Optimized by default: unchanged accounts skip account and manager correlation. <code>disableOptimization=true</code> through the API for one unoptimized run</td><td>Identity Model</td></tr><tr><td>Aggregation</td><td>Delete threshold is an integer 1 to 100, rounded to whole accounts, and applies to scheduled and flat-file runs</td><td>Connector Patterns</td></tr><tr><td>Aggregation</td><td>Schedule time zone follows the VA cluster setting and does not shift for daylight saving time</td><td>Connector Patterns</td></tr><tr><td>Flat files</td><td>Best under 500 MB; delimited files sorted by account ID</td><td>Connector Patterns</td></tr><tr><td>Quick compliance sources</td><td>Up to 3 aggregations per day, 8 hours apart, not applied to Org Admins</td><td>Connector Patterns</td></tr><tr><td>Workflows</td><td>400K executions per day at full speed, then about 5 per second; up to two hours after first enablement</td><td>Forms and Workflows</td></tr><tr><td>Workflows</td><td>Parallel loop 250 items; serial loop 1,000 items; serial loop test limited to 50 iterations</td><td>Forms and Workflows</td></tr><tr><td>Workflows</td><td>One trigger per workflow; 50 operations per variable</td><td>Forms and Workflows</td></tr><tr><td>Identity profile</td><td>One profile per identity, by priority; user name, work email and last name required; avoid <code>* ( ) &amp; ! .</code> in the user name source</td><td>Identity Model</td></tr><tr><td>Identity profile</td><td>Cannot create or delete a profile during an account aggregation; deleting a profile deletes its identities</td><td>Identity Model</td></tr><tr><td>Certifications</td><td>Automated reassignment stops after four hops</td><td>Campaigns</td></tr><tr><td>Config Hub</td><td>10 manual backups, 5,000 objects per backup or draft, weekly system backups kept to five</td><td>Testing and Go-Live</td></tr><tr><td>Config Hub</td><td>Unsupported object types are skipped and the import still reports COMPLETE; non-employee sources cannot be deployed</td><td>Testing and Go-Live</td></tr><tr><td>Virtual appliances</td><td>At least two per cluster, sandbox included; one per host; reserved range <code>10.255.255.241/28</code>; untrusted certificates rejected</td><td>Architecture</td></tr><tr><td>Tenant</td><td>Org name 3 to 13 characters; sandbox URL carries <code>-sb</code></td><td>Architecture</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Keep a copy of this table in your project wiki and add rows as you find them.</li><li>Re-test every platform-limit row on your tenant before relying on it.</li><li>Link each row from the design document that depends on it.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
