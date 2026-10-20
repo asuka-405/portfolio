@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checkout | Kiln &amp; Clay</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding-top:36px"><div class="wrap">
+	<h1 style="font-size:clamp(2rem,4vw,3rem);margin-bottom:18px">Checkout</h1>
+	<div class="steps" id="steps"></div>
+	<div class="checkout"><form id="f">
+		<div class="panel" data-p="0"><h3>1 · Contact &amp; delivery</h3><div style="display:grid;gap:14px"><div class="row2"><label class="f">Full name<input class="in" name="name" required autocomplete="name"></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}" inputmode="numeric" autocomplete="tel"></label></div><label class="f">Email<input class="in" name="email" type="email" required autocomplete="email"></label><label class="f">Address<textarea class="in" name="addr" rows="2" required autocomplete="street-address"></textarea></label><div class="row3"><label class="f">City<input class="in" name="city" required></label><label class="f">State<input class="in" name="state" required></label><label class="f">PIN code<input class="in" name="pin" required pattern="[0-9]{6}" inputmode="numeric"></label></div></div></div>
+		<div class="panel" data-p="1" hidden><h3>2 · Shipping method</h3><div class="seg" style="grid-template-columns:1fr 1fr" id="shipm"></div></div>
+		<div class="panel" data-p="2" hidden><h3>3 · Payment</h3><div class="seg"><label><input type="radio" name="pay" value="upi" checked><span>UPI<small>Pay instantly</small></span></label><label><input type="radio" name="pay" value="card"><span>Card<small>Credit / debit</small></span></label><label><input type="radio" name="pay" value="cod"><span>Cash on delivery<small>+₹49 handling</small></span></label></div><p class="msg" style="margin-top:12px">Demo only, nothing is charged and no payment details are collected.</p></div>
+		<div style="display:flex;justify-content:space-between;gap:12px"><button type="button" class="btn ghost" id="back">Back</button><button type="button" class="btn clay" id="next">Continue</button></div>
+	</form>
+	<aside class="panel sum"><h3>Your order</h3><div id="mini"></div><div id="rows"></div></aside></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("");
+const { $, esc, inr, img } = KC, f = $("#f"), S = KC.store.get("cartopts", { coupon: "", wrap: false, note: "" });
+if (!KC.cart.get().length) location.replace("cart.html");
+let step = 0; const known = KC.store.get("addr", null); if (known) Object.entries(known).forEach(([k, v]) => { if (f[k]) f[k].value = v; });
+const t = () => KC.totals(KC.cart.get(), { coupon: S.coupon, wrap: S.wrap, ship: f.sm ? f.sm.value : "std" });
+function draw() {
+	$("#steps").innerHTML = ["Delivery", "Shipping", "Payment"].map((n, i) => `<span class="${i === step ? "on" : i < step ? "ok" : ""}">${i < step ? "✓ " : i + 1 + ". "}${n}</span>`).join("");
+	document.querySelectorAll("[data-p]").forEach((p) => (p.hidden = +p.dataset.p !== step));
+	const pin = f.pin.value, base = KC.totals(KC.cart.get(), { coupon: S.coupon, wrap: S.wrap, ship: "std" });
+	$("#shipm").innerHTML = `<label><input type="radio" name="sm" value="std" ${(!f.sm || f.sm.value !== "exp") ? "checked" : ""}><span><b>Standard</b> · ${base.ship ? inr(base.ship) : "Free"}<small>Arrives ${/^\d{6}$/.test(pin) ? KC.eta(pin) : "in 3–7 days"}</small></span></label><label><input type="radio" name="sm" value="exp" ${f.sm && f.sm.value === "exp" ? "checked" : ""}><span><b>Express</b> · ₹249<small>Arrives ${/^\d{6}$/.test(pin) ? KC.eta(pin, true) : "in 1–4 days"}</small></span></label>`;
+	$("#back").style.visibility = step ? "visible" : "hidden"; $("#next").textContent = step === 2 ? "Place order" : "Continue";
+	const x = t(), cod = f.pay.value === "cod" ? 49 : 0;
+	$("#mini").innerHTML = KC.cart.get().map((l) => { const p = KC.get(l.id); return `<div style="display:flex;gap:12px;align-items:center;margin-bottom:10px"><img src="${img(p.img)}" alt="" style="width:52px;height:52px;object-fit:cover"><div style="flex:1;font-size:.88rem"><b>${esc(p.name)}</b><div class="msg">Qty ${l.qty}</div></div><b>${inr(KC.cart.unit(l) * l.qty)}</b></div>`; }).join("");
+	$("#rows").innerHTML = `<div class="r"><span>Subtotal</span><span>${inr(x.sub)}</span></div>${x.disc ? `<div class="r"><span>Discount</span><span>−${inr(x.disc)}</span></div>` : ""}${x.wrap ? `<div class="r"><span>Gift wrap</span><span>${inr(x.wrap)}</span></div>` : ""}<div class="r"><span>Shipping</span><span>${x.ship ? inr(x.ship) : "Free"}</span></div>${cod ? `<div class="r"><span>COD handling</span><span>${inr(cod)}</span></div>` : ""}<div class="r t"><span>Total</span><span>${inr(x.total + cod)}</span></div>`;
+}
+f.addEventListener("input", draw); f.addEventListener("change", draw);
+$("#back").onclick = () => { step--; draw(); };
+$("#next").onclick = () => {
+	if (step === 0 && !f.reportValidity()) return;
+	if (step < 2) { step++; draw(); window.scrollTo({ top: 80, behavior: "smooth" }); return; }
+	const x = t(), cod = f.pay.value === "cod" ? 49 : 0, lines = KC.cart.get();
+	if (lines.some((l) => { const p = KC.get(l.id); return KC.cart.pieces(l) > p.stock; })) { KC.toast("An item in your bag just sold out"); return; }
+	const items = lines.map((l) => { const p = KC.get(l.id), s = p.sets && p.sets[l.set || 0]; return { id: p.id, name: p.name + (s && s[1] > 1 ? " (" + s[0] + ")" : ""), set: l.set || 0, qty: l.qty, unit: KC.cart.unit(l), pieces: KC.cart.pieces(l) }; });
+	const a = { name: f.name.value.trim(), phone: f.phone.value, email: f.email.value.trim().toLowerCase(), addr: f.addr.value, city: f.city.value, state: f.state.value, pin: f.pin.value };
+	KC.store.set("addr", a);
+	const o = KC.orders.create({ ...a, items, sub: x.sub, disc: x.disc, ship: x.ship, wrap: x.wrap, cod, total: x.total + cod, pay: f.pay.value, coupon: S.coupon || null, gift: S.wrap ? S.note : null, express: f.sm.value === "exp" });
+	KC.store.set("who", a.email); KC.cart.clear(); KC.store.set("cartopts", { coupon: "", wrap: false, note: "" }); location.href = "order.html?id=" + o.id + "&new=1";
+};
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

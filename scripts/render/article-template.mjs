@@ -26,6 +26,7 @@ const SITE_HEADER = `\t\t<header class="site-header">
 \t\t\t\t\t<a href="../index.html#about">About</a>
 \t\t\t\t\t<a href="../index.html#projects">Projects</a>
 \t\t\t\t\t<a href="index.html">Writing</a>
+\t\t\t\t\t<a href="../works/index.html">Works</a>
 \t\t\t\t\t<a href="../docs/index.html">Docs</a>
 \t\t\t\t\t<a href="https://git.archdev.in">Git</a>
 \t\t\t\t\t<a href="../index.html#contact">Contact</a>
@@ -214,9 +215,9 @@ ${SITE_FOOTER}
 export function renderHubPage(articles, adsConfig = { enabled: false }, ogImage = null) {
 	return listingPage({
 		pageTitle: "Writing",
-		description: "All articles by Suryansh Kapil — identity, AI, Linux, and where the craft is heading.",
+		description: "All articles by Suryansh Kapil: identity, AI, Linux, and where the craft is heading.",
 		headingLabel: "All articles",
-		introHtml: "Everything I've written — identity, AI, Linux, and where the craft is heading. Search by phrase or filter by tag.",
+		introHtml: "Everything I've written: identity, AI, Linux, and where the craft is heading. Search by phrase or filter by tag.",
 		backHref: "../index.html#writing",
 		backLabel: "Home",
 		articles,
@@ -226,7 +227,7 @@ export function renderHubPage(articles, adsConfig = { enabled: false }, ogImage 
 	});
 }
 
-/** Renders the featured-articles page — only articles with Featured checked in Notion (or "featured": true in data/legacy-articles.json). */
+/** Renders the featured-articles page - only articles with Featured checked in Notion (or "featured": true in data/legacy-articles.json). */
 export function renderFeaturedPage(articles, adsConfig = { enabled: false }, ogImage = null) {
 	return listingPage({
 		pageTitle: "Featured Writing",

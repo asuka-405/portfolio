@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My shortlist | Harbor &amp; Co.</title>
+<meta name="description" content="Your saved properties with private notes." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow" style="color:var(--gold)">Shortlist</p><h1>Your saved homes.</h1><p>Add private notes, compare favourites and book visits from here. Saved in this browser.</p></div></section>
+<section class="sec" style="padding-top:30px"><div class="wrap"><div class="bar"><b id="cnt"></b><div style="display:flex;gap:10px"><button class="btn ghost sm" id="cmpall">Compare shortlisted (first 3)</button><button class="btn ghost sm" onclick="window.print()">Print / save as PDF</button></div></div><div id="list"></div></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+HR.layout("");
+const { $, esc, img } = HR;
+function draw() {
+	const ls = HR.favs.get().map((i) => HR.get(i)).filter(Boolean), notes = HR.store.get("notes", {});
+	$("#cnt").textContent = ls.length + " saved propert" + (ls.length === 1 ? "y" : "ies");
+	$("#cmpall").hidden = ls.length < 2;
+	$("#list").innerHTML = ls.length ? ls.map((l) => `<div class="panel" style="display:grid;grid-template-columns:220px 1fr;gap:20px"><a href="property.html?id=${l.id}"><img src="${img(l.imgs[0])}" alt="" style="border-radius:12px;aspect-ratio:4/3;object-fit:cover;width:100%"></a><div><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h3 style="margin:0"><a href="property.html?id=${l.id}" style="text-decoration:none">${esc(l.title)}</a></h3><div class="msg">${esc(l.loc)}, ${esc(l.city)} · ${l.beds ? l.beds + " bed · " : ""}${l.area.toLocaleString("en-IN")} sq ft</div></div><div class="pr" style="font-size:1.4rem">${HR.price(l)}</div></div><label class="f" style="margin:12px 0">Private note<textarea class="in" rows="2" data-n="${l.id}" placeholder="What did you like? Questions for the agent?">${esc(notes[l.id] || "")}</textarea></label><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn sm" href="property.html?id=${l.id}">Book a visit</a><button class="btn ghost sm" data-rm="${l.id}">Remove</button></div></div></div>`).join("") : '<div class="panel empty"><h3>No saved properties yet</h3><p class="msg" style="margin:8px 0 16px">Tap the heart on any listing to save it here.</p><a class="btn" href="listings.html">Browse properties</a></div>';
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; if (b.dataset.rm) { HR.favs.toggle(b.dataset.rm); HR.upd(); draw(); } else if (b.id === "cmpall") { HR.store.set("cmp", HR.favs.get().slice(0, 3)); location.href = "compare.html"; } });
+document.addEventListener("input", (e) => { const t = e.target.closest("[data-n]"); if (t) { const n = HR.store.get("notes", {}); n[t.dataset.n] = t.value; HR.store.set("notes", n); } });
+draw(); HR.tray();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

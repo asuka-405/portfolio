@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Settings | QueueLite (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#6c47ff;--acc-soft:rgba(108,71,255,.12);--side:#16113a;--bg:#f3f1fb}.sw2{display:flex;align-items:center;gap:10px}</style>
+</head>
+<body>
+<div class="shell"><aside class="side"></aside>
+<div class="main"><header class="top"><button class="burger" id="burger">☰</button><h1>Settings</h1><span class="sp"></span></header>
+<div class="view"><div class="g2"><div class="stack"><div class="card"><h3>Business</h3><form id="bf" class="stack" style="gap:12px"><label class="f">Business name<input class="in" name="biz"></label><div class="row2"><label class="f">Opening hours<input class="in" name="hours"></label><label class="f sw2" style="align-content:end"><span class="sw"><input type="checkbox" name="voice"><span></span></span>Voice announcements</label></div><label class="f">Display ticker message<input class="in" name="msg"></label><label class="f">SMS template <span class="mut">(use {name} {no} {pos} {eta} {link})</span><textarea class="in" name="sms" rows="3"></textarea></label><button class="btn pri" style="justify-self:start">Save</button></form></div>
+<div class="card"><h3>Demo tools</h3><div class="row"><button class="btn" id="sim">Add 15 simulated walk-ins</button><button class="btn danger" id="rs">Reset demo data</button></div></div></div>
+<div class="stack"><div class="card"><h3>Services <button class="btn sm" id="as">+ Add</button></h3><div id="sv"></div></div><div class="card"><h3>Counters <button class="btn sm" id="ac">+ Add</button></h3><div id="ct"></div></div></div></div></div></div></div>
+<script src="../lib/ui.js"></script><script src="js/core.js"></script>
+<script>
+const { $, esc } = UI; QL.side("settings"); $("#burger").onclick = () => $(".side").classList.toggle("open");
+const S = () => QL.state;
+function draw() {
+	const f = $("#bf"), s = S().settings; f.biz.value = s.biz; f.hours.value = s.hours; f.voice.checked = !!s.voice; f.msg.value = s.msg; f.sms.value = s.sms;
+	$("#sv").innerHTML = S().services.map((x) => `<div class="row sb" style="padding:8px 0;border-bottom:1px solid var(--line)"><div><span class="chip" style="background:${x.color}22;color:${x.color}">${esc(x.prefix)}</span> <b>${esc(x.name)}</b><div class="mut">avg ${x.avg} min</div></div><button class="btn sm" data-es="${x.id}">Edit</button></div>`).join("");
+	$("#ct").innerHTML = S().counters.map((c) => `<div class="row sb" style="padding:8px 0;border-bottom:1px solid var(--line)"><div><b>${esc(c.name)}</b> <span class="chip ${c.open ? "ok" : "mut"}">${c.open ? "Open" : "Closed"}</span><div class="mut">${c.svc.map((i) => esc(QL.svc(i).name)).join(", ") || "No services"}</div></div><button class="btn sm" data-ec="${c.id}">Edit</button></div>`).join("");
+}
+$("#bf").onsubmit = (e) => { e.preventDefault(); const f = e.target, s = S().settings; Object.assign(s, { biz: f.biz.value, hours: f.hours.value, voice: f.voice.checked, msg: f.msg.value, sms: f.sms.value }); QL.commit(); UI.toast("Settings saved"); };
+function svcForm(id) { const s = id ? QL.svc(id) : { name: "", prefix: "", avg: 5, color: "#6c47ff" }; UI.modal({ title: id ? "Edit service" : "Add service", body: `<form id="sf" class="stack" style="gap:12px"><label class="f">Name<input class="in" name="name" required value="${esc(s.name)}"></label><div class="row3"><label class="f">Prefix<input class="in" name="prefix" required maxlength="2" value="${esc(s.prefix)}" style="text-transform:uppercase"></label><label class="f">Avg minutes<input class="in" type="number" min="1" name="avg" value="${s.avg}"></label><label class="f">Colour<input class="in" type="color" name="color" value="${s.color}" style="padding:3px;height:42px"></label></div></form>`, actions: [{ label: "Cancel" }, ...(id ? [{ label: "Delete", cls: "danger", fn: () => { if (S().services.length <= 1) { UI.toast("Keep at least one service"); return false; } S().services = S().services.filter((x) => x.id !== id); S().counters.forEach((c) => (c.svc = c.svc.filter((x) => x !== id))); QL.commit(); draw(); } }] : []), { label: "Save", cls: "pri", fn: () => { const f = $("#sf"); if (!f.reportValidity()) return false; const o = id ? S().services.find((x) => x.id === id) : { id: "s" + Date.now() }; Object.assign(o, { name: f.name.value, prefix: f.prefix.value.toUpperCase(), avg: +f.avg.value, color: f.color.value }); if (!id) S().services.push(o); QL.commit(); draw(); } }] }); }
+function ctrForm(id) { const c = id ? S().counters.find((x) => x.id === id) : { name: "Counter " + (S().counters.length + 1), svc: [], open: true }; UI.modal({ title: id ? "Edit counter" : "Add counter", body: `<form id="cf" class="stack" style="gap:12px"><label class="f">Name<input class="in" name="name" value="${esc(c.name)}" required></label><label class="f">Services this counter handles</label>${S().services.map((s) => `<label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="s_${s.id}" ${c.svc.includes(s.id) ? "checked" : ""}> ${esc(s.name)}</label>`).join("")}</form>`, actions: [{ label: "Cancel" }, ...(id ? [{ label: "Delete", cls: "danger", fn: () => { if (S().counters.length <= 1) { UI.toast("Keep at least one counter"); return false; } S().counters = S().counters.filter((x) => x.id !== id); QL.commit(); draw(); } }] : []), { label: "Save", cls: "pri", fn: () => { const f = $("#cf"), o = id ? c : { id: "c" + Date.now(), open: true, cur: null }; o.name = f.name.value; o.svc = S().services.filter((s) => f["s_" + s.id].checked).map((s) => s.id); if (!id) S().counters.push(o); QL.commit(); draw(); } }] }); }
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; if (b.dataset.es) svcForm(b.dataset.es); else if (b.dataset.ec) ctrForm(b.dataset.ec); else if (b.id === "as") svcForm(); else if (b.id === "ac") ctrForm(); else if (b.id === "sim") { QL.simulate(15); UI.toast("15 walk-ins added"); } else if (b.id === "rs") UI.confirmBox("Resets all tickets, services and counters to the sample data.", () => { QL.reset(); draw(); UI.toast("Demo data reset"); }, "Reset"); });
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

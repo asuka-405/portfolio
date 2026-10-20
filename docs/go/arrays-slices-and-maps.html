@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -149,7 +150,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>These three are where most of Go's genuinely surprising behavior lives, and getting a real mental model of how slices work under the hood pays off constantly.</p>
+					<p>These three are where most of Go's surprising behavior lives, and getting a real mental model of how slices work under the hood pays off constantly.</p>
 					<p><strong>Arrays: fixed size, value semantics</strong></p>
 					<p>An array's length is part of its type: <code>[3]int</code> and <code>[5]int</code> are different types, incompatible with each other. Arrays are value types, assigning one array to another copies every element. Because of this, you'll rarely see raw arrays in idiomatic Go code outside of a few specific cases (fixed-size buffers, cryptographic hash outputs); slices do almost everything arrays do, more flexibly.</p>
 				</div>

@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -125,8 +126,8 @@
 
 <div class="prose reveal">
 					<h3>Chain of thought, and an important warning</h3>
-					<p>Asking a model to &quot;think step by step&quot; genuinely helps on hard reasoning, because it forces the model to spend more computation and make its intermediate steps explicit. But here's the catch that matters enormously for audit trails:</p>
-					<blockquote>The reasoning a model shows you is a plausible story it generates, not a truthful log of how it actually reached the answer.</blockquote>
+					<p>Asking a model to &quot;think step by step&quot; helps on hard reasoning, because it forces the model to spend more computation and make its intermediate steps explicit. But here's the catch that matters enormously for audit trails:</p>
+					<blockquote>The reasoning a model shows you is a plausible story it generates, not a truthful log of how it reached the answer.</blockquote>
 					<p>Studies show you can secretly bias a model's answer and its written &quot;reasoning&quot; will never mention the bias. So treat an AI's explanation as<strong>a justification a human can check</strong>(do the cited facts hold up?), never as proof of its process. This single point reshapes how you record &quot;AI rationale&quot; in compliance systems later.</p>
 				</div>
 
@@ -146,13 +147,13 @@
 				</div>
 
 				<div class="callout reveal">
-					<p>Why ReAct beats &quot;think first, then act once&quot;: the model gets to react to reality instead of planning blind. A plan made before seeing any tool output is a guess; a plan revised after each observation is closer to how a careful human actually works through a problem.</p>
+					<p>Why ReAct beats &quot;think first, then act once&quot;: the model gets to react to reality instead of planning blind. A plan made before seeing any tool output is a guess; a plan revised after each observation is closer to how a careful human works through a problem.</p>
 				</div>
 
 				<details class="cmd-explain reveal">
 					<summary>Try it yourself: Run one ReAct loop by hand, on paper<span class="chev">›</span></summary>
 					<div class="body"><div class="prose reveal">
-					<p>Pick a small real task: 'find out whether a specific package is installed on this machine' works well. Write out, step by step: Thought → Action → Observation → Thought → ... until done, exactly like the two examples above. You'll notice it's just how you already debug things when you're being careful: that's the whole pattern.</p>
+					<p>Pick a small real task: 'find out whether a specific package is installed on this machine' works well. Write out, step by step: Thought → Action → Observation → Thought →... until done, exactly like the two examples above. You'll notice it's just how you already debug things when you're being careful: that's the whole pattern.</p>
 				</div></div>
 				</details>
 
@@ -213,7 +214,7 @@
 				<details class="cmd-explain reveal">
 					<summary>Try it yourself: Write your first eval set<span class="chev">›</span></summary>
 					<div class="body"><div class="prose reveal">
-					<p>Pick one task you actually do (classifying an email's urgency, summarizing a meeting note, whatever's at hand). Write down 10 real inputs and what you'd consider the correct output for each. That list is literally the start of an eval set, the exact artifact described above, just at 10 examples instead of 20-50.</p>
+					<p>Pick one task you do (classifying an email's urgency, summarizing a meeting note, whatever's at hand). Write down 10 real inputs and what you'd consider the correct output for each. That list is literally the start of an eval set, the exact artifact described above, just at 10 examples instead of 20-50.</p>
 				</div></div>
 				</details>
 						</div>

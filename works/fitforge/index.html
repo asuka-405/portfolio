@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FitForge | Strength, conditioning &amp; mobility</title>
+<meta name="description" content="Coach-led strength, conditioning, boxing and mobility classes in Noida. Book online, try a free week, no joining fee." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="hero">
+	<img src="img/hero.jpg" alt="Barbells and dumbbells racked in a dark gym" fetchpriority="high" />
+	<div class="wrap">
+		<p class="eyebrow">Noida's strength &amp; conditioning gym</p>
+		<h1>Forged,<br/>not <em>born.</em></h1>
+		<p>Coach-led classes, real programming and a floor built for lifters. Small groups, no mirrors-and-selfies nonsense, and your first week is free.</p>
+		<div class="acts"><a class="btn" href="join.html?plan=trial">Claim your free week</a><a class="btn ghost" href="classes.html">See the timetable</a></div>
+		<div class="stats"><div><b>12</b><span>Coaches</span></div><div><b>40+</b><span>Classes a week</span></div><div><b>max 14</b><span>Per class</span></div><div><b>5:30 am</b><span>First session</span></div></div>
+	</div>
+</section>
+
+<section class="sec"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Programmes</p><h2>Train your way</h2></div><a class="btn ghost sm" href="classes.html">Full timetable</a></div>
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+		<a class="card" href="classes.html?type=Strength"><div class="ph"><img src="img/barbell.jpg" alt="Barbell deadlift" loading="lazy"><span class="chip lime">9 classes / week</span></div><div class="bd"><h3>Strength</h3><p>Barbell Club, Olympic lifting, foundations and kettlebells.</p></div></a>
+		<a class="card" href="classes.html?type=Conditioning"><div class="ph"><img src="img/hiit.jpg" alt="Group HIIT session outdoors" loading="lazy"><span class="chip lime">10 classes / week</span></div><div class="bd"><h3>Conditioning</h3><p>HIIT, Express Burn and Hyrox prep. Sweat, scaled to you.</p></div></a>
+		<a class="card" href="classes.html?type=Boxing"><div class="ph"><img src="img/boxing.jpg" alt="Boxing ring" loading="lazy"><span class="chip lime">3 classes / week</span></div><div class="bd"><h3>Boxing</h3><p>Fundamentals and Friday Fight Night. No sparring required.</p></div></a>
+		<a class="card" href="classes.html?type=Cycling"><div class="ph"><img src="img/spin.jpg" alt="Spin class" loading="lazy"><span class="chip lime">4 classes / week</span></div><div class="bd"><h3>Cycling</h3><p>Rhythm rides with live power on the wall.</p></div></a>
+		<a class="card" href="classes.html?type=Mobility"><div class="ph"><img src="img/yoga.jpg" alt="Yoga class" loading="lazy"><span class="chip lime">8 classes / week</span></div><div class="bd"><h3>Mobility</h3><p>Pilates, yoga for lifters, mobility flow and sauna recovery.</p></div></a>
+		<a class="card" href="tools.html"><div class="ph"><img src="img/meal.jpg" alt="Meal-prep containers" loading="lazy"><span class="chip lime">Free tools</span></div><div class="bd"><h3>Calculators</h3><p>TDEE, macros, 1RM and heart-rate zones, no sign-up.</p></div></a>
+	</div>
+</div></section>
+
+<section class="sec alt"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Today</p><h2>What's on today</h2></div><a class="btn sm" href="classes.html">Book a spot</a></div>
+	<div id="today"></div>
+</div></section>
+
+<section class="sec"><div class="wrap split">
+	<img src="img/pt.jpg" alt="Coach spotting a client's squat" loading="lazy" />
+	<div><p class="eyebrow">Coaching</p><h2 style="font-size:clamp(2.2rem,5vw,3.6rem);margin:10px 0 16px">Coaches who actually coach.</h2><p class="msg" style="margin-bottom:12px;font-size:1rem">Every class has a written plan, a coach who knows your name, and a maximum of fourteen people. Coaches fix your form and plan your progression.</p><p class="msg" style="margin-bottom:22px;font-size:1rem">All coaches hold recognised certifications and run continuing-education days every quarter.</p><a class="btn" href="coaches.html">Meet the coaches</a></div>
+</div></section>
+
+<section class="sec alt"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Membership</p><h2>Simple pricing</h2><p>No joining fee. Pause or cancel from your phone. Annual saves 20%.</p></div><a class="btn ghost sm" href="memberships.html">Compare plans</a></div>
+	<div class="plans" id="plans"></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">The space</p><h2>Built for training</h2></div><a class="btn ghost sm" href="facilities.html">Tour the facilities</a></div>
+	<div class="gal" id="gal"></div>
+</div></section>
+
+<section class="sec lime"><div class="wrap split">
+	<div><h2 style="font-size:clamp(2.6rem,6vw,4.6rem)">Your first week is on us.</h2><p style="margin:14px 0 22px;font-weight:700;font-size:1.1rem">Seven days, every class, the whole gym. Just show up, we'll handle the rest.</p><a class="btn dark" href="join.html?plan=trial">Start my free week</a></div>
+	<div style="display:grid;gap:12px;font-weight:700"><div>✓ No card needed</div><div>✓ Book classes online straight away</div><div>✓ A free coach-led intro session</div><div>✓ Cancel any time, there's nothing to cancel</div></div>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:860px"><div class="sec-h"><div><p class="eyebrow">FAQ</p><h2>Before you join</h2></div></div><div id="faq"></div></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+FF.layout("index.html");
+const { $, esc, inr, img, D } = FF;
+const t = FF.sessionsOn(new Date()).filter((s) => !s.past && !s.cancelled).slice(0, 5);
+$("#today").innerHTML = t.length ? t.map((s) => `<div class="cls"><time>${s.time}</time><div><div class="nm">${esc(s.p.name)}</div><small>${esc(D.coaches[s.p.coach].name)} · ${s.p.dur} min · ${s.p.lvl}</small></div><div class="spots ${s.left <= 3 ? "low" : ""}">${s.full ? "Full" : s.left + " spots left"}</div><a class="book" href="classes.html" style="text-decoration:none;text-align:center">Book</a></div>`).join("") : '<p class="empty">No more classes today, see tomorrow\'s timetable.</p>';
+$("#plans").innerHTML = D.plans.map((p, i) => `<div class="plan ${i === 1 ? "hot" : ""}">${p.tag ? `<span class="tg">${p.tag}</span>` : ""}<h3 style="font-size:1.6rem">${p.name}</h3><div class="p">${inr(p.price)} <small>/ month</small></div><ul>${p.feats.map((f) => `<li>${f}</li>`).join("")}</ul><a class="btn ${i === 1 ? "" : "ghost"}" href="join.html?plan=${p.id}">Choose ${p.name}</a></div>`).join("");
+$("#gal").innerHTML = D.facilities.slice(0, 4).map((f) => `<a href="facilities.html"><img src="${img(f[1])}" alt="${esc(f[0])}" loading="lazy"><span>${esc(f[0])}</span></a>`).join("");
+$("#faq").innerHTML = D.faqs.slice(0, 4).map((f) => `<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join("");
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

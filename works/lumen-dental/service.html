@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Treatment | Lumen Dental</title>
+<meta name="description" content="Treatment details, process, price range and FAQs at Lumen Dental." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<div id="page"></div>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+LD.layout("services.html");
+const { $, esc, inr, img, D } = LD, id = new URLSearchParams(location.search).get("s"), s = LD.svc(id) || D.services[0];
+document.title = s.name + " | Lumen Dental";
+const docs = D.doctors.filter((d) => d.skills.includes(s.id)), nf = LD.nextFree(s.id);
+$("#page").innerHTML = `<section class="page-hero"><div class="wrap"><a href="services.html" class="msg" style="text-decoration:none">← All treatments</a><p class="eyebrow" style="margin-top:10px">${s.cat}</p><h1>${esc(s.name)}</h1><p>${esc(s.short)}</p></div></section>
+<section class="sec" style="padding-top:36px"><div class="wrap checkout">
+<div><img src="${img(s.img)}" alt="" style="border-radius:22px;aspect-ratio:16/9;object-fit:cover;width:100%;margin-bottom:26px">
+<div class="panel"><h3>Why patients choose it</h3><ul style="list-style:none;display:grid;gap:10px">${s.benefits.map((b) => `<li>✓ ${esc(b)}</li>`).join("")}</ul></div>
+<div class="panel"><h3>What happens at your visit</h3><ol style="display:grid;gap:12px;padding-left:22px">${s.steps.map((b) => `<li>${esc(b)}</li>`).join("")}</ol></div>
+<div class="panel"><h3>Questions</h3>${s.faq.map((f) => `<details open><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join("")}</div></div>
+<aside class="sticky"><div class="panel mint"><p class="eyebrow">Price range</p><div style="font-size:2rem;font-weight:800;margin:4px 0">${inr(s.from)} – ${inr(s.to)}</div><p class="msg">Final quote after your exam. Typical visit: ${s.dur} minutes.</p>
+<div class="sum" style="margin:16px 0"><div><span>Next available</span><b>${nf ? LD.pd(nf.date).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" }) + ", " + LD.fmtT(nf.time) : "-"}</b></div><div><span>0% EMI</span><b>${s.from >= 10000 ? "Available" : "Over ₹10,000"}</b></div></div>
+<a class="btn block" href="book.html?s=${s.id}">Book this treatment</a><a class="btn ghost block" style="margin-top:10px" href="financing.html?s=${s.id}">Estimate cost &amp; EMI</a></div>
+<div class="panel"><h3>Who will treat you</h3>${docs.map((d) => `<a href="team.html#${d.id}" style="display:flex;gap:12px;align-items:center;text-decoration:none;margin-bottom:10px"><img src="${img(d.img)}" alt="" style="width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:top"><div><b>${esc(d.name)}</b><div class="msg">${esc(d.role.split("·")[0])}</div></div></a>`).join("")}</div></aside></div></section>
+<section class="sec alt"><div class="wrap"><div class="sec-h"><div><h2>Related treatments</h2></div></div><div class="grid">${D.services.filter((x) => x.cat === s.cat && x.id !== s.id || false).concat(D.services.filter((x) => x.cat !== s.cat)).slice(0, 4).map((x) => `<a class="card" href="service.html?s=${x.id}"><div class="ph"><img src="${img(x.img)}" alt="" loading="lazy"></div><div class="bd"><h3>${esc(x.name)}</h3><p>${esc(x.short)}</p></div></a>`).join("")}</div></div></section>`;
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

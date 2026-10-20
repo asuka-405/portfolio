@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GiveTrack | NGO console (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#d97706;--acc-ink:#fff;--acc-soft:rgba(217,119,6,.13);--side:#271505}</style>
+</head>
+<body>
+<div class="shell">
+	<aside class="side">
+		<a class="brand" href="index.html"><i>G</i><span>GiveTrack<small id="biz">Asha Foundation</small></span></a>
+		<div class="grp">Overview</div><a class="nv" data-route="dashboard" href="#dashboard"> Dashboard</a>
+		<div class="grp">Giving</div><a class="nv" data-route="donations" href="#donations"> Donations and receipts</a><a class="nv" data-route="donors" href="#donors"> Donors</a><a class="nv" data-route="campaigns" href="#campaigns"> Campaigns</a><a class="nv" data-route="recurring" href="#recurring"> Monthly giving</a>
+		<div class="grp">Accountability</div><a class="nv" data-route="expenses" href="#expenses"> Spend and utilisation</a><a class="nv" data-route="reports" href="#reports"> 80G reports</a>
+		<div class="grp">People</div><a class="nv" data-route="volunteers" href="#volunteers"> Volunteers</a><a class="nv" data-route="settings" href="#settings"> Settings</a>
+		<div class="sp"></div><a class="nv" href="index.html">← About GiveTrack</a>
+	</aside>
+	<div class="main">
+		<header class="top"><button class="burger" id="burger" aria-label="Menu">☰</button><h1 id="title">Dashboard</h1><span class="sp"></span><input class="in" id="gs" placeholder="Find a donor, press Enter" aria-label="Find donor"><button class="btn sm" id="theme" aria-label="Toggle theme">◐</button></header>
+		<div class="view" id="view"></div>
+	</div>
+</div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="../lib/qrcode.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

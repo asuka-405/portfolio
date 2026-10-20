@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your quotation | LeadNest (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#7c3aed;--acc-ink:#fff;--acc-soft:rgba(124,58,237,.12)}body{background:#ece6fb;padding:16px}.w{max-width:700px;margin:0 auto}.bar2{display:flex;gap:10px;margin-top:14px;justify-content:center}</style>
+</head>
+<body>
+<div class="w" id="pc"></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, esc, inr, fdate, toast } = UI, id = new URLSearchParams(location.search).get("id") || "";
+	function draw() { const Q = LN.quotes(), q = Q.find((x) => x.id === id) || Q[Q.length - 1]; if (!q) return ($("#pc").innerHTML = '<div class="card"><p>This quotation link is not valid.</p></div>'); const l = LN.lead(q.lead), t = LN.qtotal(q), s = LN.settings();
+		$("#pc").innerHTML = `<div style="border:1px solid #ddd;padding:22px;font:14px/1.5 system-ui;color:#111;background:#fff;border-radius:14px"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><div><h2 style="margin:0;color:#7c3aed">${esc(s.name)}</h2><div style="color:#666">${esc(s.addr)}</div></div><div style="text-align:right"><b>Quotation ${q.id}</b><br>${fdate(q.ts)}<br>Valid till ${fdate(q.valid)}</div></div><hr style="margin:12px 0">For <b>${esc(l.name)}</b>, ${esc(l.prop)}, ${esc(l.city)}<table style="width:100%;border-collapse:collapse;margin:14px 0"><tr style="background:#f5f3ff"><th style="text-align:left;padding:6px">Item</th><th style="text-align:right">Qty</th><th style="text-align:right">Amount</th></tr>${q.items.map((i) => `<tr><td style="padding:6px;border-bottom:1px solid #eee">${esc(i.name)}</td><td style="text-align:right;border-bottom:1px solid #eee">${i.qty}</td><td style="text-align:right;border-bottom:1px solid #eee">${inr(i.qty * i.rate)}</td></tr>`).join("")}</table><div style="text-align:right">Subtotal ${inr(t.sub)}<br>${t.d ? "Discount -" + inr(t.d) + "<br>" : ""}GST 18% ${inr(t.gst)}<br><b style="font-size:1.4em">Total ${inr(t.total)}</b></div></div>${q.status === "sent" ? '<div class="bar2"><button class="btn" id="no">Decline</button><button class="btn pri" id="ok">Accept quotation</button></div>' : `<div class="note" style="margin-top:14px;text-align:center">This quotation was ${q.status}.</div>`}`;
+		const ok = $("#ok"); if (ok) { ok.onclick = () => { q.status = "accepted"; LN.S.set("quotes", Q); const L = LN.leads(); const x = L.find((k) => k.id === q.lead); x.stage = "won"; x.value = t.total; x.last = Date.now(); LN.S.set("leads", L); toast("Thank you. We will call to plan the next steps."); draw(); }; $("#no").onclick = () => { q.status = "declined"; LN.S.set("quotes", Q); toast("Noted. Tell us what to change."); draw(); }; } }
+	draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

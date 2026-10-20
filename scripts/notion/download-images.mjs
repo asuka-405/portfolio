@@ -17,7 +17,7 @@ function extFromUrl(url) {
 }
 
 /** Downloads a Notion-hosted image (a presigned S3 link that expires) to `destDir`, naming it
- * `<index>.<ext>`. Returns nothing — callers build the relative src themselves. */
+ * `<index>.<ext>`. Returns nothing - callers build the relative src themselves. */
 async function downloadImageTo(url, destDir, index, label) {
 	await fs.mkdir(destDir, { recursive: true });
 

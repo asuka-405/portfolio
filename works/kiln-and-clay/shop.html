@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shop | Kiln &amp; Clay</title>
+<meta name="description" content="Browse handmade stoneware mugs, bowls, plates, vases, serveware and sets." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow">The shop</p><h1 id="h1">All pieces</h1><p>Every piece is wheel-thrown and glazed by hand. Small variations are part of the charm.</p></div></section>
+<section class="sec" style="padding-top:30px"><div class="wrap shop">
+	<aside class="fl"><h4 style="margin-top:0">Category</h4><div id="cats"></div><h4>Price</h4><div id="prices"></div><h4>Availability</h4><label style="display:flex;gap:8px;cursor:pointer;font-size:.94rem"><input type="checkbox" id="instock"> In stock only</label><button class="btn ghost sm" style="margin-top:18px" id="reset">Reset filters</button></aside>
+	<div><div class="bar"><b id="cnt"></b><select class="in" id="sort" style="width:auto"><option value="feat">Featured</option><option value="p1">Price: low to high</option><option value="p2">Price: high to low</option><option value="az">Name A–Z</option></select></div><div class="grid" id="grid"></div></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("shop.html");
+const { $, $$, esc, inr, D } = KC, q0 = new URLSearchParams(location.search), all = KC.products();
+const S = { cat: q0.get("cat") || "", col: q0.get("col") || "", price: "", q: q0.get("q") || "" };
+const PR = [["", "Any price"], ["0-1500", "Under ₹1,500"], ["1500-3000", "₹1,500 – ₹3,000"], ["3000-99999", "Over ₹3,000"]];
+function draw() {
+	$("#cats").innerHTML = [["", "All pieces"], ...D.cats.map((c) => [c, c])].map(([c, n]) => `<button class="opt ${S.cat === c ? "on" : ""}" data-c="${esc(c)}">${esc(n)}<span>${c ? all.filter((p) => p.cat === c).length : all.length}</span></button>`).join("");
+	$("#prices").innerHTML = PR.map(([v, n]) => `<button class="opt ${S.price === v ? "on" : ""}" data-p="${v}">${n}</button>`).join("");
+	const ins = $("#instock").checked, s = $("#sort").value;
+	let r = all.filter((p) => (!S.cat || p.cat === S.cat) && (!S.col || p.tags.includes(S.col)) && (!S.q || (p.name + p.desc + p.cat).toLowerCase().includes(S.q.toLowerCase())) && (!ins || p.stock > 0) && (!S.price || (p.price >= +S.price.split("-")[0] && p.price < +S.price.split("-")[1])));
+	r.sort((a, b) => s === "p1" ? a.price - b.price : s === "p2" ? b.price - a.price : s === "az" ? a.name.localeCompare(b.name) : (b.stock > 0) - (a.stock > 0) || KC.hash(a.id) - KC.hash(b.id));
+	$("#h1").textContent = S.q ? "Results for “" + S.q + "”" : S.col ? (D.collections.find((c) => c.id === S.col) || {}).name : S.cat || "All pieces";
+	$("#cnt").textContent = r.length + " piece" + (r.length === 1 ? "" : "s");
+	$("#grid").innerHTML = r.map(KC.card).join("") || '<p class="empty" style="grid-column:1/-1">Nothing matches. <a href="shop.html" style="color:var(--clay)">Clear filters</a></p>';
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; if (b.dataset.c !== undefined) { S.cat = b.dataset.c; draw(); } else if (b.dataset.p !== undefined) { S.price = b.dataset.p; draw(); } else if (b.id === "reset") { location.href = "shop.html"; } });
+["instock", "sort"].forEach((i) => $("#" + i).addEventListener("input", draw)); draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

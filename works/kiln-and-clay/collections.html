@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Collections | Kiln &amp; Clay</title>
+<meta name="description" content="Collections of handmade stoneware for mornings, dinners and gifts." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Browse</p><h1>Collections</h1><p>Our favourite ways to put the pieces together.</p></div></section>
+<div id="cols"></div>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("collections.html");
+const { $, esc, img, D } = KC;
+$("#cols").innerHTML = D.collections.map((c, i) => { const l = KC.products().filter((p) => p.tags.includes(c.id) && p.stock > 0).slice(0, 4); return `<section class="sec ${i % 2 ? "alt" : ""}" id="${c.id}"><div class="wrap"><div class="split ${i % 2 ? "rev" : ""}" style="align-items:start"><img src="${img(c.img)}" alt="${esc(c.name)}" loading="lazy"><div><p class="eyebrow">Collection</p><h2 style="font-size:clamp(2rem,4.5vw,3rem);margin:8px 0 12px">${esc(c.name)}</h2><p class="msg" style="font-size:1.02rem;margin-bottom:24px">${esc(c.blurb)}</p><div class="grid" style="grid-template-columns:repeat(2,1fr);gap:16px">${l.map(KC.card).join("")}</div><a class="btn ghost" style="margin-top:22px" href="shop.html?col=${c.id}">Shop the whole collection</a></div></div></div></section>`; }).join("");
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

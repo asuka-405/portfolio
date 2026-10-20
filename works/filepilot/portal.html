@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Send your documents | FilePilot (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#0d9488;--acc-ink:#fff;--acc-soft:rgba(13,148,136,.12);--bg:#f4fbfa}body{background:#d7efec}
+.w{max-width:560px;margin:0 auto;min-height:100vh;background:var(--bg);box-shadow:0 0 60px rgba(4,60,56,.16)}.hero{background:#064e48;color:#fff;padding:26px 22px}.hero h1{font-size:1.45rem}.hero p{opacity:.9;margin-top:6px}.pc{padding:18px;display:grid;gap:14px}
+.doc{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line)}.doc input{display:none}
+</style>
+</head>
+<body>
+<div class="w"><div class="hero"><small id="sn" style="opacity:.85"></small><h1 id="hi">Your documents</h1><p>Upload what your accountant has asked for. Nothing else to fill in.</p></div><div class="pc" id="pc"></div></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, $$, esc, fdate, toast, chip } = UI, q = new URLSearchParams(location.search).get("c"), F = () => FP.filings();
+	let c = FP.client(q) || FP.clients().find((x) => F().some((f) => f.client === x.id && f.st === "awaiting")) || FP.clients()[0];
+	$("#sn").textContent = FP.settings().name; $("#hi").textContent = "Hello, " + c.contact.split(" ")[0];
+	function draw() {
+		const mine = F().filter((f) => f.client === c.id), need = mine.filter((f) => f.st === "awaiting").sort((a, b) => (a.due < b.due ? -1 : 1)), next = mine.filter((f) => f.st !== "filed").sort((a, b) => (a.due < b.due ? -1 : 1)).slice(0, 4);
+		$("#pc").innerHTML = (need.length ? need.map((f) => `<div class="card"><div class="row sb"><b>${esc(FP.TYPES[f.type].name)} <span class="mut">${esc(f.period)}</span></b>${chip("Due " + fdate(f.due, { day: "numeric", month: "short" }), FP.daysTo(f.due) <= 3 ? "bad" : "warn")}</div>${f.docs.map((d, i) => `<div class="doc"><span>${d.got ? "✓ " : ""}${esc(d.n)}</span>${d.got ? chip("Received", "ok") : `<label class="btn sm pri">Upload<input type="file" data-up="${f.id}|${i}" accept=".pdf,.xlsx,.xls,.csv,image/*"></label>`}</div>`).join("")}</div>`).join("") : `<div class="card" style="text-align:center;padding:26px"><div style="font-size:2.4rem;color:var(--acc)">✓</div><h2>All caught up</h2><p class="mut" style="margin-top:6px">We have everything we asked for. We will tell you when each return is filed.</p></div>`)
+			+ (next.length ? `<div class="card"><h3>Coming up for you</h3>${next.map((f) => `<div class="row sb" style="padding:6px 0"><span>${esc(FP.TYPES[f.type].name)} <span class="mut">${esc(f.period)}</span></span><span class="mut">${fdate(f.due, { day: "numeric", month: "short" })}</span></div>`).join("")}</div>` : "")
+			+ `<p class="mut" style="font-size:.8rem;text-align:center">Demo only: the file name is noted but nothing is uploaded anywhere.</p><a class="btn" href="app.html#chase" style="justify-self:center">See it on the firm's chase list</a>`;
+		$$("[data-up]").forEach((el) => (el.onchange = () => { if (!el.files[0]) return; const [id, i] = el.dataset.up.split("|"), L = F(), f = L.find((x) => x.id === id); f.docs[+i].got = true; if (f.docs.every((d) => d.got) && f.st === "awaiting") f.st = "working"; FP.save(L); FP.logEv(c.name + " uploaded " + f.docs[+i].n + " for " + FP.TYPES[f.type].name, c.id); toast("Received " + el.files[0].name); draw(); }));
+	}
+	draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

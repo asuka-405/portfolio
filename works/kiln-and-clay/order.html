@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Track your order | Kiln &amp; Clay</title>
+<meta name="description" content="Live progress for your Kiln &amp; Clay order." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding-top:36px"><div class="wrap" style="max-width:880px">
+	<p class="eyebrow">Order status</p><h1 style="font-size:clamp(2rem,4vw,3rem);margin:6px 0 20px">Track your order</h1>
+	<form id="find" class="panel" style="display:flex;gap:10px;flex-wrap:wrap;align-items:end"><label class="f" style="flex:1;min-width:200px">Order number<input class="in" id="oid" placeholder="e.g. KC-20401"></label><button class="btn">Track</button></form>
+	<div id="view"></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("");
+const { $, esc, inr, img } = KC, qs = new URLSearchParams(location.search); let id = qs.get("id");
+const ICON = { placed: "✓", packed: "📦", shipped: "🚚", out: "🛵", delivered: "★" };
+function draw() {
+	KC.orders.tick(); const o = id && KC.orders.get(id);
+	if (!id) { $("#view").innerHTML = ""; return; }
+	if (!o) { $("#view").innerHTML = '<div class="panel empty"><h3>We couldn\'t find that order</h3><p class="msg">Check the number in your confirmation email.</p></div>'; return; }
+	const cur = KC.STAGES.indexOf(o.status), msg = { placed: "We've got your order and the studio is picking your pieces.", packed: "Your pieces are wrapped and boxed, double-padded for the trip.", shipped: "On its way to your city.", out: "Out for delivery today.", delivered: "Delivered. We hope you love it." }[o.status];
+	$("#view").innerHTML = `${qs.get("new") ? `<div class="panel" style="background:#e8f2dc;border-color:#b9d79f"><b>Thank you, ${esc(o.name.split(" ")[0])}!</b> A confirmation has been sent to ${esc(o.email)}.</div>` : ""}
+	<div class="panel"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><p class="eyebrow">Order</p><h3 style="font-size:1.8rem;margin:0">${o.id}</h3></div><div style="text-align:right"><p class="eyebrow">${o.status === "delivered" ? "Delivered" : "Estimated delivery"}</p><h3 style="font-size:1.4rem;margin:0">${o.status === "delivered" ? "Done ✓" : KC.eta(o.pin || "110001", o.express)}</h3></div></div>
+	<div class="trk">${KC.STAGES.map((k, i) => `<div class="s ${i < cur || o.status === "delivered" ? "done" : i === cur ? "cur" : ""}"><i>${i < cur || o.status === "delivered" ? "✓" : ICON[k]}</i>${KC.LABEL[k]}</div>`).join("")}</div><p style="text-align:center;font-weight:600;margin:14px 0 4px">${msg}</p>${o.status !== "delivered" ? '<p class="msg" style="text-align:center">This demo runs at fast-forward speed so you can watch each stage.</p>' : ""}</div>
+	<div class="split" style="align-items:start;gap:20px"><div class="panel"><h3>Items</h3>${o.items.map((l) => { const p = KC.get(l.id); return `<div style="display:flex;gap:12px;align-items:center;margin-bottom:10px">${p ? `<img src="${img(p.img)}" alt="" style="width:54px;height:54px;object-fit:cover">` : ""}<div style="flex:1;font-size:.9rem"><b>${esc(l.name)}</b><div class="msg">Qty ${l.qty}</div></div><b>${inr(l.unit * l.qty)}</b></div>`; }).join("")}<div style="display:flex;justify-content:space-between;border-top:1px solid var(--ink);margin-top:10px;padding-top:10px;font-weight:700"><span>Total (${(o.pay || "upi").toUpperCase()})</span><span>${inr(o.total)}</span></div></div>
+	<div class="panel"><h3>Delivering to</h3><p>${esc(o.name)}<br>${esc(o.addr || "")}<br>${esc(o.city || "")}${o.state ? ", " + esc(o.state) : ""} ${esc(o.pin || "")}</p>${o.gift ? `<p class="msg" style="margin-top:10px">🎁 Card: “${esc(o.gift)}”</p>` : ""}<h3 style="margin-top:18px">History</h3>${o.hist.map((h) => `<div class="msg">${new Date(h.t).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}, ${KC.LABEL[h.s]}</div>`).join("")}</div></div>
+	<div style="display:flex;gap:10px;flex-wrap:wrap" class="noprint"><button class="btn ghost sm" onclick="window.print()">Print invoice</button><a class="btn ghost sm" href="shop.html">Continue shopping</a></div>`;
+}
+$("#find").onsubmit = (e) => { e.preventDefault(); id = $("#oid").value.trim().toUpperCase(); qs.delete("new"); history.replaceState(null, "", "?id=" + id); draw(); };
+if (id) $("#oid").value = id; draw(); setInterval(draw, 4000);
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

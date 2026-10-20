@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -119,7 +120,7 @@
 					<p>The first deployments should touch nothing: read, explain, rank, and leave the decision to a human. Ranked by value-over-risk:</p>
 				</div>
 
-<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Use case</th><th>What it does</th><th>Level</th></tr></thead><tbody><tr><td><strong>Certification copilot</strong></td><td>Per item: translate the permission, show if it's actually used, flag conflicts, rank by risk. Attacks rubber-stamping directly: win is measurable in one review cycle</td><td>L1–L2 read</td></tr><tr><td><strong>Approval copilot</strong></td><td>Same analysis at request time, with the relevant policy and similar past decisions pulled up</td><td>L1–L2 read</td></tr><tr><td><strong>Privileged-session triage</strong></td><td>Summarize what happened in an admin session, flag anything off-ticket (strictly read-only: untrusted text!)</td><td>L1 read</td></tr><tr><td><strong>Access-request assistant</strong></td><td>Find the right entitlement, pre-check policy, draft the request</td><td>L2 draft</td></tr><tr><td><strong>Role mining &amp; cleanup</strong></td><td>Cluster real access into proposed roles; the AI writes the human-readable descriptions</td><td>L2 draft</td></tr><tr><td><strong>Never</strong></td><td>Privileged grants, separation-of-duty overrides, break-glass, anything irreversible</td><td>stays human</td></tr></tbody></table></div>
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Use case</th><th>What it does</th><th>Level</th></tr></thead><tbody><tr><td><strong>Certification copilot</strong></td><td>Per item: translate the permission, show if it's used, flag conflicts, rank by risk. Attacks rubber-stamping directly: win is measurable in one review cycle</td><td>L1–L2 read</td></tr><tr><td><strong>Approval copilot</strong></td><td>Same analysis at request time, with the relevant policy and similar past decisions pulled up</td><td>L1–L2 read</td></tr><tr><td><strong>Privileged-session triage</strong></td><td>Summarize what happened in an admin session, flag anything off-ticket (strictly read-only: untrusted text!)</td><td>L1 read</td></tr><tr><td><strong>Access-request assistant</strong></td><td>Find the right entitlement, pre-check policy, draft the request</td><td>L2 draft</td></tr><tr><td><strong>Role mining &amp; cleanup</strong></td><td>Cluster real access into proposed roles; the AI writes the human-readable descriptions</td><td>L2 draft</td></tr><tr><td><strong>Never</strong></td><td>Privileged grants, separation-of-duty overrides, break-glass, anything irreversible</td><td>stays human</td></tr></tbody></table></div>
 
 <div class="prose reveal">
 					<h3>The one rule that decides success</h3>
@@ -180,7 +181,7 @@
 				<details class="cmd-explain reveal">
 					<summary>Try it yourself: Sketch your own reference architecture<span class="chev">›</span></summary>
 					<div class="body"><div class="prose reveal">
-					<p>On paper, name what the three layers: systems/tools, orchestration, governance: would actually be for your own organization (or a hypothetical one). Which real systems become 'tools'? What would the orchestration layer coordinate? Who owns governance? A rough sketch here is worth more than re-reading the diagram a second time.</p>
+					<p>On paper, name what the three layers: systems/tools, orchestration, governance: would be for your own organization (or a hypothetical one). Which real systems become 'tools'? What would the orchestration layer coordinate? Who owns governance? A rough sketch here is worth more than re-reading the diagram a second time.</p>
 				</div></div>
 				</details>
 
@@ -197,7 +198,7 @@
 				</details>
 
 <div class="prose reveal">
-					<h3>Compliance: what regulators will actually ask for</h3>
+					<h3>Compliance: what regulators will ask for</h3>
 					<p>If you're deploying agents touching EU users, the AI Act's high-risk provisions become enforceable <strong>2 August 2026</strong> (with some use-based Annex III systems on a later 2027 track after the recent Omnibus agreement). Access and employment decisions sit close to (and sometimes inside) the explicitly listed high-risk categories (credit, hiring, benefits eligibility); it's a real legal question worth a real legal read, not a guess made by the engineering team.</p>
 					<ul><li><strong>Tamper-evident audit logs.</strong> Article 12 requires automatic logging of every event relevant to tracing a decision, retained a minimum of 6 months. Your agent's tool calls and outputs need to write to a log the agent itself has no permission to edit.</li><li><strong>A human-oversight mechanism.</strong> Someone must be able to see what the agent is doing and halt it mid-run: not just review a transcript afterward.</li><li><strong>A continuous risk assessment.</strong> Documented and re-run as the system changes, not a one-time sign-off at launch.</li><li><strong>Classification first.</strong> Know whether your specific use case is high-risk before you build the rest of the compliance story around a guess.</li></ul>
 					<p>None of this is IAM-specific, but IAM is the natural place to enforce it: you're already the system of record for &quot;who did what, as whom.&quot; Extend that same spine to &quot;which agent did what, as whom,&quot; and most of the audit-log requirement falls out for free rather than becoming a separate project. Two examples: a provisioning agent's every grant or deny already flows through the same event log used for human-initiated access, satisfying traceability without new plumbing; a review agent's escalation decisions get routed through the same manager-approval gate a human reviewer's decisions require, satisfying human oversight by construction.</p>
@@ -210,7 +211,7 @@
 				<details class="cmd-explain reveal">
 					<summary>Try it yourself: Check your own high-risk classification<span class="chev">›</span></summary>
 					<div class="body"><div class="prose reveal">
-					<p>Spend 15 minutes reading a summary of the EU AI Act's high-risk categories (or your own jurisdiction's equivalent, if applicable) and check whether an AI system touching hiring, access, or employment decisions in your context would plausibly be classified as high-risk. This is genuinely worth doing before building anything like this for real, not just for this article.</p>
+					<p>Spend 15 minutes reading a summary of the EU AI Act's high-risk categories (or your own jurisdiction's equivalent, if applicable) and check whether an AI system touching hiring, access, or employment decisions in your context would plausibly be classified as high-risk. This is worth doing before building anything like this for real, not just for this article.</p>
 				</div></div>
 				</details>
 

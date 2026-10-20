@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Property | Harbor &amp; Co.</title>
+<meta name="description" content="Property details, photos, floor plan, neighbourhood scores, EMI calculator and visit scheduling." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<div id="page"></div>
+<div class="lb" id="lb"><img id="lbi" alt=""><div style="display:flex;gap:12px;align-items:center"><button id="lbp" aria-label="Previous">‹</button><span id="lbc" style="color:#fff"></span><button id="lbn" aria-label="Next">›</button><button id="lbx" aria-label="Close">✕</button></div></div>
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+HR.layout("buy");
+const { $, $$, esc, inr, img, D } = HR, id = new URLSearchParams(location.search).get("id"), l = HR.get(id) || HR.listings()[0];
+HR.addView(l.id); document.title = l.title + " | Harbor & Co.";
+const ag = D.agents[l.agent], n = HR.nb(l), sale = l.purpose === "sale", p = HR.psf(l);
+const sim = HR.listings().filter((x) => x.id !== l.id && x.status !== "sold" && (x.city === l.city || x.type === l.type)).sort((a, b) => Math.abs(a.price - l.price) - Math.abs(b.price - l.price)).slice(0, 3);
+const areaTxt = l.area >= 43560 ? (l.area / 43560).toFixed(0) + " acre" : l.area.toLocaleString("en-IN") + " sq ft";
+$("#page").innerHTML = `<section class="sec" style="padding:26px 0 40px"><div class="wrap">
+<div style="margin-bottom:14px;font-size:.88rem" class="msg"><a href="index.html" style="text-decoration:none">Home</a> › <a href="listings.html?purpose=${l.purpose}" style="text-decoration:none">${sale ? "Buy" : "Rent"}</a> › ${esc(l.loc)}, ${esc(l.city)}</div>
+<div class="gallery" id="gal">${l.imgs.slice(0, 3).map((k, i) => `<a href="#" data-i="${i}"><img src="${img(k)}" alt="${esc(l.title)} photo ${i + 1}">${i === 2 && l.imgs.length > 3 ? `<span class="more">+${l.imgs.length - 3} photos</span>` : ""}</a>`).join("")}</div>
+<div class="layout" style="grid-template-columns:1fr 360px;margin-top:26px">
+<div>
+	<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><span class="chip">${l.purpose === "rent" ? "For rent" : l.type}</span> ${l.featured ? '<span class="chip" style="background:var(--gold);border-color:var(--gold);color:var(--navy)">Featured</span>' : ""} ${l.status === "sold" ? '<span class="chip" style="background:var(--red);color:#fff;border-color:var(--red)">Sold</span>' : ""}<h1 style="font-size:clamp(1.8rem,4vw,2.6rem);margin:10px 0 4px">${esc(l.title)}</h1><div class="msg">📍 ${esc(l.loc)}, ${esc(l.city)} · ✔ Verified ${HR.iso(HR.addDays(new Date(), -(HR.hash(l.id) % 20) - 2))}</div></div><div style="text-align:right"><div class="pr" style="font-size:2.2rem">${HR.price(l)}</div>${p ? `<div class="msg">₹${p.toLocaleString("en-IN")} per sq ft</div>` : ""}</div></div>
+	<div style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 22px" class="noprint"><button class="btn ghost sm" id="fav">♥ ${HR.favs.has(l.id) ? "Saved" : "Save"}</button><button class="btn ghost sm" id="share">Copy link</button><button class="btn ghost sm" onclick="window.print()">Print brochure</button><label class="btn ghost sm" style="cursor:pointer"><input type="checkbox" data-cmp="${l.id}" ${HR.cmp.has(l.id) ? "checked" : ""}> Compare</label></div>
+	<div class="facts">${[["Bedrooms", l.beds || "-"], ["Bathrooms", l.baths || "-"], ["Area", areaTxt], ["Floor", l.floor], ["Status", l.age], ["Furnishing", l.furn], ["Facing", l.facing], ["Property ID", l.id.toUpperCase()]].map(([k, v]) => `<div class="fact"><span>${k}</span><b>${esc(v)}</b></div>`).join("")}</div>
+	<div class="panel" style="margin-top:22px"><h3>About this property</h3><p style="color:#3a4764">${esc(l.desc)}</p></div>
+	<div class="panel"><h3>Amenities</h3><div class="amen">${l.am.map((a) => `<span>${esc(a)}</span>`).join("")}</div></div>
+	${l.beds ? `<div class="panel"><h3>Indicative floor plan</h3>${HR.floorplan(l)}<p class="msg" style="margin-top:8px">Not to scale. Layout shown for illustration only.</p></div>` : ""}
+	<div class="panel"><h3>Neighbourhood · ${esc(l.loc)}</h3><p class="msg" style="margin-bottom:10px">${esc(n.blurb)}</p>${[["Walkability", n.walk], ["Schools", n.school], ["Transit", n.transit], ["Safety", n.safety]].map(([k, v]) => `<div class="score"><span>${k}</span><div><i style="width:${v * 10}%"></i></div><b>${v}</b></div>`).join("")}<p class="msg" style="margin-top:10px">Area average ₹${n.psf.toLocaleString("en-IN")}/sq ft · +${n.g}% over 3 years${p ? ` · this property is <b>${p <= n.psf ? Math.round((1 - p / n.psf) * 100) + "% below" : Math.round((p / n.psf - 1) * 100) + "% above"}</b> the area average` : ""}.</p></div>
+	${sale ? `<div class="panel"><h3>Home-loan EMI</h3><div class="emi"><label>Down payment <span id="dv"></span></label><input type="range" id="dp" min="10" max="60" value="20"><label>Interest rate <span id="rv"></span></label><input type="range" id="rt" min="6.5" max="12" step=".1" value="8.5"><label>Tenure <span id="tv"></span></label><input type="range" id="tn" min="5" max="30" value="20"><div class="out"><span>Monthly EMI</span><b id="eo"></b></div></div><p class="msg" style="margin-top:8px"><a href="emi.html" style="color:var(--gold-d);font-weight:700">Open full calculators →</a></p></div>` : ""}
+</div>
+<aside><div class="sticky noprint">
+	<div class="panel"><div style="display:flex;gap:14px;align-items:center;margin-bottom:14px"><img src="${img(ag.img)}" alt="" style="width:64px;height:64px;border-radius:50%;object-fit:cover"><div><b>${esc(ag.name)}</b><div class="msg">${esc(ag.role.split("·")[0])}</div></div></div>
+	<h3 style="font-size:1rem">Schedule a visit</h3><div class="dates" id="dates"></div><div class="times" id="times" style="margin:10px 0"></div>
+	<form id="vf" style="display:grid;gap:10px"><input class="in" name="name" placeholder="Your name" required><input class="in" name="phone" placeholder="10-digit mobile" pattern="[0-9]{10}" required><button class="btn gold block" ${l.status === "sold" ? "disabled" : ""}>Request this visit</button></form><p class="msg" style="margin-top:8px">Free to reschedule. ${esc(ag.name.split(" ")[0])} will confirm by SMS.</p>
+	<hr style="border:0;border-top:1px solid var(--line);margin:14px 0"><a class="btn ghost block" href="tel:${ag.phone.replace(/\s/g, "")}">📞 ${ag.phone}</a><button class="btn ghost block" style="margin-top:8px" id="cb">Request a call back</button></div>
+</div></aside></div></div></section>
+<section class="sec alt"><div class="wrap"><div class="sec-h"><div><h2>Similar properties</h2></div></div><div class="grid">${sim.map((x) => HR.card(x)).join("")}</div></div></section>`;
+/* gallery + lightbox */
+let gi = 0; const show = (i) => { gi = (i + l.imgs.length) % l.imgs.length; $("#lbi").src = img(l.imgs[gi]); $("#lbc").textContent = (gi + 1) + " / " + l.imgs.length; $("#lb").classList.add("on"); };
+$("#gal").onclick = (e) => { const a = e.target.closest("a"); if (a) { e.preventDefault(); show(+a.dataset.i); } };
+$("#lbp").onclick = () => show(gi - 1); $("#lbn").onclick = () => show(gi + 1); $("#lbx").onclick = () => $("#lb").classList.remove("on");
+document.addEventListener("keydown", (e) => { if (!$("#lb").classList.contains("on")) return; if (e.key === "Escape") $("#lb").classList.remove("on"); if (e.key === "ArrowRight") show(gi + 1); if (e.key === "ArrowLeft") show(gi - 1); });
+/* actions */
+$("#fav").onclick = (e) => { const on = HR.favs.toggle(l.id); e.target.textContent = "♥ " + (on ? "Saved" : "Save"); HR.toast(on ? "Saved to shortlist" : "Removed from shortlist"); HR.upd(); };
+$("#share").onclick = () => { navigator.clipboard && navigator.clipboard.writeText(location.href); HR.toast("Link copied"); };
+/* EMI */
+if ($("#dp")) { const c = () => { const d = +$("#dp").value, r = +$("#rt").value, y = +$("#tn").value, P = l.price * 1e5 * (1 - d / 100); $("#dv").textContent = d + "% (" + HR.fmtLakh(Math.round(l.price * d / 100)) + ")"; $("#rv").textContent = r + "%"; $("#tv").textContent = y + " yrs"; $("#eo").textContent = inr(HR.emi(P, r, y)); }; ["dp", "rt", "tn"].forEach((i) => $("#" + i).oninput = c); c(); }
+/* visit scheduler */
+let vd = null, vt = null; const days = [...Array(10)].map((_, i) => HR.iso(HR.addDays(new Date(), i + 1))), TS = ["10:00", "11:30", "13:00", "15:00", "16:30", "18:00"];
+function vdraw() { $("#dates").innerHTML = days.map((d) => { const x = HR.pd(d); return `<button type="button" class="date ${vd === d ? "on" : ""}" data-d="${d}"><small>${x.toLocaleDateString("en-IN", { weekday: "short" })}</small><b>${x.getDate()}</b><small>${x.toLocaleDateString("en-IN", { month: "short" })}</small></button>`; }).join(""); $("#times").innerHTML = vd ? TS.filter((t) => (HR.hash(l.id + vd + t) % 5) !== 0).map((t) => `<button type="button" class="time ${vt === t ? "on" : ""}" data-t="${t}">${t}</button>`).join("") : '<span class="msg">Pick a day to see times.</span>'; }
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; if (b.dataset.d) { vd = b.dataset.d; vt = null; vdraw(); } else if (b.dataset.t) { vt = b.dataset.t; vdraw(); } else if (b.id === "cb") cbModal(); else if (b.dataset.mx !== undefined) $("#modal").classList.remove("on"); });
+$("#vf").onsubmit = (e) => { e.preventDefault(); if (!vd || !vt) { HR.toast("Choose a day and time first"); return; } const f = e.target; HR.leads.add({ name: f.name.value, phone: f.phone.value, prop: l.id, kind: "visit", visit: vd + " " + vt, agent: l.agent }); const v = HR.store.get("visits", []); v.push({ prop: l.id, date: vd, time: vt, name: f.name.value }); HR.store.set("visits", v);
+	$("#vf").innerHTML = `<p class="msg ok">✓ Visit requested for ${HR.pd(vd).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })} at ${vt}. ${esc(ag.name.split(" ")[0])} will confirm shortly.</p>`; };
+function cbModal() { $("#mbox").innerHTML = `<h3 style="font-size:1.4rem;margin-bottom:12px">Request a call back</h3><form id="cf" style="display:grid;gap:12px"><input class="in" name="name" placeholder="Your name" required><input class="in" name="phone" placeholder="10-digit mobile" pattern="[0-9]{10}" required><select class="in" name="w"><option>Within the hour</option><option>This evening</option><option>Tomorrow morning</option></select><div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn ghost" data-mx>Close</button><button class="btn gold">Request call</button></div></form>`; $("#modal").classList.add("on"); $("#cf").onsubmit = (e) => { e.preventDefault(); const f = e.target; HR.leads.add({ name: f.name.value, phone: f.phone.value, prop: l.id, kind: "callback", note: f.w.value, agent: l.agent }); $("#mbox").innerHTML = `<h3>Thank you!</h3><p class="msg" style="margin:10px 0 16px">${esc(ag.name)} will call you ${esc(f.w.value.toLowerCase())}.</p><button class="btn" data-mx>Close</button>`; }; }
+vdraw(); HR.tray();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

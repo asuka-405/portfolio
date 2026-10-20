@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book an appointment | SalonDesk (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#db2777;--acc-ink:#fff;--acc-soft:rgba(219,39,119,.12)}body{background:#fdf2f8}
+.w{max-width:760px;margin:0 auto;padding:22px 16px 60px}.top2{text-align:center;margin:10px 0 22px}.top2 h1{font-size:1.9rem}.top2 p{color:var(--mut)}
+.steps2{display:flex;gap:8px;justify-content:center;margin-bottom:20px}.steps2 span{padding:5px 14px;border-radius:99px;background:#fff;border:1px solid var(--line);font-size:.8rem;font-weight:700;color:var(--mut)}.steps2 span.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.svc{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:8px;cursor:pointer}.svc.on{border-color:var(--acc);background:var(--acc-soft)}
+.sl{display:flex;flex-wrap:wrap;gap:8px}.sl button{padding:8px 14px;border:1px solid var(--line);background:#fff;border-radius:10px;font-weight:700}.sl button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.bar2{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px -16px -60px}
+</style>
+</head>
+<body>
+<div class="w"><div class="top2"><h1 id="nm">Aura Salon &amp; Spa</h1><p>Book online in under a minute. Pay at the salon.</p></div><div class="steps2" id="st"></div><div id="bd"></div></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, $$, esc, inr, fdate, iso, addDays, toast } = UI, { S, hm, svc } = SL;
+	document.getElementById("nm").textContent = SL.settings().name;
+	let st = { step: 1, svcs: [], staff: "any", date: iso(addDays(new Date(), 0)), slot: null }, done = null;
+	const total = () => st.svcs.reduce((a, i) => a + svc(i).price, 0), dur = () => st.svcs.reduce((a, i) => a + svc(i).dur, 0);
+	const bar = (next, ok) => `<div class="bar2"><div><b>${st.svcs.length ? inr(total()) + " + GST" : "Nothing selected"}</b><div class="mut">${st.svcs.length ? dur() + " minutes" : ""}</div></div><div class="row">${st.step > 1 ? '<button class="btn" id="bk">Back</button>' : ""}<button class="btn pri" id="nx" ${ok ? "" : "disabled"}>${next}</button></div></div>`;
+	function draw() {
+		$("#st").innerHTML = ["Services", "Time", "Your details"].map((x, i) => `<span class="${st.step === i + 1 ? "on" : ""}">${i + 1}. ${x}</span>`).join("");
+		if (done) return ($("#bd").innerHTML = `<div class="card" style="text-align:center;padding:30px"><div style="font-size:2.4rem;color:var(--acc)">✓</div><h2>You are booked, ${esc(done.name.split(" ")[0])}</h2><p class="mut" style="margin:8px 0 14px">${esc(done.names)} on ${fdate(done.date, { weekday: "long", day: "numeric", month: "long" })} at ${hm(done.start)} with ${esc(done.staff)}.</p><div class="row" style="justify-content:center"><a class="btn" href="app.html#calendar">See it in the salon calendar</a><button class="btn pri" id="again">Book another</button></div></div>`, ($("#again").onclick = () => { done = null; st = { step: 1, svcs: [], staff: "any", date: iso(new Date()), slot: null }; draw(); }));
+		if (st.step === 1) $("#bd").innerHTML = SL.CATS.map((k) => `<h3 style="margin:14px 0 8px">${k}</h3>${SL.services().filter((s) => s.cat === k).map((s) => `<div class="svc ${st.svcs.includes(s.id) ? "on" : ""}" data-s="${s.id}"><div><b>${esc(s.name)}</b><div class="mut">${s.dur} min</div></div><b>${inr(s.price)}</b></div>`).join("")}`).join("") + bar("Choose a time", st.svcs.length);
+		if (st.step === 2) { const cats = st.svcs.map((i) => svc(i).cat), able = SL.staff().filter((s) => cats.every((c) => s.skills.includes(c))), days = [...Array(7)].map((_, i) => iso(addDays(new Date(), i))), slots = SL.slots(st.date, st.svcs, st.staff), uniq = {}; slots.forEach((x) => { (uniq[x.start] = uniq[x.start] || x); });
+			$("#bd").innerHTML = `<h3 style="margin-bottom:8px">Stylist</h3><div class="sl" id="sf"><button data-f="any" class="${st.staff === "any" ? "on" : ""}">Anyone available</button>${able.map((s) => `<button data-f="${s.id}" class="${st.staff === s.id ? "on" : ""}">${esc(s.name.split(" ")[0])}</button>`).join("")}</div>${!able.length ? '<p class="mut" style="margin-top:8px">No single stylist does all of these services. Book them as separate visits.</p>' : ""}<h3 style="margin:18px 0 8px">Day</h3><div class="sl">${days.map((d) => `<button data-d="${d}" class="${st.date === d ? "on" : ""}">${fdate(d, { weekday: "short", day: "numeric" })}</button>`).join("")}</div><h3 style="margin:18px 0 8px">Time</h3><div class="sl">${Object.values(uniq).sort((a, b) => a.start - b.start).map((x) => `<button data-t="${x.start}|${x.staff}" class="${st.slot && st.slot.start === x.start ? "on" : ""}">${hm(x.start)}</button>`).join("") || '<span class="mut">No free slots this day. Try another day.</span>'}</div>` + bar("Your details", st.slot); }
+		if (st.step === 3) { const s = SL.stf(st.slot.staff); $("#bd").innerHTML = `<div class="card" style="margin-bottom:14px"><b>${st.svcs.map((i) => esc(svc(i).name)).join(" + ")}</b><div class="mut">${fdate(st.date, { weekday: "long", day: "numeric", month: "long" })} at ${hm(st.slot.start)} with ${esc(s.name)} · ${inr(total())} + GST</div></div><div class="card"><div class="stack">${UI.field("Your name", "n", "", { req: 1 })}${UI.field("Mobile number", "p", "", { type: "tel", req: 1 })}${UI.field("Anything we should know?", "nt", "")}</div></div>` + bar("Confirm booking", 1); }
+		$$("[data-s]").forEach((e) => (e.onclick = () => { const i = e.dataset.s; st.svcs = st.svcs.includes(i) ? st.svcs.filter((x) => x !== i) : [...st.svcs, i]; st.slot = null; draw(); }));
+		$$("[data-f]").forEach((e) => (e.onclick = () => { st.staff = e.dataset.f; st.slot = null; draw(); })); $$("[data-d]").forEach((e) => (e.onclick = () => { st.date = e.dataset.d; st.slot = null; draw(); }));
+		$$("[data-t]").forEach((e) => (e.onclick = () => { const [a, b] = e.dataset.t.split("|"); st.slot = { start: +a, staff: b }; draw(); }));
+		const nx = $("#nx"), bk = $("#bk"); if (bk) bk.onclick = () => { st.step--; draw(); };
+		if (nx) nx.onclick = () => { if (st.step < 3) { st.step++; draw(); return; } const nm = $("[name=n]").value.trim(), ph = $("[name=p]").value.trim(); if (!nm || ph.length < 10) return toast("Please enter your name and a 10 digit mobile number"); const C = SL.clients(); let k = C.find((x) => x.phone === ph); if (!k) { k = { id: "c" + Date.now(), name: nm, phone: ph, gender: "F", bday: "", notes: "", since: iso(new Date()), wallet: 0, pkgs: [] }; C.push(k); S.set("clients", C); } const A = SL.appts(); A.push({ id: "a" + Date.now(), date: st.date, start: st.slot.start, dur: dur(), staff: st.slot.staff, client: k.id, svcs: st.svcs, status: "booked", src: "Online", notes: $("[name=nt]").value }); S.set("appts", A); done = { name: nm, names: st.svcs.map((i) => svc(i).name).join(" + "), date: st.date, start: st.slot.start, staff: SL.stf(st.slot.staff).name }; draw(); window.scrollTo(0, 0); };
+	}
+	draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Treatments &amp; prices | Lumen Dental</title>
+<meta name="description" content="Every Lumen Dental treatment with duration and price ranges: check-ups, whitening, fillings, implants, aligners and more." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Treatments</p><h1>What we do, and what it costs.</h1><p>Price ranges include consultation and standard materials. Your exact quote is confirmed after your exam.</p></div></section>
+<section class="sec" style="padding-top:30px"><div class="wrap">
+	<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px"><div class="tabs" id="cats"></div><input class="in" id="q" type="search" placeholder="Search treatments…" style="max-width:260px;margin-left:auto" aria-label="Search treatments"></div>
+	<div class="grid" id="list"></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+LD.layout("services.html");
+const { $, esc, inr, img, D } = LD; let cat = "All";
+function draw() {
+	const cats = ["All", ...new Set(D.services.map((s) => s.cat))], q = $("#q").value.toLowerCase();
+	$("#cats").innerHTML = cats.map((c) => `<button class="tab ${c === cat ? "on" : ""}" data-c="${c}">${c}</button>`).join("");
+	const l = D.services.filter((s) => (cat === "All" || s.cat === cat) && (!q || (s.name + s.short).toLowerCase().includes(q)));
+	$("#list").innerHTML = l.map((s) => `<a class="card" href="service.html?s=${s.id}"><div class="ph"><img src="${img(s.img)}" alt="" loading="lazy"></div><div class="bd"><span class="chip" style="align-self:flex-start">${s.cat}</span><h3>${esc(s.name)}</h3><p>${esc(s.short)}</p><div class="ft"><b>${inr(s.from)} – ${inr(s.to)}</b><span class="msg">${s.dur} min</span></div></div></a>`).join("") || '<p class="empty" style="grid-column:1/-1">No treatments match your search.</p>';
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("[data-c]"); if (b) { cat = b.dataset.c; draw(); } });
+$("#q").addEventListener("input", draw); draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

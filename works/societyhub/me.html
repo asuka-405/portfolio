@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Resident app | SocietyHub (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#0f766e;--acc-ink:#fff;--acc-soft:rgba(15,118,110,.14)}body{background:#e5f1ef}
+.ph{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg);padding-bottom:84px;box-shadow:0 0 60px rgba(0,60,50,.15)}
+.hd{background:var(--acc);color:#fff;padding:18px 18px 24px;border-radius:0 0 22px 22px}.hd select{width:100%;padding:9px 12px;border-radius:10px;border:0;font:inherit;font-weight:700;margin-top:8px}.hd small{opacity:.85}
+.pc{padding:16px;display:grid;gap:14px}
+.tb{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:var(--panel);border-top:1px solid var(--line);z-index:30}.tb button{border:0;background:none;padding:10px 2px 12px;font-size:.68rem;font-weight:700;color:var(--mut)}.tb button.on{color:var(--acc)}.tb button.on::before{content:"";display:block;height:3px;background:var(--acc);border-radius:3px;margin:-10px 12px 7px}
+</style>
+</head>
+<body>
+<div class="ph"><div class="hd"><small id="sn"></small><h1 style="font-size:1.3rem">My society</h1><select id="me" aria-label="Choose flat"></select></div><div class="pc" id="pc"></div><nav class="tb" id="tb"><button data-t="home" class="on">Home</button><button data-t="gate">Visitors</button><button data-t="book">Book</button><button data-t="help">Complaints</button><button data-t="vote">Notices</button></nav></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="../lib/qrcode.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, $$, esc, inr, fdate, iso, addDays, toast, modal, field, form, chip, kpi } = UI, { S } = SH, tm = (ts) => new Date(ts).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+	let tab = "home", me = S.get("me", ""); const F = SH.flats(); if (!SH.flat(me)) me = (F.find((f) => SH.owed(f.id) > 0) || F[0]).id;
+	$("#sn").textContent = SH.settings().name; $("#me").innerHTML = F.map((f) => `<option value="${f.id}">${f.id}, ${esc(f.owner)}</option>`).join(""); $("#me").value = me;
+	const mn = (k) => new Date(k + "-01T00:00:00").toLocaleDateString("en-IN", { month: "long" });
+	const V = {
+		home() { const f = SH.flat(me), o = SH.owed(me), L = SH.ledger(me).slice().reverse(), N = S.get("notices", [])[0]; return `<div class="card"><b style="font-size:1.1rem">Flat ${f.id}</b><div class="mut">${esc(f.owner)} · ${f.area} sq ft</div></div><div class="card"><div class="mut">Maintenance due</div><div style="font-size:2.2rem;font-weight:800" class="${o ? "dn" : "up"}">${inr(o)}</div>${o ? '<button class="btn pri" id="pay" style="width:100%;margin-top:10px;padding:12px">Pay by UPI</button>' : '<div class="mut">You are all paid up</div>'}</div><div class="card"><h3>Recent bills</h3>${L.slice(0, 4).map((r) => `<div class="row sb" style="padding:6px 0;border-bottom:1px solid var(--line)"><span>${mn(r.month)}</span>${r.out <= 0 ? chip("Paid", "ok") : chip("Due " + inr(r.out), "bad")}</div>`).join("")}</div>${N ? `<div class="card"><h3>Latest notice</h3><b>${esc(N.title)}</b><p class="mut">${esc(N.body)}</p></div>` : ""}`; },
+		gate() { const V2 = S.get("vis", []), pend = V2.filter((v) => v.flat === me && v.status === "pending"), exp = V2.filter((v) => v.flat === me && v.status === "expected"), rec = V2.filter((v) => v.flat === me && !["pending", "expected"].includes(v.status)).slice(-5).reverse(); return `${pend.map((v) => `<div class="card" style="border-color:var(--warn)"><b>${esc(v.name)} is at the gate</b><div class="mut">${v.purpose}${v.vehicle ? " · " + esc(v.vehicle) : ""}</div><div class="row" style="margin-top:10px"><button class="btn" style="flex:1" data-dv="${v.id}|denied">Deny</button><button class="btn pri" style="flex:1" data-dv="${v.id}|allowed">Allow</button></div></div>`).join("") || '<div class="card"><p class="mut">No one is waiting at the gate.</p></div>'}<div class="card"><h3>Expecting a guest? <button class="btn sm pri" id="eg">Create code</button></h3>${exp.map((v) => `<div class="row sb" style="padding:6px 0"><span>${esc(v.name)}</span><b style="letter-spacing:.2em">${v.code}</b></div>`).join("") || '<p class="mut">Give the guard a 4 digit code and your guest walks in without a call.</p>'}</div><div class="card"><h3>Recent visitors</h3>${rec.map((v) => `<div class="row sb" style="padding:6px 0;border-bottom:1px solid var(--line)"><span>${esc(v.name)}<div class="mut">${v.purpose} · ${tm(v.ts)}</div></span>${chip(v.status === "out" ? "Left" : v.status === "in" ? "Inside" : v.status, "mut")}</div>`).join("") || '<p class="mut">None yet</p>'}</div>`; },
+		book() { const B = S.get("book", []).filter((b) => b.flat === me && b.date >= iso(new Date())); return `<div class="card"><h3>Book a facility</h3><div class="stack"><select class="in" id="bf">${SH.FAC.map((f, i) => `<option value="${i}">${f[0]}${f[1] ? " (" + inr(f[1]) + ")" : ""}</option>`).join("")}</select><input class="in" type="date" id="bd" value="${iso(addDays(new Date(), 1))}" min="${iso(new Date())}"><div id="bs" style="display:flex;flex-wrap:wrap;gap:8px"></div></div></div><div class="card"><h3>My bookings</h3>${B.map((b) => `<div class="row sb" style="padding:6px 0;border-bottom:1px solid var(--line)"><span>${SH.FAC[b.fac][0]}<div class="mut">${fdate(b.date, { day: "numeric", month: "short" })}, ${SH.SLOTS[b.slot]}</div></span>${chip(b.status, b.status === "confirmed" ? "ok" : "warn")}</div>`).join("") || '<p class="mut">No bookings</p>'}</div>`; },
+		help() { const C = S.get("comps", []).filter((x) => x.flat === me).sort((a, b) => b.ts - a.ts); return `<div class="card"><h3>My complaints <button class="btn sm pri" id="cm">Raise one</button></h3>${C.map((x) => `<div class="row sb" style="padding:7px 0;border-bottom:1px solid var(--line)"><span>${esc(x.text)}<div class="mut">${x.cat} · ${UI.ago(x.ts)}</div></span>${chip(x.status === "progress" ? "In progress" : x.status, x.status === "resolved" ? "ok" : "warn")}</div>`).join("") || '<p class="mut">Nothing raised</p>'}</div>`; },
+		vote() { const P = S.get("polls", []); return P.map((p) => { const mine = p.votes[me]; return `<div class="card"><h3>${esc(p.q)}</h3>${p.opts.map((o, i) => `<button class="btn" style="width:100%;margin:4px 0;justify-content:space-between;${mine === i ? "border-color:var(--acc);background:var(--acc-soft)" : ""}" data-vt="${p.id}|${i}"><span>${esc(o)}</span><b>${Object.values(p.votes).filter((v) => v === i).length}</b></button>`).join("")}<div class="mut">One vote per flat. ${mine !== undefined ? "You have voted." : ""}</div></div>`; }).join("") + S.get("notices", []).map((n) => `<div class="card"><h3>${esc(n.title)}</h3><p class="mut">${esc(n.body)}</p></div>`).join(""); }
+	};
+	function draw() {
+		$("#pc").innerHTML = V[tab](); $$("#tb button").forEach((b) => b.classList.toggle("on", b.dataset.t === tab));
+		const p = $("#pay"); if (p) p.onclick = pay; const eg = $("#eg"); if (eg) eg.onclick = () => form("Expected guest", field("Guest name", "name", "", { req: 1 }), (v) => { const L = S.get("vis", []); L.push({ id: "v" + Date.now(), flat: me, name: v.name, purpose: "Guest", vehicle: "", ts: Date.now(), out: 0, status: "expected", code: String(1000 + Math.floor(Math.random() * 9000)) }); S.set("vis", L); SH.sync(); draw(); }, { save: "Create code" });
+		const cm = $("#cm"); if (cm) cm.onclick = () => form("Raise a complaint", `${field("Category", "cat", "Lift", { type: "select", opts: SH.COMPC })}${field("What is wrong?", "text", "", { req: 1 })}`, (v) => { const L = S.get("comps", []); L.push({ id: "c" + Date.now(), flat: me, ...v, status: "open", ts: Date.now() }); S.set("comps", L); SH.sync(); toast("Sent to the committee"); draw(); });
+		const bs = $("#bs"); if (bs) { const f = () => { const fac = +$("#bf").value, d = $("#bd").value, B = S.get("book", []); bs.innerHTML = SH.SLOTS.map((s, i) => { const taken = B.some((b) => b.fac === fac && b.date === d && b.slot === i && b.status !== "cancelled"); return `<button class="btn sm" data-bk="${i}" ${taken ? "disabled" : ""}>${s}${taken ? " (taken)" : ""}</button>`; }).join(""); }; $("#bf").onchange = f; $("#bd").onchange = f; f(); }
+	}
+	function pay() { const o = SH.owed(me), s = SH.settings(), link = UI.upi(s.upi, s.name, o, "Maintenance " + me); modal({ title: "Pay " + inr(o), body: `<div style="text-align:center"><div id="qrp" style="display:inline-block;background:#fff;padding:10px;border-radius:10px"></div><p class="mut" style="margin:10px 0">Scan with any UPI app, or tap below on your phone.</p><a class="btn" href="${link}">Open UPI app</a></div>`, onOpen: () => UI.qr("#qrp", link, 170), actions: [{ label: "Close" }, { label: "I have paid", cls: "pri", fn: () => { const P = SH.pays(); P.push({ id: "p" + Date.now(), flat: me, month: SH.ym(new Date()), amt: o, ts: Date.now(), mode: "UPI" }); S.set("pays", P); SH.sync(); toast("Payment noted. The treasurer will see it."); draw(); } }] }); }
+	document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return;
+		if (b.dataset.dv) { const [id, s] = b.dataset.dv.split("|"), L = S.get("vis", []); L.find((v) => v.id === id).status = s; S.set("vis", L); SH.sync(); toast(s === "allowed" ? "Allowed. The guard has been told." : "Denied"); draw(); }
+		else if (b.dataset.vt) { const [id, i] = b.dataset.vt.split("|"), P = S.get("polls", []); P.find((p) => p.id === id).votes[me] = +i; S.set("polls", P); SH.sync(); toast("Vote recorded"); draw(); }
+		else if (b.dataset.bk !== undefined) { const fac = +$("#bf").value, d = $("#bd").value, B = S.get("book", []); B.push({ id: "b" + Date.now(), fac, date: d, slot: +b.dataset.bk, flat: me, by: SH.flat(me).owner, status: SH.FAC[fac][1] >= 1500 ? "pending" : "confirmed", fee: SH.FAC[fac][1] }); S.set("book", B); SH.sync(); toast("Booked"); draw(); }
+		else if (b.closest("#tb")) { tab = b.dataset.t; draw(); window.scrollTo(0, 0); } });
+	$("#me").onchange = (e) => { me = e.target.value; S.set("me", me); draw(); }; SH.onChange(() => { if (!document.querySelector("#modal-bg.on")) draw(); }); draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

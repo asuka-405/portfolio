@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -248,21 +249,21 @@ int main() {
 					<p>That example uses <code>using namespace std;</code> to drop the std:: prefix everywhere. Don't do this in real code, especially not in a header file where it leaks into every file that includes it. It's fine in a 10-line teaching example; it's a real liability once a codebase has thousands of names in scope and two libraries happen to define something with the same name.</p>
 					<h3>Compiling a program, end to end</h3>
 					<p>Four distinct stages happen when you run a single compile command, even though most compilers hide the seams: </p>
-					<ul><li>Preprocessing. #include, #define, and other # directives are resolved textually. Comments are stripped. The output is one long, expanded, pure-C++ text stream.</li><li>Compilation proper. The preprocessed text is parsed, type-checked, and turned into an object file (machine code plus a symbol table of names it defines and names it still needs) for that one translation unit only.</li><li>Linking. The linker takes every object file plus any libraries, matches each undefined symbol to a definition somewhere, and produces one executable. &quot;undefined reference&quot; errors happen here, not during compilation, which is why they can look confusing: the code compiled fine, the definition just never turned up anywhere the linker looked.</li><li>Loading. When you actually run the executable, the operating system maps it into memory and starts executing at the entry point (which calls your main, after some runtime setup).</li></ul>
+					<ul><li>Preprocessing. #include, #define, and other # directives are resolved textually. Comments are stripped. The output is one long, expanded, pure-C++ text stream.</li><li>Compilation proper. The preprocessed text is parsed, type-checked, and turned into an object file (machine code plus a symbol table of names it defines and names it still needs) for that one translation unit only.</li><li>Linking. The linker takes every object file plus any libraries, matches each undefined symbol to a definition somewhere, and produces one executable. &quot;undefined reference&quot; errors happen here, not during compilation, which is why they can look confusing: the code compiled fine, the definition just never turned up anywhere the linker looked.</li><li>Loading. When you run the executable, the operating system maps it into memory and starts executing at the entry point (which calls your main, after some runtime setup).</li></ul>
 				</div>
 
 <div class="dgm dgm-flow reveal">
-  <div class="dgm-box"><span class="dgm-bt">source.cpp</span><span class="dgm-bd">your code + #includes</span></div>
-  <span class="dgm-arr">→</span>
-  <div class="dgm-box"><span class="dgm-bt">preprocessor</span><span class="dgm-bd">expands includes/macros</span></div>
-  <span class="dgm-arr">→</span>
-  <div class="dgm-box"><span class="dgm-bt">compiler</span><span class="dgm-bd">parses, type-checks, emits object code</span></div>
-  <span class="dgm-arr">→</span>
-  <div class="dgm-box dgm-box--accent"><span class="dgm-bt">source.o</span><span class="dgm-bd">one translation unit's machine code</span></div>
-  <span class="dgm-arr">→</span>
-  <div class="dgm-box"><span class="dgm-bt">linker</span><span class="dgm-bd">merges all .o files + libraries</span></div>
-  <span class="dgm-arr">→</span>
-  <div class="dgm-box dgm-box--accent"><span class="dgm-bt">executable</span><span class="dgm-bd">what the OS actually runs</span></div>
+ <div class="dgm-box"><span class="dgm-bt">source.cpp</span><span class="dgm-bd">your code + #includes</span></div>
+ <span class="dgm-arr">→</span>
+ <div class="dgm-box"><span class="dgm-bt">preprocessor</span><span class="dgm-bd">expands includes/macros</span></div>
+ <span class="dgm-arr">→</span>
+ <div class="dgm-box"><span class="dgm-bt">compiler</span><span class="dgm-bd">parses, type-checks, emits object code</span></div>
+ <span class="dgm-arr">→</span>
+ <div class="dgm-box dgm-box--accent"><span class="dgm-bt">source.o</span><span class="dgm-bd">one translation unit's machine code</span></div>
+ <span class="dgm-arr">→</span>
+ <div class="dgm-box"><span class="dgm-bt">linker</span><span class="dgm-bd">merges all.o files + libraries</span></div>
+ <span class="dgm-arr">→</span>
+ <div class="dgm-box dgm-box--accent"><span class="dgm-bt">executable</span><span class="dgm-bd">what the OS runs</span></div>
 </div>
 
 				<div class="callout reveal">

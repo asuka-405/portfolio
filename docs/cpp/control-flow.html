@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -214,7 +215,7 @@ int main() {
 </pre></noscript></div>
 
 <div class="prose reveal">
-					<p>Stacking case labels with no code between them (like <code>1:</code> through <code>5:</code> above) is the one place fallthrough is genuinely useful: it lets several labels share one block. Falling through *into* a block that has its own statements is the dangerous kind, and it usually means a missing <code>break</code>. If you ever want intentional fallthrough into a non-empty case, mark it with the <code>[[fallthrough]];</code> attribute (C++17) so the compiler and the next reader both know it was deliberate rather than a bug.</p>
+					<p>Stacking case labels with no code between them (like <code>1:</code> through <code>5:</code> above) is the one place fallthrough is useful: it lets several labels share one block. Falling through *into* a block that has its own statements is the dangerous kind, and it usually means a missing <code>break</code>. If you ever want intentional fallthrough into a non-empty case, mark it with the <code>[[fallthrough]];</code> attribute (C++17) so the compiler and the next reader both know it was deliberate rather than a bug.</p>
 					<h3>Loops: while, do-while, for</h3>
 					<p><code>while (cond) { }</code> checks the condition before each iteration, so the body might run zero times. <code>do { } while (cond);</code> checks after, so the body always runs at least once, useful for things like &quot;read input, then keep reading while it's valid&quot;. The classic <code>for (init; cond; step) { }</code> is just a while loop with the bookkeeping baked into the header.</p>
 				</div>
@@ -252,7 +253,7 @@ int main() {
 </pre></noscript></div>
 
 <div class="prose reveal">
-					<p>Default to <code>const auto&amp;</code> when you're only reading, <code>auto&amp;</code> when you need to mutate, and plain <code>auto</code> (by value) only when the elements are cheap to copy or you genuinely want a copy. Copying every element of a large container just to read it is a common, easy-to-miss performance mistake.</p>
+					<p>Default to <code>const auto&amp;</code> when you're only reading, <code>auto&amp;</code> when you need to mutate, and plain <code>auto</code> (by value) only when the elements are cheap to copy or you want a copy. Copying every element of a large container just to read it is a common, easy-to-miss performance mistake.</p>
 					<h3>break, continue, and goto</h3>
 					<p><code>break</code> exits the nearest enclosing loop or <code>switch</code> immediately. <code>continue</code> skips to the next iteration's condition check. Both are unremarkable and safe to use freely.</p>
 					<p><code>goto</code> still exists. In almost forty years of C++ code most people write, there is essentially one legitimate use left: jumping to a single cleanup label at the end of a function to avoid duplicating cleanup code across multiple early-exit points, and even that use case is mostly obsolete now that RAII (covered later, under memory and resource management) handles cleanup automatically. Outside of that narrow case, if you find yourself reaching for <code>goto</code>, it's almost always a sign the function should be restructured, split into smaller functions, or rewritten with a loop and a flag.</p>

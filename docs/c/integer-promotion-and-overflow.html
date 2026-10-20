@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -104,7 +105,7 @@
 <span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">							// c promotes to int -1, not unsigned 255</span></span></code></pre></div>
 
 <div class="prose reveal">
-					<p>Whether plain <code>char</code> is signed or unsigned is itself implementation-defined (it's a distinct type from both <code>signed char</code> and <code>unsigned char</code>, whichever behavior it happens to have). Comparisons and arithmetic on raw byte data should use <code>unsigned char</code> explicitly if you actually mean 0–255.</p>
+					<p>Whether plain <code>char</code> is signed or unsigned is itself implementation-defined (it's a distinct type from both <code>signed char</code> and <code>unsigned char</code>, whichever behavior it happens to have). Comparisons and arithmetic on raw byte data should use <code>unsigned char</code> explicitly if you mean 0–255.</p>
 					<h3>Signed vs unsigned comparison is a minefield</h3>
 					<p>When a signed and unsigned value of the same rank are compared or combined, the signed one converts to unsigned, not the other way around. <code>len</code> from <code>strlen</code>/<code>sizeof</code> is <code>size_t</code>, unsigned, and this is the single most common way that bites:</p>
 				</div>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Track your order | Brew &amp; Bean</title>
+<meta name="description" content="Live progress for your Brew &amp; Bean order." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding-top:36px"><div class="wrap" style="max-width:860px">
+	<p class="eyebrow">Order status</p><h2 style="font-size:2rem;margin:6px 0 20px">Track your order</h2>
+	<form id="find" class="panel" style="display:flex;gap:10px;flex-wrap:wrap;align-items:end"><label class="f" style="flex:1;min-width:200px">Order number<input class="in" id="oid" placeholder="e.g. BB-1001" /></label><button class="btn dark">Track</button></form>
+	<div id="view"></div>
+	<div id="recent"></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+BB.layout("track.html");
+const { $, esc, inr, img, D } = BB;
+const qs = new URLSearchParams(location.search); let id = qs.get("id");
+const ICON = { received: "✓", preparing: "", ready: "", out: "🛵", completed: "★" };
+function eta(o) {
+	const flow = BB.FLOW[o.mode]; let ms = 0, i = flow.indexOf(o.status);
+	for (let k = i; k < flow.length - 1; k++) ms += BB.DEMO_MS[flow[k]];
+	return Math.max(0, ms - (Date.now() - o.hist[o.hist.length - 1].t));
+}
+function draw() {
+	BB.orders.tick();
+	const o = id && BB.orders.get(id);
+	if (!id) { $("#view").innerHTML = ""; }
+	else if (!o) { $("#view").innerHTML = '<div class="panel empty"><h3>We couldn\'t find that order</h3><p class="msg">Check the number on your confirmation and try again.</p></div>'; }
+	else {
+		const flow = BB.FLOW[o.mode], cur = flow.indexOf(o.status), s = D.stores.find((x) => x.id === o.store);
+		const msgs = { received: "We've got your order and the barista is on it.", preparing: "Your order is being made fresh right now.", ready: o.mode === "delivery" ? "Packed and waiting for the rider." : o.mode === "dinein" ? "Coming to your table." : "Ready at the counter, just show your order number.", out: "Your rider is on the way.", completed: "Enjoy! Thanks for choosing Brew & Bean." };
+		const left = eta(o);
+		$("#view").innerHTML = `${qs.get("new") ? '<div class="panel" style="background:#e8f2dc;border-color:#b9d79f"><b>Order placed!</b> We\'ve sent a confirmation to ' + esc(o.phone) + '.</div>' : ""}
+		<div class="panel"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><p class="eyebrow">${o.mode === "delivery" ? "Delivery" : o.mode === "dinein" ? "Dine in" : "Pickup"} · ${esc(s.name)}</p><h3 style="font-size:1.6rem">${o.id}</h3></div><div style="text-align:right"><p class="eyebrow">${o.status === "completed" ? "Completed" : "Estimated"}</p><h3 style="font-size:1.6rem">${o.status === "completed" ? "Done" : Math.max(1, Math.ceil(left / 60000)) + " min"}</h3></div></div>
+		<div class="trk">${flow.map((k, i) => `<div class="s ${i < cur ? "done" : i === cur ? (o.status === "completed" ? "done" : "cur") : ""}"><i>${i < cur || o.status === "completed" ? "✓" : ICON[k]}</i>${BB.LABEL[k]}</div>`).join("")}</div>
+		<p style="text-align:center;font-weight:700;margin:14px 0 4px">${msgs[o.status]}</p>
+		${o.status !== "completed" ? '<p class="msg" style="text-align:center">This demo runs at fast-forward speed so you can watch each stage.</p>' : ""}</div>
+		<div class="panel"><h3>Order summary</h3>${o.items.map((l) => `<div class="r" style="display:flex;justify-content:space-between;padding:4px 0"><span>${l.qty} × ${esc(l.name)}<small style="color:var(--roast)"> ${esc([l.size, l.milk, ...(l.extras || [])].filter(Boolean).join(" · "))}</small></span><span>${inr(l.unit * l.qty)}</span></div>`).join("")}<div class="r" style="display:flex;justify-content:space-between;border-top:2px solid var(--espresso);margin-top:8px;padding-top:10px;font-weight:800"><span>Total paid (${o.pay.toUpperCase()})</span><span>${inr(o.total)}</span></div><p class="msg" style="margin-top:8px">Placed ${new Date(o.ts).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })} · ${Math.floor(o.total / 10)} points earned</p>
+		<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap"><button class="btn dark sm" id="again">Order again</button><button class="btn ghost sm" onclick="window.print()">Print receipt</button></div></div>`;
+		const a = $("#again"); if (a) a.onclick = () => { o.items.filter((l) => !/free/.test(l.name)).forEach((l) => BB.cart.add({ id: l.id, size: l.size, milk: l.milk, extras: l.extras, note: l.note, qty: l.qty })); location.href = "order.html"; };
+	}
+	const p = BB.profile.get(), mine = BB.orders.all().filter((o) => p && o.phone === p.phone && !o.seeded).reverse().slice(0, 5);
+	$("#recent").innerHTML = mine.length ? `<h3 style="margin:24px 0 10px">Your recent orders</h3>${mine.map((o) => `<a class="panel" href="track.html?id=${o.id}" style="display:flex;justify-content:space-between;text-decoration:none;padding:14px 18px;margin-bottom:10px"><span><b>${o.id}</b> · ${o.items.length} item${o.items.length > 1 ? "s" : ""}</span><span>${BB.LABEL[o.status]} · ${inr(o.total)}</span></a>`).join("")}` : "";
+}
+$("#find").onsubmit = (e) => { e.preventDefault(); id = $("#oid").value.trim().toUpperCase(); qs.delete("new"); history.replaceState(null, "", "?id=" + id); draw(); };
+if (id) $("#oid").value = id;
+draw(); setInterval(draw, 4000);
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

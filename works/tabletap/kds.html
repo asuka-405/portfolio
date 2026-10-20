@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kitchen display | TableTap (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#c2410c;--bg:#0f1115;--panel:#1a1d24;--ink:#f1f3f7;--mut:#8f98aa;--line:#2a2f3a}body{background:var(--bg);color:var(--ink)}
+.h{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line)}.h h1{font-size:1.2rem}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:16px 20px;align-items:start}.col h2{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.tk{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;border-left:5px solid var(--acc)}.tk.late{border-left-color:#ef4444;animation:pl 1.5s infinite}.tk.rd{border-left-color:#22c55e}
+@keyframes pl{50%{box-shadow:0 0 0 3px rgba(239,68,68,.3)}}.tk .t{display:flex;justify-content:space-between;align-items:baseline}.tk .t b{font-size:1.5rem}.tk ul{list-style:none;margin:10px 0}.tk li{padding:4px 0;font-size:1.02rem}.tk li small{color:var(--mut)}
+.tk .nt{background:rgba(245,158,11,.14);color:#fbbf24;border-radius:8px;padding:6px 10px;font-size:.88rem;margin-bottom:10px}
+@media(max-width:820px){.cols{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<div class="h"><h1>Kitchen display</h1><div class="row"><span class="mut" id="cnt"></span><button class="btn sm" id="snd">Sound on</button><a class="btn sm" href="app.html">Back to console</a></div></div>
+<div class="cols" id="cols"></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, esc } = UI; let sound = false, lastNew = -1;
+	const mins = (o) => Math.floor((Date.now() - o.ts) / 6e4);
+	const tk = (o, cls, act) => { const m = mins(o), p = Math.max(...o.items.map((i) => i.prep)), late = o.status !== "ready" && m > p; return `<div class="tk ${late ? "late" : cls}"><div class="t"><b>${o.table}</b><span class="mut">${o.no} · <b style="color:${late ? "#f87171" : "inherit"}">${m} min</b></span></div><ul>${o.items.map((i) => `<li><b>${i.qty} x</b> ${esc(i.name)} ${i.mods ? `<small>${esc(i.mods)}</small>` : ""}</li>`).join("")}</ul>${o.note ? `<div class="nt">Note: ${esc(o.note)}</div>` : ""}<button class="btn pri" style="width:100%" data-o="${o.id}|${act[0]}">${act[1]}</button></div>`; };
+	function draw() {
+		const O = TT.orders().filter((o) => ["new", "preparing", "ready"].includes(o.status)).sort((a, b) => a.ts - b.ts), by = (s) => O.filter((o) => o.status === s);
+		$("#cols").innerHTML = `<div class="col"><h2>New (${by("new").length})</h2>${by("new").map((o) => tk(o, "", ["preparing", "Start cooking"])).join("") || '<p class="mut">No new orders</p>'}</div><div class="col"><h2>Cooking (${by("preparing").length})</h2>${by("preparing").map((o) => tk(o, "", ["ready", "Mark ready"])).join("") || '<p class="mut">Nothing on the stove</p>'}</div><div class="col"><h2>Ready to serve (${by("ready").length})</h2>${by("ready").map((o) => tk(o, "rd", ["served", "Picked up"])).join("") || '<p class="mut">Nothing waiting</p>'}</div>`;
+		$("#cnt").textContent = O.length + " active tickets";
+		if (sound && lastNew >= 0 && by("new").length > lastNew) { try { const c = new (window.AudioContext || window.webkitAudioContext)(), o = c.createOscillator(), g = c.createGain(); o.connect(g); g.connect(c.destination); o.frequency.value = 880; g.gain.value = 0.15; o.start(); o.stop(c.currentTime + 0.25); } catch (e) {} }
+		lastNew = by("new").length;
+	}
+	document.addEventListener("click", (e) => { const b = e.target.closest("[data-o]"); if (b) { const [id, s] = b.dataset.o.split("|"); TT.setStatus(id, s); draw(); } });
+	$("#snd").onclick = (e) => { sound = !sound; e.target.textContent = sound ? "Sound on" : "Sound off"; }; $("#snd").textContent = "Sound off";
+	TT.onChange(draw); setInterval(draw, 20000); draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

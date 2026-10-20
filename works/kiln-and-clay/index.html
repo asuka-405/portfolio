@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kiln &amp; Clay | Handmade stoneware from Jaipur</title>
+<meta name="description" content="Wheel-thrown stoneware mugs, bowls, plates and vases from a family-run studio in Jaipur. Free shipping over ₹2,000." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="hero"><img src="img/hero.jpg" alt="Hands shaping clay on a potter's wheel" fetchpriority="high" /><div class="wrap"><p class="eyebrow">Handmade in Jaipur</p><h1>Made by hand. Fired by fire.</h1><p>Small-batch stoneware, thrown on the wheel and glazed by seven potters. Every piece is food-safe, oven-safe and one of a kind.</p><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn light" href="shop.html">Shop the collection</a><a class="btn ghost" style="color:#fff;border-color:#fff" href="workshops.html">Book a workshop</a></div></div></section>
+
+<section class="sec"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">New &amp; loved</p><h2>Best sellers</h2></div><a class="btn ghost sm" href="shop.html">View all</a></div>
+	<div class="grid" id="best"></div>
+</div></section>
+
+<section class="sec alt"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Shop by collection</p><h2>Find your table</h2></div></div>
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))" id="cols"></div>
+</div></section>
+
+<section class="sec"><div class="wrap split"><img src="img/maker1.jpg" alt="A potter in the studio" loading="lazy" /><div><p class="eyebrow">The studio</p><h2 style="font-size:clamp(2rem,4.5vw,3.2rem);margin:10px 0 16px">Seven potters. One small kiln. No shortcuts.</h2><p class="msg" style="font-size:1.02rem;margin-bottom:14px">Each piece is thrown, trimmed, glazed and fired in our Jaipur studio. We fire to 1,260 °C so stoneware is dense, durable and beautiful for decades.</p><p class="msg" style="font-size:1.02rem;margin-bottom:24px">That means small batches, honest prices, and a few wonderful irregularities in every piece.</p><a class="btn" href="story.html">Read our story</a></div></div></section>
+
+<section class="sec dark"><div class="wrap"><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;text-align:center"><div><div style="font:500 2.6rem Palatino,Georgia,serif;color:#f0c9a8">1,260°C</div><p class="msg" style="color:#cfc2b2">Fired until dense and durable</p></div><div><div style="font:500 2.6rem Palatino,Georgia,serif;color:#f0c9a8">12,000+</div><p class="msg" style="color:#cfc2b2">Pieces thrown every year</p></div><div><div style="font:500 2.6rem Palatino,Georgia,serif;color:#f0c9a8">30 days</div><p class="msg" style="color:#cfc2b2">Easy returns</p></div><div><div style="font:500 2.6rem Palatino,Georgia,serif;color:#f0c9a8">100%</div><p class="msg" style="color:#cfc2b2">Food-safe, lead-free glazes</p></div></div></div></section>
+
+<section class="sec"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Come and make something</p><h2>Workshops in Jaipur</h2><p>Learn to throw on the wheel, build by hand or paint a glaze over an evening drink.</p></div><a class="btn ghost sm" href="workshops.html">See all sessions</a></div>
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))" id="ws"></div>
+</div></section>
+
+<section class="sec alt"><div class="wrap" style="text-align:center;max-width:620px"><p class="eyebrow">Studio letter</p><h2 style="font-size:2.2rem;margin:8px 0 12px">First look at new kiln loads</h2><p class="msg" style="margin-bottom:20px">One email a month with what's just come out of the kiln. Subscribers get 10% off their first order.</p><form id="news" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><input class="in" type="email" required placeholder="you@email.com" style="max-width:300px" aria-label="Email"><button class="btn">Subscribe</button></form></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("index.html");
+const { $, esc, inr, img, D } = KC;
+const best = KC.products().filter((p) => p.stock > 0).sort((a, b) => KC.hash(b.id) % 97 - KC.hash(a.id) % 97).slice(0, 4);
+$("#best").innerHTML = best.map(KC.card).join("");
+$("#cols").innerHTML = D.collections.map((c) => `<a href="collections.html#${c.id}" style="text-decoration:none"><div class="p"><div class="ph" style="aspect-ratio:4/5"><img src="${img(c.img)}" alt="${esc(c.name)}" loading="lazy"></div><div class="pi"><h3 style="font-size:1.4rem">${esc(c.name)}</h3><span class="msg">${esc(c.blurb)}</span></div></div></a>`).join("");
+$("#ws").innerHTML = D.workshops.map((w) => `<a href="workshops.html#${w.id}" style="text-decoration:none"><div class="p"><div class="ph"><img src="${img(w.img)}" alt="${esc(w.name)}" loading="lazy"></div><div class="pi"><h3>${esc(w.name)}</h3><span class="cat">${w.dur} · ${inr(w.price)}${w.pair ? " per couple" : " per person"}</span></div></div></a>`).join("");
+$("#news").onsubmit = (e) => { e.preventDefault(); KC.store.set("news", [...KC.store.get("news", []), e.target.querySelector("input").value]); e.target.reset(); KC.toast("Subscribed, use WELCOME10 at checkout"); };
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Waiting-room display | QueueLite (demo)</title>
+<meta name="robots" content="noindex" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font:16px/1.4 system-ui,sans-serif;background:#0e0a24;color:#fff;min-height:100vh;display:flex;flex-direction:column;overflow:hidden}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 34px;background:#17113a;border-bottom:1px solid #2b2260}header b{font-size:1.4rem}header span{color:#a79be0;font-variant-numeric:tabular-nums}
+main{flex:1;display:grid;grid-template-columns:1.6fr 1fr;gap:26px;padding:26px 34px}
+.big{background:linear-gradient(135deg,#6c47ff,#9a6bff);border-radius:30px;padding:26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;transition:.4s}.big.flash{animation:fl 1.2s}@keyframes fl{0%,70%{box-shadow:0 0 0 0 #fff}30%{box-shadow:0 0 0 40px rgba(255,255,255,.45)}}
+.big small{font-size:1.2rem;letter-spacing:.3em;text-transform:uppercase;opacity:.85;font-weight:700}.big .t{font:900 clamp(6rem,17vw,15rem)/1 ui-monospace,Menlo,monospace}.big .c{font-size:clamp(1.6rem,3vw,2.6rem);font-weight:700}
+.side{display:grid;gap:16px;grid-template-rows:auto 1fr}.card{background:#17113a;border:1px solid #2b2260;border-radius:24px;padding:22px}.card h3{font-size:.9rem;letter-spacing:.22em;text-transform:uppercase;color:#a79be0;margin-bottom:12px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #2b2260;font:700 1.7rem ui-monospace,Menlo,monospace}.row:last-child{border:0}.row span:last-child{font:500 1rem system-ui;color:#a79be0}
+.srv{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.srv div{background:#241b5a;border-radius:16px;padding:12px;text-align:center}.srv b{display:block;font:800 1.9rem ui-monospace,monospace}.srv span{font-size:.8rem;color:#a79be0}
+footer{background:#6c47ff;padding:12px 34px;font-weight:600;white-space:nowrap;overflow:hidden}footer span{display:inline-block;padding-left:100%;animation:mq 28s linear infinite}@keyframes mq{to{transform:translateX(-100%)}}
+.start{position:fixed;inset:0;background:rgba(0,0,0,.8);display:grid;place-items:center;z-index:9}.start button{background:#6c47ff;color:#fff;border:0;border-radius:16px;padding:18px 34px;font:700 1.2rem system-ui;cursor:pointer}
+@media(max-width:900px){main{grid-template-columns:1fr;overflow:auto}body{overflow:auto}}
+</style>
+</head>
+<body>
+<header><b id="biz">Clinic</b><span id="clock"></span></header>
+<main><div class="big" id="big"><small>Now calling</small><div class="t" id="bt">-</div><div class="c" id="bc">Please wait</div></div>
+<div class="side"><div class="card"><h3>Being served</h3><div class="srv" id="srv"></div></div><div class="card"><h3>Up next</h3><div id="nx"></div></div></div></main>
+<footer><span id="msg"></span></footer>
+<div class="start" id="start"><button id="go">▶ Start display (enables sound)</button></div>
+<script src="../lib/ui.js"></script><script src="js/core.js"></script>
+<script>
+const { $, esc } = UI; let last = QL.state.call ? QL.state.call.ts : 0;
+function draw() {
+	const st = QL.state, c = st.call;
+	$("#biz").textContent = st.settings.biz; $("#msg").textContent = st.settings.msg + "   •   Hours " + st.settings.hours + "   •   Average wait right now: " + (QL.stats().waiting ? Math.max(1, Math.round(QL.waiting().reduce((a, t) => a + QL.svc(t.svc).avg, 0) / Math.max(1, st.counters.filter((x) => x.open).length))) : 0) + " min";
+	$("#bt").textContent = c ? c.no : "-"; $("#bc").textContent = c ? "→ " + c.counter : "Please wait";
+	$("#srv").innerHTML = st.counters.filter((x) => x.open).map((x) => { const t = x.cur && st.tickets.find((y) => y.id === x.cur); return `<div><b>${t ? t.no : "-"}</b><span>${esc(x.name)}</span></div>`; }).join("");
+	$("#nx").innerHTML = QL.waiting().slice(0, 6).map((t) => `<div class="row"><span>${t.no}</span><span>~${QL.estWait(t)} min</span></div>`).join("") || '<p style="color:#a79be0">No one waiting</p>';
+	if (c && c.ts > last) { last = c.ts; const b = $("#big"); b.classList.remove("flash"); void b.offsetWidth; b.classList.add("flash"); QL.chime(); setTimeout(() => QL.speak({ no: c.no, counter: c.counter }), 700); }
+}
+QL.on(draw); setInterval(() => { $("#clock").textContent = new Date().toLocaleString("en-IN", { weekday: "short", hour: "2-digit", minute: "2-digit" }); draw(); }, 5000); $("#clock").textContent = new Date().toLocaleString("en-IN", { weekday: "short", hour: "2-digit", minute: "2-digit" });
+$("#go").onclick = () => { $("#start").remove(); QL.chime(); }; draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

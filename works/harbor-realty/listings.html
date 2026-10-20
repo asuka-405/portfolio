@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Properties | Harbor &amp; Co.</title>
+<meta name="description" content="Browse and filter verified properties for sale and rent across Delhi NCR." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow" style="color:var(--gold)">Properties</p><h1 id="h1">Find your property</h1><p>Filters update instantly. Heart a listing to shortlist it, or tick Compare to see up to three side by side.</p></div></section>
+<section class="sec" style="padding-top:30px"><div class="wrap layout">
+	<aside class="filters"><div class="panel"><form class="fg" id="f" onsubmit="return false">
+		<div class="tabs" id="purpose"><button type="button" class="tab on" data-p="">All</button><button type="button" class="tab" data-p="sale">Buy</button><button type="button" class="tab" data-p="rent">Rent</button></div>
+		<label class="f">Search<input class="in" id="q" type="search" placeholder="Locality or name"></label>
+		<label class="f">City<select class="in" id="city"><option value="">All cities</option></select></label>
+		<label class="f">Type<select class="in" id="type"><option value="">Any</option><option>Apartment</option><option>Villa</option><option>Penthouse</option><option>Plot</option><option>Commercial</option></select></label>
+		<div><h4>Bedrooms</h4><div class="tabs" id="beds"><button type="button" class="tab on" data-b="0">Any</button><button type="button" class="tab" data-b="1">1+</button><button type="button" class="tab" data-b="2">2+</button><button type="button" class="tab" data-b="3">3+</button><button type="button" class="tab" data-b="4">4+</button></div></div>
+		<label class="f"><span style="display:flex;justify-content:space-between">Max price <b id="po" style="color:var(--navy)"></b></span><input type="range" id="price" min="30" max="500" step="10" value="500" style="accent-color:var(--gold)"></label>
+		<div><h4>Amenities</h4><div class="checks" id="am"></div></div>
+		<button type="button" class="btn ghost sm" id="reset">Reset filters</button>
+	</form></div></aside>
+	<div>
+		<div class="bar"><b id="cnt"></b><div style="display:flex;gap:10px;align-items:center"><select class="in" id="sort" style="width:auto"><option value="rel">Featured first</option><option value="p1">Price: low to high</option><option value="p2">Price: high to low</option><option value="a">Largest area</option><option value="new">Newest</option></select><div class="tabs" id="view"><button class="tab on" data-v="grid" aria-label="Grid view">▦</button><button class="tab" data-v="list" aria-label="List view">☰</button></div></div></div>
+		<div class="grid" id="grid" style="grid-template-columns:repeat(auto-fill,minmax(290px,1fr))"></div>
+		<div style="text-align:center;margin-top:24px"><button class="btn ghost" id="more" hidden>Show more</button></div>
+	</div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+HR.layout(new URLSearchParams(location.search).get("purpose") === "rent" ? "rent" : "buy");
+const { $, $$, esc, D } = HR, q0 = new URLSearchParams(location.search), L = HR.listings();
+const S = { p: q0.get("purpose") || "", beds: 0, view: "grid", n: 9, agent: q0.get("agent") || "" };
+[...new Set(L.map((l) => l.city))].sort().forEach((c) => $("#city").add(new Option(c, c)));
+const AM = ["Pool", "Gym", "Clubhouse", "Lift", "Power backup", "Private garden", "Covered parking", "24×7 security"];
+$("#am").innerHTML = AM.map((a) => `<label><input type="checkbox" value="${a}"> ${a}</label>`).join("");
+$("#q").value = q0.get("q") || ""; $("#city").value = q0.get("city") || ""; $("#type").value = q0.get("type") || ""; if (q0.get("max")) $("#price").value = q0.get("max");
+function maxLabel(v) { return v >= 500 ? "Any" : (v >= 100 ? "₹" + (v / 100) + " Cr" : "₹" + v + " L"); }
+function draw() {
+	const q = $("#q").value.toLowerCase(), ci = $("#city").value, ty = $("#type").value, mx = +$("#price").value, am = $$("#am input:checked").map((x) => x.value);
+	$("#po").textContent = maxLabel(mx);
+	$$("#purpose .tab").forEach((b) => b.classList.toggle("on", b.dataset.p === S.p)); $$("#beds .tab").forEach((b) => b.classList.toggle("on", +b.dataset.b === S.beds)); $$("#view .tab").forEach((b) => b.classList.toggle("on", b.dataset.v === S.view));
+	let r = L.filter((l) => (!S.agent || l.agent === S.agent) && (!S.p || l.purpose === S.p) && (!q || (l.title + l.loc + l.city).toLowerCase().includes(q)) && (!ci || l.city === ci) && (!ty || l.type === ty) && l.beds >= S.beds && (mx >= 500 || l.purpose === "rent" || l.price <= mx) && am.every((a) => l.am.some((x) => x.toLowerCase().includes(a.toLowerCase().replace("pool", "pool")))));
+	const s = $("#sort").value;
+	r.sort((a, b) => s === "p1" ? a.price - b.price : s === "p2" ? b.price - a.price : s === "a" ? b.area - a.area : s === "new" ? b.id.localeCompare(a.id) : (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+	$("#cnt").textContent = r.length + " propert" + (r.length === 1 ? "y" : "ies") + " found";
+	$("#h1").textContent = S.p === "rent" ? "Properties for rent" : S.p === "sale" ? "Properties for sale" : "All properties";
+	$("#grid").style.gridTemplateColumns = S.view === "list" ? "1fr" : "repeat(auto-fill,minmax(290px,1fr))";
+	$("#grid").innerHTML = r.slice(0, S.n).map((l) => HR.card(l, { list: S.view === "list" })).join("") || '<p class="empty" style="grid-column:1/-1">No properties match these filters. Try widening your search.</p>';
+	$("#more").hidden = r.length <= S.n;
+}
+document.addEventListener("click", (e) => {
+	const b = e.target.closest("button"); if (!b) return;
+	if (b.dataset.p !== undefined) { S.p = b.dataset.p; S.n = 9; draw(); } else if (b.dataset.b !== undefined) { S.beds = +b.dataset.b; draw(); } else if (b.dataset.v) { S.view = b.dataset.v; draw(); }
+	else if (b.id === "more") { S.n += 6; draw(); } else if (b.id === "reset") { location.href = "listings.html"; }
+});
+["q", "city", "type", "price", "sort"].forEach((i) => $("#" + i).addEventListener("input", () => { S.n = 9; draw(); })); $("#am").addEventListener("change", draw);
+draw(); HR.tray();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

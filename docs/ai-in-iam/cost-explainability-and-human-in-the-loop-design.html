@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -110,7 +111,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>A cost-saving claim that only holds up in a demo is not a cost saving, it is a liability with a delay on it. This page is about the parts of AI-in-IAM that decide whether a saving survives contact with an actual audit: what &quot;explainable&quot; needs to mean to a reviewer rather than an engineer, what an audit trail actually has to capture, how to pick the right amount of human oversight for a given task, and the specific ways teams over-automate identity governance and regret it.</p>
+					<p>A cost-saving claim that only holds up in a demo is not a cost saving, it is a liability with a delay on it. This page is about the parts of AI-in-IAM that decide whether a saving survives contact with an actual audit: what &quot;explainable&quot; needs to mean to a reviewer rather than an engineer, what an audit trail has to capture, how to pick the right amount of human oversight for a given task, and the specific ways teams over-automate identity governance and regret it.</p>
 					<h3>Explainability means something different to an auditor than to you</h3>
 					<p>An engineer's idea of an explanation is often a confidence score or a feature-attribution chart. An auditor's idea of an explanation is a sentence a non-technical reviewer can read and agree or disagree with, tied to a specific, checkable fact. &quot;87% confidence&quot; satisfies nobody in a compliance review. &quot;Unused for 140 days, not part of this person's current role&quot; does.</p>
 				</div>
@@ -120,10 +121,10 @@
 				</div>
 
 <div class="prose reveal">
-					<h3>What an audit trail actually has to capture</h3>
+					<h3>What an audit trail has to capture</h3>
 					<p>The governance page covered the principle: every agent is a first-class identity with a full decision trace. Operationally, that trace needs four specific things, and it is common to ship with only the first.</p>
 					<ol><li>What the agent read: which API calls, which documents, which records, at what time.</li><li>What it recommended or drafted, verbatim, before any human touched it.</li><li>What the human decided, and whether they accepted, modified, or rejected the AI's output.</li><li>Where that log lives, and confirmation the agent itself has no permission to edit or delete it.</li></ol>
-					<p>Miss step 3 and you cannot answer the single question every audit eventually asks: did a human actually review this, or did they rubber-stamp it? A log that only shows the AI's output and a timestamp cannot distinguish genuine review from a reflexive click.</p>
+					<p>Miss step 3 and you cannot answer the single question every audit eventually asks: did a human review this, or did they rubber-stamp it? A log that only shows the AI's output and a timestamp cannot distinguish genuine review from a reflexive click.</p>
 					<h3>Choosing the right amount of human oversight</h3>
 					<p>Not every task deserves the same oversight level. The L0 to L5 ladder from earlier in this course applies directly here, and the right level is a function of two things: how often the task fails, and how bad a single failure is.</p>
 				</div>
@@ -131,18 +132,18 @@
 <div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Oversight pattern</th><th>When it fits</th><th>The failure mode if you pick wrong</th></tr></thead><tbody><tr><td>Every action confirmed (L1-L2)</td><td>Low volume, high stakes: privileged grants, SOD overrides</td><td>Too slow for high-volume work, reviewers start rubber-stamping</td></tr><tr><td>Sampled review (L3)</td><td>High volume, moderate stakes: routine joiner access proposals</td><td>Sample size too small to catch a systematic error early</td></tr><tr><td>Escalation only (L4)</td><td>Very high volume, well-understood failure signatures: leaver verification</td><td>Anomaly detection isn't sharp enough, real problems slip through as &quot;normal&quot;</td></tr></tbody></table></div>
 
 <div class="prose reveal">
-					<p>The trap is picking the oversight level based on how confident the AI seems in a demo rather than on the actual cost of the two kinds of mistake: approving something that should have been blocked, and blocking or delaying something that was actually fine. Price both before choosing.</p>
+					<p>The trap is picking the oversight level based on how confident the AI seems in a demo rather than on the actual cost of the two kinds of mistake: approving something that should have been blocked, and blocking or delaying something that was fine. Price both before choosing.</p>
 					<h3>How teams over-automate identity governance, in order of how often it happens</h3>
 					<p><strong>1. Automating the exception path before the common path</strong></p>
 					<p>The unusual, high-judgment 10% of cases (a contractor with three concurrent roles, a re-hire with old orphaned accounts) is the tempting one to show off in a demo, and the worst place to start. It has the least volume, the least standardized data, and the highest cost per mistake. Automate the boring, high-volume, well-understood 90% first, earn trust and evals on that, then move up.</p>
 					<p><strong>2. Silent scope creep in an agent's own permissions</strong></p>
 					<p>An agent's tool access tends to only grow: someone adds one more API scope to unblock a feature, nobody removes it when the feature ships. Six months later the agent can do more than anyone remembers approving. The fix is mechanical, not cultural: the agent is a governed identity, so put it in the same certification campaigns as a human, its access gets reviewed on the same schedule as everyone else's, not on a separate track that quietly never happens.</p>
 					<p><strong>3. Treating an unvalidated confidence score as calibrated</strong></p>
-					<p>A model saying &quot;92% confident&quot; does not mean it is right 92% of the time unless someone has actually checked that against outcomes. Most teams never do this check, and act on the number anyway. If a confidence score is going to gate an oversight level (sampled review below some threshold, full review above it), validate that the number means what you are assuming it means, on your own data, before trusting it.</p>
+					<p>A model saying &quot;92% confident&quot; does not mean it is right 92% of the time unless someone has checked that against outcomes. Most teams never do this check, and act on the number anyway. If a confidence score is going to gate an oversight level (sampled review below some threshold, full review above it), validate that the number means what you are assuming it means, on your own data, before trusting it.</p>
 					<p><strong>4. No kill switch</strong></p>
 					<p>Ask, out loud, before launch: if this agent starts doing something wrong at 3am, who notices, and how do they stop it in under five minutes, without needing the one engineer who built it? If the honest answer is &quot;we would have to page the person who wrote the code,&quot; the system is not ready for anything touching real access.</p>
 					<p><strong>5. Optimizing for the demo distribution, not the production one</strong></p>
-					<p>The examples used to build confidence in a demo are almost always cleaner than what production actually contains: incomplete HR records, entitlements with names that mean something different than they say, a source system aggregation that silently failed last Tuesday. An accuracy number measured on curated examples tells you nothing about the messy 20% of real identity data every enterprise actually has.</p>
+					<p>The examples used to build confidence in a demo are almost always cleaner than what production contains: incomplete HR records, entitlements with names that mean something different than they say, a source system aggregation that silently failed last Tuesday. An accuracy number measured on curated examples tells you nothing about the messy 20% of real identity data every enterprise has.</p>
 				</div>
 
 				<details class="cmd-explain reveal">

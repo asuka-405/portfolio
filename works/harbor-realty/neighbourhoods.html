@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Neighbourhood guide | Harbor &amp; Co.</title>
+<meta name="description" content="Price per square foot, growth and livability scores for 17 localities across Delhi NCR." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow" style="color:var(--gold)">Neighbourhood guide</p><h1>Know the area.</h1><p>Average prices, three-year growth and livability scores, plus the homes we currently have there.</p></div></section>
+<section class="sec" style="padding-top:30px"><div class="wrap">
+	<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px"><div class="tabs" id="cities"></div><select class="in" id="sort" style="max-width:220px;margin-left:auto"><option value="psf">Highest price / sq ft</option><option value="g">Fastest growth</option><option value="walk">Best walkability</option><option value="school">Best schools</option></select></div>
+	<div style="overflow-x:auto"><table class="t" id="tbl"></table></div>
+	<div class="grid" id="cards" style="margin-top:30px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))"></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+HR.layout("nb");
+const { $, esc, img, D } = HR, L = HR.listings(); let city = "All";
+const ALL = Object.entries(D.nb).map(([k, v]) => ({ k, city: k.split("|")[0], loc: k.split("|")[1], ...v }));
+function draw() {
+	$("#cities").innerHTML = ["All", ...new Set(ALL.map((x) => x.city))].map((c) => `<button class="tab ${c === city ? "on" : ""}" data-c="${c}">${c}</button>`).join("");
+	const s = $("#sort").value, r = ALL.filter((x) => city === "All" || x.city === city).sort((a, b) => b[s] - a[s]);
+	$("#tbl").innerHTML = `<thead><tr><th>Locality</th><th>₹ / sq ft</th><th>3-yr growth</th><th>Walk</th><th>Schools</th><th>Transit</th><th>Safety</th><th>Listings</th></tr></thead><tbody>${r.map((x) => `<tr id="${encodeURIComponent(x.k)}"><td><b>${esc(x.loc)}</b><div class="msg">${esc(x.city)}</div></td><td>₹${x.psf.toLocaleString("en-IN")}</td><td style="color:var(--ok);font-weight:700">+${x.g}%</td><td>${x.walk}</td><td>${x.school}</td><td>${x.transit}</td><td>${x.safety}</td><td><a href="listings.html?q=${encodeURIComponent(x.loc)}" style="color:var(--gold-d);font-weight:700">${L.filter((l) => l.city === x.city && l.loc === x.loc).length} →</a></td></tr>`).join("")}</tbody>`;
+	$("#cards").innerHTML = r.slice(0, 6).map((x) => `<div class="panel" style="margin:0"><h3>${esc(x.loc)} <span class="msg" style="font-weight:500">· ${esc(x.city)}</span></h3><p class="msg" style="margin-bottom:10px">${esc(x.blurb)}</p>${[["Walkability", x.walk], ["Schools", x.school], ["Transit", x.transit], ["Safety", x.safety]].map(([k, v]) => `<div class="score"><span>${k}</span><div><i style="width:${v * 10}%"></i></div><b>${v}</b></div>`).join("")}</div>`).join("");
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("[data-c]"); if (b) { city = b.dataset.c; draw(); } }); $("#sort").onchange = draw; draw();
+if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) { t.style.background = "#fbf4e2"; t.scrollIntoView({ block: "center" }); } }
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

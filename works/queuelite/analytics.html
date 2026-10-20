@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Analytics | QueueLite (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#6c47ff;--acc-soft:rgba(108,71,255,.12);--side:#16113a;--bg:#f3f1fb}</style>
+</head>
+<body>
+<div class="shell"><aside class="side"></aside>
+<div class="main"><header class="top"><button class="burger" id="burger">☰</button><h1>Analytics</h1><span class="sp"></span><div class="tabs" id="rg"><button data-d="1">Today</button><button class="on" data-d="7">7 days</button></div><button class="btn sm" id="ex">Export CSV</button></header>
+<div class="view" id="view"></div></div></div>
+<script src="../lib/ui.js"></script><script src="js/core.js"></script>
+<script>
+const { $, esc, num } = UI; QL.side("analytics"); $("#burger").onclick = () => $(".side").classList.toggle("open"); let days = 7;
+const min = 6e4;
+function draw() {
+	const from = days === 1 ? QL.today0() : Date.now() - 8 * 864e5, T = QL.state.tickets.filter((t) => t.ts >= from), done = T.filter((t) => t.status === "done" && t.startAt), avg = (a, f) => (a.length ? a.reduce((s, x) => s + f(x), 0) / a.length : 0);
+	const wait = avg(done, (t) => t.calledAt - t.ts) / min, srv = avg(done, (t) => t.doneAt - t.startAt) / min, ns = T.length ? T.filter((t) => t.status === "noshow").length / T.length : 0, sla = done.length ? done.filter((t) => t.calledAt - t.ts <= 15 * min).length / done.length : 0;
+	const hrs = [...Array(10)].map((_, i) => 9 + i), byH = hrs.map((h) => ({ label: h + ":00", value: T.filter((t) => new Date(t.ts).getHours() === h).length }));
+	const bySvc = QL.state.services.map((s) => { const l = done.filter((t) => t.svc === s.id); return { label: s.name, value: T.filter((t) => t.svc === s.id).length, wait: avg(l, (t) => t.calledAt - t.ts) / min, srv: avg(l, (t) => t.doneAt - t.startAt) / min, color: s.color }; });
+	const byC = QL.state.counters.map((c) => { const l = done.filter((t) => t.counter === c.id); return { label: c.name, value: l.length, srv: avg(l, (t) => t.doneAt - t.startAt) / min }; });
+	const daysArr = [...Array(7)].map((_, i) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - 7 + i); return d.getTime(); }), perDay = daysArr.map((t) => { const l = QL.state.tickets.filter((x) => x.ts >= t && x.ts < t + 864e5 && x.status === "done" && x.startAt); return { label: new Date(t).toLocaleDateString("en-IN", { weekday: "short" }), y: avg(l, (x) => x.calledAt - x.ts) / min }; });
+	$("#view").innerHTML = `<div class="kpis"><div class="kpi"><span>Tickets</span><b>${num(T.length)}</b></div><div class="kpi"><span>Avg wait</span><b>${wait.toFixed(1)}m</b><small class="${wait < 10 ? "up" : "dn"}">${wait < 10 ? "Within target" : "Above target"}</small></div><div class="kpi"><span>Avg service time</span><b>${srv.toFixed(1)}m</b></div><div class="kpi"><span>Served within 15 min</span><b>${Math.round(sla * 100)}%</b></div><div class="kpi"><span>No-show rate</span><b>${(ns * 100).toFixed(1)}%</b></div></div>
+	<div class="g21" style="margin-bottom:16px"><div class="card"><h3>Tickets by hour <span class="mut">peak: ${byH.sort((a, b) => b.value - a.value)[0].label}</span></h3>${UI.bars(hrs.map((h) => ({ label: h + "h", value: T.filter((t) => new Date(t.ts).getHours() === h).length })), { h: 230 })}</div><div class="card"><h3>By service</h3>${UI.donut(bySvc.map((s) => ({ label: s.label, value: s.value || 0.001, color: s.color })), { center: num(T.length), sub: "tickets" })}</div></div>
+	<div class="g2"><div class="card"><h3>Average wait by day (min)</h3>${UI.line([{ name: "Wait", data: perDay }], { area: true, h: 210, fmt: (v) => v.toFixed(1) })}</div><div class="card"><h3>Service performance</h3><div class="tbl-wrap" style="border:0"><table class="tbl"><thead><tr><th>Service</th><th class="r">Tickets</th><th class="r">Avg wait</th><th class="r">Avg service</th></tr></thead><tbody>${bySvc.map((s) => `<tr><td><span class="chip" style="background:${s.color}22;color:${s.color}">${esc(s.label)}</span></td><td class="r">${s.value}</td><td class="r">${s.wait.toFixed(1)}m</td><td class="r">${s.srv.toFixed(1)}m</td></tr>`).join("")}</tbody></table></div><h3 style="margin-top:18px">Counters</h3>${UI.hbars(byC.map((c) => ({ label: c.label + " (" + c.srv.toFixed(1) + "m avg)", value: c.value })), { lw: "190px" })}</div></div>`;
+	$("#ex").onclick = () => UI.csv([["Token", "Service", "Created", "Called", "Done", "Status", "Wait (min)", "Service (min)"], ...T.map((t) => [t.no, QL.svc(t.svc).name, new Date(t.ts).toISOString(), t.calledAt ? new Date(t.calledAt).toISOString() : "", t.doneAt ? new Date(t.doneAt).toISOString() : "", t.status, t.calledAt ? ((t.calledAt - t.ts) / min).toFixed(1) : "", t.doneAt && t.startAt ? ((t.doneAt - t.startAt) / min).toFixed(1) : ""])], "queue-report.csv");
+}
+$("#rg").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; days = +b.dataset.d; document.querySelectorAll("#rg button").forEach((x) => x.classList.toggle("on", x === b)); draw(); };
+QL.on(draw); draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

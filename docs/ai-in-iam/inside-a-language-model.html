@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -141,7 +142,7 @@
 				</div>
 
 <div class="prose reveal">
-					<p>That's genuinely all there is, no separate memory bank, no planner. Two parts do the work.<strong>Attention</strong>moves information between words: every word asks &quot;which earlier words are relevant to me right now?&quot; and copies from them. It's a smart, content-based lookup.<strong>Feed-forward</strong>layers then process that information, and hold most of what the model &quot;knows.&quot; Stack these deep and, at enormous scale, everything else (grammar, reasoning, translation) emerges.</p>
+					<p>That's all there is, no separate memory bank, no planner. Two parts do the work.<strong>Attention</strong>moves information between words: every word asks &quot;which earlier words are relevant to me right now?&quot; and copies from them. It's a smart, content-based lookup.<strong>Feed-forward</strong>layers then process that information, and hold most of what the model &quot;knows.&quot; Stack these deep and, at enormous scale, everything else (grammar, reasoning, translation) emerges.</p>
 					<p>One practical fallout: a word can only look<em> backwards</em>, never forwards. So<strong> put your instructions before the data they apply to</strong>: the model reads top to bottom.</p>
 				</div>
 
@@ -161,7 +162,7 @@
 				<details class="cmd-explain reveal">
 					<summary>Try it yourself: Check a real pricing page<span class="chev">›</span></summary>
 					<div class="body"><div class="prose reveal">
-					<p>Open any frontier model provider's API pricing page and compare the per-million-token price for input vs. output. Confirm it's roughly a 5x gap. Then estimate: what would a 500-word answer to a 50-word question actually cost? (Rough conversion: 1 word ≈ 1.3 tokens.)</p>
+					<p>Open any frontier model provider's API pricing page and compare the per-million-token price for input vs. output. Confirm it's roughly a 5x gap. Then estimate: what would a 500-word answer to a 50-word question cost? (Rough conversion: 1 word ≈ 1.3 tokens.)</p>
 				</div></div>
 				</details>
 
@@ -191,7 +192,7 @@
 				<details class="cmd-explain reveal">
 					<summary>Try it yourself: Feel temperature change the output<span class="chev">›</span></summary>
 					<div class="body"><div class="prose reveal">
-					<p>In any API playground that exposes a temperature slider, run the same short creative prompt (e.g. 'write one sentence about rain') three times at temperature 0 and three times at temperature 1. At temp 0 you'll get the same or near-identical sentence every time; at temp 1, three genuinely different ones.</p>
+					<p>In any API playground that exposes a temperature slider, run the same short creative prompt (e.g. 'write one sentence about rain') three times at temperature 0 and three times at temperature 1. At temp 0 you'll get the same or near-identical sentence every time; at temp 1, three different ones.</p>
 				</div></div>
 				</details>
 

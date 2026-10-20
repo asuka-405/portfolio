@@ -1,0 +1,1 @@
+[{"name":"dashboard","route":"dashboard"},{"name":"students","route":"students"},{"name":"attendance","route":"attendance"},{"name":"fees","route":"fees"},{"name":"exams","route":"exams"},{"name":"admissions","route":"admissions"},{"name":"parent","file":"parent.html","w":900,"h":820,"js":"document.querySelector('[data-t=fees]').click()"}]

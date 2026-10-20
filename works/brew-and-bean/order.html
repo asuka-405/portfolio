@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your order | Brew &amp; Bean</title>
+<meta name="description" content="Review your bag, choose pickup, dine-in or delivery, and pay." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding-top:36px"><div class="wrap">
+	<div class="sec-h" style="margin-bottom:20px"><div><p class="eyebrow">Checkout</p><h2>Your order</h2></div><a class="btn ghost sm" href="menu.html">+ Add more items</a></div>
+	<div id="empty" class="empty panel" hidden><h3>Your bag is empty</h3><p class="msg" style="margin-bottom:16px">Pick something from the menu to get started.</p><a class="btn dark" href="menu.html">Browse the menu</a></div>
+	<form class="checkout" id="co" autocomplete="on">
+		<div>
+			<div class="panel"><h3>1 · Items</h3><div id="lines"></div></div>
+			<div class="panel"><h3>2 · How would you like it?</h3>
+				<div class="seg" id="mode">
+					<label><input type="radio" name="mode" value="pickup" checked><span>Pickup<small>Ready in ~10 min</small></span></label>
+					<label><input type="radio" name="mode" value="dinein"><span>Dine in<small>We'll bring it over</small></span></label>
+					<label><input type="radio" name="mode" value="delivery"><span>Delivery<small>₹40, free over ₹399</small></span></label>
+				</div>
+				<div class="row2" style="margin-top:14px"><label class="f">Café<select class="in" name="store" id="store"></select></label><label class="f">When<select class="in" name="slot" id="slot"></select></label></div>
+				<label class="f" id="addrw" style="margin-top:14px" hidden>Delivery address<textarea class="in" name="addr" rows="2" placeholder="House / flat, street, landmark, pin code"></textarea></label>
+			</div>
+			<div class="panel"><h3>3 · Your details</h3>
+				<div class="row2"><label class="f">Name<input class="in" name="name" required autocomplete="name" /></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}" inputmode="numeric" autocomplete="tel" placeholder="10 digits" /></label></div>
+				<p class="msg" id="pts" style="margin-top:10px"></p>
+			</div>
+			<div class="panel"><h3>4 · Payment</h3>
+				<div class="seg" id="pay"><label><input type="radio" name="pay" value="upi" checked><span>UPI<small>Pay on confirmation</small></span></label><label><input type="radio" name="pay" value="card"><span>Card<small>Visa · Mastercard · RuPay</small></span></label><label><input type="radio" name="pay" value="counter"><span>Pay at café<small>Pickup &amp; dine-in</small></span></label></div>
+				<p class="msg" style="margin-top:10px">Demo only, no payment is taken and nothing leaves your browser.</p>
+			</div>
+		</div>
+		<aside class="panel sum">
+			<h3>Summary</h3>
+			<label class="f">Promo code<span style="display:flex;gap:8px"><input class="in" id="cp" placeholder="WELCOME10" style="text-transform:uppercase" /><button type="button" class="btn dark sm" id="cpa">Apply</button></span></label>
+			<p class="msg" id="cpm" style="margin:6px 0 10px"></p>
+			<div class="f" style="margin-bottom:10px"><span style="font-size:.82rem;font-weight:700;color:var(--roast)">Tip your baristas</span><div class="tabs" id="tips" style="margin-top:6px"><button type="button" class="tab on" data-t="0">None</button><button type="button" class="tab" data-t="20">₹20</button><button type="button" class="tab" data-t="50">₹50</button><button type="button" class="tab" data-t="100">₹100</button></div></div>
+			<div id="redeemw" hidden style="margin-bottom:10px"><label class="f" style="grid-template-columns:auto 1fr;display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="redeem"> <span id="redeemt"></span></label></div>
+			<div id="sumrows"></div>
+			<button class="btn dark block" style="margin-top:16px" id="place">Place order</button>
+		</aside>
+	</form>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+BB.layout("order.html");
+const { $, esc, inr, img, D } = BB;
+const st = { coupon: "", tip: 0, redeem: false };
+const f = $("#co"), ph = BB.profile.get();
+$("#store").innerHTML = D.stores.map((s) => `<option value="${s.id}">${esc(s.name)}${BB.openNow(s) ? "" : " (closed now)"}</option>`).join("");
+if (new URLSearchParams(location.search).get("store")) $("#store").value = new URLSearchParams(location.search).get("store");
+if (ph) { f.name.value = ph.name; f.phone.value = ph.phone; }
+function slots() {
+	const d = new Date(), m = Math.ceil((d.getHours() * 60 + d.getMinutes() + 12) / 15) * 15, out = ["ASAP (about 12 min)"];
+	for (let i = 1; i < 9; i++) { const t = m + i * 15, h = Math.floor(t / 60) % 24, mm = t % 60; out.push(String(h).padStart(2, "0") + ":" + String(mm).padStart(2, "0")); }
+	$("#slot").innerHTML = out.map((s) => `<option>${s}</option>`).join("");
+}
+const mode = () => f.mode.value;
+function lines() {
+	const c = BB.cart.get();
+	$("#empty").hidden = c.length > 0; f.hidden = c.length === 0;
+	$("#lines").innerHTML = c.map((l, i) => { const it = BB.item(l.id); const mods = [l.size, l.milk, ...(l.extras || [])].filter(Boolean).join(" · ");
+		return `<div class="line"><img src="${img(it.img)}" alt=""><div><b>${esc(it.name)}</b><small>${esc(mods)}${l.note ? " · “" + esc(l.note) + "”" : ""}</small><div class="qty" style="margin-top:6px"><button type="button" data-i="${i}" data-d="-1" aria-label="Fewer">−</button><b>${l.qty}</b><button type="button" data-i="${i}" data-d="1" aria-label="More">+</button></div></div><b>${inr(BB.cart.unit(l) * l.qty)}</b></div>`; }).join("");
+}
+function sum() {
+	const c = BB.cart.get(), p = BB.profile.get(), bal = p ? BB.pointsFor(p.phone).balance : 0;
+	$("#redeemw").hidden = !(bal >= 100);
+	if (bal >= 100) $("#redeemt").textContent = `Use ${bal} points (−${inr(bal * 0.1)})`;
+	const t = BB.totals(c, { mode: mode(), coupon: st.coupon, tip: st.tip, redeem: st.redeem ? bal : 0 });
+	$("#cpm").innerHTML = st.coupon ? (t.couponMsg ? `<span class="err">${t.couponMsg}</span>` : `<span class="ok">✓ ${D.coupons[st.coupon].label} applied</span>`) : "Try WELCOME10, BREW50 or FREEBAKE";
+	$("#sumrows").innerHTML = `<div class="r"><span>Subtotal</span><span>${inr(t.sub)}</span></div>${t.disc ? `<div class="r"><span>Discount</span><span>−${inr(t.disc)}</span></div>` : ""}${t.freeItem ? `<div class="r"><span>Free ${esc(BB.item(t.freeItem).name)}</span><span>₹0</span></div>` : ""}${t.rv ? `<div class="r"><span>Points redeemed</span><span>−${inr(t.rv)}</span></div>` : ""}<div class="r"><span>GST (5%)</span><span>${inr(t.gst)}</span></div>${mode() === "delivery" ? `<div class="r"><span>Delivery</span><span>${t.fee ? inr(t.fee) : "Free"}</span></div>` : ""}${t.tip ? `<div class="r"><span>Tip</span><span>${inr(t.tip)}</span></div>` : ""}<div class="r t"><span>Total</span><span>${inr(t.total)}</span></div>${t.sub ? `<p class="msg" style="margin-top:8px">You'll earn <b>${Math.floor(t.total / 10)} points</b> with this order.</p>` : ""}`;
+	return t;
+}
+function refresh() { lines(); $("#addrw").hidden = mode() !== "delivery"; f.addr.required = mode() === "delivery"; $("[value=counter]", f).disabled = mode() === "delivery"; if (mode() === "delivery" && f.pay.value === "counter") f.pay.value = "upi"; sum(); }
+document.addEventListener("click", (e) => {
+	const b = e.target.closest("button"); if (!b) return;
+	if (b.dataset.d) { const i = +b.dataset.i; BB.cart.setQty(i, BB.cart.get()[i].qty + +b.dataset.d); refresh(); }
+	if (b.dataset.t !== undefined) { st.tip = +b.dataset.t; document.querySelectorAll("#tips .tab").forEach((x) => x.classList.toggle("on", x === b)); sum(); }
+	if (b.id === "cpa") { st.coupon = $("#cp").value.trim().toUpperCase(); sum(); }
+});
+f.addEventListener("change", (e) => { if (e.target.id === "redeem") st.redeem = e.target.checked; refresh(); });
+f.addEventListener("submit", (e) => {
+	e.preventDefault();
+	const c = BB.cart.get(); if (!c.length) return;
+	const unavailable = c.find((l) => !BB.isAvail(l.id)); if (unavailable) { BB.toast(BB.item(unavailable.id).name + " just sold out, please remove it"); return; }
+	const p = BB.profile.get(), bal = p ? BB.pointsFor(p.phone).balance : 0, t = BB.totals(c, { mode: mode(), coupon: st.coupon, tip: st.tip, redeem: st.redeem ? bal : 0 });
+	const items = c.map((l) => ({ id: l.id, name: BB.item(l.id).name, size: l.size, milk: l.milk, extras: l.extras, note: l.note, qty: l.qty, unit: BB.cart.unit(l) }));
+	if (t.freeItem) items.push({ id: t.freeItem, name: BB.item(t.freeItem).name + " (free)", qty: 1, unit: 0 });
+	const o = BB.orders.create({ mode: mode(), store: f.store.value, slot: f.slot.value, name: f.name.value.trim(), phone: f.phone.value, addr: f.addr.value, pay: f.pay.value, items, sub: t.sub, disc: t.disc, gst: t.gst, fee: t.fee, tip: t.tip, redeem: t.redeem, coupon: st.coupon || null, total: t.total });
+	BB.cart.clear(); location.href = "track.html?id=" + o.id + "&new=1";
+});
+slots(); refresh();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

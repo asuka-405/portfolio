@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -145,7 +146,7 @@
 				</details>
 
 <div class="prose reveal">
-					<h3>Vector databases: where retrieval actually lives</h3>
+					<h3>Vector databases: where retrieval lives</h3>
 					<p>Embeddings (from the model-internals part) turn text into a list of numbers positioned so that similar meaning sits close together in that number-space. A <strong>vector database</strong> is what stores millions of those number-lists and answers one question fast: &quot;which of these are closest to this new vector?&quot; Doing that by brute-force comparison doesn't scale, so vector databases build an approximate-nearest-neighbour index, trading a small amount of accuracy for search that stays fast at millions of documents.</p>
 					<ul><li><strong>Purpose-built options</strong>. Pinecone, Weaviate, Qdrant, Milvus: managed or self-hosted, built for this one job.</li><li><strong>Bolt-on options</strong>: pgvector on Postgres, or OpenSearch/Elasticsearch with a vector field: you add a vector index to a database you already run and already have audit and backup processes for.</li></ul>
 					<p>For enterprise identity work specifically, the bolt-on route usually wins: reusing the Postgres instance you already back up, encrypt, and have a data-residency story for is one less new vendor to run risk assessment on, see the compliance part later for why that matters.</p>
@@ -156,12 +157,12 @@
 				<details class="cmd-explain reveal">
 					<summary>Try it yourself: Compute similarity between near-synonyms<span class="chev">›</span></summary>
 					<div class="body"><div class="prose reveal">
-					<p>Using a free sentence-embedding demo (Hugging Face's inference widgets work well, no signup needed for many models), embed 'revoke access' and 'terminate employee' and compute cosine similarity: then compare it to the similarity between 'revoke access' and a genuinely unrelated phrase like 'lunch menu.' Seeing the numbers makes 'similar meanings sit close together' concrete instead of abstract.</p>
+					<p>Using a free sentence-embedding demo (Hugging Face's inference widgets work well, no signup needed for many models), embed 'revoke access' and 'terminate employee' and compute cosine similarity: then compare it to the similarity between 'revoke access' and a unrelated phrase like 'lunch menu.' Seeing the numbers makes 'similar meanings sit close together' concrete instead of abstract.</p>
 				</div></div>
 				</details>
 
 <div class="prose reveal">
-					<h3>The parts that make it actually work</h3>
+					<h3>The parts that make it work</h3>
 					<p>Naive RAG (chop docs into fixed blocks, grab the closest matches, stuff them in) demos nicely and then stalls around 70% quality. The improvements each fix a specific failure:</p>
 					<ul><li><strong>Smart splitting.</strong> Split along the document's real structure (headings, sections), not blindly every N words. A chunk that cuts a table in half is poison. Add a breadcrumb (doc title, section, date) to every chunk so it isn't stranded without context.</li><li><strong>Hybrid search.</strong> Pure semantic search misses exact codes and negations; old-fashioned keyword search misses synonyms. Use<em> both</em> and merge the results. This alone fixes a lot.</li><li><strong>Re-ranking.</strong> Retrieve ~100 candidates cheaply, then use a slower, sharper model to re-score and keep the best 5–10. Best value-for-effort upgrade in the whole stack.</li></ul>
 				</div>
@@ -201,7 +202,7 @@
 				<details class="cmd-explain reveal">
 					<summary>Try it yourself: Watch a multi-hop search happen<span class="chev">›</span></summary>
 					<div class="body"><div class="prose reveal">
-					<p>Ask a search-enabled AI assistant (Perplexity, or any chat model with web search turned on) a question that genuinely requires two separate facts to combine: 'who is older, the current CEO of [company] or the founder of [other company]?' Watch it perform more than one search before answering. That's agentic RAG's search-read-decide-search-again loop, visible in the transcript.</p>
+					<p>Ask a search-enabled AI assistant (Perplexity, or any chat model with web search turned on) a question that requires two separate facts to combine: 'who is older, the current CEO of [company] or the founder of [other company]?' Watch it perform more than one search before answering. That's agentic RAG's search-read-decide-search-again loop, visible in the transcript.</p>
 				</div></div>
 				</details>
 						</div>

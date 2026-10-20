@@ -1,0 +1,2 @@
+[{"name":"sell","route":"sell","js":"(()=>{const c=document.querySelectorAll('.pcard');[0,2,6,7,14,21].forEach(i=>c[i].click());document.querySelector('#cust').value='c3';document.querySelector('#cust').dispatchEvent(new Event('change'))})()"},
+{"name":"customers","route":"customers"},{"name":"reports","route":"reports"},{"name":"today","route":"today"}]

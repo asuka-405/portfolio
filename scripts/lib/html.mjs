@@ -41,7 +41,7 @@ export function richTextToPlain(richText) {
 	return richText.map((rt) => rt.plain_text ?? "").join("");
 }
 
-/** Strips HTML tags and collapses whitespace — used for word counts and the search index. */
+/** Strips HTML tags and collapses whitespace - used for word counts and the search index. */
 export function stripHtml(html) {
 	return html
 		.replace(/<[^>]+>/g, " ")

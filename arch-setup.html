@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta
 			name="description"
-			content="My Arch Linux post-install setup script — what it does, how to run it, and every command explained in an expandable reference."
+			content="My Arch Linux post-install setup script: what it does, how to run it, and every command explained in an expandable reference."
 		/>
 		<meta name="color-scheme" content="dark light" />
 		<title>Arch setup script · Suryansh Kapil</title>
@@ -36,6 +36,7 @@
 					<a href="index.html#about">About</a>
 					<a href="index.html#projects">Projects</a>
 					<a href="articles/index.html">Writing</a>
+					<a href="works/index.html">Works</a>
 					<a href="docs/index.html">Docs</a>
 					<a href="https://git.archdev.in">Git</a>
 					<a href="index.html#contact">Contact</a>
@@ -57,7 +58,7 @@
 				</h1>
 				<p class="doc-tagline reveal" style="--d: 0.12s">
 					One Bash script that turns a fresh Arch base install into the machine
-					I actually work on — locale, user, services, bootloader and desktop,
+					I work on: locale, user, services, bootloader and desktop,
 					with sane prompts along the way.
 				</p>
 				<div class="article-meta reveal" style="--d: 0.16s">
@@ -84,7 +85,7 @@
 				<h2 class="reveal" style="--d: 0.04s">A post-install script, not an installer</h2>
 				<div class="prose reveal" style="--d: 0.08s">
 					<p>
-						Arch doesn't hold your hand, and I like it that way — but I don't
+						Arch doesn't hold your hand, and I like it that way, but I don't
 						enjoy re-typing the same twenty commands every time I set up a
 						machine. So this script picks up
 						<strong>after</strong> the base system is installed (once you've
@@ -95,7 +96,7 @@
 					<p>
 						It's deliberately readable and interactive: it asks for your
 						passwords, username and bootloader choice rather than hiding them
-						in config. Nothing here is magic — it's the manual Arch install,
+						in config. Nothing here is magic. It's the manual Arch install,
 						written down once so I never lose it.
 					</p>
 				</div>
@@ -106,7 +107,7 @@
 				<h2 class="reveal" style="--d: 0.04s">From inside the chroot</h2>
 				<div class="prose reveal" style="--d: 0.08s">
 					<p>
-						Download it and run it — don't pipe straight into <code>bash</code>,
+						Download it and run it; don't pipe straight into <code>bash</code>,
 						because the script is interactive and needs its own stdin for the
 						prompts.
 					</p>
@@ -115,8 +116,7 @@
 				<div class="cmd reveal">bash arch-setup.sh</div>
 				<div class="callout reveal">
 					<p>
-						<strong>Read before you run.</strong> This is my personal setup —
-						<code>en_IN</code> locale, <code>Asia/Kolkata</code> time, KDE
+						<strong>Read before you run.</strong> This is my personal setup; <code>en_IN</code> locale, <code>Asia/Kolkata</code> time, KDE
 						Plasma, an <code>amd-ucode</code> for my CPU. Skim it and swap
 						those for your own before running it on real hardware.
 					</p>
@@ -129,7 +129,7 @@
 				<div class="prose reveal" style="--d: 0.08s">
 					<p>
 						Expand any line to see exactly what it does. This is the whole
-						script, in order — nothing hidden.
+						script, in order; nothing hidden.
 					</p>
 				</div>
 
@@ -148,7 +148,7 @@
 				<details class="cmd-explain reveal">
 					<summary><span>pacman -S amd-ucode --noconfirm</span><span class="chev">›</span></summary>
 					<div class="body">
-						Installs AMD CPU microcode — early firmware fixes the bootloader
+						Installs AMD CPU microcode; early firmware fixes the bootloader
 						loads before the kernel. On an Intel machine you'd swap this for
 						<code>intel-ucode</code>.
 					</div>
@@ -188,7 +188,7 @@
 					<summary><span>hwclock --systohc --utc</span><span class="chev">›</span></summary>
 					<div class="body">
 						Writes the current system time back to the hardware (BIOS) clock and
-						records that it's kept in UTC — the sane default on Linux, and what
+						records that it's kept in UTC: the sane default on Linux, and what
 						avoids the "clock is wrong after dual-booting" mess.
 					</div>
 				</details>
@@ -197,7 +197,7 @@
 				<details class="cmd-explain reveal">
 					<summary><span>systemctl enable NetworkManager</span><span class="chev">›</span></summary>
 					<div class="body">
-						Marks NetworkManager to start automatically on every boot — so you
+						Marks NetworkManager to start automatically on every boot, so you
 						have internet the first time the installed system comes up, not just
 						in the live environment.
 					</div>
@@ -239,7 +239,7 @@
 					<div class="body">
 						Prompts for your everyday username, then validates it (must start
 						with a letter/underscore, only lowercase letters, digits, dashes and
-						underscores) and checks it doesn't already exist — the same rules
+						underscores) and checks it doesn't already exist; the same rules
 						Linux itself enforces.
 					</div>
 				</details>
@@ -256,7 +256,7 @@
 				<details class="cmd-explain reveal">
 					<summary><span>passwd "$username"</span><span class="chev">›</span></summary>
 					<div class="body">
-						Sets the password for the account you just created — also looped so
+						Sets the password for the account you just created; also looped so
 						it can't silently fail.
 					</div>
 				</details>
@@ -281,7 +281,7 @@
 					<div class="body">
 						Makes a single <code>sudo</code> authentication apply across all your
 						terminals for the timeout window, instead of per-terminal. Convenience
-						over strictness — drop it if you want each terminal to re-prompt.
+						over strictness: drop it if you want each terminal to re-prompt.
 					</div>
 				</details>
 
@@ -311,10 +311,10 @@
 					</div>
 				</details>
 				<details class="cmd-explain reveal">
-					<summary><span>echo "title / linux / initrd ..." &gt; /boot/loader/entries/arch.conf</span><span class="chev">›</span></summary>
+					<summary><span>echo "title / linux / initrd..." &gt; /boot/loader/entries/arch.conf</span><span class="chev">›</span></summary>
 					<div class="body">
 						The systemd-boot "direct" path. Writes a tiny boot entry naming the
-						kernel (<code>vmlinuz-linux</code>) and initramfs — a leaner
+						kernel (<code>vmlinuz-linux</code>) and initramfs: a leaner
 						alternative to GRUB when you're not dual-booting.
 					</div>
 				</details>
@@ -340,7 +340,7 @@
 				<details class="cmd-explain reveal">
 					<summary><span>echo "arch" &gt; /etc/hostname</span><span class="chev">›</span></summary>
 					<div class="body">
-						Names the machine on the network. Purely cosmetic — set it to
+						Names the machine on the network. Purely cosmetic: set it to
 						whatever you like to see at your shell prompt.
 					</div>
 				</details>
@@ -357,8 +357,7 @@
 					<summary><span>git clone https://aur.archlinux.org/yay.git</span><span class="chev">›</span></summary>
 					<div class="body">
 						Clones <code>yay</code>, an AUR helper. Once built, it lets you
-						install from the Arch User Repository as easily as official packages
-						— <code>yay -S &lt;anything&gt;</code>.
+						install from the Arch User Repository as easily as official packages; <code>yay -S &lt;anything&gt;</code>.
 					</div>
 				</details>
 			</section>
@@ -368,8 +367,8 @@
 				<h2 class="reveal" style="--d: 0.04s">The reasoning, in long form</h2>
 				<div class="prose reveal" style="--d: 0.08s">
 					<p>
-						If you want the <em>why</em> — why Arch, how the install actually
-						works, and where this script fits — I wrote a full walkthrough:
+						If you want the <em>why</em> (why Arch, how the install
+						works, and where this script fits) I wrote a full walkthrough:
 						<a href="articles/arch-linux.html">Arch Linux, and why I keep
 						coming back to it</a>. It ends exactly where this script begins.
 					</p>

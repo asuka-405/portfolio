@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Catering | Brew &amp; Bean</title>
+<meta name="description" content="Barista carts, breakfast boxes and meeting packs for offices and events. Get an instant estimate." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><img src="img/barista1.jpg" alt="" /><div class="wrap"><p class="eyebrow">Catering &amp; events</p><h1>Coffee for your whole team.</h1><p>Pick a package, set your headcount and get an instant estimate. We'll confirm the details within a day.</p></div></section>
+<section class="sec"><div class="wrap checkout">
+	<div>
+		<h2 style="margin-bottom:16px">1 · Choose a package</h2>
+		<div class="seg" id="pk" style="grid-template-columns:1fr;gap:12px"></div>
+		<div class="panel" style="margin-top:22px"><h3>2 · Event details</h3>
+			<label class="f">Headcount: <b id="gv"></b><input type="range" id="guests" style="accent-color:var(--caramel)" /></label>
+			<div class="row2" style="margin-top:14px"><label class="f">Date<input class="in" type="date" id="date" /></label><label class="f">City<select class="in" id="city"><option>Noida</option><option>Gurugram</option><option>Delhi</option></select></label></div>
+			<div class="opt" style="margin-top:14px"><label><input type="checkbox" id="vegan"><span>Add vegan options (+₹20/head)</span></label><label><input type="checkbox" id="cups"><span>Branded cups (+₹8/head)</span></label></div>
+		</div>
+		<form class="panel" id="enq"><h3>3 · Your details</h3>
+			<div class="row2"><label class="f">Name<input class="in" name="name" required /></label><label class="f">Company<input class="in" name="org" /></label></div>
+			<div class="row2" style="margin-top:14px"><label class="f">Email<input class="in" type="email" name="email" required /></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}" inputmode="numeric" /></label></div>
+			<label class="f" style="margin-top:14px">Anything else?<textarea class="in" name="note" rows="3" placeholder="Venue access, timings, allergies…"></textarea></label>
+			<button class="btn dark" style="margin-top:16px">Request this quote</button></form>
+	</div>
+	<aside class="panel sum"><p class="eyebrow">Instant estimate</p><div class="t" style="font:700 2.4rem Georgia,serif;margin:6px 0" id="est"></div><p class="msg" id="brk"></p><hr style="border:0;border-top:1px dashed var(--line);margin:14px 0"><p class="msg">Estimates exclude GST and any venue-specific charges. Final quote confirmed by email.</p><img src="img/team.jpg" alt="" style="border-radius:14px;margin-top:14px;aspect-ratio:16/10;object-fit:cover" loading="lazy" /></aside>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+BB.layout("catering.html");
+const { $, esc, inr, D } = BB; let pk = D.catering[0];
+$("#pk").innerHTML = D.catering.map((p, i) => `<label><input type="radio" name="pk" value="${p.id}" ${i ? "" : "checked"}><span style="text-align:left;padding:18px 20px"><b style="font-size:1.05rem">${p.name}</b> · from ${inr(p.base + p.per * p.min)}<small>${p.desc} Minimum ${p.min} guests.</small></span></label>`).join("");
+const d = new Date(Date.now() + 7 * 864e5); $("#date").min = new Date(Date.now() + 2 * 864e5).toISOString().slice(0, 10); $("#date").value = d.toISOString().slice(0, 10);
+function est() {
+	const g = +$("#guests").value, ex = ($("#vegan").checked ? 20 : 0) + ($("#cups").checked ? 8 : 0), total = pk.base + (pk.per + ex) * g;
+	$("#gv").textContent = g + " guests"; $("#est").textContent = inr(total);
+	$("#brk").textContent = `${pk.name}: ${pk.base ? inr(pk.base) + " base + " : ""}${inr(pk.per + ex)} × ${g} guests`; return total;
+}
+function setPk() { $("#guests").min = pk.min; $("#guests").max = 300; if (+$("#guests").value < pk.min) $("#guests").value = Math.max(pk.min, 40); est(); }
+$("#guests").value = 40; setPk();
+document.addEventListener("input", (e) => { if (e.target.name === "pk") { pk = D.catering.find((p) => p.id === e.target.value); setPk(); } else if (["guests", "vegan", "cups"].includes(e.target.id)) est(); });
+$("#enq").onsubmit = (e) => { e.preventDefault(); const f = e.target, l = BB.store.get("catering", []); const q = { id: "CQ-" + (101 + l.length), ts: Date.now(), name: f.name.value, org: f.org.value, email: f.email.value, phone: f.phone.value, pkg: pk.name, guests: +$("#guests").value, date: $("#date").value, city: $("#city").value, note: f.note.value, est: est(), status: "new" }; l.push(q); BB.store.set("catering", l);
+	$("#enq").innerHTML = `<h3>Thank you, ${esc(q.name.split(" ")[0])}!</h3><p class="msg">Quote <b>${q.id}</b> for ${q.guests} guests on ${new Date(q.date).toLocaleDateString("en-IN", { dateStyle: "long" })} is with our events team. Expect an email at ${esc(q.email)} within one working day.</p>`; window.scrollTo({ top: $("#enq").offsetTop - 120, behavior: "smooth" }); };
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

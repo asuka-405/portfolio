@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tenant app | RentDesk (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#4f46e5;--acc-ink:#fff;--acc-soft:rgba(79,70,229,.12)}body{background:#e9e8fb}
+.ph{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg);padding-bottom:30px;box-shadow:0 0 60px rgba(40,30,120,.15)}
+.hd{background:var(--acc);color:#fff;padding:18px 18px 24px;border-radius:0 0 22px 22px}.hd select{width:100%;padding:9px 12px;border-radius:10px;border:0;font:inherit;font-weight:700;margin-top:8px}.hd small{opacity:.85}
+.pc{padding:16px;display:grid;gap:14px}
+</style>
+</head>
+<body>
+<div class="ph"><div class="hd"><small id="co"></small><h1 style="font-size:1.3rem">My stay</h1><select id="me" aria-label="Choose tenant"></select></div><div class="pc" id="pc"></div></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="../lib/qrcode.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, esc, inr, fdate, iso, toast, modal, field, kpi, chip, form } = UI, { S } = RD;
+	const T = RD.tenants().filter((t) => t.status === "active"); let me = S.get("me", ""); if (!T.find((t) => t.id === me)) me = (T.find((t) => RD.owed(t.id) > 0) || T[0]).id;
+	$("#co").textContent = RD.settings().name; $("#me").innerHTML = T.slice(0, 20).map((t) => `<option value="${t.id}">${esc(t.name)}</option>`).join(""); if (![...$("#me").options].some((o) => o.value === me)) $("#me").insertAdjacentHTML("afterbegin", `<option value="${me}">${esc(RD.tenant(me).name)}</option>`); $("#me").value = me;
+	const mn = (k) => new Date(k + "-01T00:00:00").toLocaleDateString("en-IN", { month: "long", year: "numeric" });
+	function draw() {
+		const t = RD.tenant(me), w = RD.where(t), L = RD.ledger(me), o = RD.owed(me), pend = RD.pays().filter((p) => p.tid === me && p.status === "pending"), N = S.get("notices", []), mine = S.get("comp", []).filter((x) => x.tid === me);
+		$("#pc").innerHTML = `<div class="card"><b style="font-size:1.1rem">${esc(t.name)}</b><div class="mut">${w.p.name}, room ${w.r.no}${w.b.label} · since ${fdate(t.join, { month: "short", year: "numeric" })}</div></div><div class="card"><div class="mut">Rent due</div><div style="font-size:2.2rem;font-weight:800" class="${o ? "dn" : "up"}">${inr(o)}</div><div class="mut">${o ? "Monthly rent " + inr(t.rent + t.food) : "You are all paid up"}</div>${pend.length ? `<div class="note" style="margin-top:10px">Payment of ${inr(pend[0].amt)} sent. Waiting for the owner to confirm.</div>` : o ? '<button class="btn pri" id="pay" style="width:100%;margin-top:12px;padding:12px">Pay by UPI</button>' : ""}</div>
+		<div class="card"><h3>Payment history</h3>${L.slice().reverse().slice(0, 6).map((r) => `<div class="row sb" style="padding:6px 0;border-bottom:1px solid var(--line)"><span>${mn(r.month)}</span><span>${r.out <= 0 ? chip("Paid " + inr(r.paid), "ok") : chip("Due " + inr(r.out), "bad")}</span></div>`).join("")}</div>
+		<div class="card"><h3>Complaints <button class="btn sm pri" id="cm">Raise one</button></h3>${mine.map((x) => `<div class="row sb" style="padding:6px 0;border-bottom:1px solid var(--line)"><span>${esc(x.text)}</span>${chip(x.status === "progress" ? "In progress" : x.status, x.status === "resolved" ? "ok" : "warn")}</div>`).join("") || '<p class="mut">Nothing raised</p>'}</div>
+		<div class="card"><h3>Notices</h3>${N.map((n) => `<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b>${esc(n.title)}</b><p class="mut">${esc(n.body)}</p></div>`).join("")}</div>`;
+		const p = $("#pay"); if (p) p.onclick = () => { const s = RD.settings(), link = UI.upi(s.upi, s.name, o, "Rent"); modal({ title: "Pay " + inr(o), body: `<div style="text-align:center"><div id="qrp" style="display:inline-block;background:#fff;padding:10px;border-radius:10px"></div><p class="mut" style="margin:10px 0">Scan with any UPI app, or tap below on your phone.</p><a class="btn" href="${link}">Open UPI app</a></div>`, onOpen: () => UI.qr("#qrp", link, 170), actions: [{ label: "Close" }, { label: "I have paid", cls: "pri", fn: () => { const P = RD.pays(); P.push({ id: "y" + Date.now(), tid: me, month: RD.ym(new Date()), ts: Date.now(), amt: o, mode: "UPI", status: "pending" }); S.set("pays", P); toast("Sent to the owner for confirmation"); draw(); } }] }); };
+		$("#cm").onclick = () => form("Raise a complaint", `<div class="row2">${field("Category", "cat", "Plumbing", { type: "select", opts: RD.CATS })}${field("Priority", "pri", "Normal", { type: "select", opts: ["Normal", "Urgent"] })}</div>${field("What is wrong?", "text", "", { req: 1 })}`, (v) => { const L2 = S.get("comp", []); L2.push({ id: "c" + Date.now(), tid: me, ...v, status: "open", ts: Date.now(), vendor: "" }); S.set("comp", L2); toast("Complaint sent"); draw(); });
+	}
+	$("#me").onchange = (e) => { me = e.target.value; S.set("me", me); draw(); }; draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Compare properties | Harbor &amp; Co.</title>
+<meta name="description" content="Compare up to three properties side by side: price, area, price per square foot, amenities and neighbourhood scores." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow" style="color:var(--gold)">Compare</p><h1>Side by side.</h1><p>Best values in each row are highlighted. Add up to three properties from the listings page.</p></div></section>
+<section class="sec" style="padding-top:30px"><div class="wrap"><div id="out" style="overflow-x:auto"></div></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+HR.layout("");
+const { $, esc, img } = HR;
+function draw() {
+	const ids = HR.cmp.get(), ls = ids.map((i) => HR.get(i)).filter(Boolean);
+	if (ls.length < 2) { $("#out").innerHTML = `<div class="panel empty"><h3>${ls.length ? "Add at least one more property" : "Nothing to compare yet"}</h3><p class="msg" style="margin:8px 0 16px">Tick “Compare” on any listing (up to 3).</p><a class="btn" href="listings.html">Browse properties</a></div>`; return; }
+	const best = (fn, hi) => { const v = ls.map(fn), t = hi ? Math.max(...v) : Math.min(...v); return v.map((x) => x === t && v.filter((y) => y === t).length < v.length); };
+	const rows = [
+		["Price", (l) => HR.price(l), best((l) => l.price, false)],
+		["Price / sq ft", (l) => HR.psf(l) ? "₹" + HR.psf(l).toLocaleString("en-IN") : "-", best((l) => HR.psf(l) || 1e9, false)],
+		["Area", (l) => l.area >= 43560 ? (l.area / 43560).toFixed(0) + " acre" : l.area.toLocaleString("en-IN") + " sq ft", best((l) => l.area, true)],
+		["Bedrooms", (l) => l.beds || "-", best((l) => l.beds, true)],
+		["Bathrooms", (l) => l.baths || "-", best((l) => l.baths, true)],
+		["Type", (l) => l.type], ["Locality", (l) => l.loc + ", " + l.city], ["Status", (l) => l.age], ["Furnishing", (l) => l.furn], ["Facing", (l) => l.facing],
+		["Walkability", (l) => HR.nb(l).walk + "/10", best((l) => HR.nb(l).walk, true)], ["Schools", (l) => HR.nb(l).school + "/10", best((l) => HR.nb(l).school, true)], ["Transit", (l) => HR.nb(l).transit + "/10", best((l) => HR.nb(l).transit, true)], ["Safety", (l) => HR.nb(l).safety + "/10", best((l) => HR.nb(l).safety, true)],
+		["Amenities", (l) => l.am.length + " (" + l.am.slice(0, 3).join(", ") + "…)", best((l) => l.am.length, true)],
+	];
+	$("#out").innerHTML = `<table class="t cmp-t"><thead><tr><th></th>${ls.map((l) => `<th style="min-width:230px"><a href="property.html?id=${l.id}" style="text-decoration:none;color:var(--navy)"><img src="${img(l.imgs[0])}" alt="" style="border-radius:10px;aspect-ratio:4/3;object-fit:cover;width:100%;margin-bottom:8px;display:block"><span style="font-size:1rem;text-transform:none;letter-spacing:0">${esc(l.title)}</span></a><br><button class="btn ghost sm" data-rm="${l.id}" style="margin-top:8px">Remove</button></th>`).join("")}</tr></thead><tbody>${rows.map(([k, fn, b]) => `<tr><td>${k}</td>${ls.map((l, i) => `<td class="${b && b[i] ? "best" : ""}">${esc(String(fn(l)))}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("[data-rm]"); if (b) { HR.store.set("cmp", HR.cmp.get().filter((x) => x !== b.dataset.rm)); draw(); } });
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

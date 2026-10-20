@@ -1,0 +1,365 @@
+[
+ {
+  "slug": "counterpos",
+  "name": "CounterPOS",
+  "type": "App",
+  "sector": "Shops",
+  "ind": "Kirana, medical &amp; general stores",
+  "shot": "sell",
+  "screens": "10 screens",
+  "desc": "Retail billing counter: barcode and loose-weight items, GST receipts, UPI QR, khata credit, returns with credit notes, and a day-end till check.",
+  "chips": [
+   "Barcode billing",
+   "Khata credit",
+   "GST receipts",
+   "Day close"
+  ],
+  "subs": [
+   [
+    "Billing app",
+    "app.html"
+   ]
+  ]
+ },
+ {
+  "slug": "khatalite",
+  "name": "KhataLite",
+  "type": "App",
+  "sector": "Shops",
+  "ind": "Dairies, wholesalers &amp; services",
+  "shot": "home",
+  "screens": "9 screens",
+  "desc": "Digital udhaar ledger for customers and suppliers, WhatsApp reminders with a UPI link, a shareable statement page for customers, a cashbook and ageing reports.",
+  "chips": [
+   "Customer ledgers",
+   "WhatsApp reminders",
+   "Cashbook",
+   "Ageing report"
+  ],
+  "subs": [
+   [
+    "Khata app",
+    "app.html"
+   ],
+   [
+    "Customer statement",
+    "statement.html#eyJiIjoiTWVodGEgRGFpcnkgJiBTd2VldHMiLCJ1IjoibWVodGFkYWlyeUB1cGkiLCJuIjoiU3VuaXRhIEFnZ2Fyd2FsIiwiYmFsIjoyNTAwLCJlIjpbWzE3NTc1MDAwMDAwMDAsImdhdmUiLDE4MDAsIk1vbnRobHkgZGFpcnkiXSxbMTc1ODgwMDAwMDAwMCwiZ290Iiw2MDAsIlVQSSJdLFsxNzYwMDAwMDAwMDAwLCJnYXZlIiwxMzAwLCJTd2VldHMgYm94Il1dfQ=="
+   ]
+  ]
+ },
+ {
+  "slug": "tabletap",
+  "name": "TableTap",
+  "type": "App",
+  "sector": "Food",
+  "ind": "Restaurants &amp; cafés",
+  "shot": "live",
+  "screens": "11 screens",
+  "desc": "QR table ordering with photos, a live kitchen display, table map, waiter calls, GST bills with service charge, and sales reports. Guest and kitchen screens sync live.",
+  "chips": [
+   "QR ordering",
+   "Kitchen display",
+   "Table map",
+   "GST billing"
+  ],
+  "subs": [
+   [
+    "Guest menu",
+    "menu.html?t=T5"
+   ],
+   [
+    "Kitchen display",
+    "kds.html"
+   ],
+   [
+    "Console",
+    "app.html"
+   ]
+  ]
+ },
+ {
+  "slug": "salondesk",
+  "name": "SalonDesk",
+  "type": "App",
+  "sector": "Health",
+  "ind": "Salons, spas &amp; barbers",
+  "shot": "calendar",
+  "screens": "11 screens",
+  "desc": "Stylist calendar, online booking that respects skills and breaks, GST billing, memberships and packages, client history and WhatsApp campaigns.",
+  "chips": [
+   "Booking calendar",
+   "Online booking",
+   "Memberships",
+   "Campaigns"
+  ],
+  "subs": [
+   [
+    "Online booking",
+    "book.html"
+   ],
+   [
+    "Calendar",
+    "app.html"
+   ]
+  ]
+ },
+ {
+  "slug": "schooldesk",
+  "name": "SchoolDesk",
+  "type": "App",
+  "sector": "Education",
+  "ind": "Schools &amp; play schools",
+  "shot": "dashboard",
+  "screens": "10 screens",
+  "desc": "Admissions, attendance, fee receipts, exams and report cards, timetables and notices, plus a parent portal for attendance, fees, results and UPI payment.",
+  "chips": [
+   "Admissions",
+   "Fees and receipts",
+   "Report cards",
+   "Parent portal"
+  ],
+  "subs": [
+   [
+    "Parent portal",
+    "parent.html"
+   ],
+   [
+    "School console",
+    "app.html"
+   ]
+  ]
+ },
+ {
+  "slug": "coachdesk",
+  "name": "CoachDesk",
+  "type": "App",
+  "sector": "Education",
+  "ind": "Coaching &amp; tuition centres",
+  "shot": "dashboard",
+  "screens": "11 screens",
+  "desc": "Enquiry pipeline, batches and seats, installment fee plans, attendance, tests with ranks, and a timetable planner that blocks teacher, room and batch clashes.",
+  "chips": [
+   "Enquiries",
+   "Fee installments",
+   "Tests and ranks",
+   "Clash-free timetable"
+  ],
+  "subs": [
+   [
+    "Institute console",
+    "app.html"
+   ]
+  ]
+ },
+ {
+  "slug": "paydesk",
+  "name": "PayDesk",
+  "type": "App",
+  "sector": "Services",
+  "ind": "Offices, factories &amp; clinics",
+  "shot": "payroll",
+  "screens": "11 screens",
+  "desc": "Attendance grid, leave, payroll with PF, ESI and professional tax, payslips, advances, a bank transfer file and an employee app for punch-in and payslips.",
+  "chips": [
+   "Payroll run",
+   "PF and ESI",
+   "Payslips",
+   "Employee app"
+  ],
+  "subs": [
+   [
+    "Employee app",
+    "me.html"
+   ],
+   [
+    "Payroll app",
+    "app.html"
+   ]
+  ]
+ },
+ {
+  "slug": "clinicdesk",
+  "name": "ClinicDesk",
+  "type": "App",
+  "sector": "Health",
+  "ind": "Clinics &amp; doctors",
+  "shot": "queue",
+  "screens": "10 screens",
+  "desc": "OPD token queue, patient records, a prescription writer with allergy warnings and printable letterhead, billing with UPI QR, follow-up reminders and reports.",
+  "chips": [
+   "OPD queue",
+   "Prescriptions",
+   "Allergy warnings",
+   "Follow-ups"
+  ],
+  "subs": [
+   [
+    "Clinic app",
+    "app.html"
+   ]
+  ],
+  "color": "#0369a1"
+ },
+ {
+  "slug": "rentdesk",
+  "name": "RentDesk",
+  "type": "App",
+  "sector": "Property",
+  "ind": "PG, hostels &amp; landlords",
+  "shot": "dashboard",
+  "screens": "11 screens",
+  "desc": "Bed-level occupancy, tenant records, monthly rent with UPI reminders and receipts, move-out settlement, complaints, expenses by property and a tenant app.",
+  "chips": [
+   "Rooms and beds",
+   "Rent ledger",
+   "Move-out settlement",
+   "Tenant app"
+  ],
+  "subs": [
+   [
+    "Tenant app",
+    "me.html"
+   ],
+   [
+    "Rental console",
+    "app.html"
+   ]
+  ],
+  "color": "#4f46e5"
+ },
+ {
+  "slug": "societyhub",
+  "name": "SocietyHub",
+  "type": "App",
+  "sector": "Property",
+  "ind": "Housing societies &amp; RWAs",
+  "shot": "dashboard",
+  "screens": "13 screens",
+  "desc": "Maintenance billing, a gate screen with resident-approved visitors, complaints, notices and polls, facility booking, accounts and a resident app.",
+  "chips": [
+   "Maintenance billing",
+   "Visitor approvals",
+   "Polls",
+   "Resident app"
+  ],
+  "subs": [
+   [
+    "Gate screen",
+    "gate.html"
+   ],
+   [
+    "Resident app",
+    "me.html"
+   ],
+   [
+    "Committee console",
+    "app.html"
+   ]
+  ],
+  "color": "#0f766e"
+ },
+ {
+  "slug": "fixtrack",
+  "name": "FixTrack",
+  "type": "App",
+  "sector": "Services",
+  "ind": "Repair shops &amp; garages",
+  "shot": "board",
+  "screens": "9 screens",
+  "desc": "Job cards, a repair board by stage, customer estimate approval, parts stock, GST invoices, warranty claims and WhatsApp updates.",
+  "chips": [
+   "Job cards",
+   "Estimate approval",
+   "Parts stock",
+   "Warranty"
+  ],
+  "subs": [
+   [
+    "Customer tracking",
+    "track.html?j=QF-2105"
+   ],
+   [
+    "Repair board",
+    "app.html"
+   ]
+  ]
+ },
+ {
+  "slug": "givetrack",
+  "name": "GiveTrack",
+  "type": "App",
+  "sector": "Non-profit",
+  "ind": "NGOs, trusts &amp; temples",
+  "shot": "dashboard",
+  "screens": "14 screens",
+  "desc": "Public donation page with UPI, instant 80G receipts, donor records, campaigns with progress, monthly giving, utilisation reports and a donor-wise statement.",
+  "chips": [
+   "80G receipts",
+   "Donation page",
+   "Monthly giving",
+   "Donor statement"
+  ],
+  "subs": [
+   [
+    "Donation page",
+    "donate.html"
+   ],
+   [
+    "NGO console",
+    "app.html"
+   ]
+  ]
+ },
+ {
+  "slug": "leadnest",
+  "name": "LeadNest",
+  "type": "App",
+  "sector": "Services",
+  "ind": "Interior designers, contractors &amp; service firms",
+  "shot": "pipeline",
+  "screens": "10 screens",
+  "desc": "Lead pipeline for service businesses: a web enquiry form that feeds the board, daily follow-ups, shareable quotations the client can accept, and win and loss reports.",
+  "chips": [
+   "Pipeline board",
+   "Enquiry form",
+   "Quotations",
+   "Follow-ups"
+  ],
+  "subs": [
+   [
+    "Enquiry form",
+    "form.html"
+   ],
+   [
+    "CRM",
+    "app.html"
+   ]
+  ]
+ },
+ {
+  "slug": "filepilot",
+  "name": "FilePilot",
+  "type": "App",
+  "sector": "Finance",
+  "ind": "CA firms &amp; tax consultants",
+  "shot": "dashboard",
+  "screens": "10 screens",
+  "desc": "Compliance tracker for CA firms: GST, TDS, PF, advance tax, ITR and ROC due dates per client, a filings board, WhatsApp document reminders and a client upload portal.",
+  "chips": [
+   "Due-date calendar",
+   "Filings board",
+   "Document chase",
+   "Client portal"
+  ],
+  "subs": [
+   [
+    "Client portal",
+    "portal.html"
+   ],
+   [
+    "Tracker",
+    "app.html"
+   ]
+  ]
+ }
+]

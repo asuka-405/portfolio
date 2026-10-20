@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Account statement | KhataLite</title>
+<meta name="robots" content="noindex" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font:15px/1.5 system-ui,sans-serif;background:#eef6f8;color:#12303a;padding:20px}
+.s{max-width:560px;margin:0 auto;background:#fff;border-radius:18px;box-shadow:0 20px 50px rgba(8,60,80,.12);overflow:hidden}
+.h{background:#0e7490;color:#fff;padding:22px}.h small{opacity:.8}.h h1{font-size:1.4rem;margin:2px 0 0}
+.bal{padding:22px;text-align:center;border-bottom:1px solid #e3eef1}.bal b{display:block;font-size:2.4rem;letter-spacing:-.02em}.bal span{color:#5b7782}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td,th{padding:9px 16px;border-bottom:1px solid #eef3f5;text-align:left}th{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#5b7782}.r{text-align:right}
+.pay{padding:22px;text-align:center}.pay a{display:inline-block;background:#0e7490;color:#fff;padding:13px 26px;border-radius:12px;text-decoration:none;font-weight:700}#q{display:inline-block;background:#fff;padding:8px;border:1px solid #e3eef1;border-radius:10px;margin:14px 0}.f{padding:14px;text-align:center;color:#5b7782;font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="s" id="s"><div class="h"><small>Statement from</small><h1 id="biz"></h1></div><div class="bal"><span id="hi"></span><b id="amt"></b><span id="lbl"></span></div><div id="rows"></div><div class="pay" id="pay"></div><div class="f">KhataLite, a concept build by Suryansh Kapil. Sample data.</div></div>
+<script src="../lib/qrcode.min.js"></script>
+<script>
+(function () {
+	const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+	let d; try { d = JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(1))))); } catch (e) { document.getElementById("s").innerHTML = '<div class="pay"><p>This statement link is not valid.</p></div>'; return; }
+	document.getElementById("biz").textContent = d.b; document.getElementById("hi").textContent = "Hello " + d.n; document.getElementById("amt").textContent = inr(Math.abs(d.bal));
+	document.getElementById("lbl").textContent = d.bal > 0 ? "pending with " + d.b : d.bal < 0 ? "payable to you by " + d.b : "all settled";
+	let run = 0; document.getElementById("rows").innerHTML = "<table><tr><th>Date</th><th>Details</th><th class=r>Amount</th></tr>" + d.e.map((e) => `<tr><td>${new Date(e[0]).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</td><td>${(e[3] || (e[1] === "got" ? "Payment" : "Credit")).replace(/[<>&]/g, "")}</td><td class="r" style="color:${e[1] === "got" ? "#16a34a" : "#12303a"}">${e[1] === "got" ? "-" : ""}${inr(e[2])}</td></tr>`).join("") + "</table>";
+	if (d.bal > 0) { const u = "upi://pay?pa=" + encodeURIComponent(d.u) + "&pn=" + encodeURIComponent(d.b) + "&am=" + d.bal.toFixed(2) + "&cu=INR"; document.getElementById("pay").innerHTML = `<a href="${u}">Pay ${inr(d.bal)} by UPI</a><br><div id="q"></div><div style="color:#5b7782;font-size:.85rem">or scan with any UPI app</div>`; new QRCode(document.getElementById("q"), { text: u, width: 140, height: 140 }); }
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

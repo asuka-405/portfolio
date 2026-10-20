@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -167,7 +168,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>Bugs in C++ split into three categories that need genuinely different tools to find, and misdiagnosing which one you have wastes time.</p>
+					<p>Bugs in C++ split into three categories that need different tools to find, and misdiagnosing which one you have wastes time.</p>
 					<ul><li>Compile errors: the code doesn't parse or type-check. The compiler always tells you, though not always where you'd expect (a missing semicolon on line 10 often shows up as an error on line 11, since that's where the parser finally gave up).</li><li>Logic errors: the code compiles and runs, but produces the wrong answer. The compiler cannot help you here by definition, since as far as it's concerned nothing is wrong.</li><li>Runtime errors: the code crashes, hangs, or triggers undefined behavior (out-of-bounds access, use of an uninitialized value, dereferencing a null or dangling pointer). Sometimes the OS kills the process outright (segmentation fault); sometimes, worse, it just silently produces garbage and keeps going.</li></ul>
 					<h3>Reading compiler errors and warnings</h3>
 					<p>Compiler output reads bottom-to-top less often than you'd think for C++; usually the first error listed is the real one, and everything after it is the compiler getting confused by the fallout from that first error. Fix the first error, recompile, and see how much of the rest disappears before chasing the second one.</p>
@@ -215,7 +216,7 @@ int main() {
 					<h3>Using a debugger</h3>
 					<p>Every mainstream debugger (gdb, lldb, or whatever your IDE wraps around one of those) gives you the same handful of core tools, described here generically since the concepts transfer directly regardless of which one you use:</p>
 					<ul><li>Breakpoints: mark a line where execution should pause so you can inspect the program's state at exactly that moment, instead of guessing from output.</li><li>Stepping: once paused, step into a function call to follow it line by line, step over one to run it as a black box and stop right after, or step out to finish the current function and pause back in its caller.</li><li>Watching variables: inspect (and in most debuggers, edit) the current value of any variable in scope, at the exact paused moment, rather than adding a print statement and rerunning.</li><li>The call stack: see the full chain of function calls that got you to the current paused line, which is often the fastest way to understand how you ended up somewhere unexpected.</li></ul>
-					<p>The single highest-value habit: when something crashes, don't immediately start guessing. Set a breakpoint as close to the crash as you can, run it, and actually look at the values in scope. Most &quot;impossible&quot; bugs turn out to be a variable holding a value you didn't expect, and a debugger shows you that directly instead of you having to infer it.</p>
+					<p>The single highest-value habit: when something crashes, don't immediately start guessing. Set a breakpoint as close to the crash as you can, run it, and look at the values in scope. Most &quot;impossible&quot; bugs turn out to be a variable holding a value you didn't expect, and a debugger shows you that directly instead of you having to infer it.</p>
 					<h3>Print debugging, done well</h3>
 					<p>Debuggers aren't always available or convenient (a multi-threaded race condition, timing-sensitive code, a remote embedded target), and print debugging remains a completely legitimate tool. The difference between print debugging that wastes an afternoon and print debugging that finds the bug in ten minutes is usually just discipline:</p>
 					<ul><li>Print the value AND a label. &quot;5&quot; tells you nothing an hour later; &quot;x after the loop: 5&quot; does.</li><li>Print at the boundary of the suspect region, not scattered everywhere. Bisect: if the value is right at the start of a function and wrong by the end, the bug is somewhere in that function, and you narrow further from there.</li><li>Remove the prints once you're done, or better, guard them behind a debug flag from the start so they don't linger in production output.</li></ul>

@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -186,7 +187,7 @@ func main() {
 				</div>
 
 <div class="prose reveal">
-					<p><strong>Type inference with :=</strong></p>
+					<p><strong>Type inference with:=</strong></p>
 					<p>When you use <code>:=</code>, the compiler picks a type based on the right-hand side: integer literals become <code>int</code>, floating-point literals become <code>float64</code>, string literals become <code>string</code>. This inference happens once at declaration and the variable's type is fixed after that, Go isn't dynamically typed.</p>
 					<p><strong>Type declarations: alias vs new named type</strong></p>
 					<p><code>type Celsius = float64</code> creates an alias: <code>Celsius</code> and <code>float64</code> are completely interchangeable, the same type under two names. <code>type Celsius float64</code> (no <code>=</code>) creates a new, distinct named type with <code>float64</code> as its underlying representation. The two look almost identical but behave very differently.</p>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Track your repair | FixTrack (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#e11d48;--acc-ink:#fff;--acc-soft:rgba(225,29,72,.1)}body{background:#fdeef1}
+.w{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg);box-shadow:0 0 60px rgba(120,10,40,.12)}.hd{background:var(--acc);color:#fff;padding:20px}.hd h1{font-size:1.25rem}.hd small{opacity:.85}.pc{padding:16px;display:grid;gap:14px}
+.tl{position:relative;padding-left:26px}.tl div{position:relative;padding:6px 0}.tl div::before{content:"";position:absolute;left:-20px;top:11px;width:12px;height:12px;border-radius:50%;background:var(--line);border:2px solid var(--panel)}.tl div.on::before{background:var(--acc)}.tl::before{content:"";position:absolute;left:-15px;top:10px;bottom:10px;width:2px;background:var(--line)}
+</style>
+</head>
+<body>
+<div class="w"><div class="hd"><small id="sn"></small><h1>Track your repair</h1></div><div class="pc" id="pc"></div></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, esc, inr, fdate, toast, field, chip } = UI; $("#sn").textContent = FT.settings().name;
+	let code = new URLSearchParams(location.search).get("j") || "";
+	function draw() {
+		const j = code && FT.job(code.trim().toUpperCase());
+		if (!j) return ($("#pc").innerHTML = `<div class="card"><h3>Enter your job code</h3><p class="mut" style="margin-bottom:10px">It is on your receipt and in the message we sent you.</p><div class="row"><input class="in" id="jc" placeholder="QF-2045" style="flex:1"><button class="btn pri" id="go">Track</button></div>${code ? '<p class="dn" style="margin-top:8px">We could not find that job.</p>' : ""}</div>`, ($("#go").onclick = () => { code = $("#jc").value; draw(); }));
+		const idx = FT.ST.findIndex((s) => s[0] === j.status), t = FT.total(j);
+		$("#pc").innerHTML = `<div class="card"><div class="row sb"><b style="font-size:1.1rem">${esc(j.model)}</b>${chip(FT.ST[idx][1], FT.ST[idx][2])}</div><div class="mut">Job ${j.code} · received ${fdate(j.ts)}</div><p style="margin-top:8px"><b>Problem:</b> ${esc(j.issue)}</p></div><div class="card"><h3>Progress</h3><div class="tl">${FT.ST.map((s, i) => `<div class="${i <= idx ? "on" : ""}"><b style="${i > idx ? "opacity:.45" : ""}">${s[1]}</b></div>`).join("")}</div></div>${j.status === "approval" ? `<div class="card" style="border-color:var(--warn)"><h3>Please approve the estimate</h3><div style="font-size:2rem;font-weight:800">${inr(j.est)}</div><p class="mut" style="margin:6px 0 12px">Including parts and labour, plus 18% GST on the final bill. Advance paid ${inr(j.advance)}.</p><div class="row"><button class="btn" id="no" style="flex:1">Decline</button><button class="btn pri" id="ok" style="flex:1">Approve repair</button></div></div>` : ""}${j.status === "ready" ? `<div class="card"><h3>Ready for pickup</h3><p>Please bring this code. Balance to pay <b>${inr(t.total - j.advance)}</b>.</p></div>` : ""}${j.warranty ? `<div class="card"><h3>Warranty</h3><p>Covered until ${fdate(j.warranty)}.</p></div>` : ""}<button class="btn" id="back">Track another repair</button>`;
+		const ok = $("#ok"); if (ok) { ok.onclick = () => { FT.setStatus(j.code, "repairing", "Customer"); const L = FT.jobs(); L.find((x) => x.code === j.code).approved = true; FT.S.set("jobs", L); toast("Thank you. We have started the repair."); draw(); }; $("#no").onclick = () => { toast("Noted. We will call you."); }; }
+		$("#back").onclick = () => { code = ""; history.replaceState(null, "", "track.html"); draw(); };
+	}
+	FT.onChange(draw); draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Our agents | Harbor &amp; Co.</title>
+<meta name="description" content="Meet the Harbor &amp; Co. property advisors." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow" style="color:var(--gold)">Advisors</p><h1>People, not pop-ups.</h1><p>Every client has a named advisor who answers their own phone.</p></div></section>
+<section class="sec" style="padding-top:34px"><div class="wrap"><div class="grid" id="list" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))"></div></div></section>
+<section class="sec alt"><div class="wrap split"><div><p class="eyebrow">Get in touch</p><h2 style="font-size:clamp(1.8rem,4vw,2.6rem);margin:8px 0 12px">Tell us what you're looking for.</h2><p class="msg" style="font-size:1rem">Share your budget and preferred areas and we'll shortlist matching homes, usually within a day.</p></div>
+<form class="panel" id="f" style="margin:0"><div style="display:grid;gap:12px"><div class="row2"><label class="f">Name<input class="in" name="name" required></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}"></label></div><div class="row2"><label class="f">Looking to<select class="in" name="goal"><option>Buy</option><option>Rent</option><option>Invest</option></select></label><label class="f">Budget<input class="in" name="budget" placeholder="e.g. ₹1–1.5 Cr"></label></div><label class="f">Preferred areas<input class="in" name="areas" placeholder="e.g. Sector 150, Indirapuram"></label><button class="btn gold">Get matching homes</button></div></form></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+HR.layout("agents");
+const { $, esc, img, D } = HR, L = HR.listings();
+$("#list").innerHTML = Object.entries(D.agents).map(([k, a]) => `<div class="panel agent"><img src="${img(a.img)}" alt="${esc(a.name)}" loading="lazy"><h3 style="margin-bottom:2px">${esc(a.name)}</h3><div class="msg" style="margin-bottom:12px">${esc(a.role)}</div><div class="row3" style="margin-bottom:12px"><div><b>${a.exp}</b><div class="msg">yrs</div></div><div><b>${a.deals}</b><div class="msg">deals</div></div><div><b>${L.filter((l) => l.agent === k).length}</b><div class="msg">listings</div></div></div><p class="msg" style="margin-bottom:12px">Speaks ${esc(a.langs)}</p><a class="btn ghost sm" href="tel:${a.phone.replace(/\s/g, "")}">📞 ${a.phone}</a> <a class="btn sm" href="listings.html?agent=${k}">Their listings</a></div>`).join("");
+$("#f").onsubmit = (e) => { e.preventDefault(); const f = e.target; HR.leads.add({ name: f.name.value, phone: f.phone.value, kind: "buyer", note: `${f.goal.value}, budget ${f.budget.value || "-"}, areas ${f.areas.value || "-"}`, agent: "kavya" }); $("#f").innerHTML = `<h3>Thank you, ${esc(f.name.value.split(" ")[0])}!</h3><p class="msg">We'll send matching homes within a day.</p>`; };
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

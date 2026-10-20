@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -188,7 +189,7 @@ int add(int a, int b) {
 </pre></noscript></div>
 
 <div class="prose reveal">
-					<p>The compiler only needs to know a function's signature to generate a call to it. It doesn't need the body until link time, when the linker has to actually find that body somewhere. That's the whole trick behind splitting a program across files.</p>
+					<p>The compiler only needs to know a function's signature to generate a call to it. It doesn't need the body until link time, when the linker has to find that body somewhere. That's the whole trick behind splitting a program across files.</p>
 					<h3>Parameters and return values</h3>
 					<p>Parameters are passed by value by default: the function gets its own copy, and changes inside the function don't touch the caller's variable. That's usually what you want for small types (int, double, bool) and usually wrong for anything larger, since it means an unnecessary copy. References (covered properly in a later chapter) fix that; for now, know that pass-by-value is the default and it's a real copy, not a nickname for the caller's variable.</p>
 				</div>
@@ -209,7 +210,7 @@ int main() {
 <div class="prose reveal">
 					<p>A function with no meaningful value to return uses void. A function declared to return something non-void must return something on every possible path, or the behavior of falling off the end is undefined (main is the one specific, documented exception to this rule).</p>
 					<h3>Header files and the one-definition rule</h3>
-					<p>A header file (.h or .hpp) exists to be #included by multiple .cpp files, and by convention it holds declarations, not definitions. Split a small program into three files to see why this matters:</p>
+					<p>A header file (.h or.hpp) exists to be #included by multiple.cpp files, and by convention it holds declarations, not definitions. Split a small program into three files to see why this matters:</p>
 				</div>
 
 <div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// math_utils.h</span></span>
@@ -238,7 +239,7 @@ int main() {
 
 <div class="prose reveal">
 					<p>main.cpp never sees the definitions of add or multiply, only their declarations through the header. The compiler compiles main.cpp and math_utils.cpp completely independently into two object files; the linker is the only stage that needs both bodies to exist somewhere.</p>
-					<p>The one-definition rule (ODR) is the reason headers hold declarations and not definitions: a non-inline function or a non-template variable can have exactly one definition across the entire program. Put a function <em>body</em> in a header, include that header from two .cpp files, and you get two definitions of the same function at link time: a redefinition error. Declarations are exempt from this because they carry no code, just a promise.</p>
+					<p>The one-definition rule (ODR) is the reason headers hold declarations and not definitions: a non-inline function or a non-template variable can have exactly one definition across the entire program. Put a function <em>body</em> in a header, include that header from two.cpp files, and you get two definitions of the same function at link time: a redefinition error. Declarations are exempt from this because they carry no code, just a promise.</p>
 					<h3>Include guards and #pragma once</h3>
 					<p>The same header can get #included more than once into a single translation unit, directly or indirectly (file A includes B and C, and both B and C include D). Without protection, the preprocessor pastes D's contents in twice, and the compiler sees the same declarations twice, which for some constructs (class definitions, for instance) is a hard error.</p>
 				</div>
@@ -264,19 +265,19 @@ int main() {
 				</div>
 
 <div class="dgm dgm-flow reveal">
-  <div class="dgm-box"><span class="dgm-bt">main.cpp</span><span class="dgm-bd">#includes math_utils.h</span></div>
-  <span class="dgm-arr">+</span>
-  <div class="dgm-box"><span class="dgm-bt">math_utils.cpp</span><span class="dgm-bd">#includes math_utils.h too</span></div>
-  <span class="dgm-arr">→</span>
-  <div class="dgm-box dgm-box--accent"><span class="dgm-bt">two .o files</span><span class="dgm-bd">compiled independently</span></div>
-  <span class="dgm-arr">→</span>
-  <div class="dgm-box dgm-box--accent"><span class="dgm-bt">linker</span><span class="dgm-bd">resolves add()/multiply() calls to their real bodies</span></div>
+ <div class="dgm-box"><span class="dgm-bt">main.cpp</span><span class="dgm-bd">#includes math_utils.h</span></div>
+ <span class="dgm-arr">+</span>
+ <div class="dgm-box"><span class="dgm-bt">math_utils.cpp</span><span class="dgm-bd">#includes math_utils.h too</span></div>
+ <span class="dgm-arr">→</span>
+ <div class="dgm-box dgm-box--accent"><span class="dgm-bt">two.o files</span><span class="dgm-bd">compiled independently</span></div>
+ <span class="dgm-arr">→</span>
+ <div class="dgm-box dgm-box--accent"><span class="dgm-bt">linker</span><span class="dgm-bd">resolves add()/multiply() calls to their real bodies</span></div>
 </div>
 
 <div class="prose reveal">
-					<p>This is also exactly why a linker error like &quot;undefined reference to add(int, int)&quot; means the header's declaration was found and believed, but no .o file anywhere in the final link step actually defined it (a common cause: you forgot to add the .cpp file to the build, or renamed it and the build system doesn't know).</p>
+					<p>This is also exactly why a linker error like &quot;undefined reference to add(int, int)&quot; means the header's declaration was found and believed, but no.o file anywhere in the final link step defined it (a common cause: you forgot to add the.cpp file to the build, or renamed it and the build system doesn't know).</p>
 					<h3>Linkage, in brief</h3>
-					<p>Every name at file scope (a function, a global variable) has linkage, which controls whether the same name in a different translation unit refers to the same entity. Functions and non-const globals have external linkage by default: the same name in two files really does refer to one shared thing, which is exactly what lets main.cpp call a function defined in math_utils.cpp. The full picture, including internal linkage and static, belongs to its own chapter later in this course since it interacts with scope and storage duration; for now, the practical rule is: declare in a header, define in exactly one .cpp file, and the linker does the rest.</p>
+					<p>Every name at file scope (a function, a global variable) has linkage, which controls whether the same name in a different translation unit refers to the same entity. Functions and non-const globals have external linkage by default: the same name in two files really does refer to one shared thing, which is exactly what lets main.cpp call a function defined in math_utils.cpp. The full picture, including internal linkage and static, belongs to its own chapter later in this course since it interacts with scope and storage duration; for now, the practical rule is: declare in a header, define in exactly one.cpp file, and the linker does the rest.</p>
 				</div>
 
 				<div class="callout reveal">

@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -96,7 +97,7 @@
 						<div class="doc-section">
 <div class="prose reveal">
 					<h3>Four programs are hiding behind one <code>gcc</code> invocation</h3>
-					<p><code>gcc file.c -o program</code> looks like one step. It's actually a pipeline of four, and knowing which stage produced an error tells you immediately what kind of mistake you're looking at.</p>
+					<p><code>gcc file.c -o program</code> looks like one step. It's a pipeline of four, and knowing which stage produced an error tells you immediately what kind of mistake you're looking at.</p>
 				</div>
 
 <div class="dgm dgm-scroll reveal">
@@ -107,7 +108,7 @@
 		<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
 		<div class="dgm-box"><span class="dgm-bt">Assembler</span><span class="dgm-bd">Assembly → object file (.o), machine code plus an unresolved symbol table</span><span class="dgm-tag">gcc -c</span></div>
 		<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
-		<div class="dgm-box dgm-box--accent"><span class="dgm-bt">★ Linker</span><span class="dgm-bd">Merge every .o and library, resolve every symbol reference to an address</span><span class="dgm-tag">ld, invoked by gcc</span></div>
+		<div class="dgm-box dgm-box--accent"><span class="dgm-bt">★ Linker</span><span class="dgm-bd">Merge every.o and library, resolve every symbol reference to an address</span><span class="dgm-tag">ld, invoked by gcc</span></div>
 		<div class="dgm-arr"><span class="ico h">→</span><span class="ico v">↓</span></div>
 		<div class="dgm-box"><span class="dgm-bt">Executable</span><span class="dgm-bd">Ready to load and run</span></div>
 	</div>

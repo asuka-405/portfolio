@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Websites and business apps built by Suryansh Kapil for different kinds of business. Each one is a working demo with an admin side."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Works · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../articles/index.html">Writing</a>
+					<a href="index.html" aria-current="page">Works</a>
+					<a href="../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="doc-hero">
+				<div class="hero-ambient" aria-hidden="true"><div class="hero-orbit"></div></div>
+				<a class="back-link reveal" href="../index.html">← Home</a>
+				<p class="doc-status reveal" style="--d: 0.04s">Works · 12 products</p>
+				<h1 class="doc-title reveal" style="--d: 0.08s">
+					Websites &amp; <span class="text-accent">business apps</span>
+				</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">
+					Complete, working products for the kinds of businesses that need
+					them, cafés, clinics, gyms, shops, lenders, agencies. Each one is
+					a <strong>full demo you can click through</strong>: multiple pages,
+					real flows, an admin dashboard and a landing page you could show a
+					client today.
+				</p>
+				<ul class="works-facts reveal" style="--d: 0.16s">
+					<li><b>12</b><span>complete products</span></li>
+					<li><b>110+</b><span>screens &amp; pages</span></li>
+					<li><b>12</b><span>industries</span></li>
+					<li><b>0</b><span>backends or frameworks</span></li>
+				</ul>
+				<p class="works-note reveal" style="--d: 0.2s">
+					<strong>Honest label:</strong> these are self-initiated concept
+					builds for sample businesses. The brands, people, prices and data
+					are fictional (photos are from Unsplash), and nothing here is
+					client work or a client testimonial. They show what I'd build for
+					<em>you</em>, adapted to your brand, data and workflow.
+				</p>
+			</section>
+
+			<section class="section works-section" id="works">
+				<div class="tag-filter-bar" id="works-filter" role="group" aria-label="Filter works">
+					<button type="button" class="tag-chip active" data-type="">All</button>
+					<button type="button" class="tag-chip" data-type="Website">Websites</button>
+					<button type="button" class="tag-chip" data-type="App">Business apps</button>
+				</div>
+				<div class="works-grid" id="works-grid">
+					<article class="work-card reveal" data-type="Website" style="--d: 0.00s">
+						<a class="work-thumb" href="brew-and-bean/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/brew-and-bean.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">Website</span><span class="work-pages">9 pages</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Café &amp; food</p>
+							<h3><a href="brew-and-bean/index.html">Brew &amp; Bean</a></h3>
+							<p class="work-desc">Menu, ordering and rewards for a three-outlet café: customisable drinks, bag and checkout, live order tracking, loyalty tiers, catering quotes and a staff order board.</p>
+							<div class="chips"><span class="chip chip--muted">Order & track</span><span class="chip chip--muted">Loyalty rewards</span><span class="chip chip--muted">Catering quotes</span><span class="chip chip--muted">Staff dashboard</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="brew-and-bean/index.html">Open live demo →</a><a class="work-sub" href="brew-and-bean/admin.html">Staff dashboard</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="Website" style="--d: 0.03s">
+						<a class="work-thumb" href="fitforge/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/fitforge.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">Website</span><span class="work-pages">9 pages</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Fitness</p>
+							<h3><a href="fitforge/index.html">FitForge</a></h3>
+							<p class="work-desc">Gym site with live class booking, waitlists and calendar export, a join flow with member card, member portal, coaches, calculators and an owner dashboard.</p>
+							<div class="chips"><span class="chip chip--muted">Class booking</span><span class="chip chip--muted">Member portal</span><span class="chip chip--muted">Join & pay flow</span><span class="chip chip--muted">Owner dashboard</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="fitforge/index.html">Open live demo →</a><a class="work-sub" href="fitforge/admin.html">Owner dashboard</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="Website" style="--d: 0.06s">
+						<a class="work-thumb" href="lumen-dental/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/lumen-dental.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">Website</span><span class="work-pages">10 pages</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Healthcare</p>
+							<h3><a href="lumen-dental/index.html">Lumen Dental</a></h3>
+							<p class="work-desc">Clinic site with a booking engine that knows each dentist's real availability, a patient portal, smile quiz, treatment pricing with EMI and a front-desk schedule.</p>
+							<div class="chips"><span class="chip chip--muted">Live availability</span><span class="chip chip--muted">Patient portal</span><span class="chip chip--muted">Smile quiz & EMI</span><span class="chip chip--muted">Clinic schedule</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="lumen-dental/index.html">Open live demo →</a><a class="work-sub" href="lumen-dental/admin.html">Clinic dashboard</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="Website" style="--d: 0.09s">
+						<a class="work-thumb" href="harbor-realty/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/harbor-realty.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">Website</span><span class="work-pages">10 pages</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Real estate</p>
+							<h3><a href="harbor-realty/index.html">Harbor &amp; Co.</a></h3>
+							<p class="work-desc">Property portal with 18 listings, rich filters, galleries and floor plans, compare, shortlist, EMI and stamp-duty calculators, a price estimator and an agent CRM.</p>
+							<div class="chips"><span class="chip chip--muted">Search & compare</span><span class="chip chip--muted">Calculators</span><span class="chip chip--muted">Visit scheduling</span><span class="chip chip--muted">Agent CRM</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="harbor-realty/index.html">Open live demo →</a><a class="work-sub" href="harbor-realty/admin.html">Agent CRM</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="Website" style="--d: 0.12s">
+						<a class="work-thumb" href="kiln-and-clay/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/kiln-and-clay.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">Website</span><span class="work-pages">15 pages</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">E-commerce</p>
+							<h3><a href="kiln-and-clay/index.html">Kiln &amp; Clay</a></h3>
+							<p class="work-desc">A complete online store: catalogue with sets and stock, cart and promo codes, checkout, order tracking, workshops with seat picker, trade quotes and a studio dashboard.</p>
+							<div class="chips"><span class="chip chip--muted">Cart & checkout</span><span class="chip chip--muted">Order tracking</span><span class="chip chip--muted">Workshop booking</span><span class="chip chip--muted">Studio dashboard</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="kiln-and-clay/index.html">Open live demo →</a><a class="work-sub" href="kiln-and-clay/admin.html">Studio dashboard</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="App" style="--d: 0.15s">
+						<a class="work-thumb" href="stockpulse/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/stockpulse.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">App</span><span class="work-pages">10 screens</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Retail</p>
+							<h3><a href="stockpulse/index.html">StockPulse</a></h3>
+							<p class="work-desc">Inventory software for shops: dashboard, barcode quick sale, movements ledger, stock takes, purchase orders, suppliers, ABC and dead-stock reports.</p>
+							<div class="chips"><span class="chip chip--muted">Quick sale</span><span class="chip chip--muted">Purchase orders</span><span class="chip chip--muted">Stock take</span><span class="chip chip--muted">Reports</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="stockpulse/index.html">Open live demo →</a><a class="work-sub" href="stockpulse/app.html">Open the app</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="App" style="--d: 0.00s">
+						<a class="work-thumb" href="queuelite/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/queuelite.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">App</span><span class="work-pages">7 screens</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Clinics &amp; salons</p>
+							<h3><a href="queuelite/index.html">QueueLite</a></h3>
+							<p class="work-desc">Token queue management: service desk, waiting-room display with voice, self check-in kiosk with QR tickets, phone tracker and analytics, all synced live.</p>
+							<div class="chips"><span class="chip chip--muted">Live-synced screens</span><span class="chip chip--muted">Kiosk & QR</span><span class="chip chip--muted">Voice display</span><span class="chip chip--muted">Analytics</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="queuelite/index.html">Open live demo →</a><a class="work-sub" href="queuelite/desk.html">Service desk</a><a class="work-sub" href="queuelite/display.html">Display</a><a class="work-sub" href="queuelite/kiosk.html">Kiosk</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="App" style="--d: 0.03s">
+						<a class="work-thumb" href="shiftboard/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/shiftboard.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">App</span><span class="work-pages">9 screens</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Staffing &amp; retail</p>
+							<h3><a href="shiftboard/index.html">ShiftBoard</a></h3>
+							<p class="work-desc">Rostering with a weekly grid, compliance checks, auto-fill, leave and swap requests, time clock, labour-cost tracking and a staff mobile view.</p>
+							<div class="chips"><span class="chip chip--muted">Auto-fill roster</span><span class="chip chip--muted">Compliance rules</span><span class="chip chip--muted">Time clock</span><span class="chip chip--muted">Staff app</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="shiftboard/index.html">Open live demo →</a><a class="work-sub" href="shiftboard/app.html">Open the app</a><a class="work-sub" href="shiftboard/me.html">Staff view</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="App" style="--d: 0.06s">
+						<a class="work-thumb" href="salesboard/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/salesboard.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">App</span><span class="work-pages">10 screens</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">D2C analytics</p>
+							<h3><a href="salesboard/index.html">Salesboard</a></h3>
+							<p class="work-desc">Sales analytics for a skincare brand: KPI deltas, products, customer cohorts, channel ROAS, geography, goals, a report builder and alerts over 12 months of data.</p>
+							<div class="chips"><span class="chip chip--muted">Cohort retention</span><span class="chip chip--muted">Channel ROAS</span><span class="chip chip--muted">Report builder</span><span class="chip chip--muted">Alerts</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="salesboard/index.html">Open live demo →</a><a class="work-sub" href="salesboard/app.html">Open the app</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="App" style="--d: 0.09s">
+						<a class="work-thumb" href="invoicekit/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/invoicekit.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">App</span><span class="work-pages">12 screens</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Freelancers &amp; SMBs</p>
+							<h3><a href="invoicekit/index.html">InvoiceKit</a></h3>
+							<p class="work-desc">GST invoicing with quotes, shareable pay-by-UPI links, clients, expenses, ageing, GST summaries and three templates with your logo.</p>
+							<div class="chips"><span class="chip chip--muted">GST invoices</span><span class="chip chip--muted">UPI pay links</span><span class="chip chip--muted">Quotes → invoices</span><span class="chip chip--muted">GST reports</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="invoicekit/index.html">Open live demo →</a><a class="work-sub" href="invoicekit/app.html">Open the app</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="App" style="--d: 0.12s">
+						<a class="work-thumb" href="orderlink/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/orderlink.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">App</span><span class="work-pages">9 screens</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Local commerce</p>
+							<h3><a href="orderlink/index.html">OrderLink</a></h3>
+							<p class="work-desc">WhatsApp ordering for small sellers: store and catalogue builder, mobile storefront with cart and checkout, order inbox, QR poster, customers and analytics.</p>
+							<div class="chips"><span class="chip chip--muted">Storefront</span><span class="chip chip--muted">Order inbox</span><span class="chip chip--muted">Share & QR</span><span class="chip chip--muted">Analytics</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="orderlink/index.html">Open live demo →</a><a class="work-sub" href="orderlink/shop.html">Customer store</a><a class="work-sub" href="orderlink/app.html">Dashboard</a></div>
+						</div>
+					</article>
+					<article class="work-card reveal" data-type="App" style="--d: 0.15s">
+						<a class="work-thumb" href="lendwise/index.html" tabindex="-1" aria-hidden="true">
+							<img src="img/lendwise.jpg" width="960" height="600" loading="lazy" alt="" />
+							<span class="work-type">App</span><span class="work-pages">9 screens</span>
+						</a>
+						<div class="work-body">
+							<p class="work-ind">Finance</p>
+							<h3><a href="lendwise/index.html">LendWise</a></h3>
+							<p class="work-desc">Lending platform: customer site with EMI and eligibility calculators and tracking, an underwriting console, loan book, collections and product-rate control.</p>
+							<div class="chips"><span class="chip chip--muted">Underwriting</span><span class="chip chip--muted">Loan book</span><span class="chip chip--muted">Collections</span><span class="chip chip--muted">Customer site</span></div>
+							<div class="work-actions"><a class="project-link project-link--case work-open" href="lendwise/index.html">Open live demo →</a><a class="work-sub" href="lendwise/apply.html">Customer site</a><a class="work-sub" href="lendwise/app.html">Lender console</a></div>
+						</div>
+					</article>
+				</div>
+				<p class="works-credit">Photography on the website demos: <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>. All brands and data are fictional.</p>
+			</section>
+
+			<section class="section works-cta">
+				<div class="setup-card reveal">
+					<div>
+						<p class="section-eyebrow">Work with me</p>
+						<h3>Want one of these for your business?</h3>
+						<p>
+							Tell me what you run and what's slowing you down. I'll reply
+							with a plain-language plan, a fixed scope and a price, usually
+							within a day. Everything here can be rebranded, connected to
+							your real data and taken live.
+						</p>
+						<div class="setup-actions">
+							<a class="btn btn--primary" href="mailto:suryansh@archdev.in?subject=Project%20enquiry">Email me</a>
+							<a class="btn btn--ghost" href="../index.html#contact">Use the contact form</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+				<a href="https://www.linkedin.com/in/suryansh405" target="_blank" rel="noopener">LinkedIn</a>
+				<a href="mailto:suryansh@archdev.in">Email</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+		<script>
+			(function () {
+				var bar = document.getElementById("works-filter");
+				var cards = document.querySelectorAll(".work-card");
+				bar.addEventListener("click", function (e) {
+					var b = e.target.closest("button");
+					if (!b) return;
+					bar.querySelectorAll("button").forEach(function (x) {
+						x.classList.toggle("active", x === b);
+					});
+					cards.forEach(function (c) {
+						c.hidden = !!b.dataset.type && c.dataset.type !== b.dataset.type;
+					});
+				});
+			})();
+		</script>
+	</body>
+</html>

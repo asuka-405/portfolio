@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fitness calculators | FitForge</title>
+<meta name="description" content="Free calculators: daily calories (TDEE), macros, one-rep max, BMI and heart-rate zones." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><img src="img/meal.jpg" alt="" /><div class="wrap"><p class="eyebrow">Free tools</p><h1>Know your numbers.</h1><p>Calories, macros, one-rep max and heart-rate zones. Nothing is stored or sent anywhere.</p></div></section>
+<section class="sec" style="padding-top:34px"><div class="wrap">
+	<div class="tabs" id="tabs" style="margin-bottom:22px"><button class="tab on" data-t="tdee">Calories &amp; macros</button><button class="tab" data-t="orm">One-rep max</button><button class="tab" data-t="hr">Heart-rate zones</button><button class="tab" data-t="bmi">BMI</button></div>
+	<div class="checkout">
+		<div class="panel" id="inputs"></div>
+		<div class="panel sum" id="out"></div>
+	</div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+FF.layout("tools.html");
+const { $ } = FF; let tab = "tdee";
+const fld = (id, l, v, extra = "") => `<label class="f">${l}<input class="in" id="${id}" type="number" value="${v}" ${extra}></label>`;
+const sel = (id, l, opts) => `<label class="f">${l}<select class="in" id="${id}">${opts.map((o) => `<option value="${o[0]}">${o[1]}</option>`).join("")}</select></label>`;
+const UI = {
+	tdee: () => `<h3>Calories &amp; macros</h3><div style="display:grid;gap:14px"><div class="row2">${sel("sex", "Sex", [["m", "Male"], ["f", "Female"]])}${fld("age", "Age", 28)}</div><div class="row2">${fld("h", "Height (cm)", 175)}${fld("w", "Weight (kg)", 72)}</div>${sel("act", "Activity", [[1.2, "Desk job, little exercise"], [1.375, "Light, 1–3 sessions/wk"], [1.55, "Moderate, 3–5 sessions/wk"], [1.725, "Heavy, 6–7 sessions/wk"]])}${sel("goal", "Goal", [[0.85, "Lose fat (−15%)"], [1, "Maintain"], [1.1, "Build muscle (+10%)"]])}</div>`,
+	orm: () => `<h3>One-rep max</h3><div style="display:grid;gap:14px"><div class="row2">${fld("lw", "Weight lifted (kg)", 80)}${fld("reps", "Reps completed", 5, 'min="1" max="12"')}</div><p class="msg">Uses the average of the Epley and Brzycki formulas. Most accurate at 1–8 reps.</p></div>`,
+	hr: () => `<h3>Heart-rate zones</h3><div style="display:grid;gap:14px"><div class="row2">${fld("age", "Age", 30)}${fld("rhr", "Resting heart rate", 60)}</div><p class="msg">Karvonen method: zones are percentages of your heart-rate reserve.</p></div>`,
+	bmi: () => `<h3>BMI</h3><div class="row2">${fld("h", "Height (cm)", 175)}${fld("w", "Weight (kg)", 72)}</div><p class="msg" style="margin-top:12px">BMI is a screening number, not a verdict, it ignores muscle mass and body shape.</p>`,
+};
+const v = (id) => +document.getElementById(id).value, s = (id) => document.getElementById(id).value;
+const CALC = {
+	tdee() { const bmr = 10 * v("w") + 6.25 * v("h") - 5 * v("age") + (s("sex") === "m" ? 5 : -161), t = Math.round(bmr * +s("act") * +s("goal")), p = Math.round(v("w") * 2), fat = Math.round(t * 0.25 / 9), c = Math.round((t - p * 4 - fat * 9) / 4);
+		return `<p class="eyebrow">Daily target</p><div class="out">${t.toLocaleString("en-IN")} kcal</div><p class="msg">BMR ${Math.round(bmr)} kcal · maintenance ${Math.round(bmr * +s("act"))} kcal</p><hr style="border:0;border-top:1px solid var(--line);margin:14px 0"><div class="kpis" style="grid-template-columns:repeat(3,1fr);margin:0"><div class="kpi"><span>Protein</span><b>${p} g</b></div><div class="kpi"><span>Carbs</span><b>${Math.max(0, c)} g</b></div><div class="kpi"><span>Fat</span><b>${fat} g</b></div></div>`; },
+	orm() { const w = v("lw"), r = v("reps"), ep = w * (1 + r / 30), br = r < 37 ? w * 36 / (37 - r) : w, m = (ep + br) / 2;
+		return `<p class="eyebrow">Estimated 1RM</p><div class="out">${m.toFixed(1)} kg</div><table class="t" style="margin-top:12px"><thead><tr><th>% of 1RM</th><th>Weight</th><th>Typical reps</th></tr></thead><tbody>${[[95, 2], [90, 4], [85, 6], [80, 8], [75, 10], [70, 12]].map(([p, n]) => `<tr><td>${p}%</td><td>${(m * p / 100).toFixed(1)} kg</td><td>${n}</td></tr>`).join("")}</tbody></table>`; },
+	hr() { const mx = 220 - v("age"), res = mx - v("rhr"), z = [["Z1 · Recovery", .5, .6], ["Z2 · Aerobic base", .6, .7], ["Z3 · Tempo", .7, .8], ["Z4 · Threshold", .8, .9], ["Z5 · Max effort", .9, 1]];
+		return `<p class="eyebrow">Max heart rate</p><div class="out">${mx} bpm</div><table class="t" style="margin-top:12px"><thead><tr><th>Zone</th><th>Range (bpm)</th></tr></thead><tbody>${z.map(([n, a, b]) => `<tr><td>${n}</td><td>${Math.round(v("rhr") + res * a)} – ${Math.round(v("rhr") + res * b)}</td></tr>`).join("")}</tbody></table>`; },
+	bmi() { const b = v("w") / Math.pow(v("h") / 100, 2), c = b < 18.5 ? "Underweight" : b < 25 ? "Healthy range" : b < 30 ? "Overweight" : "Obese range", lo = 18.5 * Math.pow(v("h") / 100, 2), hi = 24.9 * Math.pow(v("h") / 100, 2);
+		return `<p class="eyebrow">Your BMI</p><div class="out">${b.toFixed(1)}</div><p style="font-weight:700">${c}</p><p class="msg">Healthy weight range for your height: ${lo.toFixed(0)} – ${hi.toFixed(0)} kg.</p>`; },
+};
+function draw(keep) { if (!keep) $("#inputs").innerHTML = UI[tab](); $("#out").innerHTML = CALC[tab]() + '<a class="btn block" style="margin-top:18px" href="join.html?plan=trial">Turn the numbers into a plan, free week</a>'; document.querySelectorAll("#tabs .tab").forEach((b) => b.classList.toggle("on", b.dataset.t === tab)); }
+$("#tabs").onclick = (e) => { const b = e.target.closest("button"); if (b) { tab = b.dataset.t; draw(); } };
+$("#inputs").addEventListener("input", () => draw(true));
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Clinic dashboard | Lumen Dental</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="css/site.css" />
+<style>.adm{display:grid;grid-template-columns:230px 1fr;min-height:100vh}.adm-side{background:var(--ink);color:#cfe3e5;padding:22px 14px;position:sticky;top:0;height:100vh}.adm-side .logo{display:flex;margin-bottom:24px;color:#fff}.adm-side button{display:block;width:100%;text-align:left;padding:11px 14px;border-radius:10px;background:none;border:0;color:#b9d0d3;font:600 .94rem system-ui;cursor:pointer;margin-bottom:3px}.adm-side button.on,.adm-side button:hover{background:rgba(255,255,255,.1);color:#fff}.adm-main{padding:26px clamp(16px,3vw,36px);background:#f3f8f8}.adm-main h1{font-size:1.7rem;margin-bottom:16px}
+@media(max-width:900px){.adm{grid-template-columns:minmax(0,1fr)}.adm-side{position:static;height:auto;display:flex;overflow:auto;padding:10px}.adm-side .logo{display:none}.adm-side button{width:auto;white-space:nowrap}}</style>
+</head>
+<body>
+<div class="adm">
+	<aside class="adm-side"><a class="logo" href="index.html"><i>✦</i>Lumen Dental</a><button data-v="schedule" class="on">📅 Schedule</button><button data-v="patients">👥 Patients</button><button data-v="recalls">Recalls</button><button data-v="reports">📈 Reports</button><button data-v="settings">⚙ Availability</button><button onclick="location.href='index.html'">← Back to site</button></aside>
+	<main class="adm-main" id="main"></main>
+</div>
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+const { $, esc, inr, img, D, iso } = LD; let view = "schedule", date = iso(new Date()), q = "";
+const PX = 1; // 1px per minute
+const STAT = { booked: "Booked", arrived: "Arrived", chair: "In chair", completed: "Completed", noshow: "No-show", cancelled: "Cancelled" };
+const mid = (a) => { const s = LD.svc(a.svc); return (s.from + s.to) / 2; };
+const V = {
+	schedule() {
+		const docs = D.doctors.filter((d) => LD.works(d.id, date)), ap = LD.dayAppts(date), H = (D.hours.close - D.hours.open) * 60, cols = docs.length || 1;
+		const stats = ["booked", "arrived", "chair", "completed", "noshow"].map((s) => [s, ap.filter((a) => a.status === s).length]);
+		return `<h1>Schedule</h1><div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px"><button class="btn ghost sm" data-d="-1">‹</button><input class="in" type="date" id="dt" value="${date}" style="width:170px"><button class="btn ghost sm" data-d="1">›</button><button class="btn ghost sm" data-d="0">Today</button><span style="margin-left:auto" class="msg">${stats.map(([s, n]) => `${STAT[s]}: <b>${n}</b>`).join(" · ")}</span><button class="btn sm" data-new>+ Walk-in</button></div>
+		${docs.length ? `<div class="sched"><div class="hd" style="grid-template-columns:60px repeat(${cols},1fr)"><div></div>${docs.map((d) => `<div>${esc(d.name)}<div class="msg" style="font-weight:500">${esc(d.role.split("·")[0])}</div></div>`).join("")}</div>
+		<div class="body" style="grid-template-columns:60px repeat(${cols},1fr);height:${H}px"><div class="times-col">${[...Array(D.hours.close - D.hours.open)].map((_, i) => `<div style="top:${i * 60}px">${LD.fmtT(LD.tstr((D.hours.open + i) * 60))}</div>`).join("")}</div>
+		${docs.map((d) => `<div class="col"><div class="lines"></div><div style="position:absolute;left:0;right:0;top:${(D.hours.lunch[0] - D.hours.open) * 60}px;height:${(D.hours.lunch[1] - D.hours.lunch[0]) * 60}px;background:repeating-linear-gradient(45deg,#f1f5f9,#f1f5f9 8px,#e8eef2 8px,#e8eef2 16px);display:grid;place-items:center;font-size:.72rem;color:#64748b">Lunch</div>${ap.filter((a) => a.doc === d.id).map((a) => `<div class="ev ${a.status}" data-ev="${a.id}" style="top:${(LD.tmin(a.time) - D.hours.open * 60) * PX}px;height:${a.dur * PX - 3}px"><b>${LD.fmtT(a.time)} · ${esc(a.name)}</b>${esc(LD.svc(a.svc).name)}</div>`).join("")}</div>`).join("")}</div></div>` : '<div class="panel empty">No dentists are working on this day.</div>'}
+		<p class="msg" style="margin-top:10px">Click an appointment to move it through the visit: Arrived → In chair → Completed.</p>`;
+	},
+	patients() {
+		const all = {}; [...LD.real(), ...[0, 1, 2, 3, 4, 5, 6].flatMap((i) => LD.dayAppts(iso(LD.addDays(new Date(), -i))))].forEach((a) => { const k = a.phone; if (!all[k] || all[k].date < a.date) all[k] = { name: a.name, phone: a.phone, date: a.date, svc: a.svc, n: (all[k] ? all[k].n : 0) + 1 }; else all[k].n++; });
+		const l = Object.values(all).filter((p) => !q || (p.name + p.phone).toLowerCase().includes(q.toLowerCase()));
+		return `<h1>Patients</h1><input class="in" id="q" placeholder="Search by name or mobile" value="${esc(q)}" style="max-width:300px;margin-bottom:14px"><div style="overflow-x:auto"><table class="t"><thead><tr><th>Name</th><th>Mobile</th><th>Last visit</th><th>Last treatment</th><th>Visits</th></tr></thead><tbody>${l.slice(0, 30).map((p) => `<tr><td><b>${esc(p.name)}</b></td><td>${esc(p.phone)}</td><td>${p.date}</td><td>${esc(LD.svc(p.svc).name)}</td><td>${p.n}</td></tr>`).join("") || '<tr><td colspan="5" class="msg">No patients match.</td></tr>'}</tbody></table></div>`;
+	},
+	recalls() {
+		const l = LD.NAMES.slice(0, 12).map((n, i) => ({ n, ph: "98" + (10000000 + LD.hash(n) % 80000000), last: 190 + (LD.hash(n) % 220), why: ["6-month check-up", "Scaling due", "Aligner review", "Crown fitting", "Post-op check"][i % 5] })).sort((a, b) => b.last - a.last), sent = LD.store.get("recalled", []);
+		return `<h1>Recalls</h1><p class="msg" style="margin-bottom:14px">Patients overdue for a visit. A reminder here increases rebooking by a third in real clinics.</p><table class="t"><thead><tr><th>Patient</th><th>Mobile</th><th>Overdue</th><th>Reason</th><th></th></tr></thead><tbody>${l.map((p) => `<tr><td><b>${esc(p.n)}</b></td><td>${p.ph}</td><td>${p.last} days</td><td>${p.why}</td><td>${sent.includes(p.ph) ? '<span class="chip">Reminder sent ✓</span>' : `<button class="btn sm" data-rc="${p.ph}">Send SMS</button>`}</td></tr>`).join("")}</tbody></table>`;
+	},
+	reports() {
+		const days = [...Array(7)].map((_, i) => iso(LD.addDays(new Date(), i - 6))), rev = days.map((d) => LD.dayAppts(d).filter((a) => ["completed", "chair"].includes(a.status)).reduce((s, a) => s + mid(a), 0)), mx = Math.max(...rev, 1);
+		const by = {}; days.forEach((d) => LD.dayAppts(d).filter((a) => a.status === "completed").forEach((a) => { by[a.svc] = (by[a.svc] || 0) + mid(a); }));
+		const top = Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 6), tm = top[0] ? top[0][1] : 1, ap = days.flatMap((d) => LD.dayAppts(d)), ns = ap.filter((a) => a.status === "noshow").length;
+		return `<h1>Reports</h1><div class="kpis"><div class="kpi"><span>7-day revenue</span><b>${inr(rev.reduce((a, b) => a + b, 0))}</b></div><div class="kpi"><span>Appointments</span><b>${ap.length}</b></div><div class="kpi"><span>No-show rate</span><b>${ap.length ? Math.round(ns / ap.length * 100) : 0}%</b></div><div class="kpi"><span>Avg per visit</span><b>${ap.length ? inr(rev.reduce((a, b) => a + b, 0) / Math.max(1, ap.filter((a) => a.status === "completed").length)) : "-"}</b></div></div>
+		<div class="panel"><h3>Revenue, last 7 days</h3><div style="display:flex;align-items:end;gap:10px;height:190px">${rev.map((v, i) => `<div style="flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:6px;height:100%;font-size:.72rem;color:var(--mut)"><span>${inr(v)}</span><i style="display:block;width:100%;background:var(--teal);border-radius:8px 8px 0 0;height:${v / mx * 80}%;min-height:3px"></i>${LD.pd(days[i]).toLocaleDateString("en-IN", { weekday: "short" })}</div>`).join("")}</div></div>
+		<div class="panel"><h3>Top treatments by revenue</h3>${top.map(([id, v]) => `<div style="display:grid;grid-template-columns:200px 1fr 90px;gap:12px;align-items:center;margin:9px 0;font-size:.9rem"><span>${esc(LD.svc(id).name)}</span><div style="height:10px;background:var(--line);border-radius:9px;overflow:hidden"><i style="display:block;height:100%;width:${v / tm * 100}%;background:var(--teal)"></i></div><b>${inr(v)}</b></div>`).join("") || '<p class="msg">No completed treatments yet.</p>'}</div>`;
+	},
+	settings() {
+		const off = LD.off(), dd = [...Array(14)].map((_, i) => iso(LD.addDays(new Date(), i)));
+		return `<h1>Availability</h1><p class="msg" style="margin-bottom:14px">Mark a dentist as unavailable on a day and the public booking page stops offering their slots immediately.</p><div style="overflow-x:auto"><table class="t"><thead><tr><th>Dentist</th>${dd.map((d) => `<th>${LD.pd(d).toLocaleDateString("en-IN", { weekday: "short" })}<br>${LD.pd(d).getDate()}</th>`).join("")}</tr></thead><tbody>${D.doctors.map((dc) => `<tr><td><b>${esc(dc.name)}</b></td>${dd.map((d) => { const reg = dc.days.includes(LD.pd(d).getDay()); return `<td>${reg ? `<label class="sw"><input type="checkbox" data-off="${dc.id}|${d}" ${off[dc.id + "|" + d] ? "" : "checked"}></label>` : '<span class="msg">-</span>'}</td>`; }).join("")}</tr>`).join("")}</tbody></table></div><div class="panel" style="margin-top:18px"><h3>Reset</h3><p class="msg" style="margin-bottom:10px">Clears bookings, patient data and overrides stored in this browser.</p><button class="btn danger sm" id="reset">Reset demo data</button></div>`;
+	},
+};
+function draw() { $("#main").innerHTML = V[view](); document.querySelectorAll(".adm-side [data-v]").forEach((b) => b.classList.toggle("on", b.dataset.v === view)); }
+function evModal(id) {
+	const a = LD.dayAppts(date).find((x) => x.id === id); if (!a) return;
+	const flow = [["arrived", "Mark arrived"], ["chair", "Seat in chair"], ["completed", "Complete visit"]];
+	$("#mbox").innerHTML = `<h3>${esc(a.name)}</h3><p class="msg" style="margin-bottom:12px">${esc(LD.svc(a.svc).name)} · ${LD.fmtT(a.time)} · ${a.dur} min · ${esc(LD.doc(a.doc).name)}<br>${esc(a.phone)} · <span class="chip">${STAT[a.status]}</span>${a.notes ? "<br>Note: " + esc(a.notes) : ""}</p><div style="display:flex;gap:8px;flex-wrap:wrap">${flow.map(([s, n]) => `<button class="btn sm ${a.status === s ? "" : "ghost"}" data-st="${a.id}|${s}">${n}</button>`).join("")}<button class="btn danger sm" data-st="${a.id}|noshow">No-show</button><button class="btn danger sm" data-st="${a.id}|cancelled">Cancel</button></div><div style="text-align:right;margin-top:16px"><button class="btn ghost sm" data-mx>Close</button></div>`;
+	$("#modal").classList.add("on");
+}
+function walkin() {
+	$("#mbox").innerHTML = `<h3>New walk-in / phone booking</h3><form id="wf" style="display:grid;gap:12px;margin-top:10px"><div class="row2"><label class="f">Name<input class="in" name="name" required></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}"></label></div><div class="row2"><label class="f">Treatment<select class="in" name="svc">${D.services.map((s) => `<option value="${s.id}">${esc(s.name)}</option>`).join("")}</select></label><label class="f">Dentist<select class="in" name="doc">${D.doctors.filter((d) => LD.works(d.id, date)).map((d) => `<option value="${d.id}">${esc(d.name)}</option>`).join("")}</select></label></div><label class="f">Time<select class="in" name="time" id="tms"></select></label><p class="msg" id="wm"></p><div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn ghost" data-mx>Cancel</button><button class="btn">Book</button></div></form>`;
+	const f = $("#wf"), up = () => { const s = LD.svc(f.svc.value), t = LD.slots(f.doc.value, date, s.dur); f.time.innerHTML = t.length ? t.map((x) => `<option value="${x}">${LD.fmtT(x)}</option>`).join("") : "<option value=''>No free time</option>"; $("#wm").textContent = t.length ? "" : "That dentist has no free time for this treatment today."; };
+	f.svc.onchange = f.doc.onchange = up; up();
+	f.onsubmit = (e) => { e.preventDefault(); if (!f.time.value) return; LD.book({ svc: f.svc.value, doc: f.doc.value, date, time: f.time.value, dur: LD.svc(f.svc.value).dur, name: f.name.value, phone: f.phone.value, notes: "Walk-in / phone", pt: "new" }); $("#modal").classList.remove("on"); draw(); };
+	$("#modal").classList.add("on");
+}
+document.addEventListener("click", (e) => {
+	const b = e.target.closest("button,[data-ev]"); if (!b) { if (e.target.id === "modal") $("#modal").classList.remove("on"); return; }
+	if (b.dataset.v) { view = b.dataset.v; draw(); }
+	else if (b.dataset.d !== undefined) { date = b.dataset.d === "0" ? iso(new Date()) : iso(LD.addDays(date, +b.dataset.d)); draw(); }
+	else if (b.dataset.ev) evModal(b.dataset.ev);
+	else if (b.dataset.st) { const [id, s] = b.dataset.st.split("|"); LD.setStatus(id, s); $("#modal").classList.remove("on"); draw(); }
+	else if ("new" in b.dataset) walkin();
+	else if ("mx" in b.dataset) $("#modal").classList.remove("on");
+	else if (b.dataset.rc) { const l = LD.store.get("recalled", []); l.push(b.dataset.rc); LD.store.set("recalled", l); LD.toast("Reminder sent"); draw(); }
+	else if (b.id === "reset") { Object.keys(localStorage).filter((k) => k.startsWith("ld-")).forEach((k) => localStorage.removeItem(k)); location.reload(); }
+});
+document.addEventListener("change", (e) => { const t = e.target;
+	if (t.id === "dt") { date = t.value || date; draw(); }
+	else if (t.dataset.off) { const o = LD.off(); if (t.checked) delete o[t.dataset.off]; else o[t.dataset.off] = true; LD.store.set("off", o); LD.toast(t.checked ? "Dentist available" : "Dentist marked unavailable"); } });
+document.addEventListener("input", (e) => { if (e.target.id === "q") { q = e.target.value; const p = e.target.selectionStart; draw(); const n = $("#q"); n.focus(); n.setSelectionRange(p, p); } });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#modal").classList.remove("on"); });
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>
