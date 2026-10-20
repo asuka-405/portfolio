@@ -1,0 +1,13 @@
+# Cloudflare Workers uploads the whole folder (--assets=./). Keep repo internals and tooling out of it.
+.git
+.gitignore
+.env
+.env.example
+node_modules
+scripts
+graphify-out
+__pycache__
+package.json
+package-lock.json
+netlify.toml
+.assetsignore
