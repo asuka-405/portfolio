@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Facilities | FitForge</title>
+<meta name="description" content="Tour the FitForge gym: strength floor, conditioning zone, boxing ring, spin and Pilates studios, sauna and pool." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><img src="img/cardio.jpg" alt="" /><div class="wrap"><p class="eyebrow">The space</p><h1>12,000 sq ft of training.</h1><p>Weights, machines, a stretch zone and a sauna on one floor.</p></div></section>
+<section class="sec"><div class="wrap"><div class="gal" id="gal"></div></div></section>
+<section class="sec alt"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Opening hours</p><h2>When we're open</h2></div></div>
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"><div class="panel" style="margin:0"><h3>Gym floor</h3><p class="msg">Mon–Fri 5:30 am – 10:30 pm<br>Sat–Sun 7 am – 8 pm</p></div><div class="panel" style="margin:0"><h3>Pool &amp; sauna</h3><p class="msg">Daily 6 am – 9 pm<br>Last sauna entry 8:30 pm</p></div><div class="panel" style="margin:0"><h3>Front desk</h3><p class="msg">Mon–Sat 7 am – 9 pm<br>Sun 8 am – 6 pm</p></div></div>
+</div></section>
+<section class="sec"><div class="wrap split"><div><p class="eyebrow">Find us</p><h2 style="font-size:clamp(2.2rem,5vw,3.4rem);margin:10px 0 14px">Sector 62, Noida.</h2><p class="msg" style="font-size:1rem;margin-bottom:12px">B-14, Sector 62, Noida, UP 201309<br>5 minutes from Sector 62 metro. 120 free parking bays, EV charging and a bike rack.</p><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Sector+62+Noida">Get directions</a></div><img src="img/hero2.jpg" alt="Lifter at the rack" loading="lazy" /></div></section>
+<div class="lb" id="lb"><img id="lbi" alt=""><b id="lbt"></b></div>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+FF.layout("facilities.html");
+const { $, esc, img, D } = FF;
+$("#gal").innerHTML = D.facilities.map((f, i) => `<a href="#" data-i="${i}"><img src="${img(f[1])}" alt="${esc(f[0])}" loading="lazy"><span>${esc(f[0])}</span></a>`).join("");
+$("#gal").onclick = (e) => { const a = e.target.closest("a"); if (!a) return; e.preventDefault(); const f = D.facilities[a.dataset.i]; $("#lbi").src = img(f[1]); $("#lbt").textContent = f[0] + ", " + f[2]; $("#lb").classList.add("on"); };
+$("#lb").onclick = () => $("#lb").classList.remove("on"); document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#lb").classList.remove("on"); });
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

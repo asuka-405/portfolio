@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OrderLink | Store dashboard (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#1fa855;--acc-ink:#fff;--acc-soft:rgba(31,168,85,.12);--side:#0b1f14;--bg:#f1f6f2}
+@media print{body.print-flyer .shell{display:none!important}body.print-flyer #flyer{display:block!important}}</style>
+</head>
+<body>
+<div class="shell"><aside class="side">
+	<a class="brand" href="index.html"><i>✉</i><span>OrderLink<small id="sname">Sweet Crumbs Bakery</small></span></a>
+	<div class="grp">Sell</div><a class="nv" data-route="orders" href="#orders">Orders <span class="n" id="nn">0</span></a><a class="nv" data-route="catalog" href="#catalog">📋 Catalogue</a><a class="nv" data-route="store" href="#store">🏪 Store &amp; preview</a>
+	<div class="grp">Grow</div><a class="nv" data-route="share" href="#share">🔗 Share &amp; QR</a><a class="nv" data-route="customers" href="#customers">👥 Customers</a><a class="nv" data-route="analytics" href="#analytics">📈 Analytics</a>
+	<div class="grp">Setup</div><a class="nv" data-route="settings" href="#settings">⚙ Settings</a><a class="nv" href="shop.html" target="_blank">↗ Open customer store</a>
+	<div class="sp"></div><a class="nv" href="index.html">← About OrderLink</a>
+</aside><div class="main"><header class="top"><button class="burger" id="burger">☰</button><h1 id="title">Orders</h1><span class="sp"></span><a class="btn sm pri" href="shop.html" target="_blank">View store ↗</a></header><div class="view" id="view"></div></div></div>
+<script src="../lib/ui.js"></script><script src="../lib/qrcode.min.js"></script><script src="js/core.js"></script><script src="js/app.js"></script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

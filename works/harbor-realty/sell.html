@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sell or rent your property | Harbor &amp; Co.</title>
+<meta name="description" content="Get an instant price estimate for your home and list it with Harbor &amp; Co." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow" style="color:var(--gold)">Sell with us</p><h1>What's your home worth?</h1><p>Get an instant range from real locality data, then list with an advisor who handles viewings, negotiation and paperwork.</p></div></section>
+<section class="sec" style="padding-top:30px"><div class="wrap layout" style="grid-template-columns:1.2fr 1fr">
+	<form class="panel" id="f"><h3>1 · Tell us about the property</h3><div style="display:grid;gap:14px">
+		<div class="row2"><label class="f">City<select class="in" name="city" id="city"></select></label><label class="f">Locality<select class="in" name="loc" id="loc"></select></label></div>
+		<div class="row3"><label class="f">Type<select class="in" name="type"><option>Apartment</option><option>Villa</option><option>Plot</option></select></label><label class="f">Bedrooms<select class="in" name="beds"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></label><label class="f">Area (sq ft)<input class="in" name="area" type="number" min="300" value="1200" required></label></div>
+		<div class="row3"><label class="f">Age (years)<input class="in" name="age" type="number" min="0" max="50" value="5"></label><label class="f">Furnishing<select class="in" name="furn"><option>Unfurnished</option><option>Semi-furnished</option><option>Furnished</option></select></label><label class="f">Goal<select class="in" name="goal"><option>Sell</option><option>Rent out</option></select></label></div>
+		<h3 style="margin-top:8px">2 · Your contact details</h3>
+		<div class="row2"><label class="f">Name<input class="in" name="name" required></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}"></label></div>
+		<button class="btn gold">List my property with Harbor &amp; Co.</button></div></form>
+	<aside class="panel" style="position:sticky;top:84px;height:fit-content"><p class="eyebrow">Instant estimate</p><div class="pr" style="font-size:2.3rem;margin:6px 0" id="est">-</div><p class="msg" id="rng"></p><div id="why" style="margin-top:14px;display:grid;gap:8px;font-size:.9rem"></div><p class="msg" style="margin-top:14px">An indicative range from our locality data, not a valuation. Your advisor confirms with a site visit.</p></aside>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+HR.layout("sell");
+const { $, inr, D } = HR, f = $("#f"), cities = [...new Set(Object.keys(D.nb).map((k) => k.split("|")[0]))];
+cities.forEach((c) => $("#city").add(new Option(c, c)));
+const locs = () => { const c = $("#city").value; $("#loc").innerHTML = ""; Object.keys(D.nb).filter((k) => k.startsWith(c + "|")).forEach((k) => $("#loc").add(new Option(k.split("|")[1], k.split("|")[1]))); };
+function est() {
+	const n = D.nb[$("#city").value + "|" + $("#loc").value]; if (!n) return;
+	let psf = n.psf; const a = +f.area.value || 0, age = +f.age.value || 0, t = f.type.value;
+	psf *= t === "Villa" ? 1.15 : t === "Plot" ? 0.62 : 1; const ageF = t === "Plot" ? 1 : Math.max(0.78, 1 - age * 0.012), furnF = { Unfurnished: 1, "Semi-furnished": 1.03, Furnished: 1.07 }[f.furn.value], bedF = t === "Apartment" ? (+f.beds.value > 3 ? 1.03 : 1) : 1;
+	let val = psf * a * ageF * furnF * bedF, rent = false;
+	if (f.goal.value === "Rent out") { val = val * 0.0033; rent = true; }
+	const lo = val * 0.93, hi = val * 1.07;
+	$("#est").textContent = rent ? inr(Math.round(val / 500) * 500) + "/mo" : HR.fmtLakh(Math.round(val / 1e5));
+	$("#rng").textContent = "Likely range: " + (rent ? inr(Math.round(lo / 500) * 500) + " – " + inr(Math.round(hi / 500) * 500) + " / month" : HR.fmtLakh(Math.round(lo / 1e5)) + " – " + HR.fmtLakh(Math.round(hi / 1e5)));
+	$("#why").innerHTML = [["Locality average", "₹" + n.psf.toLocaleString("en-IN") + "/sq ft"], ["3-year price growth", "+" + n.g + "%"], ["Age adjustment", t === "Plot" ? "n/a" : "−" + Math.round((1 - ageF) * 100) + "%"], ["Furnishing", furnF > 1 ? "+" + Math.round((furnF - 1) * 100) + "%" : "-"]].map(([k, v]) => `<div style="display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding-bottom:6px"><span class="msg">${k}</span><b>${v}</b></div>`).join("");
+}
+$("#city").onchange = () => { locs(); est(); }; f.addEventListener("input", est); locs(); est();
+f.onsubmit = (e) => { e.preventDefault(); const l = HR.leads.add({ name: f.name.value, phone: f.phone.value, kind: "seller", note: `${f.type.value} ${f.beds.value}BHK, ${f.area.value} sq ft in ${$("#loc").value}, ${$("#city").value} · est ${$("#est").textContent}`, agent: "kavya" });
+	f.innerHTML = `<div class="empty"><div style="font-size:2.4rem">✓</div><h3 style="margin:8px 0">Thank you, ${HR.esc(f.name.value.split(" ")[0])}!</h3><p class="msg">Reference <b>${l.id}</b>. An advisor will call within 2 hours to book a free site visit and photoshoot.</p></div>`; };
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Employee app | PayDesk (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#0d9488;--acc-ink:#fff;--acc-soft:rgba(13,148,136,.13)}body{background:#e3f1ef}
+.ph{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg);padding-bottom:30px;box-shadow:0 0 60px rgba(0,60,50,.15)}
+.hd{background:var(--acc);color:#fff;padding:18px 18px 24px;border-radius:0 0 22px 22px}.hd select{width:100%;padding:9px 12px;border-radius:10px;border:0;font:inherit;font-weight:700;margin-top:8px}.hd small{opacity:.85}
+.pc{padding:16px;display:grid;gap:14px}.punch{text-align:center;padding:22px}.punch .clk{font-size:2.6rem;font-weight:800;letter-spacing:-.02em}
+</style>
+</head>
+<body>
+<div class="ph"><div class="hd"><small id="co"></small><h1 style="font-size:1.3rem">My PayDesk</h1><select id="me" aria-label="Choose employee"></select></div><div class="pc" id="pc"></div></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, esc, inr, fdate, iso, toast, modal, field, kpi, chip, form } = UI, { S, LT } = PD;
+	let me = S.get("me", "e1"); const E = PD.emps().filter((e) => e.status === "active"); $("#co").textContent = PD.settings().co; $("#me").innerHTML = E.map((e) => `<option value="${e.id}">${esc(e.name)} (${e.code})</option>`).join(""); if (!E.find((e) => e.id === me)) me = E[0].id; $("#me").value = me;
+	const mlabel = (ym) => new Date(ym + "-01T00:00:00").toLocaleDateString("en-IN", { month: "long", year: "numeric" });
+	function draw() {
+		const e = E.find((x) => x.id === me), ym = PD.ymOf(new Date()), c = PD.calc(e, ym), today = iso(new Date()), P = S.get("punch", {}), pt = (P[today] || {})[me] || {}, bal = PD.leaveBal(me), months = [PD.shift(ym, -1), PD.shift(ym, -2)];
+		$("#pc").innerHTML = `<div class="card punch"><div class="mut">${fdate(today, { weekday: "long", day: "numeric", month: "long" })}</div><div class="clk" id="clk"></div>${pt.out ? `<p class="mut" style="margin:10px 0">In ${pt.in}, out ${pt.out}. Have a good evening.</p>` : pt.in ? `<p class="mut" style="margin:10px 0">Punched in at ${pt.in}</p><button class="btn pri" id="pu" style="width:100%;padding:13px">Punch out</button>` : `<button class="btn pri" id="pu" style="width:100%;padding:13px;margin-top:10px">Punch in</button>`}</div>
+		<div class="kpis" style="margin:0;grid-template-columns:1fr 1fr">${kpi("Days present", c.present + c.half / 2, "this month")}${kpi("Leave taken", c.leave, "paid leave")}</div>
+		<div class="card"><h3>Leave balance <button class="btn sm pri" id="ap">Apply</button></h3>${Object.entries(LT).map(([k, v]) => `<div class="row sb" style="padding:5px 0"><span>${v[0]}</span><b>${bal[k]} of ${v[1]}</b></div>`).join("")}</div>
+		<div class="card"><h3>My payslips</h3>${months.map((m) => { const x = PD.calc(e, m); return `<div class="row sb" style="padding:8px 0;border-bottom:1px solid var(--line)"><div><b>${mlabel(m)}</b><div class="mut">${x.payable} days paid</div></div><div class="row"><b>${inr(x.net)}</b></div></div>`; }).join("")}<p class="mut" style="margin-top:8px;font-size:.82rem">This month's payslip appears once payroll is finalised.</p></div>`;
+		const tick = () => { const n = $("#clk"); if (n) n.textContent = new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }); }; tick(); clearInterval(draw.t); draw.t = setInterval(tick, 15000);
+		const pu = $("#pu"); if (pu) pu.onclick = () => { const t = new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }); P[today] = P[today] || {}; P[today][me] = { ...pt, ...(pt.in ? { out: t } : { in: t }) }; S.set("punch", P); const A = S.get("att", {}), d = new Date().getDate() - 1; if (A[ym] && A[ym][me] && A[ym][me][d] === "") { A[ym][me][d] = "P"; S.set("att", A); } toast(pt.in ? "Punched out at " + t : "Punched in at " + t); draw(); };
+		$("#ap").onclick = () => form("Apply for leave", `<div class="row3">${field("Type", "type", "CL", { type: "select", opts: Object.entries(LT).map(([k, v]) => [k, v[0]]) })}${field("From", "from", today, { type: "date" })}${field("To", "to", today, { type: "date" })}</div>${field("Reason", "reason", "")}`, (v) => { const days = Math.max(1, Math.round((new Date(v.to) - new Date(v.from)) / 864e5) + 1), L = S.get("leaves", []); L.push({ id: "l" + Date.now(), emp: me, ...v, days, status: "pending", ts: Date.now() }); S.set("leaves", L); toast("Sent to your manager"); });
+	}
+	$("#me").onchange = (e) => { me = e.target.value; S.set("me", me); draw(); }; draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

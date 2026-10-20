@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Get a free quote | LeadNest (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#7c3aed;--acc-ink:#fff;--acc-soft:rgba(124,58,237,.12);--bg:#faf8ff}body{background:#ece6fb}
+.w{max-width:520px;margin:0 auto;min-height:100vh;background:var(--bg);box-shadow:0 0 60px rgba(60,20,120,.14)}.hero{background:#4c1d95;color:#fff;padding:26px 22px}.hero h1{font-size:1.5rem}.hero p{opacity:.9;margin-top:6px}.pc{padding:18px;display:grid;gap:14px}
+</style>
+</head>
+<body>
+<div class="w"><div class="hero"><small id="sn" style="opacity:.85"></small><h1>Get a free design consultation</h1><p>Tell us about your home. We reply within a day with ideas and a rough budget.</p></div><div class="pc" id="pc"></div></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, esc, toast, field } = UI; $("#sn").textContent = LN.settings().name;
+	function draw(done) { if (done) return ($("#pc").innerHTML = `<div class="card" style="text-align:center;padding:28px"><div style="font-size:2.6rem;color:var(--acc)">✓</div><h2>Thanks, ${esc(done)}</h2><p class="mut" style="margin:8px 0 14px">We will call you within a day. You can also reach us on ${LN.settings().phone}.</p><a class="btn" href="app.html">See it in the CRM pipeline</a></div>`);
+		$("#pc").innerHTML = `<div class="card"><div class="stack">${field("Your name", "name", "", { req: 1 })}${field("Mobile number", "phone", "", { type: "tel", req: 1 })}<div class="row2">${field("Property", "prop", "3 BHK apartment", { type: "select", opts: ["2 BHK apartment", "3 BHK apartment", "4 BHK apartment", "Villa", "Builder floor", "Office"] })}${field("City", "city", "Noida", { type: "select", opts: ["Noida", "Greater Noida", "Delhi", "Ghaziabad", "Gurugram"] })}</div>${field("What do you need?", "scope", "Full home interiors", { type: "select", opts: ["Full home interiors", "Kitchen and wardrobes", "Living and bedrooms", "Kitchen only", "Renovation"] })}${field("Approximate budget", "value", 800000, { type: "select", opts: [[400000, "Up to ₹5 lakh"], [800000, "₹5 to 10 lakh"], [1500000, "₹10 to 20 lakh"], [2500000, "Above ₹20 lakh"]] })}</div></div><button class="btn pri" id="go" style="padding:14px;font-size:1.05rem">Request a call back</button>`;
+		$("#go").onclick = () => { const v = UI.vals($("#pc")); if (!v.name || String(v.phone).length < 10) return toast("Please add your name and a 10 digit mobile number"); LN.addLead({ name: v.name, phone: v.phone, prop: v.prop, city: v.city, scope: v.scope, value: +v.value, src: "Website form" }); draw(v.name.split(" ")[0]); }; }
+	draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SchoolDesk | School console (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#7c3aed;--acc-ink:#fff;--acc-soft:rgba(124,58,237,.12);--side:#17102b}</style>
+</head>
+<body>
+<div class="shell">
+	<aside class="side">
+		<a class="brand" href="index.html"><i>S</i><span>SchoolDesk<small id="biz">Greenfield Public School</small></span></a>
+		<div class="grp">Overview</div><a class="nv" data-route="dashboard" href="#dashboard"> Dashboard</a>
+		<div class="grp">Students</div><a class="nv" data-route="students" href="#students"> Students</a><a class="nv" data-route="admissions" href="#admissions"> Admissions</a><a class="nv" data-route="attendance" href="#attendance"> Attendance</a>
+		<div class="grp">Academics</div><a class="nv" data-route="exams" href="#exams"> Exams and results</a><a class="nv" data-route="timetable" href="#timetable"> Timetable</a><a class="nv" data-route="staff" href="#staff"> Teachers</a>
+		<div class="grp">Office</div><a class="nv" data-route="fees" href="#fees"> Fees</a><a class="nv" data-route="notices" href="#notices"> Notices</a><a class="nv" data-route="settings" href="#settings"> Settings</a>
+		<div class="sp"></div><a class="nv" href="index.html">← About SchoolDesk</a>
+	</aside>
+	<div class="main">
+		<header class="top"><button class="burger" id="burger" aria-label="Menu">☰</button><h1 id="title">Dashboard</h1><span class="sp"></span><input class="in" id="gs" placeholder="Find a student, press Enter" aria-label="Find student"><button class="btn sm" id="theme" aria-label="Toggle theme">◐</button></header>
+		<div class="view" id="view"></div>
+	</div>
+</div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="../lib/qrcode.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 // Search + tag filtering for the articles hub/featured pages. Runs entirely client-side
-// against a build-time search-index.json — no server, no runtime API calls.
+// against a build-time search-index.json - no server, no runtime API calls.
 (function () {
 	var list = document.getElementById("article-list");
 	var input = document.getElementById("article-search-input");
@@ -24,7 +24,7 @@
 			});
 		})
 		.catch(function () {
-			// No generated index available yet (e.g. local clone before first `npm run build`) —
+			// No generated index available yet (e.g. local clone before first `npm run build`) -
 			// search still works against title + tags via DOM attributes below.
 		});
 

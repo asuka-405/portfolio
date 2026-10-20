@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -244,7 +245,7 @@ func main() {
 <div class="prose reveal">
 					<p>No base class exists anywhere. `Circle` and `Rectangle` share nothing but the fact that both happen to have an `Area()` method, and that's entirely sufficient for `totalArea` to treat them uniformly through the `Shape` interface.</p>
 					<h3>When you do want shared implementation: embedding</h3>
-					<p>Sometimes you genuinely want to share behavior, not just a contract, say several shapes should all log the same way when their area is computed. That's when embedding earns its keep: it reuses an implementation without pretending there's an is-a relationship.</p>
+					<p>Sometimes you want to share behavior, not just a contract, say several shapes should all log the same way when their area is computed. That's when embedding earns its keep: it reuses an implementation without pretending there's an is-a relationship.</p>
 				</div>
 
 <div class="onecompiler-embed reveal" data-oc-source="package main
@@ -297,7 +298,7 @@ func main() {
 					<h3>Putting both together</h3>
 					<p>The idiomatic pattern is almost always: interfaces define what a type can do (for callers who only care about behavior), embedding shares how a type does part of its work (for types that want to reuse an implementation), and the two rarely need to touch. A type can embed a helper struct for shared plumbing and independently satisfy any number of unrelated interfaces based purely on its method set.</p>
 					<p><strong>A checklist for the instinct to reach for inheritance</strong></p>
-					<ul><li>Do you actually need substitutability (treating several concrete types the same way through one abstraction)? That's an interface, full stop, not embedding.</li><li>Do you just want to avoid retyping the same three methods on five structs? That's embedding a shared helper struct, and it's fine, just don't expect it to grant any polymorphism.</li><li>Are you modeling a hierarchy because the domain genuinely has one (a Manager 'is a kind of' Employee, say)? Consider whether composition (Employee has a Manager field, or a Role interface) models it just as well without the coupling. Usually it does.</li></ul>
+					<ul><li>Do you need substitutability (treating several concrete types the same way through one abstraction)? That's an interface, full stop, not embedding.</li><li>Do you just want to avoid retyping the same three methods on five structs? That's embedding a shared helper struct, and it's fine, just don't expect it to grant any polymorphism.</li><li>Are you modeling a hierarchy because the domain has one (a Manager 'is a kind of' Employee, say)? Consider whether composition (Employee has a Manager field, or a Role interface) models it just as well without the coupling. Usually it does.</li></ul>
 				</div>
 						</div>
 					</div>

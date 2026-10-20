@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KhataLite | Khata app (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#0e7490;--acc-ink:#fff;--acc-soft:rgba(14,116,144,.12);--side:#0b1d24}</style>
+</head>
+<body>
+<div class="shell">
+	<aside class="side">
+		<a class="brand" href="index.html"><i>K</i><span>KhataLite<small id="biz">Mehta Dairy & Sweets</small></span></a>
+		<div class="grp">Khata</div><a class="nv" data-route="home" href="#home"> Home</a><a class="nv" data-route="parties" href="#parties"> Parties</a><a class="nv" data-route="reminders" href="#reminders"> Reminders <span class="n" id="n-reminders">0</span></a>
+		<div class="grp">Money</div><a class="nv" data-route="cashbook" href="#cashbook"> Cashbook</a><a class="nv" data-route="reports" href="#reports"> Reports</a>
+		<div class="grp">Account</div><a class="nv" data-route="settings" href="#settings"> Settings & backup</a>
+		<div class="sp"></div><a class="nv" href="index.html">← About KhataLite</a>
+	</aside>
+	<div class="main">
+		<header class="top"><button class="burger" id="burger" aria-label="Menu">☰</button><h1 id="title">Home</h1><span class="sp"></span><input class="in" id="gs" placeholder="Find a party, press Enter" aria-label="Find party"><button class="btn sm" id="theme" aria-label="Toggle theme">◐</button></header>
+		<div class="view" id="view"></div>
+	</div>
+</div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="../lib/qrcode.min.js"></script>
+<script src="js/app.js"></script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -167,7 +168,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>Not every error is the same kind of error, and C++ gives you several different tools because &quot;how should this fail&quot; genuinely has different right answers depending on the situation. This chapter is about telling those situations apart, not about picking one true way to handle every error (a full deep dive on exceptions specifically comes later in this course).</p>
+					<p>Not every error is the same kind of error, and C++ gives you several different tools because &quot;how should this fail&quot; has different right answers depending on the situation. This chapter is about telling those situations apart, not about picking one true way to handle every error (a full deep dive on exceptions specifically comes later in this course).</p>
 					<h3>Programmer errors vs. runtime failures</h3>
 					<p>Worth separating up front: a <strong>programmer error</strong> is a violated precondition, calling a function with an argument it explicitly documented as invalid, indexing past the end of an array, dereferencing a null pointer. These are bugs. A <strong>runtime failure</strong> is something that can legitimately happen even in correct code: a file doesn't exist, a network call times out, user input doesn't parse as a number. Bugs should crash loudly and immediately in development. Runtime failures need to be handled gracefully, because they're expected, not exceptional in the sense of being rare.</p>
 					<h3>assert for programmer errors</h3>
@@ -207,7 +208,7 @@ int main() {
 					<h3>Two strategies for runtime failures: return values and exceptions</h3>
 					<p>For failures that need to be handled, not just asserted away in debug builds, C++ code broadly falls into two camps:</p>
 					<ul><li><strong>Signal failure through the return type.</strong> Error codes, <code>std::optional&lt;T&gt;</code> when there's no meaningful value to return, <code>std::expected&lt;T, E&gt;</code> (C++23) when you also want to explain why it failed. The caller has to check.</li><li><strong>Throw an exception.</strong> The failure propagates up the call stack automatically until something catches it. The caller doesn't have to check at every level, but forgetting to catch anywhere means the program terminates.</li></ul>
-					<p>Neither is universally correct. A rough, honest heuristic: use return-based signaling for failures that are routine and expected as part of normal control flow (a lookup that might not find anything, parsing input that might be malformed). Reach for exceptions when the failure is genuinely exceptional, when propagating it up several call frames without every intermediate function having to know or care is exactly the behavior you want, or when a constructor fails (constructors have no return value to signal failure with, so exceptions are close to the only clean option).</p>
+					<p>Neither is universally correct. A rough, honest heuristic: use return-based signaling for failures that are routine and expected as part of normal control flow (a lookup that might not find anything, parsing input that might be malformed). Reach for exceptions when the failure is exceptional, when propagating it up several call frames without every intermediate function having to know or care is exactly the behavior you want, or when a constructor fails (constructors have no return value to signal failure with, so exceptions are close to the only clean option).</p>
 					<h3>std::optional: values that might not exist</h3>
 					<p><code>std::optional&lt;T&gt;</code> (from <code>&lt;optional&gt;</code>) wraps a value that may or may not be present, without needing a sentinel value like <code>-1</code> or <code>nullptr</code> that could be confused with a legitimate result.</p>
 				</div>

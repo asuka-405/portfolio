@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Coaches | FitForge</title>
+<meta name="description" content="Meet the FitForge coaching team and book a free intro session." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><img src="img/pt3.jpg" alt="" /><div class="wrap"><p class="eyebrow">The team</p><h1>Meet your coaches.</h1><p>Certified, experienced and genuinely invested in your progress. Book a free intro session with any of them.</p></div></section>
+<section class="sec"><div class="wrap"><div class="grid" id="coaches" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))"></div></div></section>
+<section class="sec alt" id="book"><div class="wrap split">
+	<div><p class="eyebrow">Free intro session</p><h2 style="font-size:clamp(2.2rem,5vw,3.4rem);margin:10px 0 14px">Not sure where to start?</h2><p class="msg" style="font-size:1rem">A 30-minute one-to-one: we'll talk goals, check how you move and write you a first-week plan. No obligation, no hard sell.</p></div>
+	<form class="panel" id="f" style="margin:0"><h3>Book an intro</h3><div style="display:grid;gap:14px"><div class="row2"><label class="f">Name<input class="in" name="name" required></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}" inputmode="numeric"></label></div>
+	<div class="row2"><label class="f">Coach<select class="in" name="coach" id="cs"></select></label><label class="f">Preferred date<input class="in" type="date" name="date" required></label></div>
+	<label class="f">Your goal<select class="in" name="goal"><option>Build strength</option><option>Lose fat</option><option>Get fitter</option><option>Recover from injury</option><option>Prepare for an event</option></select></label><button class="btn">Request intro session</button></div></form>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+FF.layout("coaches.html");
+const { $, esc, img, D } = FF;
+$("#coaches").innerHTML = Object.entries(D.coaches).map(([k, c]) => `<article class="card" id="${k}"><div class="ph" style="aspect-ratio:1/1"><img src="${img(c.img)}" alt="${esc(c.name)}" loading="lazy"></div><div class="bd"><h3>${esc(c.name)}</h3><span class="eyebrow">${esc(c.role)}</span><p>${esc(c.bio)}</p><div>${c.certs.map((x) => '<span class="chip">' + esc(x) + "</span> ").join("")}</div><a class="btn ghost sm" style="margin-top:10px" href="classes.html?coach=${k}">Classes with ${esc(c.name.split(" ")[0])}</a></div></article>`).join("");
+$("#cs").innerHTML = Object.entries(D.coaches).map(([k, c]) => `<option value="${k}">${esc(c.name)}</option>`).join("");
+document.querySelector("[name=date]").min = FF.iso(new Date());
+$("#f").onsubmit = (e) => { e.preventDefault(); const f = e.target, l = FF.store.get("intros", []); l.push({ ts: Date.now(), name: f.name.value, phone: f.phone.value, coach: f.coach.value, date: f.date.value, goal: f.goal.value }); FF.store.set("intros", l); $("#f").innerHTML = `<h3>Request sent ✓</h3><p class="msg">Thanks ${esc(f.name.value.split(" ")[0])}, ${esc(D.coaches[f.coach.value].name)} will text you within a day to confirm a time around ${FF.pd(f.date.value).toLocaleDateString("en-IN", { day: "numeric", month: "long" })}.</p>`; };
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

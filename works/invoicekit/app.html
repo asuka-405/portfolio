@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>InvoiceKit | Invoicing app (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#3b5bdb;--acc-soft:rgba(59,91,219,.1);--side:#111a3a;--bg:#eef1f8}
+@media print{.view{padding:0}.card{padding:0}}</style>
+</head>
+<body>
+<div class="shell"><aside class="side">
+	<a class="brand" href="index.html"><i>₹</i><span>InvoiceKit<small id="bizn">Pixel &amp; Pine Studio</small></span></a>
+	<div class="grp">Sales</div><a class="nv" data-route="dashboard" href="#dashboard">📊 Dashboard</a><a class="nv" data-route="invoices" href="#invoices">🧾 Invoices</a><a class="nv" data-route="quotes" href="#quotes">📝 Quotes</a><a class="nv" data-route="payments" href="#payments">💳 Payments</a>
+	<div class="grp">Books</div><a class="nv" data-route="expenses" href="#expenses">🧮 Expenses</a><a class="nv" data-route="reports" href="#reports">📈 Reports &amp; GST</a>
+	<div class="grp">Setup</div><a class="nv" data-route="clients" href="#clients">👥 Clients</a><a class="nv" data-route="items" href="#items">📦 Items &amp; services</a><a class="nv" data-route="settings" href="#settings">⚙ Settings</a>
+	<div class="sp"></div><a class="nv" href="index.html">← About InvoiceKit</a>
+</aside><div class="main"><header class="top"><button class="burger" id="burger">☰</button><h1 id="title">Dashboard</h1><span class="sp"></span><a class="btn sm pri" href="#invoice/new">+ New invoice</a></header><div class="view" id="view"></div></div></div>
+<script src="../lib/ui.js"></script><script src="../lib/qrcode.min.js"></script><script src="js/invoice.js"></script><script src="js/app.js"></script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

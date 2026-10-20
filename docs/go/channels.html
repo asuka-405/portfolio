@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -262,7 +263,7 @@ func main() {
 
 <div class="prose reveal">
 					<h3>Closing channels</h3>
-					<p>`close(ch)` signals that no more values will ever be sent. Receivers can keep draining any values still buffered, but once the channel is fully drained, further receives return the zero value immediately instead of blocking. The two-value receive form (`v, ok := &lt;-ch`) tells you which situation you're in: `ok` is `false` once the channel is closed and drained.</p>
+					<p>`close(ch)` signals that no more values will ever be sent. Receivers can keep draining any values still buffered, but once the channel is fully drained, further receives return the zero value immediately instead of blocking. The two-value receive form (`v, ok:= &lt;-ch`) tells you which situation you're in: `ok` is `false` once the channel is closed and drained.</p>
 				</div>
 
 <div class="onecompiler-embed reveal" data-oc-source="package main
@@ -306,11 +307,11 @@ func main() {
 }</pre></noscript></div>
 
 				<div class="callout reveal">
-					<p>Only the sender should ever close a channel, never the receiver, and never close a channel more than once (that panics). If multiple goroutines might send on the same channel, closing gets genuinely tricky, and often the cleanest fix is a separate 'done' channel purely for the shutdown signal instead of closing the data channel itself.</p>
+					<p>Only the sender should ever close a channel, never the receiver, and never close a channel more than once (that panics). If multiple goroutines might send on the same channel, closing gets tricky, and often the cleanest fix is a separate 'done' channel purely for the shutdown signal instead of closing the data channel itself.</p>
 				</div>
 
 <div class="prose reveal">
-					<p>A `range` loop over a channel is the idiomatic way to drain it until closed, it does exactly the `v, ok := &lt;-ch; if !ok { break }` dance above, automatically:</p>
+					<p>A `range` loop over a channel is the idiomatic way to drain it until closed, it does exactly the `v, ok:= &lt;-ch; if !ok { break }` dance above, automatically:</p>
 				</div>
 
 <div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> v </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">:=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> range</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> ch { </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// exits automatically once ch is closed and drained</span></span>
@@ -344,7 +345,7 @@ func main() {
 
 <div class="prose reveal">
 					<p><strong>Choosing between them at a glance</strong></p>
-					<ul><li>Unbuffered: use when you want a hard synchronization point, the sender genuinely should wait until the receiver is ready, not just fire-and-forget.</li><li>Buffered: use when the sender should be able to get a bit ahead of the receiver without blocking, a small, deliberate amount of slack, not an unbounded queue.</li><li>Never use an unbounded buffer size as a substitute for proper backpressure, a channel is not a magic infinite queue, and a producer that outpaces its consumer forever will eventually exhaust memory regardless of buffer size.</li></ul>
+					<ul><li>Unbuffered: use when you want a hard synchronization point, the sender should wait until the receiver is ready, not just fire-and-forget.</li><li>Buffered: use when the sender should be able to get a bit ahead of the receiver without blocking, a small, deliberate amount of slack, not an unbounded queue.</li><li>Never use an unbounded buffer size as a substitute for proper backpressure, a channel is not a magic infinite queue, and a producer that outpaces its consumer forever will eventually exhaust memory regardless of buffer size.</li></ul>
 				</div>
 
 				<details class="cmd-explain reveal">

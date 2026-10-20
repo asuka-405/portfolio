@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Journal | Kiln &amp; Clay</title>
+<meta name="description" content="Notes from the studio on caring for stoneware, firing, and setting a table." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Journal</p><h1>Notes from the studio</h1><p>Short pieces on clay, craft and the table.</p></div></section>
+<section class="sec" style="padding-top:20px"><div class="wrap" style="max-width:980px" id="list"></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("journal.html");
+const { $, esc, img, D } = KC;
+$("#list").innerHTML = D.journal.map((a) => `<article class="art" id="${a.id}"><img src="${img(a.img)}" alt="" loading="lazy"><div><p class="eyebrow">${a.date} · ${a.mins} min read</p><h2 style="font-size:1.8rem;margin:6px 0 10px">${esc(a.title)}</h2><p class="msg" style="margin-bottom:10px">${esc(a.body[0])}</p><details><summary style="font:600 .78rem system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--clay)">Read the rest</summary>${a.body.slice(1).map((p) => `<p style="margin-top:12px">${esc(p)}</p>`).join("")}</details></div></article>`).join("");
+if (location.hash) { const d = document.querySelector(location.hash + " details"); if (d) d.open = true; }
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

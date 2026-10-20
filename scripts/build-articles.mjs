@@ -12,6 +12,7 @@ import {
 	HOMEPAGE_TEASER_COUNT,
 } from "./lib/paths.mjs";
 import { stripHtml, escapeHtml } from "./lib/html.mjs";
+import { humanizeHtml, humanizeJson } from "./lib/humanize.mjs";
 import { getNotionClient } from "./notion/notion-client.mjs";
 import { fetchPublishedArticles } from "./notion/fetch-articles.mjs";
 import { convertPageToSections } from "./notion/blocks-to-html.mjs";
@@ -102,7 +103,7 @@ async function buildNotionArticle(client, meta) {
 	});
 
 	await fs.mkdir(ARTICLES_DIR, { recursive: true });
-	await fs.writeFile(path.join(ARTICLES_DIR, `${meta.slug}.html`), html, "utf8");
+	await fs.writeFile(path.join(ARTICLES_DIR, `${meta.slug}.html`), humanizeHtml(html), "utf8");
 
 	return {
 		kind: "notion",
@@ -125,12 +126,12 @@ async function rewriteHomepage(teaserArticles) {
 	const endIdx = html.indexOf(MARKER_END);
 	if (startIdx === -1 || endIdx === -1) {
 		throw new Error(
-			`Could not find ${MARKER_START} / ${MARKER_END} markers in index.html — the homepage article list must be wrapped in these comments before running the build.`
+			`Could not find ${MARKER_START} / ${MARKER_END} markers in index.html - the homepage article list must be wrapped in these comments before running the build.`
 		);
 	}
 	const before = html.slice(0, startIdx + MARKER_START.length);
 	const after = html.slice(endIdx);
-	const fragment = renderHomepageListFragment(teaserArticles);
+	const fragment = humanizeHtml(renderHomepageListFragment(teaserArticles));
 	await fs.writeFile(HOMEPAGE_PATH, `${before}\n${fragment}\n\t\t\t\t\t${after}`, "utf8");
 }
 
@@ -162,18 +163,18 @@ async function main() {
 	const listingOgImage = await defaultOgImageUrl();
 
 	await fs.mkdir(ARTICLES_DIR, { recursive: true });
-	await fs.writeFile(HUB_PATH, renderHubPage(forArticlesDir, adsConfig, listingOgImage), "utf8");
+	await fs.writeFile(HUB_PATH, humanizeHtml(renderHubPage(forArticlesDir, adsConfig, listingOgImage)), "utf8");
 
 	const featured = forArticlesDir.filter((a) => a.featured);
 	await fs.writeFile(
 		path.join(ARTICLES_DIR, "featured.html"),
-		renderFeaturedPage(featured, adsConfig, listingOgImage),
+		humanizeHtml(renderFeaturedPage(featured, adsConfig, listingOgImage)),
 		"utf8"
 	);
 
 	await fs.writeFile(
 		path.join(ARTICLES_DIR, "search-index.json"),
-		JSON.stringify(buildSearchIndex(forArticlesDir)),
+		humanizeJson(JSON.stringify(buildSearchIndex(forArticlesDir))),
 		"utf8"
 	);
 

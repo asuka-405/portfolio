@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Patient portal | Lumen Dental</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding-top:36px"><div class="wrap" id="app"></div></section>
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+LD.layout("portal.html");
+const { $, esc, inr, img, D, iso } = LD; let view = "overview", rs = null;
+const KEY = "ptdata";
+function data() {
+	let d = LD.store.get(KEY, null);
+	if (!d) {
+		const t = (n) => iso(LD.addDays(new Date(), n));
+		d = { plan: [{ id: 1, name: "Check-up & X-rays", cost: 900, status: "done", date: t(-120), tooth: "" }, { id: 2, name: "Scaling & polishing", cost: 1400, status: "done", date: t(-120), tooth: "" }, { id: 3, name: "Tooth-coloured filling", cost: 2200, status: "recommended", date: "", tooth: "26" }, { id: 4, name: "Teeth whitening", cost: 7500, status: "recommended", date: "", tooth: "" }, { id: 5, name: "Crown (zirconia)", cost: 14000, status: "planned", date: "", tooth: "36" }],
+			invoices: [{ id: "INV-2041", date: t(-120), desc: "Check-up, X-rays and scaling", amt: 2300, paid: true }, { id: "INV-2288", date: t(-30), desc: "Composite filling (tooth 17)", amt: 1900, paid: false }],
+			chart: { 17: "f", 36: "c", 26: "r", 18: "m", 28: "m", 38: "m", 48: "m", 46: "f" }, forms: { medical: null, consent: null } };
+		LD.store.set(KEY, d);
+	}
+	return d;
+}
+function login() {
+	$("#app").innerHTML = `<div class="split"><div><p class="eyebrow">Patient portal</p><h1 style="font-size:clamp(2rem,5vw,3.2rem);margin:8px 0 12px">Your appointments and records.</h1><p class="msg" style="margin-bottom:18px;font-size:1.02rem">Manage appointments, review treatment plans, pay invoices and complete forms, from your phone.</p>
+	<form class="panel" id="lf" style="max-width:420px"><h3>Sign in</h3><div style="display:grid;gap:14px"><label class="f">Mobile number<input class="in" name="phone" required pattern="[0-9]{10}" inputmode="numeric"></label><label class="f">Date of birth<input class="in" name="dob" type="date" required></label><button class="btn">Sign in</button><button type="button" class="btn ghost" id="demo">Use a sample patient</button><p class="msg">Demo: any details work, and bookings you've made are linked automatically.</p></div></form></div><img src="img/patient2.jpg" alt="Dentist talking with a patient" /></div>`;
+	$("#lf").onsubmit = (e) => { e.preventDefault(); const f = e.target, old = LD.patient.get(); LD.patient.set({ name: old && old.phone === f.phone.value ? old.name : "Patient " + f.phone.value.slice(-4), phone: f.phone.value, dob: f.dob.value, email: old ? old.email : "" }); render(); };
+	$("#demo").onclick = () => { const pt = { name: "Meera Sharma", phone: "9876512345", dob: "1991-03-14", email: "meera@example.com" }; LD.patient.set(pt);
+		if (!LD.real().some((a) => a.phone === pt.phone)) { const nf = LD.nextFree("cleaning"); if (nf) { const dd = LD.addDays(nf.date, 2); LD.book({ svc: "cleaning", doc: nf.doc, date: nf.date, time: nf.time, dur: LD.svc("cleaning").dur, name: pt.name, phone: pt.phone, email: pt.email, dob: pt.dob, ins: "", notes: "", pt: "returning" }); } }
+		render(); };
+}
+const mine = () => { const p = LD.patient.get(); return LD.real().filter((a) => a.phone === p.phone).map((a) => ({ ...a, status: LD.stat()[a.id] || a.status || "booked" })).sort((a, b) => (a.date + a.time < b.date + b.time ? -1 : 1)); };
+const upcoming = () => mine().filter((a) => a.date >= iso(new Date()) && !["cancelled", "completed"].includes(a.status));
+const apptRow = (a, acts) => `<div class="panel" style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center"><div><b>${esc(LD.svc(a.svc).name)}</b><div class="msg">${LD.pd(a.date).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })} · ${LD.fmtT(a.time)} · ${esc(LD.doc(a.doc).name)} · <span class="chip">${a.status}</span></div></div>${acts ? `<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost sm" data-rs="${a.id}">Reschedule</button><button class="btn danger sm" data-cx="${a.id}">Cancel</button></div>` : ""}</div>`;
+const V = {
+	overview(p, d) {
+		const next = upcoming()[0], due = d.invoices.filter((i) => !i.paid).reduce((s, i) => s + i.amt, 0), rec = d.plan.filter((x) => x.status === "recommended");
+		return `<div class="kpis"><div class="kpi"><span>Next visit</span><b style="font-size:1.1rem">${next ? LD.pd(next.date).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) + " · " + LD.fmtT(next.time) : "None booked"}</b></div><div class="kpi"><span>Balance due</span><b>${inr(due)}</b></div><div class="kpi"><span>Recommended</span><b>${rec.length}</b></div><div class="kpi"><span>Next check-up</span><b style="font-size:1.1rem">${LD.pd(iso(LD.addDays(new Date(), 21))).toLocaleDateString("en-IN", { month: "short", year: "numeric" })}</b></div></div>
+		${next ? `<h3 style="margin-bottom:10px">Next appointment</h3>${apptRow(next, true)}` : `<div class="panel mint"><h3>No upcoming appointment</h3><p class="msg" style="margin-bottom:12px">You're due a six-month check-up. Let's get one in the diary.</p><a class="btn" href="book.html?s=checkup">Book a check-up</a></div>`}
+		<div class="panel"><h3>Treatment plan progress</h3>${["done", "recommended", "planned"].map((s) => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line)"><span style="text-transform:capitalize">${s}</span><b>${d.plan.filter((x) => x.status === s).length} item(s)</b></div>`).join("")}<button class="btn ghost sm" style="margin-top:12px" data-v="plan">View full plan</button></div>`;
+	},
+	appointments() {
+		const l = mine(), up = l.filter((a) => a.date >= iso(new Date()) && !["cancelled", "completed"].includes(a.status)), past = l.filter((a) => !up.includes(a));
+		return `<h3 style="margin-bottom:10px">Upcoming</h3>${up.map((a) => apptRow(a, true)).join("") || '<p class="msg" style="margin-bottom:18px">Nothing booked. <a href="book.html" style="color:var(--teal);font-weight:700">Book now →</a></p>'}<h3 style="margin:18px 0 10px">Past &amp; cancelled</h3>${past.map((a) => apptRow(a, false)).join("") || '<p class="msg">No history yet.</p>'}`;
+	},
+	plan(p, d) {
+		const tot = d.plan.filter((x) => x.status !== "declined" && x.status !== "done").reduce((s, x) => s + x.cost, 0);
+		return `<div class="panel"><h3>Your treatment plan</h3><table class="t"><thead><tr><th>Treatment</th><th>Tooth</th><th>Cost</th><th>Status</th><th></th></tr></thead><tbody>${d.plan.map((x) => `<tr><td><b>${esc(x.name)}</b></td><td>${x.tooth || "-"}</td><td>${inr(x.cost)}</td><td><span class="chip">${x.status}</span></td><td>${x.status === "recommended" ? `<button class="btn sm" data-pa="${x.id}">Accept</button> <button class="btn ghost sm" data-pd="${x.id}">Decline</button>` : x.status === "planned" ? `<a class="btn ghost sm" href="book.html">Book</a>` : ""}</td></tr>`).join("")}</tbody></table><p class="msg" style="margin-top:12px">Outstanding plan value: <b>${inr(tot)}</b> · <a href="financing.html" style="color:var(--teal);font-weight:700">Spread it with 0% EMI →</a></p></div>`;
+	},
+	invoices(p, d) {
+		return `<div class="panel"><h3>Invoices</h3><table class="t"><thead><tr><th>No.</th><th>Date</th><th>Description</th><th>Amount</th><th></th></tr></thead><tbody>${d.invoices.map((i) => `<tr><td>${i.id}</td><td>${i.date}</td><td>${esc(i.desc)}</td><td>${inr(i.amt)}</td><td>${i.paid ? '<span class="chip">Paid</span>' : `<button class="btn sm" data-pay="${i.id}">Pay now</button>`} <button class="btn ghost sm" data-pr="${i.id}">Receipt</button></td></tr>`).join("")}</tbody></table><p class="msg" style="margin-top:10px">Demo only, no payment is processed.</p></div>`;
+	},
+	chart(p, d) {
+		const U = [18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27, 28], L = [48, 47, 46, 45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37, 38];
+		const row = (a) => `<div class="tooth-row">${a.map((n) => `<div class="tooth ${d.chart[n] || ""}" title="Tooth ${n}">${n}</div>`).join("")}</div>`;
+		return `<div class="panel"><h3>Your dental chart</h3>${row(U)}<div style="height:12px"></div>${row(L)}<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;font-size:.84rem"><span><span class="tooth f" style="display:inline-block;width:16px;height:20px;vertical-align:middle"></span> Filling</span><span><span class="tooth c" style="display:inline-block;width:16px;height:20px;vertical-align:middle"></span> Crown</span><span><span class="tooth r" style="display:inline-block;width:16px;height:20px;vertical-align:middle"></span> Needs treatment</span><span><span class="tooth m" style="display:inline-block;width:16px;height:20px;vertical-align:middle"></span> Missing / wisdom</span></div></div><div class="panel mint"><b>Tip:</b> Tooth 26 has a cavity we're monitoring. Your dentist recommends a filling before it needs a root canal.</div>`;
+	},
+	forms(p, d) {
+		return `<div class="panel"><h3>Medical history</h3>${d.forms.medical ? `<p class="msg ok">✓ Completed on ${d.forms.medical.date}</p>` : `<form id="mf" style="display:grid;gap:12px"><div class="row2"><label class="f">Allergies<input class="in" name="all" placeholder="e.g. penicillin"></label><label class="f">Current medication<input class="in" name="med"></label></div><div style="display:flex;gap:18px;flex-wrap:wrap;font-size:.92rem"><label><input type="checkbox" name="c1"> Diabetes</label><label><input type="checkbox" name="c2"> Heart condition</label><label><input type="checkbox" name="c3"> Pregnant</label><label><input type="checkbox" name="c4"> Smoker</label></div><button class="btn" style="justify-self:start">Submit form</button></form>`}</div>
+		<div class="panel"><h3>Treatment consent</h3>${d.forms.consent ? `<p class="msg ok">✓ Signed on ${d.forms.consent.date}</p>` : `<p class="msg" style="margin-bottom:12px">I consent to examination, X-rays and treatment as explained by my dentist.</p><button class="btn" id="sign">Sign electronically</button>`}</div>`;
+	},
+	profile(p) { return `<form class="panel" id="pf"><h3>Your details</h3><div style="display:grid;gap:14px;max-width:520px"><label class="f">Name<input class="in" name="name" value="${esc(p.name)}" required></label><div class="row2"><label class="f">Mobile<input class="in" name="phone" value="${esc(p.phone)}" readonly></label><label class="f">Email<input class="in" name="email" type="email" value="${esc(p.email || "")}"></label></div><button class="btn" style="justify-self:start">Save</button></div></form>`; },
+};
+function render() {
+	const p = LD.patient.get(); if (!p) return login();
+	const d = data(), tabs = [["overview", "Overview"], ["appointments", "Appointments"], ["plan", "Treatment plan"], ["invoices", "Invoices"], ["chart", "Dental chart"], ["forms", "Forms"], ["profile", "Profile"]];
+	$("#app").innerHTML = `<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:end;margin-bottom:18px"><div><p class="eyebrow">Patient portal</p><h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">Hello, ${esc(p.name.split(" ")[0])}</h1></div><div style="display:flex;gap:8px"><a class="btn sm" href="book.html">Book a visit</a><button class="btn ghost sm" data-v="out">Sign out</button></div></div>
+	<div class="tabs" style="margin-bottom:20px">${tabs.map(([k, n]) => `<button class="tab ${k === view ? "on" : ""}" data-v="${k}">${n}</button>`).join("")}</div><div>${V[view](p, d)}</div>`;
+}
+function resModal(a) {
+	rs = { a, date: null, time: null }; const days = [...Array(21)].map((_, i) => iso(LD.addDays(new Date(), i)));
+	const draw = () => { $("#mbox").innerHTML = `<h3 style="margin-bottom:4px">Reschedule</h3><p class="msg" style="margin-bottom:14px">${esc(LD.svc(a.svc).name)} with ${esc(LD.doc(a.doc).name)}</p><div class="dates">${days.map((d) => { const n = LD.slots(a.doc, d, a.dur, a.id).length, x = LD.pd(d); return `<button class="date ${rs.date === d ? "on" : ""}" data-rd="${d}" ${n ? "" : "disabled"}><small>${x.toLocaleDateString("en-IN", { weekday: "short" })}</small><b>${x.getDate()}</b><small>${x.toLocaleDateString("en-IN", { month: "short" })}</small></button>`; }).join("")}</div>${rs.date ? `<div class="times">${LD.slots(a.doc, rs.date, a.dur, a.id).map((t) => `<button class="time ${rs.time === t ? "on" : ""}" data-rt="${t}">${LD.fmtT(t)}</button>`).join("")}</div>` : '<p class="msg">Choose a new date.</p>'}<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px"><button class="btn ghost" data-mx>Close</button><button class="btn" data-rc ${rs.time ? "" : "disabled"}>Confirm new time</button></div>`; };
+	draw(); rs.draw = draw; $("#modal").classList.add("on");
+}
+document.addEventListener("click", (e) => {
+	const b = e.target.closest("button"); if (!b) { if (e.target.id === "modal") $("#modal").classList.remove("on"); return; }
+	const d = LD.store.get(KEY, null);
+	if (b.dataset.v === "out") { LD.patient.set(null); render(); }
+	else if (b.dataset.v) { view = b.dataset.v; render(); }
+	else if (b.dataset.rs) resModal(mine().find((a) => a.id === b.dataset.rs));
+	else if (b.dataset.rd) { rs.date = b.dataset.rd; rs.time = null; rs.draw(); }
+	else if (b.dataset.rt) { rs.time = b.dataset.rt; rs.draw(); }
+	else if ("mx" in b.dataset) $("#modal").classList.remove("on");
+	else if ("rc" in b.dataset) { const l = LD.real(), a = l.find((x) => x.id === rs.a.id); a.date = rs.date; a.time = rs.time; LD.store.set("appts", l); $("#modal").classList.remove("on"); LD.toast("Appointment moved"); render(); }
+	else if (b.dataset.cx) { const a = mine().find((x) => x.id === b.dataset.cx), hrs = (LD.pd(a.date).getTime() + LD.tmin(a.time) * 60000 - Date.now()) / 36e5; LD.setStatus(a.id, "cancelled"); LD.toast(hrs < 4 ? "Cancelled, late cancellation fee may apply" : "Appointment cancelled"); render(); }
+	else if (b.dataset.pa) { d.plan.find((x) => x.id == b.dataset.pa).status = "planned"; LD.store.set(KEY, d); render(); }
+	else if (b.dataset.pd) { d.plan.find((x) => x.id == b.dataset.pd).status = "declined"; LD.store.set(KEY, d); render(); }
+	else if (b.dataset.pay) { d.invoices.find((x) => x.id === b.dataset.pay).paid = true; LD.store.set(KEY, d); LD.toast("Payment received, thank you!"); render(); }
+	else if (b.dataset.pr) window.print();
+	else if (b.id === "sign") { d.forms.consent = { date: iso(new Date()) }; LD.store.set(KEY, d); render(); }
+});
+document.addEventListener("submit", (e) => {
+	e.preventDefault(); const f = e.target, d = data();
+	if (f.id === "mf") { d.forms.medical = { date: iso(new Date()) }; LD.store.set(KEY, d); LD.toast("Medical history saved"); render(); }
+	else if (f.id === "pf") { const p = LD.patient.get(); p.name = f.name.value; p.email = f.email.value; LD.patient.set(p); LD.toast("Details saved"); render(); }
+});
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#modal").classList.remove("on"); });
+render();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

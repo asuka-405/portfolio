@@ -1,0 +1,3 @@
+#!/bin/bash
+# usage: dl2.sh WIDTH name id name id ...
+w=$1; shift; while [ $# -gt 0 ]; do n=$1; id=$2; shift 2; echo "$n $id"; done | xargs -P 6 -L1 sh -c 'for t in 1 2 3; do curl -s -m 45 -o $0.jpg "https://images.unsplash.com/photo-$1?w='$w'&q=72&fm=jpg&fit=crop&h='$((w*2/3))'" && identify -quiet $0.jpg >/dev/null 2>&1 && break; done'

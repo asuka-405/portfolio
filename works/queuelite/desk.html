@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Desk | QueueLite (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#6c47ff;--acc-soft:rgba(108,71,255,.12);--side:#16113a;--bg:#f3f1fb}
+.now{border-radius:18px;padding:22px;color:#fff;text-align:center;background:linear-gradient(135deg,var(--acc),#9a6bff)}.now small{letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:700}.now .t{font:900 4.6rem/1 ui-monospace,Menlo,monospace;margin:6px 0}.now .meta{opacity:.9}
+.ctr{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.ctr button{border:1.5px solid var(--line);background:var(--panel);border-radius:12px;padding:8px 14px;font-weight:700;text-align:left}.ctr button.on{border-color:var(--acc);background:var(--acc-soft)}.ctr small{display:block;font-weight:500;color:var(--mut)}
+.tk{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel);margin-bottom:8px}.tk .no{font:800 1.2rem ui-monospace,Menlo,monospace}.tk .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.timer{font:700 1.1rem ui-monospace,Menlo,monospace}</style>
+</head>
+<body>
+<div class="shell"><aside class="side"></aside>
+<div class="main"><header class="top"><button class="burger" id="burger">☰</button><h1>Service desk</h1><span class="sp"></span><button class="btn sm" id="sim">+ Simulate 8 walk-ins</button><button class="btn sm pri" id="issue">+ Issue token</button></header>
+<div class="view"><div class="kpis" id="kp"></div><div class="g21"><div class="stack"><div><label class="mut" style="font-weight:700">YOUR COUNTER</label><div class="ctr" id="ctr"></div></div><div class="now" id="now"></div><div class="row" id="acts"></div></div>
+<div class="card"><h3>Waiting <span class="mut" id="wc"></span></h3><div class="row" style="margin-bottom:10px"><select class="in" id="sf" style="width:auto"></select><input class="in" id="q" placeholder="Search name / token" style="max-width:200px"></div><div id="wl"></div></div></div></div></div></div>
+<script src="../lib/ui.js"></script><script src="js/core.js"></script>
+<script>
+const { $, esc } = UI; QL.side("desk"); $("#burger").onclick = () => $(".side").classList.toggle("open");
+let mine = sessionStorage.getItem("ql-counter") || "c1", filt = "", q = "";
+const S = () => QL.state, me = () => S().counters.find((c) => c.id === mine) || S().counters[0];
+const fmtT = (ms) => { const s = Math.max(0, Math.floor(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); };
+function draw() {
+	const st = QL.stats(), c = me(), cur = c.cur && S().tickets.find((t) => t.id === c.cur);
+	$("#kp").innerHTML = `<div class="kpi"><span>Waiting now</span><b>${st.waiting}</b></div><div class="kpi"><span>Being served</span><b>${st.serving}</b></div><div class="kpi"><span>Served today</span><b>${st.servedToday}</b></div><div class="kpi"><span>Avg wait today</span><b>${st.avgWaitToday ? st.avgWaitToday.toFixed(1) + "m" : "-"}</b></div>`;
+	$("#ctr").innerHTML = S().counters.map((x) => `<button class="${x.id === mine ? "on" : ""}" data-c="${x.id}">${esc(x.name)}<small>${x.open ? (x.cur ? "Busy" : "Free") : "Closed"} · ${x.svc.map((s) => QL.svc(s).name.split(" ")[0]).join(", ")}</small></button>`).join("");
+	$("#now").innerHTML = c.open ? (cur ? `<small>Now serving · ${esc(c.name)}</small><div class="t">${cur.no}</div><div class="meta">${esc(cur.name)} · ${esc(QL.svc(cur.svc).name)}${cur.prio ? " · Priority" : ""}</div><div class="timer" id="tm" style="margin-top:8px">00:00</div>` : `<small>${esc(c.name)} is free</small><div class="t">-</div><div class="meta">Press “Call next” to bring in the next customer</div>`) : `<small>${esc(c.name)} is closed</small><div class="t">✕</div><div class="meta">Open the counter to start serving</div>`;
+	$("#acts").innerHTML = c.open ? `<button class="btn pri" id="next" ${QL.waiting().some((t) => c.svc.includes(t.svc)) ? "" : "disabled"}>Call next ▶ <kbd style="opacity:.6">N</kbd></button><button class="btn" id="recall" ${cur ? "" : "disabled"}>Recall </button><button class="btn" id="done" ${cur ? "" : "disabled"}>Complete ✓</button><button class="btn" id="ns" ${cur ? "" : "disabled"}>No-show</button><button class="btn" id="tr" ${cur ? "" : "disabled"}>Transfer →</button><button class="btn danger" id="close">Close counter</button>` : '<button class="btn pri" id="open">Open counter</button>';
+	const l = QL.waiting().filter((t) => (!filt || t.svc === filt) && (!q || (t.no + t.name).toLowerCase().includes(q.toLowerCase())));
+	$("#wc").textContent = l.length + " in line";
+	$("#sf").innerHTML = '<option value="">All services</option>' + S().services.map((s) => `<option value="${s.id}" ${filt === s.id ? "selected" : ""}>${esc(s.name)}</option>`).join("");
+	$("#wl").innerHTML = l.length ? l.map((t) => `<div class="tk"><span class="no">${t.no}</span><div><b>${esc(t.name)}</b> ${t.prio ? "" : ""}<div class="mut"><i class="dot" style="background:${QL.svc(t.svc).color}"></i>${esc(QL.svc(t.svc).name)} · waiting ${Math.max(0, Math.round((Date.now() - t.ts) / 60000))}m · ~${QL.estWait(t)}m left</div></div><button class="btn sm danger" data-x="${t.id}" aria-label="Remove">✕</button></div>`).join("") : '<p class="empty">Nobody is waiting </p>';
+}
+setInterval(() => { const c = me(), cur = c.cur && S().tickets.find((t) => t.id === c.cur), el = $("#tm"); if (el && cur) el.textContent = fmtT(Date.now() - cur.startAt); }, 1000);
+QL.on(draw);
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return;
+	if (b.dataset.c) { mine = b.dataset.c; sessionStorage.setItem("ql-counter", mine); draw(); }
+	else if (b.id === "next") { const t = QL.callNext(mine); if (t) UI.toast("Calling " + t.no); } else if (b.id === "recall") { QL.recall(mine); UI.toast("Recalled"); } else if (b.id === "done") { QL.finish(mine, "done"); } else if (b.id === "ns") { QL.finish(mine, "noshow"); UI.toast("Marked as no-show"); }
+	else if (b.id === "close") { const c = me(); if (c.cur) QL.finish(mine, "done", true); QL.setCounter(mine, { open: false, cur: null }); } else if (b.id === "open") QL.setCounter(mine, { open: true });
+	else if (b.id === "tr") { const c = me(), t = S().tickets.find((x) => x.id === c.cur); UI.modal({ title: "Transfer " + t.no, body: `<label class="f">Send to service<select class="in" id="ts">${S().services.filter((s) => s.id !== t.svc).map((s) => `<option value="${s.id}">${esc(s.name)}</option>`).join("")}</select></label>`, actions: [{ label: "Cancel" }, { label: "Transfer", cls: "pri", fn: () => { QL.transfer(t.id, $("#ts").value); UI.toast("Transferred"); } }] }); }
+	else if (b.dataset.x) QL.cancel(b.dataset.x);
+	else if (b.id === "sim") { QL.simulate(8); UI.toast("8 walk-ins added"); }
+	else if (b.id === "issue") UI.modal({ title: "Issue a token", body: `<form id="isf" class="stack" style="gap:12px"><label class="f">Customer name<input class="in" name="name" placeholder="Optional"></label><label class="f">Mobile (for SMS)<input class="in" name="phone" pattern="[0-9]{10}" placeholder="Optional"></label><label class="f">Service<select class="in" name="svc">${S().services.map((s) => `<option value="${s.id}">${esc(s.name)} · ~${QL.estNew(s.id)} min wait</option>`).join("")}</select></label><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="prio"> Priority (senior citizen / emergency)</label></form>`, actions: [{ label: "Cancel" }, { label: "Issue token", cls: "pri", fn: () => { const f = $("#isf"); const t = QL.issue({ svc: f.svc.value, name: f.name.value, phone: f.phone.value, prio: f.prio.checked }); UI.toast("Token " + t.no + " issued"); } }] });
+});
+$("#sf").onchange = (e) => { filt = e.target.value; draw(); }; $("#q").oninput = (e) => { q = e.target.value; draw(); };
+document.addEventListener("keydown", (e) => { if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return; if (e.key === "n" || e.key === "N") { const t = QL.callNext(mine); if (t) UI.toast("Calling " + t.no); } });
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

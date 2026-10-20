@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your bag | Kiln &amp; Clay</title>
+<meta name="description" content="Review your bag before checkout." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding-top:36px"><div class="wrap">
+	<h1 style="font-size:clamp(2rem,4vw,3rem);margin-bottom:22px">Your bag</h1>
+	<div id="empty" class="panel empty" hidden><h3>Your bag is empty</h3><p class="msg" style="margin:8px 0 18px">Let's find you something beautiful.</p><a class="btn" href="shop.html">Browse the shop</a></div>
+	<div class="checkout" id="co"><div><div id="lines"></div><div class="panel" style="margin-top:22px"><h3>Make it a gift</h3><label style="display:flex;gap:10px;align-items:center;cursor:pointer"><input type="checkbox" id="wrap"> Gift wrap (+₹99), recycled paper, twine and a handwritten card</label><textarea class="in" id="gnote" rows="2" placeholder="Message for the card (optional)" style="margin-top:10px" hidden></textarea></div></div>
+	<aside class="panel sum"><h3>Summary</h3><div id="shipbar"></div>
+		<label class="f" style="margin:14px 0 4px">Promo code</label><div style="display:flex;gap:8px"><input class="in" id="cp" placeholder="WELCOME10" style="text-transform:uppercase"><button class="btn sm" id="cpa">Apply</button></div><p class="msg" id="cpm" style="margin:6px 0 12px"></p>
+		<div id="rows"></div><a class="btn clay block" style="margin-top:16px" href="checkout.html" id="go">Proceed to checkout</a><p class="msg" style="margin-top:10px;text-align:center">Secure checkout · 30-day returns</p></aside></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("");
+const { $, esc, inr, img, D } = KC, S = KC.store.get("cartopts", { coupon: "", wrap: false, note: "" });
+function save() { KC.store.set("cartopts", S); }
+function draw() {
+	const c = KC.cart.get(); $("#empty").hidden = c.length > 0; $("#co").hidden = !c.length;
+	$("#lines").innerHTML = c.map((l, i) => { const p = KC.get(l.id), s = p.sets && p.sets[l.set || 0]; return `<div class="line"><a href="product.html?id=${p.id}"><img src="${img(p.img)}" alt=""></a><div><a href="product.html?id=${p.id}" style="text-decoration:none"><b>${esc(p.name)}</b></a><small>${s ? s[0] : "Single piece"} · ${inr(KC.cart.unit(l))} each</small><div class="qty" style="margin-top:8px"><button data-i="${i}" data-d="-1" aria-label="Fewer">−</button><b>${l.qty}</b><button data-i="${i}" data-d="1" aria-label="More">+</button></div> <button class="btn ghost sm" data-rm="${i}" style="margin-left:8px;border:0;padding:6px">Remove</button></div><b>${inr(KC.cart.unit(l) * l.qty)}</b></div>`; }).join("");
+	const t = KC.totals(c, { coupon: S.coupon, wrap: S.wrap });
+	$("#wrap").checked = S.wrap; $("#gnote").hidden = !S.wrap; $("#gnote").value = S.note;
+	$("#shipbar").innerHTML = t.toFree > 0 ? `<p class="msg">Add <b>${inr(t.toFree)}</b> more for free shipping</p><div class="ship"><i style="width:${Math.min(100, (2000 - t.toFree) / 20)}%"></i></div>` : '<p class="msg ok">✓ You get free shipping</p><div class="ship"><i style="width:100%"></i></div>';
+	$("#cpm").innerHTML = S.coupon ? (t.msg ? `<span class="err">${t.msg}</span>` : `<span class="ok">✓ ${D.coupons[S.coupon].label}</span>`) : "Try WELCOME10, CLAY15 or FREESHIP";
+	$("#rows").innerHTML = `<div class="r"><span>Subtotal</span><span>${inr(t.sub)}</span></div>${t.disc ? `<div class="r"><span>Discount</span><span>−${inr(t.disc)}</span></div>` : ""}${t.wrap ? `<div class="r"><span>Gift wrap</span><span>${inr(t.wrap)}</span></div>` : ""}<div class="r"><span>Shipping</span><span>${t.ship ? inr(t.ship) : "Free"}</span></div><div class="r t"><span>Total</span><span>${inr(t.total)}</span></div><p class="msg">Includes ${inr(t.gst)} GST</p>`;
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; if (b.dataset.d) { const i = +b.dataset.i, c = KC.cart.get(); const before = c[i].qty; KC.cart.setQty(i, before + +b.dataset.d); if (KC.cart.get()[i] && KC.cart.get()[i].qty === before && +b.dataset.d > 0) KC.toast("That's all we have in stock"); draw(); } else if (b.dataset.rm) { KC.cart.setQty(+b.dataset.rm, 0); draw(); } else if (b.id === "cpa") { S.coupon = $("#cp").value.trim().toUpperCase(); save(); draw(); } });
+$("#wrap").onchange = (e) => { S.wrap = e.target.checked; save(); draw(); }; $("#gnote").oninput = (e) => { S.note = e.target.value; save(); };
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

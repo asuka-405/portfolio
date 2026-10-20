@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gate screen | SocietyHub (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#0f766e;--acc-ink:#fff;--acc-soft:rgba(15,118,110,.14)}body{background:#e5f1ef}
+.w{max-width:560px;margin:0 auto;min-height:100vh;background:var(--bg);box-shadow:0 0 50px rgba(0,60,50,.15)}
+.hd{background:var(--acc);color:#fff;padding:16px 18px}.hd h1{font-size:1.2rem}.hd small{opacity:.85}.pc{padding:16px;display:grid;gap:14px}
+.big{font-size:1.1rem;padding:14px}
+</style>
+</head>
+<body>
+<div class="w"><div class="hd"><small id="sn"></small><h1>Main gate</h1></div><div class="pc" id="pc"></div></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, esc, toast, form, field, chip } = UI, { S } = SH, tm = (ts) => new Date(ts).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+	$("#sn").textContent = SH.settings().name;
+	function draw() {
+		const V = S.get("vis", []), pend = V.filter((v) => v.status === "pending"), exp = V.filter((v) => v.status === "expected"), inside = V.filter((v) => v.status === "in");
+		$("#pc").innerHTML = `<button class="btn pri big" id="nv">+ Log a visitor</button><div class="card"><h3>Pre-approved code</h3><div class="row"><input class="in" id="cd" placeholder="4 digit code from the resident" maxlength="4" inputmode="numeric" style="flex:1"><button class="btn" id="ck">Check</button></div></div>
+		<div class="card"><h3>Waiting for approval <span class="chip warn">${pend.length}</span></h3>${pend.map((v) => `<div class="row sb" style="padding:8px 0;border-bottom:1px solid var(--line)"><span><b>${esc(v.name)}</b> for ${v.flat}<div class="mut">${v.purpose} · ${tm(v.ts)}</div></span>${chip("Waiting", "warn")}</div>`).join("") || '<p class="mut">No one waiting</p>'}</div>
+		<div class="card"><h3>Allowed, send in <span class="chip ok">${V.filter((v) => v.status === "allowed").length}</span></h3>${V.filter((v) => v.status === "allowed").map((v) => `<div class="row sb" style="padding:8px 0;border-bottom:1px solid var(--line)"><span><b>${esc(v.name)}</b> to ${v.flat}</span><button class="btn sm pri" data-in="${v.id}">Entered</button></div>`).join("") || '<p class="mut">None</p>'}${V.filter((v) => v.status === "denied").slice(-2).map((v) => `<div class="row sb" style="padding:8px 0"><span><b>${esc(v.name)}</b> for ${v.flat}</span>${chip("Denied", "bad")}</div>`).join("")}</div>
+		<div class="card"><h3>Inside now <span class="chip">${inside.length}</span></h3>${inside.map((v) => `<div class="row sb" style="padding:8px 0;border-bottom:1px solid var(--line)"><span><b>${esc(v.name)}</b> in ${v.flat}<div class="mut">since ${tm(v.ts)}</div></span><button class="btn sm" data-out="${v.id}">Exit</button></div>`).join("") || '<p class="mut">Nobody inside</p>'}</div>`;
+		$("#nv").onclick = () => form("Log a visitor", `${field("Visitor name", "name", "", { req: 1 })}<div class="row2">${field("Visiting flat", "flat", "A-101", { type: "select", opts: SH.flats().map((f) => f.id) })}${field("Purpose", "purpose", "Guest", { type: "select", opts: ["Guest", "Delivery", "Cab", "Service staff", "Courier"] })}</div>${field("Vehicle number", "vehicle", "")}`, (v) => { const L = S.get("vis", []); L.push({ id: "v" + Date.now(), ...v, ts: Date.now(), out: 0, status: "pending", code: "" }); S.set("vis", L); SH.sync(); toast("Approval request sent to flat " + v.flat); draw(); }, { save: "Ask resident" });
+		$("#ck").onclick = () => { const code = $("#cd").value.trim(), v = exp.find((x) => x.code === code); if (!v) return toast("No visitor with that code"); const L = S.get("vis", []); const x = L.find((q) => q.id === v.id); x.status = "in"; x.ts = Date.now(); S.set("vis", L); SH.sync(); toast(v.name + " allowed in for " + v.flat); draw(); };
+	}
+	document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; const L = S.get("vis", []); if (b.dataset.in) { const x = L.find((v) => v.id === b.dataset.in); x.status = "in"; x.ts = Date.now(); } else if (b.dataset.out) { const x = L.find((v) => v.id === b.dataset.out); x.status = "out"; x.out = Date.now(); } else return; S.set("vis", L); SH.sync(); draw(); });
+	SH.onChange(draw); draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

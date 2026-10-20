@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rewards | Brew &amp; Bean</title>
+<meta name="description" content="Earn a point for every ₹10 at Brew &amp; Bean. Join free and earn free drinks, upgrades and cupping evenings." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><img src="img/flatwhite.jpg" alt="" /><div class="wrap"><p class="eyebrow">Bean Rewards</p><h1>Every cup counts.</h1><p>Join free, earn a point for every ₹10, and turn them into drinks, upgrades and invitations.</p></div></section>
+<section class="sec"><div class="wrap" id="app"></div></section>
+<section class="sec alt"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Tiers</p><h2>Move up as you sip</h2></div></div>
+	<div class="grid" id="tiers" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))"></div>
+</div></section>
+<section class="sec"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">How it works</p><h2>Three simple steps</h2></div></div>
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"><div class="step"><b class="n">1</b><h3>Join with your mobile</h3><p class="msg">No app, no card. Your number is your membership.</p></div><div class="step"><b class="n">2</b><h3>Order as usual</h3><p class="msg">Use the same number at checkout online or tell the barista in store.</p></div><div class="step"><b class="n">3</b><h3>Redeem at checkout</h3><p class="msg">100 points = ₹10 off. Apply them on any order.</p></div></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+BB.layout("rewards.html");
+const { $, esc, inr, D } = BB;
+function tiers(pts) { const cur = BB.tierFor(pts); $("#tiers").innerHTML = D.tiers.map((t) => `<div class="tier ${t.n === cur.n ? "on" : ""}"><p class="eyebrow">${t.min}+ points</p><h3 style="font-size:1.5rem;margin:4px 0 8px">${t.n}</h3><p class="msg">${t.perk}</p>${t.n === cur.n ? '<p style="margin-top:10px;font-weight:800;color:var(--leaf)">Your tier</p>' : ""}</div>`).join(""); }
+function render() {
+	const p = BB.profile.get();
+	if (!p) {
+		tiers(0);
+		$("#app").innerHTML = `<div class="split"><div><h2 style="font-size:2.2rem;margin-bottom:12px">Join Bean Rewards</h2><p class="msg" style="margin-bottom:18px">It takes ten seconds. You'll get a welcome code for 10% off your next order.</p>
+		<form id="join" style="display:grid;gap:14px;max-width:420px"><label class="f">Name<input class="in" name="name" required /></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}" inputmode="numeric" placeholder="10 digits" /></label><label class="f">Birthday (for your free drink)<input class="in" type="date" name="dob" /></label><button class="btn dark">Join for free</button></form></div>
+		<img src="img/team.jpg" alt="Baristas at the counter" /></div>`;
+		$("#join").onsubmit = (e) => { e.preventDefault(); const f = e.target; BB.profile.set({ name: f.name.value.trim(), phone: f.phone.value, dob: f.dob.value, joined: Date.now() }); BB.toast("Welcome to Bean Rewards! Use WELCOME10 at checkout."); render(); };
+		return;
+	}
+	const pts = BB.pointsFor(p.phone), tier = BB.tierFor(pts.earned), idx = D.tiers.indexOf(tier), nxt = D.tiers[idx + 1];
+	const pct = nxt ? Math.round((pts.earned - tier.min) / (nxt.min - tier.min) * 100) : 100;
+	const mine = BB.orders.all().filter((o) => o.phone === p.phone).reverse();
+	tiers(pts.earned);
+	$("#app").innerHTML = `<div class="panel" style="background:var(--espresso);color:var(--cream);border:0;display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;margin-bottom:22px"><div class="ring" style="--p:${pct}"><div><span><b>${pts.balance}</b><small>points</small></span></div></div>
+		<div><p class="eyebrow" style="color:#f0c58f">${tier.n} member</p><h2 style="font-size:2rem;margin:4px 0 6px">Hi ${esc(p.name.split(" ")[0])}!</h2><p style="color:#d9cbb8">${nxt ? `${nxt.min - pts.earned} more points to reach <b>${nxt.n}</b>.` : "You've reached our top tier. Thank you!"} Your balance is worth <b>${inr(pts.balance * 0.1)}</b> off.</p>
+		<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap"><a class="btn" href="menu.html">Earn more</a><button class="btn ghost" id="share">Refer a friend</button><button class="btn ghost" id="leave">Sign out</button></div></div></div>
+		<h3 style="margin-bottom:12px">Points activity</h3>
+		${mine.length ? `<table class="t"><thead><tr><th>Date</th><th>Order</th><th>Spent</th><th>Points</th></tr></thead><tbody>${mine.slice(0, 12).map((o) => `<tr><td>${new Date(o.ts).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</td><td><a href="track.html?id=${o.id}">${o.id}</a></td><td>${inr(o.total)}</td><td>+${Math.floor(o.total / 10)}${o.redeem ? ` <span class="msg">(−${o.redeem} redeemed)</span>` : ""}</td></tr>`).join("")}</tbody></table>` : '<p class="msg">No orders yet, place one with this mobile number and your points will appear here.</p>'}`;
+	$("#share").onclick = () => { const code = "BEAN-" + p.phone.slice(-4); navigator.clipboard && navigator.clipboard.writeText(code); BB.toast("Your referral code " + code + " is copied"); };
+	$("#leave").onclick = () => { BB.store.set("profile", null); render(); };
+}
+render();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -167,7 +168,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>An earlier chapter covered function templates. Class templates apply the same idea to whole classes: write the logic once, parameterized by type, and let the compiler generate a concrete version for each type you actually use.</p>
+					<p>An earlier chapter covered function templates. Class templates apply the same idea to whole classes: write the logic once, parameterized by type, and let the compiler generate a concrete version for each type you use.</p>
 					<h3>Class templates</h3>
 				</div>
 
@@ -236,9 +237,9 @@ int main() {
 </pre></noscript></div>
 
 <div class="prose reveal">
-					<p>That ((std::cout &lt;&lt; args &lt;&lt; &quot; &quot;), ...) is a fold expression (C++17): it expands the parameter pack, applying the comma operator across every argument, which is a compact way to &quot;do this for every argument in the pack&quot; without writing recursive template unpacking by hand, which is how this was done before C++17 and was considerably uglier.</p>
-					<h3>Concepts: constraints that actually explain themselves</h3>
-					<p>Before C++20, constraining a template to only accept certain kinds of types relied on SFINAE (substitution failure is not an error), a genuinely clever but genuinely unreadable technique involving std::enable_if and template metaprogramming tricks. If you got it wrong, the compiler error was often a wall of template instantiation backtraces with no clear indication of what you actually did wrong.</p>
+					<p>That ((std::cout &lt;&lt; args &lt;&lt; &quot; &quot;),...) is a fold expression (C++17): it expands the parameter pack, applying the comma operator across every argument, which is a compact way to &quot;do this for every argument in the pack&quot; without writing recursive template unpacking by hand, which is how this was done before C++17 and was considerably uglier.</p>
+					<h3>Concepts: constraints that explain themselves</h3>
+					<p>Before C++20, constraining a template to only accept certain kinds of types relied on SFINAE (substitution failure is not an error), a clever but unreadable technique involving std::enable_if and template metaprogramming tricks. If you got it wrong, the compiler error was often a wall of template instantiation backtraces with no clear indication of what you did wrong.</p>
 					<p>Concepts (C++20) replace most of that with a named, readable constraint you can attach directly to a template parameter:</p>
 				</div>
 
@@ -261,7 +262,7 @@ int main() {
 </pre></noscript></div>
 
 <div class="prose reveal">
-					<p>If you're writing a template that only makes sense for certain kinds of types, use a concept to say so directly, rather than letting a misuse fail deep inside the implementation with a confusing error. Concepts are a genuinely large usability improvement, and by now the reasonable default whenever you'd have reached for SFINAE in older code.</p>
+					<p>If you're writing a template that only makes sense for certain kinds of types, use a concept to say so directly, rather than letting a misuse fail deep inside the implementation with a confusing error. Concepts are a large usability improvement, and by now the reasonable default whenever you'd have reached for SFINAE in older code.</p>
 				</div>
 
 				<details class="cmd-explain reveal">

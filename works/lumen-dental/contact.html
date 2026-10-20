@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Visit &amp; contact | Lumen Dental</title>
+<meta name="description" content="Find Lumen Dental in Sector 18, Noida: opening hours, directions, emergency contact and enquiry form." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Visit us</p><h1>Sector 18, Noida.</h1><p>Five minutes from Sector 18 metro, with free patient parking behind the building.</p></div></section>
+<section class="sec" style="padding-top:34px"><div class="wrap checkout">
+	<div><img src="img/clinic2.jpg" alt="Treatment room" style="border-radius:22px;aspect-ratio:16/9;object-fit:cover;width:100%;margin-bottom:22px" />
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"><div class="panel" style="margin:0"><h3>Address</h3><p class="msg">Lumen Dental<br>21 Garden Lane, Sector 18<br>Noida, UP 201301</p><a class="btn ghost sm" style="margin-top:12px" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Sector+18+Noida">Get directions</a></div>
+	<div class="panel" style="margin:0"><h3>Hours <span id="st"></span></h3><div id="hrs" class="msg" style="display:grid;grid-template-columns:auto 1fr;gap:2px 16px"></div></div></div>
+	<div class="panel" style="margin-top:20px;background:#fff7ed;border-color:#fed7aa"><h3>Dental emergency?</h3><p class="msg">Severe pain, swelling, a knocked-out tooth or bleeding that won't stop, call <b>+91 120 400 1818</b> during opening hours and we'll see you the same day.</p></div></div>
+	<form class="panel" id="f" style="margin:0"><h3>Send us a message</h3><div style="display:grid;gap:14px"><label class="f">Name<input class="in" name="name" required></label><label class="f">Mobile or email<input class="in" name="c" required></label><label class="f">Topic<select class="in" name="t"><option>General question</option><option>Insurance &amp; billing</option><option>Second opinion</option><option>Feedback</option></select></label><label class="f">Message<textarea class="in" name="m" rows="4" required></textarea></label><button class="btn">Send message</button></div></form>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+LD.layout("contact.html");
+const { $ } = LD, DN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], today = new Date().getDay();
+$("#st").innerHTML = LD.isOpen() ? '<span class="open y">Open now</span>' : '<span class="open n">Closed</span>';
+$("#hrs").innerHTML = [1, 2, 3, 4, 5, 6, 0].map((d) => `<span style="${d === today ? "font-weight:800;color:var(--teal)" : ""}">${DN[d]}</span><span style="${d === today ? "font-weight:800;color:var(--teal)" : ""}">${LD.D.hours.days.includes(d) ? "9:00 am – 6:00 pm" : "Closed"}</span>`).join("");
+$("#f").onsubmit = (e) => { e.preventDefault(); const f = e.target, l = LD.store.get("msgs", []); l.push({ ts: Date.now(), name: f.name.value, c: f.c.value, t: f.t.value, m: f.m.value }); LD.store.set("msgs", l); $("#f").innerHTML = `<h3>Thank you, ${LD.esc(f.name.value.split(" ")[0])}</h3><p class="msg">Your message is with our front-desk team. We reply within one working day.</p>`; };
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

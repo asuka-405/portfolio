@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Product | Kiln &amp; Clay</title>
+<meta name="description" content="Handmade stoneware from Kiln &amp; Clay." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding:30px 0 60px"><div class="wrap" id="page"></div></section>
+<section class="sec alt"><div class="wrap"><div class="sec-h"><div><h2>You may also like</h2></div></div><div class="grid" id="rel"></div></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("shop.html");
+const { $, $$, esc, inr, img, D } = KC, id = new URLSearchParams(location.search).get("id"), p = KC.get(id) || KC.products()[0];
+document.title = p.name + " | Kiln & Clay";
+const detail = [p.img, D.detail[KC.hash(p.id) % D.detail.length], D.detail[(KC.hash(p.id) + 2) % D.detail.length]];
+let set = 0, qty = 1, shot = 0;
+function price() { const s = p.sets && p.sets[set], unit = s ? Math.round(p.price * s[1] * (1 - s[2] / 100)) : p.price; return unit; }
+function draw() {
+	const out = p.stock <= 0, low = p.stock > 0 && p.stock <= 5, u = price();
+	$("#page").innerHTML = `<div class="msg" style="margin-bottom:18px;font-size:.84rem"><a href="shop.html" style="text-decoration:none">Shop</a> › <a href="shop.html?cat=${encodeURIComponent(p.cat)}" style="text-decoration:none">${esc(p.cat)}</a> › ${esc(p.name)}</div>
+	<div class="pdp"><div class="gal"><div class="th">${detail.map((k, i) => `<img src="${img(k)}" alt="" class="${i === shot ? "on" : ""}" data-s="${i}">`).join("")}</div><div class="main"><img src="${img(detail[shot])}" alt="${esc(p.name)}"></div></div>
+	<div><p class="eyebrow">${esc(p.cat)}</p><h1>${esc(p.name)}</h1><div class="price">${inr(u)} <small>${p.sets && p.sets[set][2] ? "· save " + p.sets[set][2] + "%" : ""} incl. GST</small></div>
+	<p style="margin:14px 0 18px;color:#5a4d43">${esc(p.desc)}</p>
+	${p.sets ? `<div style="margin-bottom:18px"><label class="f" style="margin-bottom:8px">Quantity in set</label><div class="opts">${p.sets.map((s, i) => `<label><input type="radio" name="set" value="${i}" ${i === set ? "checked" : ""}><span>${s[0]}${s[2] ? " · −" + s[2] + "%" : ""}</span></label>`).join("")}</div></div>` : ""}
+	<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px"><div class="qty"><button data-q="-1" aria-label="Fewer">−</button><b>${qty}</b><button data-q="1" aria-label="More">+</button></div><button class="btn clay" style="flex:1;min-width:180px" id="add" ${out ? "disabled" : ""}>${out ? "Sold out" : "Add to bag"}</button><button class="btn ghost sm wish-b" data-wish="${p.id}" style="padding:14px 18px">${KC.wish.has(p.id) ? "♥ Saved" : "♡ Save"}</button></div>
+	<p class="msg" style="margin-bottom:6px">${out ? "This piece is sold out. Join the waitlist below." : low ? `<b style="color:#d6862b">Only ${p.stock} left</b>, made in small batches.` : "In stock · ships in 2 working days"}</p>
+	${out ? `<form id="wl" style="display:flex;gap:8px;margin:10px 0"><input class="in" type="email" required placeholder="Email me when it's back"><button class="btn sm">Notify me</button></form>` : ""}
+	<div class="panel" style="margin-top:18px;padding:16px"><label class="f" style="margin-bottom:6px">Check delivery</label><div style="display:flex;gap:8px"><input class="in" id="pin" placeholder="6-digit PIN code" maxlength="6" inputmode="numeric"><button class="btn sm ghost" id="pinb">Check</button></div><p class="msg" id="pinm" style="margin-top:8px"></p></div>
+	<div class="tabs" id="tabs"><button class="on" data-t="d">Details</button><button data-t="c">Care</button><button data-t="s">Shipping</button></div><div class="tp" id="tp"></div></div></div>`;
+	tab("d");
+}
+const TABS = { d: `<ul><li>Wheel-thrown stoneware, fired to 1,260 °C</li><li>Food-safe, lead-free glaze</li><li>Dishwasher, oven (to 220 °C) and microwave safe</li><li>Each piece is handmade, so size and colour vary slightly</li></ul>`, c: `<ul><li>Hand wash or use a gentle dishwasher cycle</li><li>Avoid sudden temperature changes</li><li>Don't use steel wool on the glaze</li></ul><p style="margin-top:8px"><a href="care.html" style="color:var(--clay)">Full care guide →</a></p>`, s: `<ul><li>Free standard shipping over ₹2,000 (otherwise ₹99)</li><li>Express delivery ₹249 · 1–3 days in metros</li><li>Double-boxed and insured. Broken in transit? We replace it free.</li><li>30-day returns on unused pieces</li></ul>` };
+function tab(t) { $$("#tabs button").forEach((b) => b.classList.toggle("on", b.dataset.t === t)); $("#tp").innerHTML = TABS[t]; }
+document.addEventListener("click", (e) => {
+	const b = e.target.closest("button,img[data-s]"); if (!b) return;
+	if (b.dataset.s !== undefined) { shot = +b.dataset.s; draw(); }
+	else if (b.dataset.q) { qty = Math.max(1, Math.min(10, qty + +b.dataset.q)); draw(); }
+	else if (b.dataset.t) tab(b.dataset.t);
+	else if (b.id === "add") { const r = KC.cart.add(p.id, set, qty); KC.toast(r.ok ? p.name + " added to your bag" : r.msg); }
+	else if (b.id === "pinb") { const v = $("#pin").value; $("#pinm").innerHTML = /^\d{6}$/.test(v) ? `Delivery by <b>${KC.eta(v)}</b> · express ${KC.eta(v, true)}` : '<span class="err">Enter a valid 6-digit PIN code.</span>'; }
+	else if (b.dataset.wish) { b.textContent = KC.wish.has(p.id) ? "♥ Saved" : "♡ Save"; }
+});
+document.addEventListener("change", (e) => { if (e.target.name === "set") { set = +e.target.value; draw(); } });
+document.addEventListener("submit", (e) => { if (e.target.id === "wl") { e.preventDefault(); KC.toast("We'll email you when it's back"); e.target.reset(); } });
+draw();
+$("#rel").innerHTML = KC.products().filter((x) => x.id !== p.id && (x.cat === p.cat || x.tags.some((t) => p.tags.includes(t)))).slice(0, 4).map(KC.card).join("");
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

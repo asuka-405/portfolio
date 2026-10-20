@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My account | FitForge</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding-top:40px"><div class="wrap" id="app"></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+FF.layout("account.html");
+const { $, esc, inr, D, iso, pd } = FF; let view = "overview";
+const goalKey = "progress";
+function empty() {
+	$("#app").innerHTML = `<div class="panel" style="max-width:640px;margin:20px auto;text-align:center;padding:40px"><p class="eyebrow">Member portal</p><h2 style="font-size:2.4rem;margin:8px 0 12px">You're not signed in</h2><p class="msg" style="margin-bottom:22px">Join in two minutes, or explore the portal with a sample member.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a class="btn" href="join.html">Join FitForge</a><button class="btn ghost" id="demo">Use a sample member</button></div></div>`;
+	$("#demo").onclick = () => { FF.member.create({ name: "Aanya Sharma", phone: "9876500000", email: "aanya@example.com", plan: "unlimited", billing: "monthly", goal: "Build strength" }); FF.store.set("progress", { weights: [[-63, 68.4], [-49, 68.0], [-35, 67.6], [-21, 67.1], [-7, 66.9]].map(([d, w]) => [iso(FF.addDays(new Date(), d)), w]), prs: [{ lift: "Back squat", kg: 70, date: iso(FF.addDays(new Date(), -40)) }, { lift: "Deadlift", kg: 95, date: iso(FF.addDays(new Date(), -22)) }, { lift: "Bench press", kg: 42.5, date: iso(FF.addDays(new Date(), -10)) }] }); render(); };
+}
+function head(m) {
+	return `<div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:end;margin-bottom:22px"><div><p class="eyebrow">Member portal</p><h1 style="font-size:clamp(2.2rem,5vw,3.4rem)">Hi, ${esc(m.name.split(" ")[0])}</h1></div><span class="chip lime">${esc(FF.planName(m.plan))} · ${m.status === "frozen" ? "Frozen" : "Active"}</span></div>`;
+}
+const V = {
+	overview(m) {
+		const ck = new Set(FF.store.get("checkins", [])), mo = iso(new Date()).slice(0, 7), thisMonth = [...ck].filter((d) => d.startsWith(mo)).length;
+		const cells = [...Array(98)].map((_, i) => { const d = iso(FF.addDays(new Date(), i - 97)); return `<i class="${ck.has(d) ? "on" : ""} ${i === 97 ? "today" : ""}" title="${d}"></i>`; }).join("");
+		const next = FF.bookings.get().filter((b) => b.st === "booked" && b.id >= iso(new Date())).sort((a, b) => a.id < b.id ? -1 : 1)[0];
+		const days = Math.max(0, Math.ceil((m.expires - Date.now()) / 864e5));
+		return `<div class="kpis"><div class="kpi"><span>Visits this month</span><b>${thisMonth}</b></div><div class="kpi"><span>Current streak</span><b>${FF.streak()} d</b></div><div class="kpi"><span>Classes booked</span><b>${FF.bookings.get().filter((b) => b.st === "booked").length}</b></div><div class="kpi"><span>${m.plan === "trial" ? "Pass ends in" : "Renews in"}</span><b>${days} d</b></div></div>
+		<div class="split" style="align-items:start;gap:20px"><div class="panel"><h3>Next class</h3>${next ? (() => { const [d, t, p] = next.id.split("|"); return `<p style="font:400 1.6rem Impact,sans-serif;text-transform:uppercase">${esc(FF.prog(p).name)}</p><p class="msg">${pd(d).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })} · ${t}</p>`; })() : '<p class="msg">Nothing booked. <a href="classes.html" style="color:var(--lime)">Browse the timetable →</a></p>'}</div>
+		<div class="card-id" style="max-width:none"><div class="eyebrow">FitForge member</div><div class="n" style="margin:14px 0 2px">${esc(m.name)}</div><div class="msg">${esc(FF.planName(m.plan))} · since ${new Date(m.joined).toLocaleDateString("en-IN", { month: "short", year: "numeric" })}</div><div class="no" style="margin-top:12px">${m.id}</div></div></div>
+		<div class="panel"><h3>Last 14 weeks</h3><div class="heat">${cells}</div><p class="msg" style="margin-top:10px">Each square is a day you trained.</p></div>`;
+	},
+	bookings() {
+		const l = FF.bookings.get().sort((a, b) => a.id < b.id ? -1 : 1), up = l.filter((b) => b.id.slice(0, 10) >= iso(new Date())), past = l.filter((b) => b.id.slice(0, 10) < iso(new Date()));
+		const row = (b, c) => { const [d, t, p] = b.id.split("|"); return `<tr><td><b>${esc(FF.prog(p).name)}</b></td><td>${pd(d).toLocaleDateString("en-IN", { day: "numeric", month: "short" })} · ${t}</td><td>${b.st === "wait" ? "Waitlist" : "Confirmed"}</td><td>${c ? `<button class="btn ghost sm" data-c="${b.id}">Cancel</button>` : ""}</td></tr>`; };
+		return `<div class="panel"><h3>Upcoming</h3>${up.length ? `<table class="t"><tbody>${up.map((b) => row(b, 1)).join("")}</tbody></table>` : '<p class="msg">No upcoming bookings.</p>'}</div><div class="panel"><h3>Past</h3>${past.length ? `<table class="t"><tbody>${past.map((b) => row(b, 0)).join("")}</tbody></table>` : '<p class="msg">Nothing yet.</p>'}</div>`;
+	},
+	membership(m) {
+		const p = D.plans.find((x) => x.id === m.plan);
+		return `<div class="panel"><h3>Your plan</h3><div class="row2"><div><b style="font:400 1.8rem Impact,sans-serif;text-transform:uppercase">${esc(FF.planName(m.plan))}</b><p class="msg">${m.billing === "annual" ? "Billed yearly" : "Billed monthly"} · ${p ? inr(m.billing === "annual" ? p.price * 0.8 : p.price) + " / month" : "No recurring charge"}</p><p class="msg">Valid until ${new Date(m.expires).toLocaleDateString("en-IN", { dateStyle: "long" })}</p></div><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end">${m.status === "frozen" ? '<button class="btn" id="unfreeze">Unfreeze membership</button>' : '<button class="btn ghost" id="freeze">Freeze for 30 days</button>'}<a class="btn ghost" href="memberships.html">Change plan</a></div></div></div>
+		<div class="panel"><h3>Invoices</h3><table class="t"><thead><tr><th>Date</th><th>Description</th><th>Amount</th></tr></thead><tbody>${p ? [0, 1, 2].map((i) => `<tr><td>${new Date(Date.now() - i * 30 * 864e5).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</td><td>${esc(p.name)} membership</td><td>${inr(p.price)}</td></tr>`).join("") : '<tr><td colspan="3" class="msg">No invoices on a free pass.</td></tr>'}</tbody></table></div>
+		<div class="panel"><h3>Leaving?</h3><p class="msg" style="margin-bottom:12px">Cancel any time, you keep access until the end of your billing period. Nothing to pay.</p><button class="btn ghost sm" id="cancelm">Cancel membership</button></div>`;
+	},
+	progress() {
+		const P = FF.store.get(goalKey, { weights: [], prs: [] }), w = P.weights.slice(-10);
+		const mn = Math.min(...w.map((x) => x[1]), 999) - 1, mx = Math.max(...w.map((x) => x[1]), 0) + 1;
+		const chart = w.length > 1 ? `<svg viewBox="0 0 600 180" style="width:100%"><polyline fill="none" stroke="var(--lime)" stroke-width="3" points="${w.map((x, i) => `${20 + i * 560 / (w.length - 1)},${160 - (x[1] - mn) / (mx - mn) * 140}`).join(" ")}"/>${w.map((x, i) => `<circle cx="${20 + i * 560 / (w.length - 1)}" cy="${160 - (x[1] - mn) / (mx - mn) * 140}" r="4" fill="var(--lime)"/><text x="${20 + i * 560 / (w.length - 1)}" y="${150 - (x[1] - mn) / (mx - mn) * 140}" fill="#8f968d" font-size="11" text-anchor="middle">${x[1]}</text>`).join("")}</svg>` : '<p class="msg">Log two or more weigh-ins to see your trend.</p>';
+		return `<div class="split" style="align-items:start;gap:20px"><div class="panel"><h3>Body weight</h3>${chart}<form id="wf" style="display:flex;gap:10px;margin-top:14px"><input class="in" id="wv" type="number" step="0.1" min="30" max="250" placeholder="kg today" required><button class="btn sm">Log</button></form></div>
+		<div class="panel"><h3>Personal records</h3><table class="t"><tbody>${P.prs.map((p) => `<tr><td><b>${esc(p.lift)}</b></td><td>${p.kg} kg</td><td class="msg">${p.date}</td></tr>`).join("") || '<tr><td class="msg">No PRs logged yet.</td></tr>'}</tbody></table><form id="pf" class="row3" style="margin-top:14px;grid-template-columns:1.4fr 1fr auto"><input class="in" id="pl" placeholder="Lift" required><input class="in" id="pk" type="number" step="0.5" placeholder="kg" required><button class="btn sm">Add PR</button></form></div></div>`;
+	},
+	profile(m) {
+		return `<form class="panel" id="pfm"><h3>Profile</h3><div style="display:grid;gap:14px;max-width:520px"><label class="f">Name<input class="in" name="name" value="${esc(m.name)}" required></label><div class="row2"><label class="f">Mobile<input class="in" name="phone" value="${esc(m.phone)}" required></label><label class="f">Email<input class="in" name="email" type="email" value="${esc(m.email)}"></label></div><button class="btn" style="justify-self:start">Save changes</button></div></form>`;
+	},
+};
+function render() {
+	const m = FF.member.get(); if (!m) return empty();
+	const tabs = [["overview", "Overview"], ["bookings", "Bookings"], ["membership", "Membership"], ["progress", "Progress"], ["profile", "Profile"]];
+	$("#app").innerHTML = head(m) + `<div class="acc"><nav class="acc-nav">${tabs.map(([k, n]) => `<button data-v="${k}" class="${k === view ? "on" : ""}">${n}</button>`).join("")}<button data-v="out" style="margin-top:12px">Sign out</button></nav><div id="view">${V[view](m)}</div></div>`;
+}
+document.addEventListener("click", (e) => {
+	const b = e.target.closest("button"); if (!b) return; const m = FF.member.get();
+	if (b.dataset.v === "out") { FF.store.set("member", null); render(); }
+	else if (b.dataset.v) { view = b.dataset.v; render(); }
+	else if (b.dataset.c) { FF.cancel(b.dataset.c); FF.toast("Booking cancelled"); render(); }
+	else if (b.id === "freeze") { m.status = "frozen"; FF.member.set(m); FF.toast("Membership frozen for 30 days"); render(); }
+	else if (b.id === "unfreeze") { m.status = "active"; FF.member.set(m); FF.toast("Welcome back!"); render(); }
+	else if (b.id === "cancelm") { if (b.dataset.sure) { FF.store.set("member", null); FF.toast("Membership cancelled"); render(); } else { b.dataset.sure = 1; b.textContent = "Tap again to confirm cancellation"; } }
+});
+document.addEventListener("submit", (e) => {
+	e.preventDefault(); const f = e.target, P = FF.store.get(goalKey, { weights: [], prs: [] });
+	if (f.id === "wf") { P.weights.push([iso(new Date()), +$("#wv").value]); FF.store.set(goalKey, P); render(); }
+	else if (f.id === "pf") { P.prs.unshift({ lift: $("#pl").value, kg: +$("#pk").value, date: iso(new Date()) }); FF.store.set(goalKey, P); FF.toast("New PR logged "); render(); }
+	else if (f.id === "pfm") { const m = FF.member.get(); m.name = f.name.value; m.phone = f.phone.value; m.email = f.email.value; FF.member.set(m); FF.toast("Profile saved"); render(); }
+});
+render();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

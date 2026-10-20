@@ -65,7 +65,7 @@ async function renderTable(client, block) {
 /**
  * Walks a section's flat block list, grouping consecutive prose-shaped blocks (paragraphs,
  * h3 subheadings, lists, quotes, dividers) into `.prose` divs, and emitting non-prose blocks
- * (images, tables, code, embeds, callouts, toggles) as their own top-level elements —
+ * (images, tables, code, embeds, callouts, toggles) as their own top-level elements -
  * matching how the hand-written articles interleave `.prose` with `.cmd`/`.callout`/etc.
  */
 export async function renderSectionBody(
@@ -149,7 +149,7 @@ export async function renderSectionBody(
 				const lang = (block.code.language || "").toLowerCase();
 				if (lang === "html") {
 					// Escape hatch: a code block set to the "HTML" language is injected verbatim,
-					// unescaped — lets an article embed custom markup (e.g. hand-built diagrams
+					// unescaped - lets an article embed custom markup (e.g. hand-built diagrams
 					// using the site's own .dgm/.arch/.ladder components) that Notion has no
 					// native block for, while staying real HTML/CSS instead of a static image.
 					output.push(code);

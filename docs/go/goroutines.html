@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -200,9 +201,9 @@ func main() {
 				</div>
 
 <div class="dgm reveal">
-	<div class="dgm-box"><span class="dgm-bt">Goroutines (thousands, cheap)</span><span class="dgm-bd">G1  G2  G3  G4  G5  G6 ...</span></div>
+	<div class="dgm-box"><span class="dgm-bt">Goroutines (thousands, cheap)</span><span class="dgm-bd">G1 G2 G3 G4 G5 G6...</span></div>
 	<div class="dgm-arr">↓ scheduled onto ↓</div>
-	<div class="dgm-box dgm-box--accent"><span class="dgm-bt">OS Threads (few, expensive)</span><span class="dgm-bd">M1  M2  M3  M4</span></div>
+	<div class="dgm-box dgm-box--accent"><span class="dgm-bt">OS Threads (few, expensive)</span><span class="dgm-bd">M1 M2 M3 M4</span></div>
 </div>
 
 <div class="prose reveal">
@@ -251,7 +252,7 @@ func main() {
 <div class="prose reveal">
 					<p>Nothing in this program crashes, nothing even prints a warning, that's exactly what makes goroutine leaks dangerous. The fix is always to make sure every goroutine has a real, guaranteed way to finish: a value it's certain to eventually receive, a channel that will definitely get closed, or a `context.Context` it's watching for cancellation (covered later in this course).</p>
 					<p><strong>A quick mental checklist before writing `go someFunc()`</strong></p>
-					<ul><li>Does this goroutine have a guaranteed way to eventually stop, under every code path, including error cases?</li><li>Does the caller need to know when it's done, or care about its result? If so, you need a channel or WaitGroup to actually wait, not just a hope that it finishes in time.</li><li>Could this spawn an unbounded number of goroutines under load (one per incoming request, with no limit)? If so, you probably want a worker pool instead, covered in the concurrency patterns chapter.</li></ul>
+					<ul><li>Does this goroutine have a guaranteed way to eventually stop, under every code path, including error cases?</li><li>Does the caller need to know when it's done, or care about its result? If so, you need a channel or WaitGroup to wait, not just a hope that it finishes in time.</li><li>Could this spawn an unbounded number of goroutines under load (one per incoming request, with no limit)? If so, you probably want a worker pool instead, covered in the concurrency patterns chapter.</li></ul>
 				</div>
 
 				<details class="cmd-explain reveal">

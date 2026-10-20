@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Invoice | InvoiceKit (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>body{background:#eef1f8;padding:20px}.wrap{max-width:820px;margin:0 auto}.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}.pay{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:16px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}@media print{.bar,.pay{display:none}body{padding:0;background:#fff}}</style>
+</head>
+<body>
+<div class="wrap"><div class="bar"><b id="bn">InvoiceKit</b><div style="display:flex;gap:8px"><button class="btn" onclick="window.print()">Download PDF</button></div></div><div id="doc"></div><div class="pay" id="pay"></div></div>
+<script src="../lib/ui.js"></script><script src="../lib/qrcode.min.js"></script><script src="js/invoice.js"></script>
+<script>
+try {
+	const o = JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(1).replace(/-/g, "+").replace(/_/g, "/"))))), c = IK.calc(o.d, o.b, o.c); document.title = o.d.no + ", " + o.b.name; document.getElementById("bn").textContent = o.b.name;
+	document.getElementById("doc").innerHTML = IK.render(o.d, o.b, o.c);
+	const pay = document.getElementById("pay"), isQ = o.d.type === "quote";
+	if (isQ) pay.innerHTML = '<div><b>Reply to this quote</b><div class="mut">Accept it and we will turn it into an invoice.</div></div><button class="btn pri" onclick="this.textContent=\'✓ Accepted, thank you!\';this.disabled=true">Accept quote</button>';
+	else if (c.balance > 0) { pay.innerHTML = `<div id="q"></div><div style="flex:1;min-width:220px"><b style="font-size:1.2rem">Pay ${IK.m2(c.balance)}</b><div class="mut" style="margin:4px 0 12px">Scan with any UPI app, or pay to ${UI.esc(o.b.upi)}</div><button class="btn pri" id="pb">I've paid, notify ${UI.esc(o.b.name)}</button></div>`; new QRCode(document.getElementById("q"), { text: `upi://pay?pa=${o.b.upi}&pn=${encodeURIComponent(o.b.name)}&am=${c.balance.toFixed(2)}&cu=INR&tn=${o.d.no}`, width: 120, height: 120 }); document.getElementById("pb").onclick = function () { this.textContent = "✓ Thanks, we'll confirm shortly"; this.disabled = true; }; }
+	else pay.innerHTML = "<b>✓ This invoice is fully paid. Thank you!</b>";
+} catch (e) { document.getElementById("doc").innerHTML = '<div class="card empty">This link looks incomplete. Ask the sender to share it again.</div>'; }
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FilePilot | Compliance tracker (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#0d9488;--acc-ink:#fff;--acc-soft:rgba(13,148,136,.12);--side:#062f2c}</style>
+</head>
+<body>
+<div class="shell">
+	<aside class="side">
+		<a class="brand" href="index.html"><i>F</i><span>FilePilot<small id="biz">Rao and Sethi Associates</small></span></a>
+		<div class="grp">Work</div><a class="nv" data-route="dashboard" href="#dashboard"> Dashboard</a><a class="nv" data-route="calendar" href="#calendar"> Calendar</a><a class="nv" data-route="filings" href="#filings"> Filings</a><a class="nv" data-route="chase" href="#chase"> Document chase <span class="n" id="n-chase">0</span></a>
+		<div class="grp">Firm</div><a class="nv" data-route="clients" href="#clients"> Clients</a><a class="nv" data-route="reports" href="#reports"> Reports</a><a class="nv" data-route="settings" href="#settings"> Settings</a>
+		<div class="sp"></div><a class="nv" href="index.html">← About FilePilot</a>
+	</aside>
+	<div class="main">
+		<header class="top"><button class="burger" id="burger" aria-label="Menu">☰</button><h1 id="title">Dashboard</h1><span class="sp"></span><input class="in" id="gs" placeholder="Find a client, press Enter" aria-label="Find client"><button class="btn sm" id="theme" aria-label="Toggle theme">◐</button></header>
+		<div class="view" id="view"></div>
+	</div>
+</div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="../lib/qrcode.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

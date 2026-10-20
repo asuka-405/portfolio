@@ -9,6 +9,7 @@ import { downloadDocImage } from "./notion/download-images.mjs";
 import { renderDocsHubPage, renderDocsPage } from "./render/docs-template.mjs";
 import { urlEntry, insertSitemapEntries } from "./render/sitemap.mjs";
 import { defaultOgImageUrl } from "./render/seo.mjs";
+import { humanizeHtml } from "./lib/humanize.mjs";
 
 async function pruneStaleTopicDirs(currentSlugs) {
 	let entries;
@@ -61,7 +62,7 @@ async function buildTopic(client, topicMeta, ogImage, warnings) {
 
 		const html = renderDocsPage({ topic: topicMeta, topicRoot, node, bodyHtml, ogImage });
 		const filename = isOverview ? "index.html" : `${node.slug}.html`;
-		await fs.writeFile(path.join(topicDir, filename), html, "utf8");
+		await fs.writeFile(path.join(topicDir, filename), humanizeHtml(html), "utf8");
 		sitemapEntries.push(urlEntry(`docs/${topicMeta.slug}/${filename}`));
 		currentFilenames.add(filename);
 	}
@@ -96,7 +97,7 @@ async function main() {
 
 	warnings.forEach((w) => console.warn(`[build-docs] ${w}`));
 
-	await fs.writeFile(DOCS_HUB_PATH, renderDocsHubPage(topics, ogImage), "utf8");
+	await fs.writeFile(DOCS_HUB_PATH, humanizeHtml(renderDocsHubPage(topics, ogImage)), "utf8");
 
 	const existingSitemap = await fs.readFile(SITEMAP_PATH, "utf8");
 	await fs.writeFile(SITEMAP_PATH, insertSitemapEntries(existingSitemap, sitemapEntries), "utf8");

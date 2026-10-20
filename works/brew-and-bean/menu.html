@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Menu | Brew &amp; Bean</title>
+<meta name="description" content="Coffee, tea, bakes and brunch. Search, filter by diet and customise every drink." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><img src="img/interior2.jpg" alt="" /><div class="wrap"><p class="eyebrow">The menu</p><h1>Everything we make.</h1><p>Tap any item to customise it. Dietary tags and calories are shown on every card.</p></div></section>
+<section class="sec" style="padding-top:20px"><div class="wrap">
+	<div class="toolbar">
+		<input class="in" id="q" type="search" placeholder="Search the menu…" aria-label="Search the menu" />
+		<div class="tabs" id="cats" role="tablist"></div>
+		<div class="filters" id="diet"><button class="tab" data-d="veg">Vegetarian</button><button class="tab" data-d="vegan">Vegan</button><button class="tab" data-d="gf">Gluten-free</button></div>
+	</div>
+	<div id="menu"></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script src="js/modal.js"></script>
+<script>
+BB.layout("menu.html");
+const { $, $$, esc, inr, img, D } = BB;
+let cat = decodeURIComponent(location.hash.slice(1)) || "All", diet = new Set();
+if (!["All", ...D.cats].includes(cat)) cat = "All";
+const card = (i) => `<article class="card"><div class="ph"><img src="${img(i.img)}" alt="${esc(i.name)}" loading="lazy" />${BB.isAvail(i.id) ? "" : '<div class="sold">Sold out today</div>'}</div><div class="bd"><h3>${esc(i.name)}</h3><div class="tagrow">${i.tags.map((t) => `<span class="chip ${t}">${{ veg: "Veg", vegan: "Vegan", gf: "GF" }[t]}</span>`).join("")}${i.kcal ? `<span class="chip">${i.kcal} kcal</span>` : ""}</div><p>${esc(i.desc)}</p><div class="ft"><span class="price">${inr(BB.priceOf(i))}</span><button class="btn dark sm" data-add="${i.id}" ${BB.isAvail(i.id) ? "" : "disabled"}>${i.drink ? "Customise" : "Add"}</button></div></div></article>`;
+function render() {
+	$("#cats").innerHTML = ["All", ...D.cats].map((c) => `<button class="tab ${c === cat ? "on" : ""}" data-c="${c}" role="tab">${c}</button>`).join("");
+	$$("#diet .tab").forEach((b) => b.classList.toggle("on", diet.has(b.dataset.d)));
+	const q = $("#q").value.toLowerCase().trim();
+	const pass = (i) => (cat === "All" || i.cat === cat) && [...diet].every((d) => i.tags.includes(d)) && (!q || (i.name + i.desc).toLowerCase().includes(q));
+	const out = D.cats.map((c) => { const l = D.items.filter((i) => i.cat === c && pass(i)); return l.length ? `<h2 class="cat-h" id="${c}">${c}</h2><div class="grid">${l.map(card).join("")}</div>` : ""; }).join("");
+	$("#menu").innerHTML = out || '<p class="empty">Nothing matches your filters. Try clearing the search.</p>';
+}
+document.addEventListener("click", (e) => {
+	const t = e.target.closest("button"); if (!t) return;
+	if (t.dataset.c) { cat = t.dataset.c; history.replaceState(null, "", "#" + cat); render(); }
+	else if (t.dataset.d) { diet.has(t.dataset.d) ? diet.delete(t.dataset.d) : diet.add(t.dataset.d); render(); }
+	else if (t.dataset.add) {
+		const it = BB.item(t.dataset.add);
+		if (it.drink) BBModal.open(it.id); else { BB.cart.add({ id: it.id, qty: 1 }); BB.toast(it.name + " added to your bag"); }
+	}
+});
+$("#q").addEventListener("input", render);
+render();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -262,7 +263,7 @@ void doubleFree() {
 <div class="prose reveal">
 					<p>Both of these compile without warning or error in general, and neither necessarily crashes immediately. That delay between the mistake and its visible effect is exactly why these bugs are so much harder to track down than a syntax error, and exactly why the RAII-based alternative isn't just &quot;nicer&quot;, it removes the entire bug category.</p>
 					<h3>Placement new</h3>
-					<p>Placement new constructs an object at a specific, already-allocated memory address, instead of allocating new memory itself: <code>new (address) Type(args)</code>. It's a genuinely advanced, rare tool, used mostly by people implementing their own memory allocators, object pools, or low-level containers (in fact, this is exactly how <code>std::vector</code> itself constructs elements into its pre-allocated storage internally). You're very unlikely to need it in application code; it's mentioned here so the name doesn't come as a surprise if you encounter it, not as something to reach for.</p>
+					<p>Placement new constructs an object at a specific, already-allocated memory address, instead of allocating new memory itself: <code>new (address) Type(args)</code>. It's a advanced, rare tool, used mostly by people implementing their own memory allocators, object pools, or low-level containers (in fact, this is exactly how <code>std::vector</code> itself constructs elements into its pre-allocated storage internally). You're very unlikely to need it in application code; it's mentioned here so the name doesn't come as a surprise if you encounter it, not as something to reach for.</p>
 				</div>
 
 				<details class="cmd-explain reveal">

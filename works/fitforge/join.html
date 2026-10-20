@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Join | FitForge</title>
+<meta name="description" content="Join FitForge or claim your free 7-day pass in three quick steps." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding-top:40px"><div class="wrap">
+	<p class="eyebrow">Join FitForge</p><h1 style="font-size:clamp(2.4rem,6vw,4rem);margin:8px 0 20px">Let's get you started.</h1>
+	<div class="steps" id="steps"></div>
+	<div class="checkout">
+		<form id="f">
+			<div class="panel" data-p="0"><h3>1 · Choose your plan</h3>
+				<div class="seg" id="plans" style="grid-template-columns:1fr 1fr"></div>
+				<div class="toggle" id="bill" style="margin:18px 0 0"><button type="button" data-b="monthly" class="on">Monthly</button><button type="button" data-b="annual">Annual · save 20%</button></div></div>
+			<div class="panel" data-p="1" hidden><h3>2 · About you</h3>
+				<div style="display:grid;gap:14px"><div class="row2"><label class="f">Full name<input class="in" name="name" required autocomplete="name"></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}" inputmode="numeric" autocomplete="tel"></label></div>
+				<div class="row2"><label class="f">Email<input class="in" type="email" name="email" required autocomplete="email"></label><label class="f">Date of birth<input class="in" type="date" name="dob" required max="2010-01-01"></label></div>
+				<label class="f">Main goal<select class="in" name="goal"><option>Build strength</option><option>Lose fat</option><option>Get fitter</option><option>Learn to lift safely</option><option>Train for an event</option></select></label>
+				<label class="f">Any injuries or conditions we should know about?<textarea class="in" name="health" rows="2"></textarea></label>
+				<label style="display:flex;gap:10px;align-items:flex-start;color:var(--mut);font-size:.9rem"><input type="checkbox" name="par" required style="margin-top:5px"> I confirm I'm fit to exercise and accept the club rules.</label></div></div>
+			<div class="panel" data-p="2" hidden><h3>3 · Payment</h3>
+				<div id="nopay" class="msg" hidden>Your free pass needs no payment. We'll just ask for a card at the front desk if you decide to join.</div>
+				<div id="pay"><div class="seg"><label><input type="radio" name="pm" value="upi" checked><span>UPI<small>Instant</small></span></label><label><input type="radio" name="pm" value="card"><span>Card<small>Auto-debit</small></span></label><label><input type="radio" name="pm" value="desk"><span>Pay at desk<small>Within 48 h</small></span></label></div>
+				<div style="margin-top:14px" id="cardf" hidden class="row2"><label class="f">Card number<input class="in" inputmode="numeric" placeholder="4242 4242 4242 4242"></label><label class="f">Expiry / CVC<input class="in" placeholder="MM/YY · 123"></label></div>
+				<p class="msg" style="margin-top:12px">Demo only, no payment details are collected or sent anywhere.</p></div></div>
+			<div style="display:flex;justify-content:space-between;gap:12px"><button type="button" class="btn ghost" id="back">Back</button><button type="button" class="btn" id="next">Continue</button></div>
+		</form>
+		<aside class="panel sum"><h3>Your order</h3><div id="sum"></div></aside>
+	</div>
+	<div id="done" hidden></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+FF.layout("join.html");
+const { $, esc, inr, D } = FF, q = new URLSearchParams(location.search);
+const ALL = [{ id: "trial", name: "Free 7-day pass", price: 0, d: "Try everything for a week" }, ...D.plans.map((p) => ({ id: p.id, name: p.name, price: p.price, d: p.feats[0] })), { id: "day", name: "Day pass", price: 399, d: "One day, full access" }];
+let step = 0, plan = ALL.find((p) => p.id === q.get("plan")) ? q.get("plan") : "trial", bill = q.get("billing") === "annual" ? "annual" : "monthly";
+const f = $("#f");
+$("#plans").innerHTML = ALL.map((p) => `<label><input type="radio" name="plan" value="${p.id}"><span><b>${p.name}</b><br><small>${p.price ? inr(p.price) + (p.id === "day" ? "" : " / mo") : "Free"} · ${esc(p.d)}</small></span></label>`).join("");
+const cur = () => ALL.find((p) => p.id === plan);
+const price = () => { const p = cur(); if (!p.price) return 0; if (p.id === "day") return 399; return bill === "annual" ? Math.round(p.price * 0.8) * 12 : p.price; };
+function draw() {
+	f.plan.value = plan; $("#bill").hidden = ["trial", "day"].includes(plan);
+	document.querySelectorAll("#bill button").forEach((b) => b.classList.toggle("on", b.dataset.b === bill));
+	document.querySelectorAll("[data-p]").forEach((p) => (p.hidden = +p.dataset.p !== step));
+	$("#steps").innerHTML = ["Plan", "Your details", "Payment"].map((n, i) => `<span class="${i === step ? "on" : i < step ? "ok" : ""}">${i < step ? "✓ " : i + 1 + ". "}${n}</span>`).join("");
+	$("#back").style.visibility = step ? "visible" : "hidden"; $("#next").textContent = step === 2 ? (price() ? "Confirm & pay " + inr(price() * 1.0) : "Claim my pass") : "Continue";
+	$("#nopay").hidden = price() > 0; $("#pay").hidden = price() === 0; $("#cardf").hidden = f.pm.value !== "card";
+	const p = cur(), gst = price() - price() / 1.18;
+	$("#sum").innerHTML = `<div class="r"><span>${p.name}</span><span>${price() ? inr(price()) : "Free"}</span></div>${p.price && p.id !== "day" ? `<div class="r"><span>Billing</span><span>${bill === "annual" ? "Yearly (−20%)" : "Monthly"}</span></div>` : ""}<div class="r"><span>Joining fee</span><span>₹0</span></div>${price() ? `<div class="r"><span>Includes GST (18%)</span><span>${inr(gst)}</span></div>` : ""}<div class="r t"><span>Due today</span><span>${inr(price())}</span></div><p class="msg" style="margin-top:12px">${plan === "trial" ? "No card required." : "Cancel or pause any time from your account."}</p>`;
+}
+f.addEventListener("change", (e) => { if (e.target.name === "plan") plan = e.target.value; draw(); });
+$("#bill").onclick = (e) => { const b = e.target.closest("button"); if (b) { bill = b.dataset.b; draw(); } };
+$("#back").onclick = () => { step = Math.max(0, step - 1); draw(); };
+$("#next").onclick = () => {
+	if (step === 1 && !f.reportValidity()) return;
+	if (step < 2) { step++; draw(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+	const m = FF.member.create({ name: f.name.value.trim(), phone: f.phone.value, email: f.email.value, plan, billing: bill, goal: f.goal.value });
+	$("#f").parentElement.hidden = true; $("#steps").hidden = true; $("#done").hidden = false;
+	const code = [...m.id].map((c, i) => 2 + ((c.charCodeAt(0) * (i + 3)) % 5));
+	$("#done").innerHTML = `<div class="split"><div><p class="eyebrow">You're in</p><h2 style="font-size:clamp(2.4rem,6vw,4rem);margin:10px 0 14px">Welcome to FitForge, ${esc(m.name.split(" ")[0])}.</h2><p class="msg" style="font-size:1rem;margin-bottom:20px">${plan === "trial" ? "Your free pass is active for 7 days." : "Your " + esc(FF.planName(plan)) + " membership is active."} Show the card at the front desk, or just scan it at the turnstile.</p><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="classes.html">Book your first class</a><a class="btn ghost" href="account.html">Go to my account</a></div></div>
+	<div class="card-id"><div class="eyebrow">FitForge member</div><div class="n" style="margin:18px 0 4px">${esc(m.name)}</div><div class="msg">${esc(FF.planName(plan))}</div><svg viewBox="0 0 200 40" style="margin:18px 0 6px;width:100%;height:52px;background:#fff;padding:4px">${code.map((w, i) => `<rect x="${i * 14 + 6}" y="0" width="${w}" height="40" fill="#000"/>`).join("")}</svg><div class="no">${m.id}</div></div></div>`;
+};
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

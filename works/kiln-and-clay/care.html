@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Care, shipping &amp; returns | Kiln &amp; Clay</title>
+<meta name="description" content="How to care for stoneware, delivery times, returns and FAQs." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Help</p><h1>Care, shipping &amp; returns</h1><p>How to wash, ship and return your pieces.</p></div></section>
+<section class="sec" style="padding-top:20px"><div class="wrap"><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+	<div class="panel" style="margin:0"><h3>Everyday care</h3><ul style="padding-left:18px;display:grid;gap:6px" class="msg"><li>Wash by hand or on a gentle dishwasher cycle</li><li>Avoid sudden hot–cold changes</li><li>Oven safe to 220 °C, microwave safe</li><li>No steel wool on the glaze</li></ul></div>
+	<div class="panel" style="margin:0"><h3>Shipping</h3><ul style="padding-left:18px;display:grid;gap:6px" class="msg"><li>Free standard shipping over ₹2,000</li><li>Standard ₹99 · 2–7 days</li><li>Express ₹249 · 1–4 days</li><li>Double-boxed, insured</li></ul></div>
+	<div class="panel" style="margin:0"><h3>Returns</h3><ul style="padding-left:18px;display:grid;gap:6px" class="msg"><li>30 days, unused pieces</li><li>Refund to original payment</li><li>Broken in transit? Free replacement</li><li>Email care@kilnandclay.example</li></ul></div></div></div></section>
+<section class="sec alt"><div class="wrap" style="max-width:820px"><div class="sec-h"><div><p class="eyebrow">FAQ</p><h2>Common questions</h2></div></div><div id="faq"></div>
+<div class="panel" style="margin-top:30px"><h3>Check delivery to your PIN</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><input class="in" id="pin" maxlength="6" placeholder="6-digit PIN" style="max-width:200px" inputmode="numeric"><button class="btn sm" id="chk">Check</button></div><p class="msg" id="res" style="margin-top:10px"></p></div></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("");
+const { $, esc, D } = KC;
+$("#faq").innerHTML = D.faqs.map((f) => `<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join("");
+$("#chk").onclick = () => { const v = $("#pin").value; $("#res").innerHTML = /^\d{6}$/.test(v) ? `Standard delivery by <b>${KC.eta(v)}</b> · Express by <b>${KC.eta(v, true)}</b>` : '<span class="err">Enter a valid 6-digit PIN code.</span>'; };
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

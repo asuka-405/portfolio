@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FixTrack | Repair shop console (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#e11d48;--acc-ink:#fff;--acc-soft:rgba(225,29,72,.1);--side:#2a0a12}</style>
+</head>
+<body>
+<div class="shell">
+	<aside class="side">
+		<a class="brand" href="index.html"><i>F</i><span>FixTrack<small id="biz">QuickFix Mobile and Laptop Repair</small></span></a>
+		<div class="grp">Workshop</div><a class="nv" data-route="board" href="#board"> Repair board <span class="n" id="n-board">0</span></a><a class="nv" data-route="jobs" href="#jobs"> All jobs</a>
+		<div class="grp">Stock</div><a class="nv" data-route="parts" href="#parts"> Parts</a><a class="nv" data-route="warranty" href="#warranty"> Warranty</a>
+		<div class="grp">Business</div><a class="nv" data-route="reports" href="#reports"> Reports</a><a class="nv" data-route="settings" href="#settings"> Settings</a>
+		<div class="sp"></div><a class="nv" href="index.html">← About FixTrack</a>
+	</aside>
+	<div class="main">
+		<header class="top"><button class="burger" id="burger" aria-label="Menu">☰</button><h1 id="title">Repair board</h1><span class="sp"></span><input class="in" id="gs" placeholder="Find a job or customer, press Enter" aria-label="Find job"><button class="btn sm" id="theme" aria-label="Toggle theme">◐</button></header>
+		<div class="view" id="view"></div>
+	</div>
+</div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

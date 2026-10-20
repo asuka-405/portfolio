@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book an appointment | Lumen Dental</title>
+<meta name="description" content="Book a Lumen Dental appointment online: choose a treatment, a dentist and a time that suits you." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Appointments</p><h1>Book a visit.</h1><p>Four quick steps. We'll confirm by SMS and send a reminder the day before.</p></div></section>
+<section class="sec" style="padding-top:30px"><div class="wrap">
+	<div class="steps" id="steps"></div>
+	<div class="checkout" id="flow">
+		<div>
+			<div class="panel" data-p="0"><h3>1 · What do you need?</h3><div class="opts" id="svcs"></div></div>
+			<div class="panel" data-p="1" hidden><h3>2 · Choose a dentist and time</h3>
+				<div class="opts" id="docs" style="margin-bottom:18px"></div>
+				<div class="dates" id="dates"></div><div id="times"></div></div>
+			<form class="panel" data-p="2" id="det" hidden><h3>3 · About you</h3>
+				<div class="seg" style="margin-bottom:14px;grid-template-columns:1fr 1fr"><label><input type="radio" name="pt" value="new" checked><span>New patient<small>First visit with us</small></span></label><label><input type="radio" name="pt" value="returning"><span>Returning<small>I've visited before</small></span></label></div>
+				<div style="display:grid;gap:14px"><div class="row2"><label class="f">Full name<input class="in" name="name" required autocomplete="name"></label><label class="f">Mobile<input class="in" name="phone" required pattern="[0-9]{10}" inputmode="numeric" autocomplete="tel"></label></div>
+				<div class="row2"><label class="f">Email<input class="in" name="email" type="email" autocomplete="email"></label><label class="f">Date of birth<input class="in" name="dob" type="date" required></label></div>
+				<label class="f">Insurance (optional)<select class="in" name="ins"><option value="">Paying myself</option></select></label>
+				<label class="f">Anything we should know?<textarea class="in" name="notes" rows="3" placeholder="Pain, allergies, medication, anxiety…"></textarea></label>
+				<label style="display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--mut)"><input type="checkbox" name="ok" required style="margin-top:5px"> I agree to the 4-hour cancellation policy and to be contacted about this booking.</label></div></form>
+			<div class="panel" data-p="3" hidden><h3>4 · Check and confirm</h3><div class="sum" id="conf"></div><p class="msg" style="margin-top:12px">Free cancellation or rescheduling up to 4 hours before. Fees are confirmed after your exam, nothing is charged today.</p></div>
+			<div style="display:flex;justify-content:space-between;gap:12px" id="nav"><button class="btn ghost" id="back">Back</button><button class="btn" id="next">Continue</button></div>
+		</div>
+		<aside class="sticky"><div class="panel mint"><h3>Your appointment</h3><div class="sum" id="side" style="background:transparent;border:0;padding:0"></div></div></aside>
+	</div>
+	<div id="done" class="panel ok-box" hidden></div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+LD.layout("book.html");
+const { $, esc, inr, img, D } = LD, q = new URLSearchParams(location.search);
+const st = { step: 0, svc: LD.svc(q.get("s")) ? q.get("s") : null, doc: LD.doc(q.get("d")) ? q.get("d") : "any", date: null, time: null, resolved: null };
+if (st.svc) st.step = 1;
+const days = [...Array(21)].map((_, i) => LD.iso(LD.addDays(new Date(), i)));
+const dur = () => LD.svc(st.svc).dur;
+const eligible = () => D.doctors.filter((d) => d.skills.includes(st.svc));
+function slotMap(date) { // time -> doctor id
+	const m = {}; const ids = st.doc === "any" ? eligible().map((d) => d.id) : [st.doc];
+	ids.forEach((id) => LD.slots(id, date, dur()).forEach((t) => { if (!m[t]) m[t] = id; }));
+	return m;
+}
+const p = LD.patient.get();
+const f = $("#det"); D.insurers.forEach((i) => f.ins.add(new Option(i, i)));
+if (p) { f.name.value = p.name; f.phone.value = p.phone; f.email.value = p.email || ""; f.dob.value = p.dob || ""; f.pt.value = "returning"; }
+function draw() {
+	$("#steps").innerHTML = ["Treatment", "Dentist & time", "Your details", "Confirm"].map((n, i) => `<span class="${i === st.step ? "on" : i < st.step ? "ok" : ""}">${i < st.step ? "✓ " : i + 1 + ". "}${n}</span>`).join("");
+	document.querySelectorAll("[data-p]").forEach((x) => (x.hidden = +x.dataset.p !== st.step));
+	$("#svcs").innerHTML = D.services.map((s) => `<button class="opt ${st.svc === s.id ? "on" : ""}" data-s="${s.id}"><b>${esc(s.name)}</b><small>${s.dur} min · from ${inr(s.from)}</small></button>`).join("");
+	if (st.svc) {
+		$("#docs").innerHTML = `<button class="opt ${st.doc === "any" ? "on" : ""}" data-d="any"><b>First available</b><small>Earliest slot with any suitable dentist</small></button>` + eligible().map((d) => `<button class="opt ${st.doc === d.id ? "on" : ""}" data-d="${d.id}"><b>${esc(d.name)}</b><small>${esc(d.role.split("·")[0])}</small></button>`).join("");
+		$("#dates").innerHTML = days.map((d) => { const n = Object.keys(slotMap(d)).length, x = LD.pd(d); return `<button class="date ${st.date === d ? "on" : ""}" data-t="${d}" ${n ? "" : "disabled"}><small>${x.toLocaleDateString("en-IN", { weekday: "short" })}</small><b>${x.getDate()}</b><small>${x.toLocaleDateString("en-IN", { month: "short" })}</small></button>`; }).join("");
+		if (st.date) { const m = slotMap(st.date), ts = Object.keys(m).sort(); $("#times").innerHTML = ts.length ? `<div class="times">${ts.map((t) => `<button class="time ${st.time === t ? "on" : ""}" data-tm="${t}">${LD.fmtT(t)}</button>`).join("")}</div>` : '<p class="msg">No times left on this day.</p>'; if (st.time && m[st.time]) st.resolved = m[st.time]; else { st.time = null; st.resolved = null; } }
+		else $("#times").innerHTML = '<p class="msg">Pick a date to see available times.</p>';
+	}
+	const s = st.svc && LD.svc(st.svc), dc = st.resolved && LD.doc(st.resolved);
+	const rows = [["Treatment", s ? esc(s.name) : "-"], ["Dentist", dc ? esc(dc.name) : st.doc !== "any" && st.doc ? esc(LD.doc(st.doc).name) : "First available"], ["When", st.date && st.time ? LD.pd(st.date).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" }) + " · " + LD.fmtT(st.time) : "-"], ["Duration", s ? s.dur + " min" : "-"], ["Estimated fee", s ? inr(s.from) + " – " + inr(s.to) : "-"]];
+	$("#side").innerHTML = rows.map((r) => `<div><span>${r[0]}</span><b>${r[1]}</b></div>`).join("");
+	$("#conf").innerHTML = rows.concat([["Patient", esc(f.name.value || "-") + " · " + esc(f.phone.value || "")], ["Insurance", esc(f.ins.value || "None")]]).map((r) => `<div><span>${r[0]}</span><b>${r[1]}</b></div>`).join("");
+	$("#back").style.visibility = st.step ? "visible" : "hidden"; $("#next").textContent = st.step === 3 ? "Confirm appointment" : "Continue";
+	$("#next").disabled = (st.step === 0 && !st.svc) || (st.step === 1 && !(st.date && st.time));
+}
+document.addEventListener("click", (e) => {
+	const b = e.target.closest("button"); if (!b) return;
+	if (b.dataset.s) { st.svc = b.dataset.s; st.date = st.time = null; if (st.doc !== "any" && !eligible().some((d) => d.id === st.doc)) st.doc = "any"; draw(); }
+	else if (b.dataset.d) { st.doc = b.dataset.d; st.time = null; if (st.date && !Object.keys(slotMap(st.date)).length) st.date = null; draw(); }
+	else if (b.dataset.t) { st.date = b.dataset.t; st.time = null; draw(); }
+	else if (b.dataset.tm) { st.time = b.dataset.tm; draw(); }
+});
+$("#back").onclick = () => { st.step--; draw(); };
+$("#next").onclick = () => {
+	if (st.step === 2 && !f.reportValidity()) return;
+	if (st.step < 3) { st.step++; draw(); window.scrollTo({ top: 120, behavior: "smooth" }); return; }
+	const a = LD.book({ svc: st.svc, doc: st.resolved, date: st.date, time: st.time, dur: dur(), name: f.name.value.trim(), phone: f.phone.value, email: f.email.value, dob: f.dob.value, ins: f.ins.value, notes: f.notes.value, pt: f.pt.value });
+	LD.patient.set({ name: a.name, phone: a.phone, email: a.email, dob: a.dob, ins: a.ins });
+	$("#flow").hidden = true; $("#steps").hidden = true; const d = $("#done"); d.hidden = false;
+	d.innerHTML = `<div class="tick">✓</div><h2 style="font-size:2rem">You're booked, ${esc(a.name.split(" ")[0])}!</h2><p class="msg" style="margin:10px auto 18px;max-width:30rem">${esc(LD.svc(a.svc).name)} with ${esc(LD.doc(a.doc).name)} on <b>${LD.pd(a.date).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })} at ${LD.fmtT(a.time)}</b>. Reference <b>${a.id}</b>. A confirmation SMS is on its way to ${esc(a.phone)}.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn" id="ics">Add to calendar</button><a class="btn ghost" href="portal.html">Open my patient portal</a><a class="btn ghost" href="index.html">Back to home</a></div>`;
+	$("#ics").onclick = () => LD.ics(a);
+};
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

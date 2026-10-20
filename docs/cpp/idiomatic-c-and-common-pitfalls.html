@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -167,7 +168,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>This closing chapter is less about new syntax and more about how experienced C++ programmers actually write the language day to day, versus how a lot of code from twenty years ago (or a lot of beginner code today) still gets written.</p>
+					<p>This closing chapter is less about new syntax and more about how experienced C++ programmers write the language day to day, versus how a lot of code from twenty years ago (or a lot of beginner code today) still gets written.</p>
 					<h3>Prefer the standard library over hand-rolled loops</h3>
 				</div>
 
@@ -220,7 +221,7 @@ int main() {
 					<h3>Prefer scoped enums</h3>
 					<p>enum class Color { Red, Green, Blue } instead of a plain enum. Scoped enums don't leak their enumerator names into the surrounding scope, don't implicitly convert to int (a real source of bugs when comparing unrelated enums that happen to share numeric values), and force you to write Color::Red instead of a bare Red that could mean almost anything.</p>
 					<h3>If you remember five things from this course</h3>
-					<ul><li>RAII is why C++ can be both fast and safe: tie every resource's lifetime to an object's constructor/destructor, and exceptions, early returns, and forgotten cleanup stop being a source of bugs.</li><li>Prefer value semantics and the standard library's containers/algorithms to hand-rolled pointer manipulation; reach for raw new/delete and manual loops only when you have a specific reason the abstraction doesn't fit.</li><li>Templates give you compile-time polymorphism (zero runtime cost, but code generated per type); virtual functions give you runtime polymorphism (one shared implementation, small dispatch cost). Know which one your problem actually needs.</li><li>Move semantics exist so that returning and passing heavy objects by value stopped meaning expensive copies. Let the compiler move for you by default; reach for std::move only when you specifically mean &quot;I'm done with this, take it.&quot;</li><li>Modern C++ (11 through 23) changed the language's center of gravity: if code you're reading looks like it was written in 2003 (raw pointers everywhere, manual new/delete, no auto, no range-for), that's not automatically wrong, but it's very likely leaving safety and readability on the table that the language has offered for over a decade now.</li></ul>
+					<ul><li>RAII is why C++ can be both fast and safe: tie every resource's lifetime to an object's constructor/destructor, and exceptions, early returns, and forgotten cleanup stop being a source of bugs.</li><li>Prefer value semantics and the standard library's containers/algorithms to hand-rolled pointer manipulation; reach for raw new/delete and manual loops only when you have a specific reason the abstraction doesn't fit.</li><li>Templates give you compile-time polymorphism (zero runtime cost, but code generated per type); virtual functions give you runtime polymorphism (one shared implementation, small dispatch cost). Know which one your problem needs.</li><li>Move semantics exist so that returning and passing heavy objects by value stopped meaning expensive copies. Let the compiler move for you by default; reach for std::move only when you specifically mean &quot;I'm done with this, take it.&quot;</li><li>Modern C++ (11 through 23) changed the language's center of gravity: if code you're reading looks like it was written in 2003 (raw pointers everywhere, manual new/delete, no auto, no range-for), that's not automatically wrong, but it's very likely leaving safety and readability on the table that the language has offered for over a decade now.</li></ul>
 				</div>
 						</div>
 					</div>

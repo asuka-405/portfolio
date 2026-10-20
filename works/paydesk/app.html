@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PayDesk | Payroll app (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#0d9488;--acc-ink:#fff;--acc-soft:rgba(13,148,136,.13);--side:#0a1f1e}</style>
+</head>
+<body>
+<div class="shell">
+	<aside class="side">
+		<a class="brand" href="index.html"><i>P</i><span>PayDesk<small id="biz">Verma Packaging Pvt Ltd</small></span></a>
+		<div class="grp">Overview</div><a class="nv" data-route="dashboard" href="#dashboard"> Dashboard</a>
+		<div class="grp">People</div><a class="nv" data-route="employees" href="#employees"> Employees</a><a class="nv" data-route="attendance" href="#attendance"> Attendance</a><a class="nv" data-route="leaves" href="#leaves"> Leave <span class="n" id="n-leaves">0</span></a>
+		<div class="grp">Pay</div><a class="nv" data-route="payroll" href="#payroll"> Payroll</a><a class="nv" data-route="advances" href="#advances"> Advances</a><a class="nv" data-route="compliance" href="#compliance"> PF, ESI and PT</a>
+		<div class="grp">Account</div><a class="nv" data-route="settings" href="#settings"> Settings</a>
+		<div class="sp"></div><a class="nv" href="index.html">← About PayDesk</a>
+	</aside>
+	<div class="main">
+		<header class="top"><button class="burger" id="burger" aria-label="Menu">☰</button><h1 id="title">Dashboard</h1><span class="sp"></span><input class="in" id="gs" placeholder="Find an employee, press Enter" aria-label="Find employee"><button class="btn sm" id="theme" aria-label="Toggle theme">◐</button></header>
+		<div class="view" id="view"></div>
+	</div>
+</div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

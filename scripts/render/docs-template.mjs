@@ -28,6 +28,7 @@ function siteHeader(rootPrefix) {
 \t\t\t\t\t<a href="${rootPrefix}index.html#about">About</a>
 \t\t\t\t\t<a href="${rootPrefix}index.html#projects">Projects</a>
 \t\t\t\t\t<a href="${rootPrefix}articles/index.html">Writing</a>
+\t\t\t\t\t<a href="${rootPrefix}works/index.html">Works</a>
 \t\t\t\t\t<a href="${rootPrefix}docs/index.html">Docs</a>
 \t\t\t\t\t<a href="https://git.archdev.in">Git</a>
 \t\t\t\t\t<a href="${rootPrefix}index.html#contact">Contact</a>
@@ -76,7 +77,7 @@ function topicCardHtml(topic) {
 \t\t</a>`;
 }
 
-/** Renders docs/index.html — one card per Published topic in the Site Docs database. */
+/** Renders docs/index.html - one card per Published topic in the Site Docs database. */
 export function renderDocsHubPage(topics, ogImage = null) {
 	const rootPrefix = "../";
 	const cards = topics.map(topicCardHtml).join("\n");

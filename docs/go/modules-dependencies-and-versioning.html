@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -162,9 +163,9 @@
 <span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span></code></pre></div>
 
 <div class="prose reveal">
-					<p><code>go mod init github.com/you/yourproject</code> creates the initial <code>go.mod</code>. <code>go get github.com/some/dependency</code> adds or updates a dependency. <code>go mod tidy</code> reconciles <code>go.mod</code>/<code>go.sum</code> with what your code actually imports, adding anything missing and removing anything unused, worth running before every commit that touches imports.</p>
+					<p><code>go mod init github.com/you/yourproject</code> creates the initial <code>go.mod</code>. <code>go get github.com/some/dependency</code> adds or updates a dependency. <code>go mod tidy</code> reconciles <code>go.mod</code>/<code>go.sum</code> with what your code imports, adding anything missing and removing anything unused, worth running before every commit that touches imports.</p>
 					<h3>Semantic import versioning</h3>
-					<p>Go has a genuinely unusual convention here: when a module reaches a breaking v2 release, the module PATH itself changes to include <code>/v2</code>, not just the version number in go.mod. A module at <code>github.com/you/yourproject</code> becomes <code>github.com/you/yourproject/v2</code> for its v2+ releases, and both can be imported into the same program simultaneously without conflict, since they're literally different import paths.</p>
+					<p>Go has a unusual convention here: when a module reaches a breaking v2 release, the module PATH itself changes to include <code>/v2</code>, not just the version number in go.mod. A module at <code>github.com/you/yourproject</code> becomes <code>github.com/you/yourproject/v2</code> for its v2+ releases, and both can be imported into the same program simultaneously without conflict, since they're literally different import paths.</p>
 				</div>
 
 <div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">go</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">import</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span></span>

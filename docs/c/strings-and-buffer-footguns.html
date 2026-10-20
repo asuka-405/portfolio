@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -98,7 +99,7 @@
 					<h3>A C string is a convention, not a type</h3>
 					<p><code>char *</code> doesn't know its own length. &quot;String&quot; in C means &quot;keep reading bytes until you hit a <code>\0</code>&quot; Every string function is walking a buffer on that promise, and every buffer overflow is that promise being broken.</p>
 					<p><strong>The classics: gets, strcpy, sprintf, strcat</strong></p>
-					<p><code>gets()</code> reads a line with no length limit at all and was removed from the C standard entirely in C11, not deprecated, deleted, because there is no way to call it safely. <code>strcpy</code>, <code>strcat</code>, and unbounded <code>sprintf</code> all share the same flaw: they write until the source runs out, with zero awareness of how big the destination actually is.</p>
+					<p><code>gets()</code> reads a line with no length limit at all and was removed from the C standard entirely in C11, not deprecated, deleted, because there is no way to call it safely. <code>strcpy</code>, <code>strcat</code>, and unbounded <code>sprintf</code> all share the same flaw: they write until the source runs out, with zero awareness of how big the destination is.</p>
 				</div>
 
 <div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">char</span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209"> buf</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">8</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">];</span></span>
@@ -146,9 +147,9 @@
 <span class="line"><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">dest</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">[</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">sizeof</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(dest) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">-</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">] </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> '</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">\0</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">'</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // this line is not optional</span></span></code></pre></div>
 
 <div class="prose reveal">
-					<p>The reliably-terminated alternative most people actually want is <code>snprintf(dest, sizeof dest, &quot;%s&quot;, src)</code>. It always null-terminates within the given size, at the cost of silently truncating rather than failing loudly on overflow (check its return value if you need to detect truncation).</p>
+					<p>The reliably-terminated alternative most people want is <code>snprintf(dest, sizeof dest, &quot;%s&quot;, src)</code>. It always null-terminates within the given size, at the cost of silently truncating rather than failing loudly on overflow (check its return value if you need to detect truncation).</p>
 					<h3>String literals are read-only, even though the type says otherwise</h3>
-					<p><code>char *s = &quot;hello&quot;;</code> gives you a pointer to a string literal with static storage duration. The type is <code>char *</code>, not <code>const char *</code>, for historical reasons, but modifying it is undefined behavior anyway, and on many platforms it lives in a genuinely read-only mapped segment and segfaults immediately:</p>
+					<p><code>char *s = &quot;hello&quot;;</code> gives you a pointer to a string literal with static storage duration. The type is <code>char *</code>, not <code>const char *</code>, for historical reasons, but modifying it is undefined behavior anyway, and on many platforms it lives in a read-only mapped segment and segfaults immediately:</p>
 				</div>
 
 <div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">char</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">s </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "hello"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Parent portal | SchoolDesk (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#7c3aed;--acc-ink:#fff;--acc-soft:rgba(124,58,237,.12)}
+body{background:#ede9f7}
+.ph{max-width:520px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;padding-bottom:78px;box-shadow:0 0 60px rgba(60,30,120,.15)}
+.ph .hd{background:var(--acc);color:#fff;padding:18px 18px 22px;border-radius:0 0 22px 22px}.hd small{opacity:.8}.hd h1{font-size:1.25rem;margin:2px 0 10px}
+.hd select{width:100%;padding:9px 12px;border-radius:10px;border:0;font:inherit;font-weight:700;color:#17102b}
+.pc{padding:16px;display:grid;gap:14px}
+.tb{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);display:grid;grid-template-columns:repeat(6,1fr);background:var(--panel);border-top:1px solid var(--line);z-index:30}
+.tb button{border:0;background:none;padding:10px 2px 12px;font-size:.7rem;font-weight:700;color:var(--mut)}.tb button.on{color:var(--acc)}.tb button.on::before{content:"";display:block;height:3px;background:var(--acc);border-radius:3px;margin:-10px 14px 7px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center;font-size:.8rem}.cal b{font-weight:700;color:var(--mut);font-size:.7rem}.cal div{padding:8px 0;border-radius:8px}
+@media(max-width:560px){.ph{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="ph"><div class="hd"><small id="sn"></small><h1>Parent portal</h1><select id="kid" aria-label="Choose child"></select></div><div class="pc" id="pc"></div>
+<nav class="tb" id="tb"><button data-t="home" class="on">Home</button><button data-t="att">Attendance</button><button data-t="fees">Fees</button><button data-t="res">Results</button><button data-t="tt">Timetable</button><button data-t="nt">Notices</button></nav></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="../lib/qrcode.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, $$, esc, inr, fdate, iso, toast, modal, chip, kpi } = UI, { S, SUBJ } = SD, sd = SD.settings;
+	let tab = "home", kid = S.get("kid", null) || "s44";
+	const st = SD.students(); if (!SD.student(kid)) kid = st[0].id;
+	$("#sn").textContent = sd().name; $("#kid").innerHTML = st.filter((s) => s.cls === 5 && s.sec === "A" || s.cls === 2 && s.sec === "B" || s.cls === 7 && s.sec === "A").slice(0, 8).map((s) => `<option value="${s.id}">${esc(s.name)} (Class ${s.cls}-${s.sec})</option>`).join(""); if (!$("#kid").querySelector(`[value="${kid}"]`)) { const o = [...$("#kid").options].map((x) => x.value); kid = o.find((id) => SD.fees(id).due > 0) || o[0]; } $("#kid").value = kid;
+	const V = {
+		home() { const s = SD.student(kid), f = SD.fees(kid), r = SD.result(kid, "hy"), n = SD.notices().filter((x) => x.aud === "all" || x.aud === String(s.cls))[0];
+			return `<div class="card"><div class="row"><span class="avatar" style="width:48px;height:48px;font-size:1rem">${UI.initials(s.name)}</span><div><b style="font-size:1.1rem">${esc(s.name)}</b><div class="mut">Class ${s.cls}-${s.sec} · Roll ${s.roll} · ${s.adm}</div></div></div></div><div class="kpis" style="margin:0;grid-template-columns:1fr 1fr">${kpi("Attendance", SD.attPct(kid) + "%", "last 30 days", SD.attPct(kid) >= 90 ? "up" : "dn")}${kpi("Fee due", inr(Math.max(0, f.due)), f.due > 0 ? "pay by UPI" : "all clear", f.due > 0 ? "dn" : "up")}${r ? kpi("Half-yearly", r.pct.toFixed(0) + "%", "Grade " + r.grade + ", rank " + SD.rank(kid, "hy").pos) : ""}${kpi("Class teacher", esc((SD.staff().find((t) => t.ct === s.cls + "-" + s.sec) || { name: "-" }).name.replace(/^(Mr|Mrs|Ms)\. /, "")), "")}</div>${n ? `<div class="card"><h3>Latest notice</h3><b>${esc(n.title)}</b><p class="mut" style="margin-top:4px">${esc(n.body)}</p></div>` : ""}`; },
+		att() { const s = SD.student(kid), days = SD.schoolDays(20), A = S.get("att", {}); const cells = days.map((d) => { const r = A[d + "|" + s.cls + "-" + s.sec], ab = r && r.abs.includes(kid), lv = r && r.lv.includes(kid); return `<div style="background:${!r ? "var(--line)" : ab ? "rgba(220,38,38,.2)" : lv ? "rgba(217,119,6,.22)" : "rgba(22,163,74,.18)"}" title="${d}">${new Date(d).getDate()}<div class="mut" style="font-size:.65rem">${ab ? "A" : lv ? "L" : r ? "P" : ""}</div></div>`; }).join("");
+			return `<div class="card"><h3>Attendance <span class="mut">${SD.attPct(kid)}% in 30 days</span></h3><div class="cal">${["Mon", "Tue", "Wed", "Thu", "Fri"].map((d) => `<b>${d}</b>`).join("")}${cells}</div><p class="mut" style="margin-top:10px;font-size:.8rem">P present, A absent, L leave. Last 20 school days.</p></div>`; },
+		fees() { const f = SD.fees(kid); return `<div class="card"><h3>Fee summary</h3><div class="row sb" style="padding:4px 0"><span class="mut">Charged so far</span><b>${inr(f.demand)}</b></div><div class="row sb" style="padding:4px 0"><span class="mut">Paid</span><b class="up">${inr(f.paid)}</b></div><div class="row sb" style="padding:4px 0;font-size:1.2rem"><span>Due now</span><b class="${f.due > 0 ? "dn" : "up"}">${inr(Math.max(0, f.due))}</b></div>${f.due > 0 ? '<button class="btn pri" id="pay" style="width:100%;margin-top:10px;padding:12px">Pay by UPI</button>' : ""}</div><div class="card"><h3>Receipts</h3>${f.pays.slice().reverse().map((p) => `<div class="row sb" style="padding:7px 0;border-bottom:1px solid var(--line)"><div><b>${p.rcpt}</b><div class="mut">${fdate(p.ts)} · ${p.mode}</div></div><b>${inr(p.amt)}</b></div>`).join("") || '<p class="empty">No payments yet</p>'}</div>`; },
+		res() { return SD.exams().map((e) => { const r = SD.result(kid, e.id); return r ? `<div class="card"><h3>${esc(e.name)} <span class="mut">${r.pct.toFixed(1)}% · ${r.grade} · rank ${SD.rank(kid, e.id).pos}</span></h3>${SUBJ.map((b) => `<div style="display:grid;grid-template-columns:110px 1fr 46px;gap:8px;align-items:center;padding:4px 0;font-size:.88rem"><span>${b}</span><div class="bar"><i style="width:${(r.m[b] / e.max) * 100}%"></i></div><b style="text-align:right">${r.m[b]}/${e.max}</b></div>`).join("")}</div>` : ""; }).join(""); },
+		tt() { const s = SD.student(kid), t = S.get("tt", {})[s.cls + "-" + s.sec], now = new Date().getDay(), d = now >= 1 && now <= 5 ? now - 1 : 0; return `<div class="card"><h3>${["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][d]} <span class="mut">${now >= 1 && now <= 5 ? "today" : "next school day"}</span></h3>${t[d].map((sb, p) => `<div class="row sb" style="padding:7px 0;border-bottom:1px solid var(--line)"><span class="mut">${["8:00", "8:45", "9:30", "10:15", "11:00", "11:45"][p]}</span><b>${sb}</b></div>${p === 2 ? '<div class="mut" style="padding:5px 0;text-align:center;font-size:.8rem">Short break</div>' : ""}`).join("")}</div>`; },
+		nt() { const s = SD.student(kid); return SD.notices().filter((x) => x.aud === "all" || x.aud === String(s.cls)).map((n) => `<div class="card"><h3>${esc(n.title)}</h3><p>${esc(n.body)}</p><div class="mut" style="margin-top:6px">${UI.ago(n.ts)}</div></div>`).join(""); }
+	};
+	function draw() { $("#pc").innerHTML = V[tab](); $$("#tb button").forEach((b) => b.classList.toggle("on", b.dataset.t === tab)); const p = $("#pay"); if (p) p.onclick = pay; }
+	function pay() { const f = SD.fees(kid), s = SD.student(kid), link = UI.upi(sd().upi, sd().name, f.due, "Fee " + s.adm); modal({ title: "Pay " + inr(f.due), body: `<div style="text-align:center"><div id="qrp" style="display:inline-block;background:#fff;padding:10px;border-radius:10px"></div><p class="mut" style="margin:10px 0">Scan with any UPI app, or tap below on your phone.</p><a class="btn" href="${link}">Open UPI app</a></div>`, onOpen: () => UI.qr("#qrp", link, 170), actions: [{ label: "Close" }, { label: "I have paid", cls: "pri", fn: () => { const P = S.get("pays", []), n = P.length + 1; P.push({ id: "r" + Date.now(), sid: kid, ts: Date.now(), amt: f.due, mode: "UPI", note: "Paid from parent portal", rcpt: "GPS/26-27/" + String(n).padStart(4, "0") }); S.set("pays", P); toast("Payment recorded. A receipt is on its way."); draw(); } }] }); }
+	$("#tb").onclick = (e) => { const b = e.target.closest("[data-t]"); if (b) { tab = b.dataset.t; draw(); window.scrollTo(0, 0); } };
+	$("#kid").onchange = (e) => { kid = e.target.value; S.set("kid", kid); draw(); };
+	draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

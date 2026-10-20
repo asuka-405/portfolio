@@ -1,0 +1,1 @@
+[{"name":"pipeline","route":"pipeline"},{"name":"leads","route":"leads"},{"name":"tasks","route":"tasks"},{"name":"quotes","route":"quotes"},{"name":"reports","route":"reports"},{"name":"form","file":"form.html","w":900,"h":820,"route":""},{"name":"quote","file":"quote.html?id=Q-1106","w":900,"h":820,"route":""}]

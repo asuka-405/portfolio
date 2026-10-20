@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -193,7 +194,7 @@ int main() {
 </pre></noscript></div>
 
 <div class="prose reveal">
-					<p>&lt;cstdint&gt; gives you std::int8_t through std::int64_t (and the unsigned versions) specifically so you never have to guess. Reach for these anywhere the exact width actually matters (file formats, network protocols, bit-packed structures); reach for plain int everywhere else, since it's the type the compiler and standard library are most optimized to work with.</p>
+					<p>&lt;cstdint&gt; gives you std::int8_t through std::int64_t (and the unsigned versions) specifically so you never have to guess. Reach for these anywhere the exact width matters (file formats, network protocols, bit-packed structures); reach for plain int everywhere else, since it's the type the compiler and standard library are most optimized to work with.</p>
 					<h3>sizeof, and why sizes aren't guaranteed</h3>
 					<p>sizeof(T) tells you how many bytes an object of type T occupies on the platform you're compiling for, right now, on this compiler. It's a compile-time operator, not a runtime function call, and its result can (and does) differ across platforms for the exact same source code.</p>
 				</div>
@@ -210,12 +211,12 @@ int main() {
 </pre></noscript></div>
 
 				<div class="callout reveal">
-					<p>Try it yourself: run that on Compiler Explorer with a few different compilers/targets from the dropdown (try an ARM target alongside the default x86-64 one). sizeof(long) is the one most likely to actually differ: 8 bytes on 64-bit Linux/macOS, 4 bytes on 64-bit Windows. That single inconsistency has broken real cross-platform code.</p>
+					<p>Try it yourself: run that on Compiler Explorer with a few different compilers/targets from the dropdown (try an ARM target alongside the default x86-64 one). sizeof(long) is the one most likely to differ: 8 bytes on 64-bit Linux/macOS, 4 bytes on 64-bit Windows. That single inconsistency has broken real cross-platform code.</p>
 				</div>
 
 <div class="prose reveal">
 					<h3>Signed versus unsigned</h3>
-					<p>A signed integer type can represent negative numbers; an unsigned one cannot, and in exchange gets roughly double the positive range for the same bit width. Unsigned types wrap around on overflow instead of triggering undefined behavior (an actual, well-defined guarantee, unlike signed overflow), which sounds like a safety feature and is actually one of the most common sources of subtle bugs in C++.</p>
+					<p>A signed integer type can represent negative numbers; an unsigned one cannot, and in exchange gets roughly double the positive range for the same bit width. Unsigned types wrap around on overflow instead of triggering undefined behavior (an actual, well-defined guarantee, unlike signed overflow), which sounds like a safety feature and is one of the most common sources of subtle bugs in C++.</p>
 				</div>
 
 <div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++unsigned+int+a+%3D+0%3B%0A++++a+%3D+a+-+1%3B+++++++++++++++++//+wraps+around%3A+no+error%2C+no+warning+by+default%0A++++std%3A%3Acout+%3C%3C+a+%3C%3C+%22%5Cn%22%3B++++//+prints+a+huge+number%2C+not+-1%0A%7D%0A',wrap:'1'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a><button type="button" class="godbolt-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aint+main()+%7B%0A++++unsigned+int+a+%3D+0%3B%0A++++a+%3D+a+-+1%3B+++++++++++++++++//+wraps+around%3A+no+error%2C+no+warning+by+default%0A++++std%3A%3Acout+%3C%3C+a+%3C%3C+%22%5Cn%22%3B++++//+prints+a+huge+number%2C+not+-1%0A%7D%0A',wrap:'1'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;

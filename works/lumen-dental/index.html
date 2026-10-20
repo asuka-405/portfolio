@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lumen Dental | Gentle, modern dentistry in Noida</title>
+<meta name="description" content="Painless check-ups, whitening, implants and orthodontics in a calm, modern Noida clinic. Book online in a minute." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="hero">
+	<div>
+		<span class="chip">Accepting new patients</span>
+		<h1>Gentle dentistry, <span>brighter smiles.</span></h1>
+		<p class="lead">Painless check-ups, whitening, implants and orthodontics in a calm, modern clinic. Same-week appointments and prices shown before you book, no surprises.</p>
+		<div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="book.html">Book online in 1 minute</a><a class="btn ghost" href="services.html">Explore treatments</a></div>
+		<div class="trust"><div><b>12,000+</b><span>Patients treated</span></div><div><b>4.9 ★</b><span>1,200+ reviews</span></div><div><b>0%</b><span>EMI on big treatments</span></div></div>
+	</div>
+	<div class="imgs"><img src="img/smile3.jpg" alt="A patient smiling" fetchpriority="high" /><div class="badge a">★ 4.9 / 5<small>Google reviews</small></div><div class="badge b">Next free slot<small id="nf">-</small></div></div>
+</section>
+
+<section class="sec alt"><div class="wrap">
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))" id="why"></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Treatments</p><h2>Everything under one roof</h2><p>From routine check-ups to full smile makeovers, with transparent price ranges.</p></div><a class="btn ghost sm" href="services.html">All treatments</a></div>
+	<div class="grid" id="svc"></div>
+</div></section>
+
+<section class="sec alt"><div class="wrap split">
+	<img src="img/clinic.jpg" alt="A treatment room at Lumen Dental" loading="lazy" />
+	<div><p class="eyebrow">The clinic</p><h2 style="font-size:clamp(1.8rem,4vw,2.7rem);margin:8px 0 14px">Calm by design.</h2><p class="msg" style="font-size:1rem;margin-bottom:12px">Natural light, quiet suites and noise-cancelling headphones for every patient. Our 4-room clinic uses digital X-rays, 3D scanners and hospital-grade sterilisation.</p>
+	<ul style="list-style:none;display:grid;gap:8px;margin-bottom:22px"><li>✓ Class-B autoclaves with tracked sterilisation</li><li>✓ Digital X-rays and intra-oral scanners</li><li>✓ Sedation and anxiety-friendly care</li></ul><a class="btn" href="team.html">Meet the dentists</a></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Our dentists</p><h2>People you'll want to see twice</h2></div><a class="btn ghost sm" href="team.html">Full team</a></div>
+	<div class="grid" id="docs" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))"></div>
+</div></section>
+
+<section class="sec dark"><div class="wrap split">
+	<div><p class="eyebrow" style="color:var(--teal-l)">Smile quiz</p><h2 style="font-size:clamp(1.8rem,4vw,2.7rem);margin:8px 0 14px">Not sure what you need?</h2><p style="color:#b9d0d3;margin-bottom:20px">Answer five quick questions and we'll suggest treatments, rough costs and the dentist who's best placed to help.</p><a class="btn white" href="smile-quiz.html">Take the 1-minute quiz</a></div>
+	<div class="panel" style="margin:0;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);color:#e7f2f3"><h3>Pay your way</h3><p style="color:#b9d0d3;margin-bottom:12px">0% EMI over 3, 6 or 12 months. Cashless with leading insurers:</p><div style="display:flex;gap:8px;flex-wrap:wrap" id="ins"></div><a class="btn white sm" style="margin-top:16px" href="financing.html">Try the cost calculator</a></div>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px"><div class="sec-h"><div><p class="eyebrow">FAQ</p><h2>Good questions</h2></div></div><div id="faq"></div></div></section>
+
+<section class="sec alt"><div class="wrap" style="text-align:center;max-width:680px"><h2 style="font-size:clamp(1.8rem,4vw,2.7rem);margin-bottom:12px">Ready when you are.</h2><p class="msg" style="margin-bottom:22px">Book online, by phone or walk in. Emergency? Call +91 120 400 1818, we'll see you today.</p><a class="btn" href="book.html">Book an appointment</a></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+LD.layout("index.html");
+const { $, esc, inr, img, D } = LD;
+const nf = LD.nextFree("checkup"); if (nf) $("#nf").textContent = LD.pd(nf.date).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" }) + " · " + LD.fmtT(nf.time);
+$("#why").innerHTML = [["⚡", "Same-week slots", "Most patients are seen within 3 days, same day for emergencies."], ["", "Honest pricing", "You see a price range before you book. No upselling."], ["🛡", "Cashless insurance", "We work with the major insurers and file claims for you."], ["", "Anxiety-friendly", "Headphones, breaks on request and sedation options."]].map((x) => `<div class="panel" style="margin:0"><div style="font-size:1.6rem">${x[0]}</div><h3 style="margin:8px 0 4px">${x[1]}</h3><p class="msg">${x[2]}</p></div>`).join("");
+$("#svc").innerHTML = D.services.slice(0, 8).map((s) => `<a class="card" href="service.html?s=${s.id}"><div class="ph"><img src="${img(s.img)}" alt="${esc(s.name)}" loading="lazy"></div><div class="bd"><span class="chip" style="align-self:flex-start">${s.cat}</span><h3>${esc(s.name)}</h3><p>${esc(s.short)}</p><div class="ft"><b>from ${inr(s.from)}</b><span style="color:var(--teal);font-weight:700">Details →</span></div></div></a>`).join("");
+$("#docs").innerHTML = D.doctors.map((d) => `<a class="card" href="team.html#${d.id}"><div class="ph" style="aspect-ratio:1/1"><img src="${img(d.img)}" alt="${esc(d.name)}" loading="lazy" style="object-position:top"></div><div class="bd"><h3>${esc(d.name)}</h3><p>${esc(d.role)}</p><span class="msg">${d.exp} years' experience</span></div></a>`).join("");
+$("#ins").innerHTML = D.insurers.map((i) => `<span class="chip w">${i}</span>`).join("");
+$("#faq").innerHTML = D.faqs.slice(0, 4).map((f) => `<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join("");
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Studio dashboard | Kiln &amp; Clay</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="css/site.css" />
+<style>.adm{display:grid;grid-template-columns:230px 1fr;min-height:100vh}.adm-side{background:var(--ink);padding:22px 14px;position:sticky;top:0;height:100vh}.adm-side .logo{display:block;color:#fff;margin-bottom:24px}.adm-side button{display:block;width:100%;text-align:left;padding:11px 14px;background:none;border:0;border-left:3px solid transparent;color:#cfc2b2;font:600 .8rem system-ui;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.adm-side button.on,.adm-side button:hover{color:#fff;border-left-color:var(--clay);background:rgba(255,255,255,.06)}.adm-main{padding:26px clamp(16px,3vw,36px)}.adm-main h1{font-size:1.9rem;margin-bottom:16px}
+@media(max-width:900px){.adm{grid-template-columns:minmax(0,1fr)}.adm-side{position:static;height:auto;display:flex;overflow:auto;padding:10px}.adm-side .logo{display:none}.adm-side button{width:auto;white-space:nowrap}}</style>
+</head>
+<body>
+<div class="adm">
+	<aside class="adm-side"><a class="logo" href="index.html">Kiln<i style="color:var(--clay)">&amp;</i>Clay</a><button data-v="orders" class="on">Orders</button><button data-v="inventory">Inventory</button><button data-v="sales">Sales</button><button data-v="workshops">Workshops</button><button data-v="trade">Trade enquiries</button><button data-v="settings">Settings</button><button onclick="location.href='index.html'">← Back to shop</button></aside>
+	<main class="adm-main" id="main"></main>
+</div>
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+const { $, $$, esc, inr, img, D } = KC; let view = "orders", flt = "";
+const day0 = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); };
+const V = {
+	orders() {
+		const all = KC.orders.all().slice().reverse(), l = all.filter((o) => !flt || o.status === flt), today = all.filter((o) => o.ts >= day0());
+		return `<h1>Orders</h1><div class="kpis"><div class="kpi"><span>Orders today</span><b>${today.length}</b></div><div class="kpi"><span>Revenue today</span><b>${inr(today.reduce((s, o) => s + o.total, 0))}</b></div><div class="kpi"><span>To pack</span><b>${all.filter((o) => o.status === "placed").length}</b></div><div class="kpi"><span>In transit</span><b>${all.filter((o) => ["shipped", "out"].includes(o.status)).length}</b></div></div>
+		<div class="tabs" style="margin-bottom:14px;border:0"><button class="btn ${flt === "" ? "" : "ghost"} sm" data-f="">All</button> ${KC.STAGES.map((s) => `<button class="btn ${flt === s ? "" : "ghost"} sm" data-f="${s}">${KC.LABEL[s]}</button>`).join(" ")}</div>
+		<div style="overflow-x:auto"><table class="t"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th></th></tr></thead><tbody>${l.slice(0, 40).map((o) => `<tr><td><b>${o.id}</b><div class="msg">${new Date(o.ts).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</div></td><td>${esc(o.name)}<div class="msg">${esc(o.city || "")}</div></td><td>${o.items.map((i) => esc(i.name)).slice(0, 2).join(", ")}${o.items.length > 2 ? " +" + (o.items.length - 2) : ""}</td><td>${inr(o.total)}</td><td><span class="chip ${o.status === "delivered" ? "g" : ""}">${KC.LABEL[o.status]}</span></td><td>${o.status !== "delivered" ? `<button class="btn sm" data-adv="${o.id}">Advance →</button>` : ""}</td></tr>`).join("") || '<tr><td colspan="6" class="msg">No orders.</td></tr>'}</tbody></table></div>`;
+	},
+	inventory() {
+		return `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><h1>Inventory</h1><button class="btn clay sm" data-add>+ Add product</button></div><div style="overflow-x:auto"><table class="t"><thead><tr><th></th><th>Product</th><th>Category</th><th>Price (₹)</th><th>Stock</th><th>Status</th></tr></thead><tbody>${KC.products().sort((a, b) => a.stock - b.stock).map((p) => `<tr><td><img src="${img(p.img)}" alt="" style="width:46px;height:46px;object-fit:cover"></td><td><b>${esc(p.name)}</b></td><td>${esc(p.cat)}</td><td><input class="in" type="number" min="0" value="${p.price}" data-pr="${p.id}" style="width:100px;padding:6px 8px"></td><td><input class="in" type="number" min="0" value="${p.stock}" data-st="${p.id}" style="width:80px;padding:6px 8px"></td><td>${p.stock <= 0 ? '<span class="chip r">Sold out</span>' : p.stock <= 5 ? '<span class="chip" style="color:#d6862b">Low</span>' : '<span class="chip g">OK</span>'}</td></tr>`).join("")}</tbody></table></div>`;
+	},
+	sales() {
+		const all = KC.orders.all(), days = [...Array(14)].map((_, i) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - 13 + i); return d.getTime(); }), by = days.map((t) => all.filter((o) => o.ts >= t && o.ts < t + 864e5).reduce((s, o) => s + o.total, 0)), mx = Math.max(...by, 1), tot = by.reduce((a, b) => a + b, 0);
+		const items = {}; all.forEach((o) => o.items.forEach((i) => { items[i.name] = (items[i.name] || 0) + i.qty; })); const top = Object.entries(items).sort((a, b) => b[1] - a[1]).slice(0, 6), tm = top[0] ? top[0][1] : 1;
+		return `<h1>Sales</h1><div class="kpis"><div class="kpi"><span>14-day revenue</span><b>${inr(tot)}</b></div><div class="kpi"><span>Orders</span><b>${all.length}</b></div><div class="kpi"><span>Avg order</span><b>${all.length ? inr(tot / Math.max(1, all.length)) : "-"}</b></div><div class="kpi"><span>Repeat customers</span><b>${Math.round(new Set(all.map((o) => o.email)).size ? (1 - new Set(all.map((o) => o.email)).size / all.length) * 100 : 0)}%</b></div></div>
+		<div class="panel"><h3>Revenue, last 14 days</h3><div class="bars">${by.map((v, i) => `<div><span>${v ? Math.round(v / 1000) + "k" : ""}</span><i style="height:${v / mx * 85}%"></i>${new Date(days[i]).getDate()}</div>`).join("")}</div></div>
+		<div class="panel"><h3>Best sellers</h3>${top.map(([n, c]) => `<div style="display:grid;grid-template-columns:240px 1fr 40px;gap:12px;align-items:center;margin:9px 0;font-size:.9rem"><span>${esc(n)}</span><div style="height:10px;background:var(--line)"><i style="display:block;height:100%;width:${c / tm * 100}%;background:var(--clay)"></i></div><b>${c}</b></div>`).join("")}</div>`;
+	},
+	workshops() { const l = KC.wbook.get().slice().reverse(); return `<h1>Workshop bookings</h1>${l.length ? `<table class="t"><thead><tr><th>Ref</th><th>Guest</th><th>Workshop</th><th>Date</th><th>Seats</th><th>Total</th></tr></thead><tbody>${l.map((b) => `<tr><td>${b.id}</td><td>${esc(b.name)}<div class="msg">${esc(b.phone)}</div></td><td>${esc(b.workshop)}</td><td>${b.date} · ${b.time}</td><td>${b.guests}</td><td>${inr(b.total)}</td></tr>`).join("")}</tbody></table>` : '<div class="panel empty">Bookings from the Workshops page appear here.</div>'}`; },
+	trade() { const l = KC.store.get("trade", []).slice().reverse(); return `<h1>Trade enquiries</h1>${l.length ? `<table class="t"><thead><tr><th>Ref</th><th>Business</th><th>Request</th><th>Estimate</th><th>Status</th></tr></thead><tbody>${l.map((q) => `<tr><td>${q.id}</td><td><b>${esc(q.biz)}</b><div class="msg">${esc(q.name)} · ${esc(q.email)}</div></td><td>${q.qty} × ${esc(q.cat)}</td><td>${esc(q.est)}</td><td><select class="in" data-tq="${q.id}" style="padding:6px 8px">${["new", "quoted", "won", "lost"].map((s) => `<option ${q.status === s ? "selected" : ""}>${s}</option>`).join("")}</select></td></tr>`).join("")}</tbody></table>` : '<div class="panel empty">Quote requests from the Trade page appear here.</div>'}`; },
+	settings() { return `<h1>Settings</h1><div class="panel"><h3>Demo behaviour</h3><label style="display:flex;gap:10px;align-items:center;cursor:pointer"><input type="checkbox" id="auto" ${KC.store.get("auto", true) ? "checked" : ""}> Auto-advance new orders (fast-forward mode)</label><p class="msg" style="margin-top:8px">When on, new orders progress through packed → shipped → delivered on their own so shoppers can watch the tracker.</p></div><div class="panel"><h3>Reset</h3><p class="msg" style="margin-bottom:10px">Clears orders, stock changes, bookings and carts in this browser.</p><button class="btn ghost sm" id="reset">Reset demo data</button></div>`; },
+};
+function draw() { KC.orders.tick(); $("#main").innerHTML = V[view](); $$(".adm-side [data-v]").forEach((b) => b.classList.toggle("on", b.dataset.v === view)); }
+function addModal() {
+	$("#mbox").innerHTML = `<h3 style="font-size:1.5rem;margin-bottom:12px">Add a product</h3><form id="af" style="display:grid;gap:12px"><label class="f">Name<input class="in" name="name" required></label><div class="row2"><label class="f">Category<select class="in" name="cat">${D.cats.map((c) => `<option>${c}</option>`).join("")}</select></label><label class="f">Price (₹)<input class="in" type="number" name="price" min="1" required></label></div><div class="row2"><label class="f">Stock<input class="in" type="number" name="stock" min="0" value="10"></label><label class="f">Photo<select class="in" name="img">${["mug1", "bowl1", "plate1", "vase1", "teapot1", "planter1", "candle1", "tableware1"].map((k) => `<option>${k}</option>`).join("")}</select></label></div><label class="f">Description<textarea class="in" name="desc" rows="2"></textarea></label><div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn ghost" data-mx>Cancel</button><button class="btn clay">Publish</button></div></form>`;
+	$("#modal").classList.add("on");
+	$("#af").onsubmit = (e) => { e.preventDefault(); const f = e.target, c = KC.store.get("custom", []); c.push({ id: "new-" + (c.length + 1), name: f.name.value, cat: f.cat.value, price: +f.price.value, img: f.img.value, desc: f.desc.value || "New arrival.", stock: +f.stock.value, tags: [], sets: null }); KC.store.set("custom", c); $("#modal").classList.remove("on"); KC.toast("Product published to the shop"); draw(); };
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) { if (e.target.id === "modal") $("#modal").classList.remove("on"); return; }
+	if (b.dataset.v) { view = b.dataset.v; draw(); } else if (b.dataset.f !== undefined) { flt = b.dataset.f; draw(); } else if (b.dataset.adv) { KC.orders.advance(b.dataset.adv); draw(); }
+	else if ("add" in b.dataset) addModal(); else if ("mx" in b.dataset) $("#modal").classList.remove("on");
+	else if (b.id === "reset") { Object.keys(localStorage).filter((k) => k.startsWith("kc-")).forEach((k) => localStorage.removeItem(k)); location.reload(); } });
+document.addEventListener("change", (e) => { const t = e.target, ov = KC.store.get("over", {});
+	if (t.dataset.pr) { ov[t.dataset.pr] = { ...(ov[t.dataset.pr] || {}), price: +t.value }; KC.store.set("over", ov); KC.toast("Price saved"); }
+	else if (t.dataset.st) { ov[t.dataset.st] = { ...(ov[t.dataset.st] || {}), stock: Math.max(0, +t.value) }; KC.store.set("over", ov); KC.toast("Stock saved"); draw(); }
+	else if (t.dataset.tq) { const l = KC.store.get("trade", []); l.find((x) => x.id === t.dataset.tq).status = t.value; KC.store.set("trade", l); }
+	else if (t.id === "auto") KC.store.set("auto", t.checked); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#modal").classList.remove("on"); });
+draw(); setInterval(() => { if (view === "orders" && !document.activeElement.matches("input,select")) draw(); }, 6000);
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

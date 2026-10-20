@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -95,8 +96,8 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>This is a crash course in the parts of C that are easy to get wrong even after you already know the syntax. It assumes you can program in Go, Java, JavaScript, Rust, Python, whatever, and skips past <code>for</code> loops and function declarations straight to the stuff that actually breaks production code.</p>
-					<p>C's syntax is small enough to learn in an afternoon. What takes longer, and what this course is actually about, is the list of things the language lets you do that it does not check for you: reading past the end of an array, using a value before it's initialized, letting an integer wrap around when you meant it not to. None of that raises an exception. Most of it compiles clean, runs fine on your machine, and fails somewhere else, later, differently.</p>
+					<p>This is a crash course in the parts of C that are easy to get wrong even after you already know the syntax. It assumes you can program in Go, Java, JavaScript, Rust, Python, whatever, and skips past <code>for</code> loops and function declarations straight to the stuff that breaks production code.</p>
+					<p>C's syntax is small enough to learn in an afternoon. What takes longer, and what this course is about, is the list of things the language lets you do that it does not check for you: reading past the end of an array, using a value before it's initialized, letting an integer wrap around when you meant it not to. None of that raises an exception. Most of it compiles clean, runs fine on your machine, and fails somewhere else, later, differently.</p>
 					<h3>What makes C different from the language you already know</h3>
 					<ul><li>No bounds checking. <code>arr[10]</code> on a 10-element array is not an exception, it's an address the language will happily compute and let you write to.</li><li>No garbage collector. Every <code>malloc</code> is a debt; nobody pays it but you.</li><li>The compiler assumes undefined behavior never happens and optimizes on that assumption, not &quot;probably safe&quot; but actively hostile to code that depends on UB behaving a particular way.</li><li>Types are a compile-time convenience the runtime has mostly forgotten about by the time your program executes.</li></ul>
 					<blockquote>Everything in this course exists because it broke something for someone. Treat each section as a bug report, not trivia.</blockquote>

@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -149,7 +150,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>This is meant to be a genuinely practical walkthrough, not just syntax. Here's a real, complete, minimal HTTP server using only the standard library.</p>
+					<p>This is meant to be a practical walkthrough, not just syntax. Here's a real, complete, minimal HTTP server using only the standard library.</p>
 					<h3>The basics: ServeMux and handlers</h3>
 					<p>A handler is anything satisfying <code>http.Handler</code> (a <code>ServeHTTP(w http.ResponseWriter, r *http.Request)</code> method), but in practice you'll mostly write plain functions and register them with <code>http.HandleFunc</code>, which wraps them into handlers for you:</p>
 				</div>
@@ -187,7 +188,7 @@ func main() {
 </pre></noscript></div>
 
 				<div class="callout reveal">
-					<p>This example is meant to illustrate the pattern and won't let you actually curl it from this embedded panel (no real network access in the sandbox). Run it locally with <code>http.ListenAndServe(&quot;:8080&quot;, nil)</code> uncommented at the end of main, then visit http://localhost:8080/hello?name=World in a browser to see it respond for real.</p>
+					<p>This example is meant to illustrate the pattern and won't let you curl it from this embedded panel (no real network access in the sandbox). Run it locally with <code>http.ListenAndServe(&quot;:8080&quot;, nil)</code> uncommented at the end of main, then visit http://localhost:8080/hello?name=World in a browser to see it respond for real.</p>
 				</div>
 
 <div class="prose reveal">
@@ -236,7 +237,7 @@ func main() {
 <span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">}</span></span></code></pre></div>
 
 <div class="prose reveal">
-					<p>Run it as <code>./server -port 9090</code> and <code>*port</code> reflects the flag value (or the default, 8080, if the flag wasn't passed). <code>flag</code> is enough for straightforward tools; genuinely complex CLIs with subcommands often reach for a third-party library like cobra, but that's a scale decision, not a default.</p>
+					<p>Run it as <code>./server -port 9090</code> and <code>*port</code> reflects the flag value (or the default, 8080, if the flag wasn't passed). <code>flag</code> is enough for straightforward tools; complex CLIs with subcommands often reach for a third-party library like cobra, but that's a scale decision, not a default.</p>
 				</div>
 
 				<div class="callout reveal">

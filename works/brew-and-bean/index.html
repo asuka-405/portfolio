@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brew &amp; Bean | Small-batch coffee, baked daily</title>
+<meta name="description" content="Brew &amp; Bean is a neighbourhood roastery and café in Delhi NCR. Order ahead for pickup or delivery, earn rewards and book catering." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="hero">
+	<img src="img/hero.jpg" alt="Barista pouring milk into a latte" fetchpriority="high" />
+	<div class="wrap">
+		<p class="eyebrow">Small-batch roasters · Since 2016</p>
+		<h1>Coffee worth slowing down for.</h1>
+		<p>Single-origin beans roasted every morning, pastries baked before sunrise. Order ahead and your cup is waiting when you walk in.</p>
+		<div class="acts"><a class="btn" href="menu.html">Order now</a><a class="btn ghost" href="locations.html">Find a café</a></div>
+		<div class="badges"><div><b>3</b><span>Cafés in NCR</span></div><div><b>24</b><span>Beans in rotation</span></div><div><b>6 a.m.</b><span>First bake</span></div></div>
+	</div>
+</section>
+
+<section class="sec"><div class="wrap">
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+		<a class="panel" href="order.html" style="text-decoration:none;margin:0"><p class="eyebrow">Order ahead</p><h3>Skip the queue</h3><p class="msg">Pick a café, choose a slot, collect when it's ready. Or get it delivered.</p></a>
+		<a class="panel" href="rewards.html" style="text-decoration:none;margin:0"><p class="eyebrow">Rewards</p><h3>Every cup counts</h3><p class="msg">Earn a point for every ₹10. Free drinks, upgrades and a birthday treat.</p></a>
+		<a class="panel" href="catering.html" style="text-decoration:none;margin:0"><p class="eyebrow">Catering</p><h3>Coffee for your team</h3><p class="msg">A barista cart at your office, or breakfast boxes for the whole floor.</p></a>
+	</div>
+</div></section>
+
+<section class="sec alt"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Crowd pleasers</p><h2>Today's favourites</h2></div><a class="btn dark sm" href="menu.html">See the full menu</a></div>
+	<div class="grid" id="fav"></div>
+</div></section>
+
+<section class="sec"><div class="wrap split">
+	<img src="img/barista2.jpg" alt="Barista steaming milk behind the counter" loading="lazy" />
+	<div>
+		<p class="eyebrow">Our story</p><h2 style="font-size:clamp(1.9rem,4vw,2.8rem);margin:8px 0 14px">A roastery that grew a café.</h2>
+		<p style="color:var(--roast);margin-bottom:12px">It started as a 5 kg roaster in a Noida garage and a stack of notebooks full of cupping scores. Today we roast twice a day, bake before dawn, and still taste every batch ourselves.</p>
+		<p style="color:var(--roast);margin-bottom:22px">We buy directly from small estates in Coorg and Chikmagalur, pay above-market prices, and print the harvest date on every bag.</p>
+		<a class="btn dark" href="about.html">Read our story</a>
+	</div>
+</div></section>
+
+<section class="sec dark"><div class="wrap">
+	<div class="stats"><div><b>5 kg</b><span>Roasted per batch</span></div><div><b>12</b><span>Partner estates</span></div><div><b>48 hrs</b><span>Max from roast to cup</span></div><div><b>100%</b><span>Compostable cups</span></div></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Explore</p><h2>Something for every hour</h2></div></div>
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+		<a class="card" href="menu.html#Coffee" style="text-decoration:none"><div class="ph"><img src="img/cappuccino.jpg" alt="Cappuccino" loading="lazy" /></div><div class="bd"><h3>Coffee</h3><p>Espresso, filter and iced.</p></div></a>
+		<a class="card" href="menu.html#Bakes" style="text-decoration:none"><div class="ph"><img src="img/croissants.jpg" alt="Fresh croissants" loading="lazy" /></div><div class="bd"><h3>Bakes</h3><p>Baked daily from 6 a.m.</p></div></a>
+		<a class="card" href="menu.html#Brunch" style="text-decoration:none"><div class="ph"><img src="img/pancakes.jpg" alt="Pancakes" loading="lazy" /></div><div class="bd"><h3>Brunch</h3><p>All-day plates and toasts.</p></div></a>
+		<a class="card" href="menu.html#Beans" style="text-decoration:none"><div class="ph"><img src="img/beans.jpg" alt="Roasted coffee beans" loading="lazy" /></div><div class="bd"><h3>Beans</h3><p>Take our roast home.</p></div></a>
+	</div>
+</div></section>
+
+<section class="sec alt"><div class="wrap split rev">
+	<div>
+		<p class="eyebrow">Three cafés, one standard</p><h2 style="font-size:clamp(1.9rem,4vw,2.8rem);margin:8px 0 14px">Find us across the NCR.</h2>
+		<div id="stores" style="display:grid;gap:12px;margin-bottom:20px"></div>
+		<a class="btn dark" href="locations.html">Hours &amp; directions</a>
+	</div>
+	<img src="img/interior1.jpg" alt="Inside our Noida café" loading="lazy" />
+</div></section>
+
+<section class="sec"><div class="wrap">
+	<div class="panel" style="display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;margin:0">
+		<div><p class="eyebrow">The Bean Letter</p><h3 style="font-size:1.6rem;margin:6px 0">New roasts, first.</h3><p class="msg">One email a month: what's on the roaster, what's new on the counter, and a coupon.</p></div>
+		<form id="news" style="display:flex;gap:10px;flex-wrap:wrap"><input class="in" type="email" required placeholder="you@email.com" style="flex:1;min-width:200px" aria-label="Email" /><button class="btn dark">Subscribe</button></form>
+	</div>
+</div></section>
+
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script src="js/modal.js"></script>
+<script>
+BB.layout("index.html");
+const { $, esc, inr, img, D } = BB;
+const card = (i) => `<article class="card"><div class="ph"><img src="${img(i.img)}" alt="${esc(i.name)}" loading="lazy" />${BB.isAvail(i.id) ? "" : '<div class="sold">Sold out today</div>'}</div><div class="bd"><h3>${esc(i.name)}</h3><p>${esc(i.desc)}</p><div class="ft"><span class="price">${inr(BB.priceOf(i))}</span><button class="btn dark sm" data-add="${i.id}" ${BB.isAvail(i.id) ? "" : "disabled"}>Add</button></div></div></article>`;
+$("#fav").innerHTML = [...D.items].sort((a, b) => b.pop - a.pop).slice(0, 4).map(card).join("");
+$("#stores").innerHTML = D.stores.map((s) => `<a href="locations.html#${s.id}" class="panel" style="text-decoration:none;margin:0;padding:14px 16px"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><b>${esc(s.name)}</b><div class="msg">${esc(s.addr)}</div></div><span class="open ${BB.openNow(s) ? "y" : "n"}">${BB.openNow(s) ? "Open now" : "Closed"}</span></div></a>`).join("");
+document.addEventListener("click", (e) => { const b = e.target.closest("[data-add]"); if (b) BBModal.open(b.dataset.add); });
+$("#news").onsubmit = (e) => { e.preventDefault(); BB.store.set("news", [...BB.store.get("news", []), e.target.querySelector("input").value]); e.target.reset(); BB.toast("You're on the list, check your inbox for WELCOME10"); };
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

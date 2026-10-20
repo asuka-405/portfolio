@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Track your token | QueueLite (demo)</title>
+<meta name="robots" content="noindex" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font:16px/1.5 system-ui,sans-serif;background:#f3f1fb;color:#1c1440;min-height:100vh;display:grid;place-items:start center;padding:20px}
+.phone{width:100%;max-width:430px}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}header b{font-size:1.2rem}header a{color:#6c47ff;font-weight:700;font-size:.85rem;text-decoration:none}
+.card{background:#fff;border-radius:24px;padding:24px;box-shadow:0 10px 30px rgba(60,40,140,.1);margin-bottom:14px}.in{width:100%;padding:14px;border:2px solid #e0daf5;border-radius:14px;font:700 1.3rem ui-monospace,monospace;text-transform:uppercase;text-align:center}.in:focus{outline:0;border-color:#6c47ff}
+.btn{display:block;width:100%;background:#6c47ff;color:#fff;border:0;border-radius:14px;padding:14px;font:700 1rem system-ui;cursor:pointer;margin-top:10px}.btn.ghost{background:#efeafc;color:#4a2fd1}
+.no{font:900 4.4rem/1 ui-monospace,Menlo,monospace;text-align:center}.big{text-align:center}.big small{letter-spacing:.18em;text-transform:uppercase;color:#7a72a8;font-weight:700;font-size:.74rem}.pos{font-size:3rem;font-weight:800;color:#6c47ff}
+.prog{height:12px;background:#e8e3fb;border-radius:9px;overflow:hidden;margin:14px 0}.prog i{display:block;height:100%;background:linear-gradient(90deg,#6c47ff,#9a6bff);transition:width .6s}
+.st{display:inline-block;padding:4px 14px;border-radius:99px;font-weight:800;font-size:.82rem}.st.w{background:#fff4d6;color:#a16a00}.st.s{background:#dcfce7;color:#15803d}.st.d{background:#e8e3fb;color:#4a2fd1}
+.sw{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-weight:600}.sw input{width:46px;height:26px;accent-color:#6c47ff}
+.sms{background:#1c1440;color:#e4defb;border-radius:16px 16px 16px 4px;padding:12px 14px;font-size:.88rem;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="phone"><header><b id="biz">Clinic</b><a href="kiosk.html">Kiosk</a></header><div id="app"></div></div>
+<script src="../lib/ui.js"></script><script src="js/core.js"></script>
+<script>
+const { $, esc } = UI; $("#biz").textContent = QL.state.settings.biz;
+let no = (new URLSearchParams(location.search).get("t") || "").toUpperCase(), notified = false;
+const find = () => QL.todays().find((t) => t.no === no);
+function draw() {
+	const t = no && find();
+	if (!no || !t) { $("#app").innerHTML = `<div class="card"><h2 style="margin-bottom:6px">Track your token</h2><p style="color:#5a5380;margin-bottom:14px">${no ? "We couldn't find that token today. Check the number on your ticket." : "Enter the token number printed on your ticket."}</p><form id="f"><input class="in" id="n" placeholder="A001" value="${esc(no)}" maxlength="5"><button class="btn">Track</button></form></div>`; $("#f").onsubmit = (e) => { e.preventDefault(); no = $("#n").value.trim().toUpperCase(); history.replaceState(null, "", "?t=" + no); draw(); }; return; }
+	const s = QL.svc(t.svc), pos = t.status === "waiting" ? QL.position(t) : 0, total = Math.max(pos, QL.todays().filter((x) => x.svc === t.svc && x.status === "waiting").length, 5), w = t.status === "waiting" ? QL.estWait(t) : 0, notify = localStorage.getItem("ql-notify-" + no) === "1";
+	const c = t.counter && QL.state.counters.find((x) => x.id === t.counter);
+	$("#app").innerHTML = `<div class="card big"><small>${esc(s.name)}</small><div class="no">${t.no}</div><span class="st ${t.status === "waiting" ? "w" : t.status === "serving" ? "s" : "d"}">${{ waiting: "Waiting", serving: "It's your turn!", done: "Completed", noshow: "Missed", cancelled: "Cancelled" }[t.status]}</span>
+	${t.status === "waiting" ? `<div style="margin-top:16px"><small>Position in line</small><div class="pos">${pos}</div><div class="prog"><i style="width:${Math.max(6, (1 - (pos - 1) / total) * 100)}%"></i></div><b>About ${w} min</b><div style="color:#7a72a8;font-size:.88rem">Updated live · ${QL.state.counters.filter((x) => x.open && x.svc.includes(t.svc)).length} counter(s) open for this service</div><div class="sw"><span>Text me when I'm 3rd in line</span><input type="checkbox" id="nt" ${notify ? "checked" : ""}></div><button class="btn ghost" id="leave">Leave the queue</button></div>` : t.status === "serving" ? `<p style="margin-top:14px;font-size:1.3rem;font-weight:800">Please go to ${esc(c ? c.name : "the counter")}</p>` : `<p style="margin-top:12px;color:#5a5380">Thank you for visiting ${esc(QL.state.settings.biz)}.</p>`}</div>
+	${notify && t.status === "waiting" && pos <= 3 ? `<div class="card"><b>📨 SMS sent</b><div class="sms">${esc(QL.state.settings.sms.replace("{name}", t.name).replace("{no}", t.no).replace("{pos}", pos + (pos === 1 ? "st" : pos === 2 ? "nd" : "rd")).replace("{eta}", w).replace("{link}", location.host || "queuelite"))}</div></div>` : ""}
+	<button class="btn ghost" id="other">Track another token</button>`;
+	const nt = $("#nt"); if (nt) nt.onchange = () => { localStorage.setItem("ql-notify-" + no, nt.checked ? "1" : "0"); draw(); }; const lv = $("#leave"); if (lv) lv.onclick = () => { QL.cancel(t.id); draw(); }; $("#other").onclick = () => { no = ""; history.replaceState(null, "", "track.html"); draw(); };
+}
+QL.on(draw); setInterval(draw, 4000); draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

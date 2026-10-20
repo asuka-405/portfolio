@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Visit | Brew &amp; Bean</title>
+<meta name="description" content="Three Brew &amp; Bean cafés across Delhi NCR, addresses, opening hours and directions." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><img src="img/storefront.jpg" alt="" /><div class="wrap"><p class="eyebrow">Visit us</p><h1>Three cafés, one standard.</h1><p>Walk in, or order ahead and we'll have it ready. Open-now status updates live.</p></div></section>
+<section class="sec"><div class="wrap" id="stores"></div></section>
+<section class="sec alt"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Questions</p><h2>Good to know</h2></div></div>
+	<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+		<div class="panel" style="margin:0"><h3>Dogs &amp; laptops?</h3><p class="msg">Dogs are welcome on all patios. Laptops are fine at every café; we just ask for no calls at long tables.</p></div>
+		<div class="panel" style="margin:0"><h3>Wi-Fi &amp; power</h3><p class="msg">Free Wi-Fi everywhere, power sockets along the wall seating, and a quiet table at the back in Noida.</p></div>
+		<div class="panel" style="margin:0"><h3>Private events</h3><p class="msg">Hire the Noida roastery floor for tastings and launches. <a href="catering.html" style="color:var(--caramel-d);font-weight:700">Enquire →</a></p></div>
+	</div>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+BB.layout("locations.html");
+const { $, esc, img, D } = BB, DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], today = new Date().getDay();
+$("#stores").innerHTML = D.stores.map((s, i) => `<article class="store" id="${s.id}" style="${i % 2 ? "" : ""}"><img src="${img(s.img)}" alt="Inside ${esc(s.name)}" loading="lazy"><div class="bd"><div><span class="open ${BB.openNow(s) ? "y" : "n"}">${BB.openNow(s) ? "Open now · until " + BB.fmtH(s.hours[today][1]) : "Closed · opens " + BB.fmtH(s.hours[today][0] > new Date().getHours() ? s.hours[today][0] : s.hours[(today + 1) % 7][0])}</span></div>
+	<h2 style="font-size:1.9rem">${esc(s.name)}</h2><p class="msg">${esc(s.note)}</p><p><b>${esc(s.addr)}</b><br><a href="tel:${s.phone.replace(/\s/g, "")}" style="color:var(--caramel-d)">${s.phone}</a></p>
+	<div class="hrs">${[1, 2, 3, 4, 5, 6, 0].map((d) => `<span${d === today ? ' class="today"' : ""}><b${d === today ? ' class="today"' : ""}>${DAYS[d]}</b></span><span>${BB.fmtH(s.hours[d][0])} – ${BB.fmtH(s.hours[d][1])}</span>`).join("")}</div>
+	<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px"><a class="btn dark sm" href="order.html?store=${s.id}">Order from here</a><a class="btn ghost sm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Brew & Bean " + s.addr)}">Directions</a></div></div></article>`).join("");
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

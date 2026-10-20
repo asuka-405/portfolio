@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -110,7 +111,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<h3>What an agent actually is</h3>
+					<h3>What an agent is</h3>
 					<p>Strip away the hype and an agent is a simple formula:<strong> agent = model + tools + memory + a loop.</strong> The model decides the next step (but can only ever<em> emit a request</em>, never act); your program runs the tool; the result gets added to the context; the model is called again. Repeat until it's done.</p>
 				</div>
 
@@ -174,7 +175,7 @@
 <div class="prose reveal">
 					<h3>Making agents fast, not just cheap</h3>
 					<p>Cost optimization (a few parts back) and speed optimization are related but distinct: a cheap agent that takes 90 seconds to answer still gets abandoned. A few techniques that target latency specifically:</p>
-					<ol><li><strong>Parallelize independent tool calls.</strong> If step 2 and step 3 don't depend on each other's output, fire them concurrently instead of serially. Most agent frameworks, LangGraph included, support this as a first-class pattern rather than something you bolt on.</li><li><strong>Stream partial output.</strong> Showing the model's answer, and its intermediate tool calls: as they happen makes a 20-second task <strong>feel</strong> instant, even though total latency hasn't changed. Silence is what makes users assume something broke.</li><li><strong>Route per step, not just per request.</strong> One agent run can call a cheap model for mechanical sub-steps (&quot;extract this field,&quot; &quot;summarize this ticket&quot;) and reserve the frontier model for the one step that actually needs judgment.</li><li><strong>Cache semantically, not just exactly.</strong> For read-heavy agents: an IAM helpdesk answering the same handful of policy questions worded differently every time: cache by embedding similarity, not just byte-identical matches.</li></ol>
+					<ol><li><strong>Parallelize independent tool calls.</strong> If step 2 and step 3 don't depend on each other's output, fire them concurrently instead of serially. Most agent frameworks, LangGraph included, support this as a first-class pattern rather than something you bolt on.</li><li><strong>Stream partial output.</strong> Showing the model's answer, and its intermediate tool calls: as they happen makes a 20-second task <strong>feel</strong> instant, even though total latency hasn't changed. Silence is what makes users assume something broke.</li><li><strong>Route per step, not just per request.</strong> One agent run can call a cheap model for mechanical sub-steps (&quot;extract this field,&quot; &quot;summarize this ticket&quot;) and reserve the frontier model for the one step that needs judgment.</li><li><strong>Cache semantically, not just exactly.</strong> For read-heavy agents: an IAM helpdesk answering the same handful of policy questions worded differently every time: cache by embedding similarity, not just byte-identical matches.</li></ol>
 				</div>
 
 				<div class="callout reveal">
@@ -211,9 +212,9 @@
 				</div>
 
 				<details class="cmd-explain reveal">
-					<summary>Try it yourself: Audit a tool you actually use<span class="chev">›</span></summary>
+					<summary>Try it yourself: Audit a tool you use<span class="chev">›</span></summary>
 					<div class="body"><div class="prose reveal">
-					<p>Pick one AI tool you use that can take real actions: an IDE coding agent, a browser-automation agent, anything that writes or clicks, not just chats. List out what it can actually access and do. Check it against the lethal trifecta: does it have private-data access, exposure to untrusted text, and an unsupervised way to act, all three at once? If yes, that's a real gap, not a hypothetical one.</p>
+					<p>Pick one AI tool you use that can take real actions: an IDE coding agent, a browser-automation agent, anything that writes or clicks, not just chats. List out what it can access and do. Check it against the lethal trifecta: does it have private-data access, exposure to untrusted text, and an unsupervised way to act, all three at once? If yes, that's a real gap, not a hypothetical one.</p>
 				</div></div>
 				</details>
 						</div>

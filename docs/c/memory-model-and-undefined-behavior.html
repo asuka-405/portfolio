@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -95,8 +96,8 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<h3>The layout your program actually gets</h3>
-					<p>Before you can reason about a dangling pointer, it helps to know what's actually sitting in memory. A running process's address space is divided into a handful of regions, and where a value lives determines its whole lifetime story.</p>
+					<h3>The layout your program gets</h3>
+					<p>Before you can reason about a dangling pointer, it helps to know what's sitting in memory. A running process's address space is divided into a handful of regions, and where a value lives determines its whole lifetime story.</p>
 				</div>
 
 <div class="arch reveal">
@@ -124,7 +125,7 @@
 
 <div class="prose reveal">
 					<p>The returned address isn't null and the compiler won't stop you. It's a pointer to a stack slot that now belongs to whatever gets called next. Reading through it is undefined behavior, not &quot;probably still zero.&quot; If you need the value to outlive the function, it has to live on the heap (<code>malloc</code>) or be passed in by the caller.</p>
-					<h3>What &quot;undefined behavior&quot; actually means</h3>
+					<h3>What &quot;undefined behavior&quot; means</h3>
 					<p>It's tempting to read &quot;undefined behavior&quot; as &quot;the result is unspecified, but reasonable.&quot; That's not what the standard says, and it's not how compilers treat it. The standard says a program that triggers UB has no meaning at all. Compilers use that as license to assume it never happens, then optimize as if the code that would trigger it is unreachable.</p>
 					<p>Signed integer overflow is the clearest example. It's UB, full stop, on every C compiler that matters. So a compiler is free to assume a signed loop counter never overflows. If your loop's termination depends on it overflowing, the compiler can delete the check:</p>
 				</div>
@@ -162,7 +163,7 @@
 <span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> bits </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> *</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">p;</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"> // strict-aliasing violation: reading a float object through an int*</span></span></code></pre></div>
 
 <div class="prose reveal">
-					<p>The fix that's actually portable is <code>memcpy</code> into a same-sized destination. It gets optimized down to a plain load/store by any competent compiler, with none of the UB:</p>
+					<p>The fix that's portable is <code>memcpy</code> into a same-sized destination. It gets optimized down to a plain load/store by any competent compiler, with none of the UB:</p>
 				</div>
 
 <div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">float</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> f </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 3.14</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">f</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>

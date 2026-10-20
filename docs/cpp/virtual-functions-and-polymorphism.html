@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -167,7 +168,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>Inheritance alone gives you code reuse. Virtual functions give you runtime polymorphism: the ability to call a function through a base class pointer or reference and have the correct derived class version run, without the caller needing to know which derived type it actually has.</p>
+					<p>Inheritance alone gives you code reuse. Virtual functions give you runtime polymorphism: the ability to call a function through a base class pointer or reference and have the correct derived class version run, without the caller needing to know which derived type it has.</p>
 					<h3>The problem virtual functions solve</h3>
 				</div>
 
@@ -220,7 +221,7 @@ int main() {
 </pre></noscript></div>
 
 <div class="prose reveal">
-					<h3>How this actually works: vtables, conceptually</h3>
+					<h3>How this works: vtables, conceptually</h3>
 					<p>You don't need to know assembly to use virtual functions, but the mental model helps: a class with any virtual functions gets a hidden pointer to a vtable, a per-class table of function pointers for its virtual functions. Calling a virtual function through a pointer/reference means: look up the object's actual vtable (via that hidden pointer), find the entry for this function, call whatever it points to. That indirection is the entire mechanism, and it's also why virtual calls have a small but real runtime cost compared to a plain non-virtual call.</p>
 					<h3>Pure virtual functions and abstract classes</h3>
 					<p>A pure virtual function (= 0) has no implementation in the base class and forces every concrete derived class to provide one. A class with at least one pure virtual function is abstract: you cannot instantiate it directly, only through a derived class that implements all pure virtuals.</p>
@@ -251,7 +252,7 @@ int main() {
 
 <div class="prose reveal">
 					<h3>override and final</h3>
-					<p>Always write override on functions you intend to override. Without it, a typo (wrong parameter type, missing const, wrong name) silently creates a brand new, unrelated function instead of overriding anything, and the compiler won't warn you. With override, the same typo is a compile error, because the compiler can now check there's actually a matching virtual function in the base to override.</p>
+					<p>Always write override on functions you intend to override. Without it, a typo (wrong parameter type, missing const, wrong name) silently creates a brand new, unrelated function instead of overriding anything, and the compiler won't warn you. With override, the same typo is a compile error, because the compiler can now check there's a matching virtual function in the base to override.</p>
 				</div>
 
 <div class="godbolt-embed reveal"><div class="godbolt-embed-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">c++ · live, editable, runnable</span><a class="godbolt-embed-open" href="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Base+%7B%0Apublic%3A%0A++++virtual+void+speak()+const+%7B+std%3A%3Acout+%3C%3C+%22Base%5Cn%22%3B+%7D%0A%7D%3B%0A%0Aclass+Derived+%3A+public+Base+%7B%0Apublic%3A%0A++++//+void+speak()+%7B+std%3A%3Acout+%3C%3C+%22Derived%5Cn%22%3B+%7D+//+BUG%3A+missing+const%2C+this+HIDES%2C+doesn%27t+override%0A++++void+speak()+const+override+%7B+std%3A%3Acout+%3C%3C+%22Derived%5Cn%22%3B+%7D+//+override+catches+the+mistake+if+uncommented+above%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Derived+d%3B%0A++++Base%26+b+%3D+d%3B%0A++++b.speak()%3B%0A%7D%0A',wrap:'1'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank" rel="noopener">Open in Compiler Explorer ↗</a><button type="button" class="godbolt-embed-fullscreen" aria-label="Toggle fullscreen">⛶</button></div><iframe class="godbolt-embed-frame" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ciostream%3E%0A%0Aclass+Base+%7B%0Apublic%3A%0A++++virtual+void+speak()+const+%7B+std%3A%3Acout+%3C%3C+%22Base%5Cn%22%3B+%7D%0A%7D%3B%0A%0Aclass+Derived+%3A+public+Base+%7B%0Apublic%3A%0A++++//+void+speak()+%7B+std%3A%3Acout+%3C%3C+%22Derived%5Cn%22%3B+%7D+//+BUG%3A+missing+const%2C+this+HIDES%2C+doesn%27t+override%0A++++void+speak()+const+override+%7B+std%3A%3Acout+%3C%3C+%22Derived%5Cn%22%3B+%7D+//+override+catches+the+mistake+if+uncommented+above%0A%7D%3B%0A%0Aint+main()+%7B%0A++++Derived+d%3B%0A++++Base%26+b+%3D+d%3B%0A++++b.speak()%3B%0A%7D%0A',wrap:'1'),l:'5',n:'0',o:'C%2B%2B+source',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g122,compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'-std%3Dc%2B%2B20+-O0+-Wall+-Wextra',source:1,stdinPanelShown:'1',tree:'1',wrap:'1'),l:'5',n:'0',o:'Executor+(C%2B%2B)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" loading="lazy" title="Editable C++ example on Compiler Explorer"></iframe><noscript><pre>#include &lt;iostream&gt;
@@ -341,7 +342,7 @@ int main() {
 </pre></noscript></div>
 
 <div class="prose reveal">
-					<p>The fix is always the same: take polymorphic objects by reference or pointer, never by value, if you want virtual dispatch to actually work.</p>
+					<p>The fix is always the same: take polymorphic objects by reference or pointer, never by value, if you want virtual dispatch to work.</p>
 				</div>
 
 				<details class="cmd-explain reveal">

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>StockPulse | Inventory app (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#10b981;--acc-ink:#04261b;--acc-soft:rgba(16,185,129,.14);--side:#0b1512}</style>
+</head>
+<body>
+<div class="shell">
+	<aside class="side">
+		<a class="brand" href="index.html"><i>◉</i><span>StockPulse<small id="biz">Aanya's General Store</small></span></a>
+		<div class="grp">Overview</div><a class="nv" data-route="dashboard" href="#dashboard">📊 Dashboard</a>
+		<div class="grp">Inventory</div><a class="nv" data-route="items" href="#items">📦 Items <span class="n" id="nlow">0</span></a><a class="nv" data-route="movements" href="#movements">🔁 Movements</a><a class="nv" data-route="stocktake" href="#stocktake">📝 Stock take</a>
+		<div class="grp">Selling</div><a class="nv" data-route="sell" href="#sell">🧾 Quick sale</a>
+		<div class="grp">Buying</div><a class="nv" data-route="orders" href="#orders">🚚 Purchase orders <span class="n" id="npo">0</span></a><a class="nv" data-route="suppliers" href="#suppliers">🏭 Suppliers</a>
+		<div class="grp">Insight</div><a class="nv" data-route="reports" href="#reports">📈 Reports</a><a class="nv" data-route="settings" href="#settings">⚙ Settings</a>
+		<div class="sp"></div><a class="nv" href="index.html">← About StockPulse</a>
+	</aside>
+	<div class="main">
+		<header class="top"><button class="burger" id="burger" aria-label="Menu">☰</button><h1 id="title">Dashboard</h1><span class="sp"></span><input class="in" id="gs" placeholder="Scan barcode / search item ⏎" aria-label="Quick find"><button class="btn sm" id="theme" aria-label="Toggle theme">◐</button></header>
+		<div class="view" id="view"></div>
+	</div>
+</div>
+<script src="../lib/ui.js"></script>
+<script src="js/app.js"></script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -149,7 +150,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>Go's official concurrency slogan is &quot;don't communicate by sharing memory, share memory by communicating&quot;, meaning: prefer passing data through channels over multiple goroutines poking at the same shared variable. But shared mutable state is sometimes genuinely the right tool, and the `sync` package is what you reach for when it is.</p>
+					<p>Go's official concurrency slogan is &quot;don't communicate by sharing memory, share memory by communicating&quot;, meaning: prefer passing data through channels over multiple goroutines poking at the same shared variable. But shared mutable state is sometimes the right tool, and the `sync` package is what you reach for when it is.</p>
 					<h3>sync.Mutex</h3>
 					<p>A mutex (mutual exclusion lock) guarantees only one goroutine at a time can be inside the section of code between `Lock()` and `Unlock()`. It's the direct, low-level way to protect shared state, the exact thing channels exist to often let you avoid needing.</p>
 				</div>
@@ -298,8 +299,8 @@ func main() {
 }</pre></noscript></div>
 
 <div class="prose reveal">
-					<h3>What a data race actually is</h3>
-					<p>A data race is two or more goroutines accessing the same memory at the same time, with at least one of them writing, and no synchronization between them. The outcome is officially undefined by the language spec, not just &quot;probably fine&quot;, genuinely undefined: the compiler is permitted to do things you wouldn't expect, because Go's memory model assumes races don't happen and optimizes accordingly.</p>
+					<h3>What a data race is</h3>
+					<p>A data race is two or more goroutines accessing the same memory at the same time, with at least one of them writing, and no synchronization between them. The outcome is officially undefined by the language spec, not just &quot;probably fine&quot; undefined: the compiler is permitted to do things you wouldn't expect, because Go's memory model assumes races don't happen and optimizes accordingly.</p>
 				</div>
 
 <div class="onecompiler-embed reveal" data-oc-source="package main
@@ -349,11 +350,11 @@ func main() {
 <div class="prose reveal">
 					<p>Run this enough times and you'll often see a number less than 1000, because `counter++` isn't atomic, it's a read, an increment, and a write, and two goroutines can interleave those three steps and stomp on each other's update. The specific wrong number you get isn't even deterministic across runs, which is exactly what makes data races so miserable to debug from symptoms alone.</p>
 					<h3>The race detector</h3>
-					<p>Go ships a built-in race detector: run any program or test with `-race` (`go run -race main.go`, `go test -race ./...`) and the runtime instruments every memory access, flagging races as they actually happen during that specific execution, with a stack trace pointing at both conflicting accesses.</p>
+					<p>Go ships a built-in race detector: run any program or test with `-race` (`go run -race main.go`, `go test -race./...`) and the runtime instruments every memory access, flagging races as they happen during that specific execution, with a stack trace pointing at both conflicting accesses.</p>
 				</div>
 
 				<div class="callout reveal">
-					<p>The race detector only catches races that actually occur during that run, it can't prove their absence, only their presence when they happen to trigger. Run your test suite with -race routinely, not just once, especially for anything touching goroutines, and treat any race it reports as a real bug to fix immediately, never as a false positive to silence.</p>
+					<p>The race detector only catches races that occur during that run, it can't prove their absence, only their presence when they happen to trigger. Run your test suite with -race routinely, not just once, especially for anything touching goroutines, and treat any race it reports as a real bug to fix immediately, never as a false positive to silence.</p>
 				</div>
 
 <div class="prose reveal">

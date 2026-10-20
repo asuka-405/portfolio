@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pricing &amp; EMI calculator | Lumen Dental</title>
+<meta name="description" content="Build a treatment estimate, see insurance cover and spread the cost with 0% EMI." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Pricing &amp; payment</p><h1>Know the cost before you sit down.</h1><p>Pick the treatments you're considering. We'll show a realistic range, what insurance may cover and the EMI options.</p></div></section>
+<section class="sec" style="padding-top:34px"><div class="wrap checkout">
+	<div>
+		<div class="panel"><h3>1 · Treatments</h3><div class="opts" id="svcs"></div></div>
+		<div class="panel"><h3>2 · Insurance &amp; payment</h3><div class="row2"><label class="f">Insurer<select class="in" id="ins"><option value="0">Paying myself</option></select></label><label class="f">Cover on dental: <b id="cv"></b><input type="range" id="cover" min="0" max="80" step="5" value="0" style="accent-color:var(--teal)"></label></div></div>
+	</div>
+	<aside class="sticky"><div class="panel mint"><p class="eyebrow">Estimated cost</p><div style="font-size:2.1rem;font-weight:800;margin:4px 0" id="tot">₹0</div><p class="msg" id="rng"></p>
+	<div class="sum" style="margin:14px 0" id="brk"></div>
+	<h3 style="margin-top:6px">EMI options</h3><div id="emi" class="msg"></div><a class="btn block" style="margin-top:16px" id="go" href="book.html">Book a consultation</a></div></aside>
+</div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+LD.layout("financing.html");
+const { $, esc, inr, D } = LD, sel = new Set((new URLSearchParams(location.search).get("s") || "").split(",").filter((x) => LD.svc(x)));
+D.insurers.forEach((i) => $("#ins").add(new Option(i, 60)));
+function draw() {
+	$("#svcs").innerHTML = D.services.map((s) => `<button class="opt ${sel.has(s.id) ? "on" : ""}" data-s="${s.id}"><b>${esc(s.name)}</b><small>${inr(s.from)} – ${inr(s.to)}</small></button>`).join("");
+	const l = [...sel].map(LD.svc), lo = l.reduce((a, s) => a + s.from, 0), hi = l.reduce((a, s) => a + s.to, 0), mid = (lo + hi) / 2, cover = +$("#cover").value;
+	$("#cv").textContent = cover + "%";
+	const claim = Math.round(mid * cover / 100), pay = Math.round(mid - claim);
+	$("#tot").textContent = inr(pay); $("#rng").textContent = l.length ? `Range ${inr(lo)} – ${inr(hi)} before insurance` : "Select a treatment to begin";
+	$("#brk").innerHTML = `<div><span>Mid-range estimate</span><b>${inr(mid)}</b></div><div><span>Insurance cover (${cover}%)</span><b>−${inr(claim)}</b></div><div><span>You pay</span><b>${inr(pay)}</b></div>`;
+	$("#emi").innerHTML = pay >= 10000 ? [3, 6, 12].map((m) => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line)"><span>${m} months · 0% interest</span><b style="color:var(--ink)">${inr(pay / m)} / month</b></div>`).join("") : "0% EMI is available on payable amounts above ₹10,000.";
+	$("#go").href = "book.html" + (l[0] ? "?s=" + l[0].id : "");
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("[data-s]"); if (b) { sel.has(b.dataset.s) ? sel.delete(b.dataset.s) : sel.add(b.dataset.s); draw(); } });
+$("#ins").onchange = (e) => { $("#cover").value = e.target.value; draw(); }; $("#cover").oninput = draw; draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

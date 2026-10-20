@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Class timetable | FitForge</title>
+<meta name="description" content="Book strength, conditioning, boxing, cycling and mobility classes at FitForge. Live availability and waitlists." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><img src="img/hiit.jpg" alt="" /><div class="wrap"><p class="eyebrow">Timetable</p><h1>Book your next session.</h1><p id="mstate">Live availability for the next two weeks.</p></div></section>
+<section class="sec" style="padding-top:30px"><div class="wrap">
+	<div class="cal-nav" id="days"></div>
+	<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:16px 0 20px"><div class="tabs" id="types"></div><select class="in" id="coach" style="max-width:220px;margin-left:auto"><option value="">All coaches</option></select></div>
+	<div id="list"></div>
+	<div class="panel" style="margin-top:26px" id="mine"></div>
+</div></section>
+<div class="modal" id="modal"></div>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+FF.layout("classes.html");
+const { $, esc, img, D, DAYN } = FF;
+const params = new URLSearchParams(location.search);
+let day = 0, type = params.get("type") || "All", coach = params.get("coach") || "";
+const days = [...Array(14)].map((_, i) => FF.addDays(new Date(), i));
+$("#coach").innerHTML += Object.entries(D.coaches).map(([k, c]) => `<option value="${k}">${c.name}</option>`).join("");
+const m = FF.member.get();
+if (m) $("#mstate").textContent = `Signed in as ${m.name} · ${FF.planName(m.plan)}, you can book ${FF.windowDays()} days ahead.`;
+function draw() {
+	$("#days").innerHTML = days.map((d, i) => `<button class="day ${i === day ? "on" : ""}" data-i="${i}"><small>${i === 0 ? "Today" : DAYN[d.getDay()].slice(0, 3)}</small><b>${d.getDate()}</b><small>${d.toLocaleDateString("en-IN", { month: "short" })}</small></button>`).join("");
+	$("#types").innerHTML = ["All", "Strength", "Conditioning", "Boxing", "Cycling", "Mobility"].map((t) => `<button class="tab ${t === type ? "on" : ""}" data-t="${t}">${t}</button>`).join("");
+	const list = FF.sessionsOn(days[day]).filter((s) => (type === "All" || s.p.type === type) && (!coach || s.p.coach === coach));
+	$("#list").innerHTML = list.map((s) => {
+		const c = D.coaches[s.p.coach], label = s.cancelled ? "Cancelled" : s.past ? "Finished" : s.booked ? "Booked ✓" : s.wait ? "Waitlisted" : s.full ? "Join waitlist" : "Reserve";
+		return `<div class="cls ${s.past ? "past" : ""} ${s.cancelled ? "cancel" : ""}"><time>${s.time}</time><div><div class="nm" data-d="${s.id}">${esc(s.p.name)}</div><small>${esc(c.name)} · ${s.p.dur} min · ${s.p.lvl} · <span class="chip">${s.p.type}</span></small></div><div class="spots ${s.left <= 3 && !s.full ? "low" : ""}">${s.full ? "Class full" : s.left + " of " + s.p.cap + " left"}</div><button class="book ${s.booked ? "on" : s.wait || s.full ? "wait" : ""}" data-b="${s.id}" ${s.past || s.cancelled ? "disabled" : ""}>${label}</button></div>`;
+	}).join("") || '<p class="empty">No classes match these filters on this day.</p>';
+	const up = FF.bookings.get().filter((b) => b.id.slice(0, 10) >= FF.iso(new Date())).sort((a, b) => a.id < b.id ? -1 : 1);
+	$("#mine").innerHTML = `<h3>My upcoming bookings</h3>` + (up.length ? up.map((b) => { const [d, t, p] = b.id.split("|"), pr = FF.prog(p); return `<div class="cls" style="grid-template-columns:1fr auto auto"><div><div class="nm">${esc(pr.name)}</div><small>${FF.pd(d).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })} · ${t} · ${b.st === "wait" ? "Waitlist" : "Confirmed"}</small></div><button class="btn ghost sm" data-ics="${b.id}">+ Calendar</button><button class="btn ghost sm" data-c="${b.id}">Cancel</button></div>`; }).join("") : '<p class="msg">You have nothing booked yet. Pick a class above.</p>');
+}
+function find(id) { return FF.sessionsOn(id.slice(0, 10)).find((s) => s.id === id); }
+function modal(id) {
+	const s = find(id), c = D.coaches[s.p.coach];
+	$("#modal").innerHTML = `<div class="mbox"><button class="mx" data-x aria-label="Close">✕</button><img src="${img(s.p.img)}" alt=""><div class="mb"><div><span class="chip lime">${s.p.type}</span><h3 style="font-size:2.2rem;margin-top:8px">${esc(s.p.name)}</h3><p class="msg">${FF.pd(s.date).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })} · ${s.time} · ${s.p.dur} min</p></div><p>${esc(s.p.desc)}</p>
+	<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="msg"><div><b style="color:var(--txt)">Coach</b><br>${esc(c.name)}</div><div><b style="color:var(--txt)">Level</b><br>${s.p.lvl}</div><div><b style="color:var(--txt)">Bring</b><br>${esc(s.p.kit)}</div><div><b style="color:var(--txt)">Spots</b><br>${s.full ? "Full, waitlist open" : s.left + " of " + s.p.cap}</div></div>
+	<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-b="${s.id}" ${s.past || s.cancelled ? "disabled" : ""}>${s.booked ? "Booked ✓" : s.full ? "Join waitlist" : "Reserve my spot"}</button><button class="btn ghost" data-ics="${s.id}">Add to calendar</button></div></div></div>`;
+	$("#modal").classList.add("on");
+}
+document.addEventListener("click", (e) => {
+	const t = e.target.closest("button,[data-d]"); if (!t) { if (e.target.id === "modal") $("#modal").classList.remove("on"); return; }
+	if (t.dataset.i) { day = +t.dataset.i; draw(); }
+	else if (t.dataset.t) { type = t.dataset.t; draw(); }
+	else if (t.dataset.d) modal(t.dataset.d);
+	else if ("x" in t.dataset) $("#modal").classList.remove("on");
+	else if (t.dataset.b) {
+		const s = find(t.dataset.b);
+		if (s.booked || s.wait) { FF.cancel(s.id); FF.toast("Booking cancelled"); }
+		else { const r = FF.book(s); FF.toast(r.msg); if (r.need) { setTimeout(() => (location.href = "join.html?plan=trial"), 900); return; } }
+		draw(); if ($("#modal").classList.contains("on")) modal(s.id);
+	}
+	else if (t.dataset.c) { FF.cancel(t.dataset.c); FF.toast("Booking cancelled"); draw(); }
+	else if (t.dataset.ics) FF.ics(find(t.dataset.ics));
+});
+$("#coach").value = coach; $("#coach").onchange = (e) => { coach = e.target.value; draw(); };
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#modal").classList.remove("on"); });
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

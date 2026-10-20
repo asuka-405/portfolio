@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pottery workshops in Jaipur | Kiln &amp; Clay</title>
+<meta name="description" content="Book a pottery workshop at our Jaipur studio: wheel throwing, hand-building, glaze evenings and date nights." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="band"><img src="img/wheel.jpg" alt="" /><div class="wrap"><p class="eyebrow">Workshops</p><h1>Get your hands dirty.</h1><p>Small classes, patient teachers and a real firing: we glaze and fire everything you make, and send it to you in two weeks.</p></div></section>
+<section class="sec"><div class="wrap" id="list"></div></section>
+<section class="sec alt"><div class="wrap" style="max-width:820px"><div class="sec-h"><div><p class="eyebrow">Good to know</p><h2>Before you book</h2></div></div>
+	<details><summary>Do I need experience?</summary><p>None at all. Our teachers guide you from your first lump of clay.</p></details><details><summary>What should I wear?</summary><p>Clothes you don't mind getting muddy and short nails. We provide aprons and towels.</p></details><details><summary>When do I get my pieces?</summary><p>We trim, glaze and fire them for you. Pieces are ready for pickup, or shipped, in about two weeks.</p></details><details><summary>Private groups?</summary><p>Yes, birthdays, team days and hen parties for 8–24 people. <a href="wholesale.html#enquire" style="color:var(--clay)">Enquire here.</a></p></details></div></section>
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("workshops.html");
+const { $, esc, inr, img, D } = KC; let cur = null;
+const taken = (s) => { const b = KC.wbook.get().filter((x) => x.sid === s.id); return b.reduce((a, x) => a + x.guests, 0); };
+function render() {
+	$("#list").innerHTML = D.workshops.map((w) => { const ss = KC.sessions(w, 4).slice(0, 6); return `<article class="ws" id="${w.id}"><img src="${img(w.img)}" alt="${esc(w.name)}" loading="lazy"><div class="bd"><div><span class="chip">${w.dur}</span> <span class="chip">Max ${w.cap}</span></div><h2 style="font-size:1.9rem">${esc(w.name)}</h2><p class="msg">${esc(w.blurb)}</p><div style="font:500 1.4rem Palatino,Georgia,serif">${inr(w.price)} <small class="msg" style="font-family:system-ui;font-size:.8rem">${w.pair ? "per couple" : "per person"}</small></div>
+	<div class="dates">${ss.map((s) => { const left = w.cap - s.taken0 - taken(s), d = KC.pd(s.date); return `<button class="date" data-s="${s.id}" ${left <= 0 ? "disabled" : ""}><small>${d.toLocaleDateString("en-IN", { weekday: "short" })}</small><b>${d.getDate()} ${d.toLocaleDateString("en-IN", { month: "short" })}</b><small>${left <= 0 ? "Full" : left + " left"}</small></button>`; }).join("")}</div></div></article>`; }).join("");
+}
+function modal(sid) {
+	const [wid, date] = sid.split("|"), w = D.workshops.find((x) => x.id === wid), s = KC.sessions(w, 6).find((x) => x.id === sid), mine = new Set(), reserved = new Set([...Array(w.cap)].map((_, i) => i).filter((i) => (KC.hash(sid + i) % w.cap) < s.taken0 && false)); // seeded taken seats
+	const takenSeats = new Set(); for (let i = 0; takenSeats.size < s.taken0; i++) takenSeats.add(KC.hash(sid + "s" + i) % w.cap); KC.wbook.get().filter((b) => b.sid === sid).forEach((b) => b.seats.forEach((x) => takenSeats.add(x)));
+	cur = { w, s, mine, takenSeats };
+	const draw = () => { $("#mbox").innerHTML = `<h3 style="font-size:1.6rem">${esc(w.name)}</h3><p class="msg">${KC.pd(date).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })} · ${w.time} · ${w.dur}</p><label class="f" style="margin-top:14px">Pick your ${w.pair ? "table" : "wheel"} (${mine.size} chosen)</label><div class="seats" style="grid-template-columns:repeat(${Math.min(w.cap, 6)},1fr)">${[...Array(w.cap)].map((_, i) => `<button type="button" class="seat ${takenSeats.has(i) ? "taken" : mine.has(i) ? "mine" : ""}" data-seat="${i}" ${takenSeats.has(i) ? "disabled" : ""}>${i + 1}</button>`).join("")}</div>
+	<form id="wf" style="display:grid;gap:12px"><div class="row2"><input class="in" name="name" placeholder="Your name" required><input class="in" name="phone" placeholder="Mobile" required pattern="[0-9]{10}"></div><input class="in" type="email" name="email" placeholder="Email" required><div style="display:flex;justify-content:space-between;align-items:center"><b>Total ${inr(w.price * (w.pair ? mine.size : mine.size))}</b><div style="display:flex;gap:8px"><button type="button" class="btn ghost" data-mx>Cancel</button><button class="btn clay" ${mine.size ? "" : "disabled"}>Reserve</button></div></div></form>`;
+		$("#wf").onsubmit = (e) => { e.preventDefault(); const f = e.target, b = KC.wbook.add({ sid, wid, name: f.name.value, phone: f.phone.value, email: f.email.value.toLowerCase(), date, time: w.time, workshop: w.name, guests: mine.size, seats: [...mine], total: w.price * mine.size }); KC.store.set("who", b.email); $("#mbox").innerHTML = `<h3 style="font-size:1.6rem">You're booked! </h3><p class="msg" style="margin:10px 0 16px">${esc(w.name)} on ${KC.pd(date).toLocaleDateString("en-IN", { day: "numeric", month: "long" })} at ${w.time}. Reference <b>${b.id}</b>. A confirmation is on its way to ${esc(b.email)}.</p><div style="display:flex;gap:8px"><a class="btn" href="account.html">View in my account</a><button class="btn ghost" data-mx>Close</button></div>`; render(); }; };
+	draw(); cur.draw = draw; $("#modal").classList.add("on");
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) { if (e.target.id === "modal") $("#modal").classList.remove("on"); return; }
+	if (b.dataset.s) modal(b.dataset.s); else if (b.dataset.seat !== undefined) { const i = +b.dataset.seat; cur.mine.has(i) ? cur.mine.delete(i) : cur.mine.add(i); cur.draw(); } else if ("mx" in b.dataset) $("#modal").classList.remove("on"); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#modal").classList.remove("on"); });
+render(); if (location.hash) { const t = document.getElementById(location.hash.slice(1)); t && t.scrollIntoView({ block: "center" }); }
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

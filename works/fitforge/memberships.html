@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Membership &amp; pricing | FitForge</title>
+<meta name="description" content="FitForge membership plans: Off-peak, Unlimited and Coached. No joining fee. Annual saves 20%." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><img src="img/dumbbells.jpg" alt="" /><div class="wrap"><p class="eyebrow">Membership</p><h1>Pick a plan. Skip the fine print.</h1><p>No joining fee, no lock-in. Pause for up to three months a year, cancel in two taps.</p></div></section>
+<section class="sec"><div class="wrap">
+	<div class="toggle" id="bill"><button data-b="monthly" class="on">Monthly</button><button data-b="annual">Annual · save 20%</button></div>
+	<div class="plans" id="plans"></div>
+	<p class="msg" style="margin-top:16px">Prices include GST. Day pass ₹399 · 10-class pack ₹3,499 · both available at the front desk.</p>
+</div></section>
+<section class="sec alt"><div class="wrap">
+	<div class="sec-h"><div><p class="eyebrow">Compare</p><h2>What's included</h2></div></div>
+	<div style="overflow-x:auto"><table class="t" id="cmp"></table></div>
+</div></section>
+<section class="sec"><div class="wrap split">
+	<div><p class="eyebrow">Add-ons</p><h2 style="font-size:clamp(2.2rem,5vw,3.4rem);margin:10px 0 16px">Level up any plan.</h2>
+	<div style="display:grid;gap:12px"><div class="panel" style="margin:0"><b>Personal training</b>, ₹1,800 per session, ₹15,000 for a pack of 10.</div><div class="panel" style="margin:0"><b>Nutrition consult</b>, ₹2,500 for a 60-minute plan and a 4-week check-in.</div><div class="panel" style="margin:0"><b>Pool access</b>, ₹600 / month on Off-peak, included free in Coached.</div></div></div>
+	<img src="img/pt2.jpg" alt="Coach guiding a lift" loading="lazy" />
+</div></section>
+<section class="sec alt"><div class="wrap" style="max-width:860px"><div class="sec-h"><div><p class="eyebrow">FAQ</p><h2>Membership questions</h2></div></div><div id="faq"></div></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+FF.layout("memberships.html");
+const { $, esc, inr, D } = FF; let bill = "monthly";
+function draw() {
+	$("#plans").innerHTML = D.plans.map((p, i) => { const pr = bill === "annual" ? Math.round(p.price * 0.8) : p.price; return `<div class="plan ${i === 1 ? "hot" : ""}">${p.tag ? `<span class="tg">${p.tag}</span>` : ""}<h3 style="font-size:1.8rem">${p.name}</h3><div class="p">${inr(pr)} <small>/ month${bill === "annual" ? " · billed yearly (" + inr(pr * 12) + ")" : ""}</small></div><ul>${p.feats.map((f) => `<li>${f}</li>`).join("")}</ul><a class="btn ${i === 1 ? "" : "ghost"}" href="join.html?plan=${p.id}&billing=${bill}">Choose ${p.name}</a></div>`; }).join("");
+}
+$("#bill").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; bill = b.dataset.b; document.querySelectorAll("#bill button").forEach((x) => x.classList.toggle("on", x === b)); draw(); };
+$("#cmp").innerHTML = `<thead><tr><th></th>${D.plans.map((p) => "<th>" + p.name + "</th>").join("")}</tr></thead><tbody>${D.compare.map((r) => "<tr><td>" + r[0] + "</td>" + r.slice(1).map((c) => "<td>" + c + "</td>").join("") + "</tr>").join("")}</tbody>`;
+$("#faq").innerHTML = D.faqs.map((f) => `<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join("");
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

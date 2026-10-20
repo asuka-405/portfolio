@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Staff dashboard | Brew &amp; Bean</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div class="adm">
+	<aside class="adm-side">
+		<a class="logo" href="index.html">Brew<span>&amp;</span>Bean</a>
+		<button data-v="orders" class="on">📋 Live orders</button><button data-v="sales">📈 Sales</button><button data-v="menu">Menu &amp; stock</button><button data-v="catering">Catering</button><button data-v="settings">⚙ Settings</button>
+		<div class="sp"></div><button onclick="location.href='index.html'">← Back to site</button>
+	</aside>
+	<main class="adm-main" id="main"></main>
+</div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+const { $, $$, esc, inr, img, D } = BB; let view = "orders", store = "all";
+const today0 = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); };
+const ago = (t) => { const m = Math.round((Date.now() - t) / 60000); return m < 1 ? "just now" : m < 60 ? m + " min ago" : Math.round(m / 60) + " h ago"; };
+function kpis(list) { const rev = list.reduce((s, o) => s + o.total, 0); return `<div class="kpis"><div class="kpi"><span>Orders today</span><b>${list.length}</b></div><div class="kpi"><span>Revenue today</span><b>${inr(rev)}</b></div><div class="kpi"><span>Avg order</span><b>${list.length ? inr(rev / list.length) : "-"}</b></div><div class="kpi"><span>Open now</span><b>${BB.orders.all().filter((o) => o.status !== "completed").length}</b></div></div>`; }
+const views = {
+	orders() {
+		const all = BB.orders.all().filter((o) => store === "all" || o.store === store), todays = all.filter((o) => o.ts >= today0());
+		const cols = [["received", "New"], ["preparing", "Preparing"], ["ready", "Ready"], ["completed", "Done today"]];
+		return `<h1>Live orders</h1>${kpis(todays)}<div class="tabs" style="margin-bottom:16px"><button class="tab ${store === "all" ? "on" : ""}" data-s="all">All cafés</button>${D.stores.map((s) => `<button class="tab ${store === s.id ? "on" : ""}" data-s="${s.id}">${s.name.split(",")[0]}</button>`).join("")}</div>
+		<div class="kan">${cols.map(([k, n]) => { const l = all.filter((o) => (k === "ready" ? ["ready", "out"].includes(o.status) : o.status === k) && (k !== "completed" || o.ts >= today0())).sort((a, b) => b.ts - a.ts).slice(0, 12); return `<div class="col"><h4><span>${n}</span><span>${l.length}</span></h4>${l.map((o) => `<div class="ord"><b>${o.id} · ${esc(o.name)}</b><span class="msg">${o.mode} · ${ago(o.ts)} · ${inr(o.total)}</span><ul>${o.items.map((i) => `<li>${i.qty} × ${esc(i.name)}${i.size ? " (" + esc(i.size) + ")" : ""}</li>`).join("")}</ul>${k !== "completed" ? `<div class="acts"><button class="btn dark sm" data-adv="${o.id}">${{ received: "Start", preparing: "Mark ready", ready: "Complete" }[o.status] || "Complete"}</button></div>` : ""}</div>`).join("") || '<p class="msg">Nothing here.</p>'}</div>`; }).join("")}</div>`;
+	},
+	sales() {
+		const all = BB.orders.all().filter((o) => store === "all" || o.store === store), days = [...Array(7)].map((_, i) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - 6 + i); return d.getTime(); });
+		const byDay = days.map((t) => all.filter((o) => o.ts >= t && o.ts < t + 864e5).reduce((s, o) => s + o.total, 0)), mx = Math.max(...byDay, 1);
+		const items = {}; all.forEach((o) => o.items.forEach((i) => { items[i.name] = (items[i.name] || 0) + i.qty; }));
+		const top = Object.entries(items).sort((a, b) => b[1] - a[1]).slice(0, 6), tm = top[0] ? top[0][1] : 1;
+		const modes = { pickup: 0, dinein: 0, delivery: 0 }; all.forEach((o) => { modes[o.mode]++; });
+		return `<h1>Sales</h1><div class="tabs" style="margin-bottom:16px"><button class="tab ${store === "all" ? "on" : ""}" data-s="all">All cafés</button>${D.stores.map((s) => `<button class="tab ${store === s.id ? "on" : ""}" data-s="${s.id}">${s.name.split(",")[0]}</button>`).join("")}</div>
+		<div class="kpis"><div class="kpi"><span>7-day revenue</span><b>${inr(byDay.reduce((a, b) => a + b, 0))}</b></div><div class="kpi"><span>Orders</span><b>${all.length}</b></div><div class="kpi"><span>Avg order</span><b>${all.length ? inr(byDay.reduce((a, b) => a + b, 0) / all.length) : "-"}</b></div><div class="kpi"><span>Delivery share</span><b>${all.length ? Math.round(modes.delivery / all.length * 100) : 0}%</b></div></div>
+		<div class="panel"><h3>Revenue, last 7 days</h3><div class="bars">${byDay.map((v, i) => `<div><span>${inr(v)}</span><i style="height:${v / mx * 85}%"></i>${new Date(days[i]).toLocaleDateString("en-IN", { weekday: "short" })}</div>`).join("")}</div></div>
+		<div class="panel"><h3>Best sellers</h3>${top.map(([n, c]) => `<div style="display:grid;grid-template-columns:200px 1fr 40px;gap:12px;align-items:center;margin:8px 0;font-size:.9rem"><span>${esc(n)}</span><div style="height:10px;background:var(--line);border-radius:9px;overflow:hidden"><i style="display:block;height:100%;width:${c / tm * 100}%;background:var(--caramel)"></i></div><b>${c}</b></div>`).join("")}</div>`;
+	},
+	menu() {
+		return `<h1>Menu &amp; stock</h1><p class="msg" style="margin-bottom:14px">Toggle an item off to mark it "sold out" instantly on the website. Edit prices inline.</p><table class="t"><thead><tr><th></th><th>Item</th><th>Category</th><th>Price (₹)</th><th>Available</th></tr></thead><tbody>${D.items.map((i) => `<tr><td><img src="${img(i.img)}" alt="" style="width:44px;height:44px;border-radius:8px;object-fit:cover"></td><td><b>${esc(i.name)}</b></td><td>${i.cat}</td><td><input class="in" type="number" min="0" value="${BB.priceOf(i)}" data-p="${i.id}" style="width:90px;padding:6px 8px"></td><td><label class="sw"><input type="checkbox" data-a="${i.id}" ${BB.isAvail(i.id) ? "checked" : ""}><span></span></label></td></tr>`).join("")}</tbody></table>`;
+	},
+	catering() {
+		const l = BB.store.get("catering", []).slice().reverse();
+		return `<h1>Catering enquiries</h1>${l.length ? `<table class="t"><thead><tr><th>Ref</th><th>Contact</th><th>Package</th><th>Guests</th><th>Date</th><th>Estimate</th><th>Status</th></tr></thead><tbody>${l.map((q) => `<tr><td>${q.id}</td><td><b>${esc(q.name)}</b><br><span class="msg">${esc(q.org || "")}</span></td><td>${q.pkg}</td><td>${q.guests}</td><td>${q.date}</td><td>${inr(q.est)}</td><td><select class="in" data-q="${q.id}" style="padding:6px 8px">${["new", "quoted", "confirmed", "declined"].map((s) => `<option ${q.status === s ? "selected" : ""}>${s}</option>`).join("")}</select></td></tr>`).join("")}</tbody></table>` : '<p class="msg">No enquiries yet.</p>'}`;
+	},
+	settings() {
+		return `<h1>Settings</h1><div class="panel"><h3>Demo behaviour</h3><label class="f" style="display:flex;gap:12px;align-items:center;font-weight:600"><span class="sw"><input type="checkbox" id="auto" ${BB.store.get("auto", true) ? "checked" : ""}><span></span></span>Auto-advance new orders (fast-forward demo mode)</label><p class="msg" style="margin-top:10px">When on, new orders move through the stages on their own so customers can watch the tracker. Turn it off to move orders by hand from Live orders.</p></div>
+		<div class="panel"><h3>Reset</h3><p class="msg" style="margin-bottom:12px">Clears all orders, rewards profile, cart and menu overrides in this browser and restores the sample data.</p><button class="btn dark sm" id="reset">Reset demo data</button></div>`;
+	},
+};
+function draw() { BB.orders.tick(); $("#main").innerHTML = views[view](); $$(".adm-side [data-v]").forEach((b) => b.classList.toggle("on", b.dataset.v === view)); }
+document.addEventListener("click", (e) => {
+	const b = e.target.closest("button"); if (!b) return;
+	if (b.dataset.v) { view = b.dataset.v; draw(); } else if (b.dataset.s) { store = b.dataset.s; draw(); }
+	else if (b.dataset.adv) { BB.orders.advance(b.dataset.adv); draw(); }
+	else if (b.id === "reset") { Object.keys(localStorage).filter((k) => k.startsWith("bb-")).forEach((k) => localStorage.removeItem(k)); location.reload(); }
+});
+document.addEventListener("change", (e) => { const t = e.target;
+	if (t.dataset.a) { const u = BB.store.get("unavail", []).filter((x) => x !== t.dataset.a); if (!t.checked) u.push(t.dataset.a); BB.store.set("unavail", u); BB.toast("Menu updated"); }
+	else if (t.dataset.p) { const p = BB.store.get("prices", {}); p[t.dataset.p] = +t.value; BB.store.set("prices", p); BB.toast("Price saved"); }
+	else if (t.dataset.q) { const l = BB.store.get("catering", []); l.find((x) => x.id === t.dataset.q).status = t.value; BB.store.set("catering", l); }
+	else if (t.id === "auto") BB.store.set("auto", t.checked); });
+draw(); setInterval(() => { if (view === "orders" && !document.activeElement.matches("input,select")) draw(); }, 5000);
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

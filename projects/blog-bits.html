@@ -6,10 +6,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta
 			name="description"
-			content="Blog Bits — a small CMS exploring Shadow DOM components and React islands. Architecture, UI, and engineering challenges."
+			content="Blog Bits: a small CMS exploring Shadow DOM components and React islands. Architecture, UI, and engineering challenges."
 		/>
 		<meta name="color-scheme" content="dark light" />
-		<title>Blog Bits — Case study · Suryansh Kapil</title>
+		<title>Blog Bits: Case study · Suryansh Kapil</title>
 		<script>
 			(function () {
 				var r = document.documentElement;
@@ -36,6 +36,7 @@
 					<a href="../index.html#about">About</a>
 					<a href="../index.html#projects">Projects</a>
 					<a href="../articles/index.html">Writing</a>
+					<a href="../works/index.html">Works</a>
 					<a href="../docs/index.html">Docs</a>
 					<a href="../index.html#contact">Contact</a>
 				</nav>
@@ -57,7 +58,7 @@
 					Blog <span class="text-accent">Bits</span>
 				</h1>
 				<p class="doc-tagline reveal" style="--d: 0.12s">
-					A small-scale CMS I built to sharpen my frontend — and to test a
+					A small-scale CMS I built to sharpen my frontend, and to test a
 					hunch: that a <strong>Shadow-DOM component library</strong> plus
 					targeted <strong>React islands</strong> can replace React where it
 					isn't earning its weight.
@@ -80,7 +81,7 @@
 					<p>
 						Blog Bits started as a way to refine my frontend skills on
 						something real: a small content-management system. But the goal
-						underneath was architectural — to see how far you can get with
+						underneath was architectural, to see how far you can get with
 						<strong>plain Web Components and the Shadow DOM</strong> before
 						reaching for a full framework.
 					</p>
@@ -88,14 +89,14 @@
 						The result is a lightweight UI library that handles the
 						static-and-structural work, with <strong>islands of micro React
 						apps</strong> dropped in only where genuine interactivity earns
-						it — for example, an embeddable chat widget that can live inside
+						it, for example, an embeddable chat widget that can live inside
 						an HTMX page or another Shadow-DOM-based site.
 					</p>
 				</div>
 				<div class="fact-grid">
 					<div class="fact reveal" style="--d: 0.04s">
 						<span class="k">Role</span>
-						<span class="v">Solo — build &amp; research</span>
+						<span class="v">Solo: build &amp; research</span>
 					</div>
 					<div class="fact reveal" style="--d: 0.09s">
 						<span class="k">Theme</span>
@@ -115,9 +116,8 @@
 					<p>
 						The CMS renders server-driven HTML enhanced with HTMX. Reusable
 						pieces are Shadow-DOM components with fully scoped styles. Only
-						the genuinely interactive pockets — a chat widget, a rich editor —
-						are hydrated as small React islands, so the JavaScript you ship
-						maps to the interactivity you actually use.
+						the interactive pockets (a chat widget, a rich editor) are hydrated as small React islands, so the JavaScript you ship
+						maps to the interactivity you use.
 					</p>
 				</div>
 				<div class="arch reveal" style="--d: 0.12s">
@@ -145,13 +145,13 @@
 					<div class="arch-tier">
 						<div class="arch-node arch-node--accent">
 							<span class="n">React islands</span>
-							<span class="d">Chat widget, rich editor — only where needed</span>
+							<span class="d">Chat widget, rich editor, only where needed</span>
 							<span class="tech">React</span>
 						</div>
 					</div>
 				</div>
 				<p class="arch-caption reveal">
-					Reach for React last, not first — the library and HTMX carry most of
+					Reach for React last, not first: the library and HTMX carry most of
 					the UI, islands cover the rest.
 				</p>
 				<div class="dgm reveal">
@@ -164,7 +164,7 @@
 						<div class="dgm-static">static HTML &nbsp;·&nbsp; server-rendered &nbsp;·&nbsp; 0 kB JS</div>
 					</div>
 				</div>
-				<p class="fig-cap reveal">Only the genuinely interactive pockets (the accented boxes) become React "islands" — the rest of the page ships zero framework code.</p>
+				<p class="fig-cap reveal">Only the interactive pockets (the accented boxes) become React "islands"; the rest of the page ships zero framework code.</p>
 			</section>
 
 			<section class="doc-section">
@@ -225,7 +225,7 @@
 					</div>
 				</div>
 				<p class="mock-caption reveal">
-					A representative view — a mostly server-rendered admin where only the
+					A representative view: a mostly server-rendered admin where only the
 					toolbar and chat are React, each isolated in its own island.
 				</p>
 			</section>
@@ -240,7 +240,7 @@
 						<span class="label">Problem</span>
 						<p>
 							Islands architecture only pays off if the seam between
-							server-rendered and interactive is drawn well — too coarse and
+							server-rendered and interactive is drawn well; too coarse and
 							you ship a framework for static content; too fine and the page
 							fragments into dozens of tiny runtimes.
 						</p>
@@ -273,7 +273,7 @@
 						<span class="label">Problem</span>
 						<p>
 							A reusable library lives or dies by its API. Components need a
-							predictable contract — inputs, events, composition — that
+							predictable contract (inputs, events, composition) that
 							doesn't leak their internals to consumers.
 						</p>
 						<span class="label">Approach</span>
@@ -288,8 +288,7 @@
 						<h3>Keeping React off the critical path</h3>
 						<span class="label">Problem</span>
 						<p>
-							The whole premise fails if React ends up in the base bundle —
-							then every page pays for a framework most of them don't use.
+							The whole premise fails if React ends up in the base bundle, then every page pays for a framework most of them don't use.
 						</p>
 						<span class="label">Approach</span>
 						<p class="fix">

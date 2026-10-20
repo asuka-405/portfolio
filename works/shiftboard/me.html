@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My shifts | ShiftBoard (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>:root{--acc:#0f766e;--acc-ink:#fff;--acc-soft:rgba(15,118,110,.12);--bg:#f1f6f5}body{display:grid;place-items:start center;padding:14px}.app{width:100%;max-width:440px}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}header b{font-size:1.15rem}header a{color:var(--acc);font-weight:700;font-size:.85rem;text-decoration:none}.card{margin-bottom:12px}.hero{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;border:0}.hero .btn{background:#fff;color:#0f766e;border:0;width:100%;padding:13px;margin-top:10px;font-size:1rem}.hero .btn.out{background:#fecaca;color:#7f1d1d}.sh{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.sh:last-child{border:0}</style>
+</head>
+<body>
+<div class="app"><header><b>ShiftBoard</b><a href="app.html">Manager view →</a></header><div id="app"></div></div>
+<script src="../lib/ui.js"></script><script src="js/core.js"></script>
+<script>
+const { $, esc, fdate, iso, addDays, pd } = UI;
+let me = sessionStorage.getItem("sb-me") || SB.staff()[1].id;
+const DN = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+function draw() {
+	const x = SB.staff().find((s) => s.id === me), wk = SB.weekKey(new Date()), di = (new Date().getDay() + 6) % 7, sh = SB.shift(SB.cell(wk, me, di)), open = SB.clockOpen(me);
+	const rq = SB.requests().filter((r) => r.staff === me).slice(-4).reverse(), hrs = SB.weekHours(wk, me);
+	$("#app").innerHTML = `<label class="f" style="margin-bottom:12px">You are<select class="in" id="who">${SB.staff().map((s) => `<option value="${s.id}" ${s.id === me ? "selected" : ""}>${esc(s.name)}, ${esc(s.role)}</option>`).join("")}</select></label>
+	<div class="card hero"><div style="opacity:.85;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700">Today · ${fdate(new Date(), { weekday: "long", day: "numeric", month: "short" })}</div><div style="font-size:1.6rem;font-weight:800;margin:6px 0">${sh ? esc(sh.name) + " shift" : "You're off today"}</div><div>${sh ? sh.start + " – " + sh.end + " · " + SB.hours(sh.id) + " hours" : "Enjoy the rest!"}</div>${open ? `<div style="margin-top:8px;opacity:.9">Clocked in at ${new Date(open.in).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</div><button class="btn out" id="co">Clock out</button>` : sh ? '<button class="btn" id="ci">Clock in</button>' : ""}</div>
+	<div class="card"><h3>This week <span class="mut">${hrs}h of ${x.contract}h</span></h3>${[0, 1, 2, 3, 4, 5, 6].map((d) => { const s = SB.shift(SB.cell(wk, me, d)), date = addDays(wk, d); return `<div class="sh"><span><b>${DN[d]}</b> <span class="mut">${date.getDate()}</span></span>${s ? `<span class="chip" style="background:${s.color}44;color:var(--ink)">${esc(s.name)} · ${s.start}–${s.end}</span>` : '<span class="mut">Off</span>'}${s ? `<button class="btn sm" data-sw="${d}">Swap</button>` : `<button class="btn sm" data-to="${d}">Request off</button>`}</div>`; }).join("")}</div>
+	<div class="card"><h3>My requests</h3>${rq.map((r) => `<div class="sh"><span>${r.type === "swap" ? "Swap" : "Time off"} · ${fdate(r.date, { weekday: "short", day: "numeric", month: "short" })}</span><span class="chip ${r.status === "approved" ? "ok" : r.status === "denied" ? "bad" : "warn"}">${r.status}</span></div>`).join("") || '<p class="mut">No requests yet.</p>'}</div>`;
+	$("#who").onchange = (e) => { me = e.target.value; sessionStorage.setItem("sb-me", me); draw(); };
+	const ci = $("#ci"); if (ci) ci.onclick = () => { SB.clockIn(me); UI.toast("Clocked in, have a good shift!"); draw(); }; const co = $("#co"); if (co) co.onclick = () => { SB.clockOut(me); UI.toast("Clocked out"); draw(); };
+}
+function reqForm(type, d) {
+	const date = iso(addDays(SB.weekKey(new Date()), d));
+	UI.modal({ title: type === "swap" ? "Request a shift swap" : "Request time off", body: `<form id="rf" class="stack" style="gap:12px"><p class="mut">${fdate(date, { weekday: "long", day: "numeric", month: "long" })}</p>${type === "swap" ? `<label class="f">Swap with<select class="in" name="to">${SB.staff().filter((s) => s.id !== me).map((s) => `<option value="${s.id}">${esc(s.name)}</option>`).join("")}</select></label>` : ""}<label class="f">Reason<input class="in" name="note" placeholder="Optional"></label></form>`, actions: [{ label: "Cancel" }, { label: "Send request", cls: "pri", fn: () => { const f = $("#rf"), l = SB.requests(); l.push({ id: "r" + Date.now(), type, staff: me, date, to: f.to ? f.to.value : "", note: f.note.value, status: "pending", ts: Date.now() }); SB.save("requests", l); UI.toast("Request sent to your manager"); draw(); } }] });
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; if (b.dataset.sw) reqForm("swap", +b.dataset.sw); else if (b.dataset.to) reqForm("timeoff", +b.dataset.to); });
+draw();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

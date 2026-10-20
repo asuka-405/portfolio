@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wishlist | Kiln &amp; Clay</title>
+<meta name="description" content="Your saved pieces." />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="page-hero"><div class="wrap"><p class="eyebrow">Saved for later</p><h1>Your wishlist</h1></div></section>
+<section class="sec" style="padding-top:20px"><div class="wrap"><div class="grid" id="grid"></div><p class="empty" id="empty" hidden>Nothing saved yet. Tap ♥ on any piece. <a href="shop.html" style="color:var(--clay)">Browse the shop →</a></p></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("");
+function draw() { const l = KC.wish.get().map(KC.get).filter(Boolean); KC.$("#grid").innerHTML = l.map(KC.card).join(""); KC.$("#empty").hidden = l.length > 0; }
+draw(); document.addEventListener("click", (e) => { if (e.target.closest("[data-wish]")) setTimeout(draw, 50); });
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

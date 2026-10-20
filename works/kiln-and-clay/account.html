@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My account | Kiln &amp; Clay</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<section class="sec" style="padding-top:40px"><div class="wrap" id="app"></div></section>
+<div id="site-footer"></div>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+KC.layout("");
+const { $, esc, inr, img } = KC; let view = "orders";
+function login() { $("#app").innerHTML = `<div class="panel" style="max-width:480px;margin:20px auto"><p class="eyebrow">Account</p><h2 style="font-size:2rem;margin:6px 0 10px">Sign in</h2><p class="msg" style="margin-bottom:16px">Enter the email you used at checkout to see your orders. (Demo: no password needed.)</p><form id="lf" style="display:grid;gap:12px"><input class="in" type="email" name="email" required placeholder="you@email.com"><button class="btn">Continue</button></form></div>`; $("#lf").onsubmit = (e) => { e.preventDefault(); KC.store.set("who", e.target.email.value.trim().toLowerCase()); render(); }; }
+const V = {
+	orders(w) { const l = KC.orders.all().filter((o) => o.email === w && !o.seeded).reverse(); return `<h3 style="margin-bottom:12px">Your orders</h3>${l.length ? l.map((o) => `<a class="panel" href="order.html?id=${o.id}" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;text-decoration:none;margin-bottom:12px"><div><b>${o.id}</b><div class="msg">${new Date(o.ts).toLocaleDateString("en-IN", { dateStyle: "medium" })} · ${o.items.length} item${o.items.length > 1 ? "s" : ""}</div></div><div style="text-align:right"><span class="chip ${o.status === "delivered" ? "g" : ""}">${KC.LABEL[o.status]}</span><div><b>${inr(o.total)}</b></div></div></a>`).join("") : '<div class="panel empty"><p class="msg" style="margin-bottom:14px">No orders under this email yet.</p><a class="btn" href="shop.html">Start shopping</a></div>'}`; },
+	wishlist() { const l = KC.wish.get().map(KC.get).filter(Boolean); return `<h3 style="margin-bottom:12px">Wishlist</h3>${l.length ? `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">${l.map(KC.card).join("")}</div>` : '<p class="msg">Tap the heart on any piece to save it here.</p>'}`; },
+	workshops(w) { const l = KC.wbook.get().filter((b) => b.email === w); return `<h3 style="margin-bottom:12px">Workshop bookings</h3>${l.length ? l.map((b) => `<div class="panel" style="margin-bottom:12px"><b>${esc(b.name)}</b><div class="msg">${KC.pd(b.date).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })} · ${b.time} · ${b.guests} guest${b.guests > 1 ? "s" : ""} · ${b.id}</div></div>`).join("") : '<p class="msg">No workshops booked. <a href="workshops.html" style="color:var(--clay)">See upcoming sessions →</a></p>'}`; },
+	addresses() { const a = KC.store.get("addr", null); return `<h3 style="margin-bottom:12px">Saved address</h3>${a ? `<div class="panel"><b>${esc(a.name)}</b><p class="msg">${esc(a.addr)}<br>${esc(a.city)}, ${esc(a.state)} ${esc(a.pin)}<br>${esc(a.phone)}</p></div>` : '<p class="msg">Your address is saved after your first order.</p>'}`; },
+};
+function render() {
+	const w = KC.store.get("who", null); if (!w) return login();
+	const tabs = [["orders", "Orders"], ["wishlist", "Wishlist"], ["workshops", "Workshops"], ["addresses", "Address"]];
+	$("#app").innerHTML = `<p class="eyebrow">My account</p><h1 style="font-size:clamp(2rem,4vw,3rem);margin:6px 0 22px">${esc(w)}</h1><div class="acc"><nav class="acc-nav">${tabs.map(([k, n]) => `<button data-v="${k}" class="${k === view ? "on" : ""}">${n}</button>`).join("")}<button data-v="out" style="margin-top:10px">Sign out</button></nav><div>${V[view](w)}</div></div>`;
+}
+document.addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (!b) return; if (b.dataset.v === "out") { KC.store.set("who", null); render(); } else { view = b.dataset.v; render(); } });
+render();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

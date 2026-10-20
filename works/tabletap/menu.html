@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Order at your table | TableTap (demo)</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="../lib/app.css" />
+<style>
+:root{--acc:#c2410c;--acc-ink:#fff;--acc-soft:rgba(194,65,12,.1);--bg:#fffaf5}body{background:#f3e9df}
+.ph{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;padding-bottom:90px;box-shadow:0 0 60px rgba(80,30,0,.15)}
+.hero{height:150px;background:#222 center/cover;position:relative;color:#fff}.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 20%,rgba(0,0,0,.75))}.hero div{position:absolute;left:16px;right:16px;bottom:12px;z-index:2}.hero h1{font-size:1.4rem}.hero p{opacity:.9;font-size:.85rem}
+.stk{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}.cats{display:flex;gap:8px;overflow:auto;padding:10px 14px;scrollbar-width:none}.cats button{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;font-weight:700;font-size:.84rem}.cats button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tools{display:flex;gap:8px;padding:0 14px 10px;align-items:center}.tools input{flex:1}.vf{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}.vf button{border:0;background:#fff;padding:7px 10px;font-weight:700;font-size:.78rem}.vf button.on{background:var(--acc);color:#fff}
+.it{display:grid;grid-template-columns:1fr 104px;gap:12px;padding:14px;border-bottom:1px solid var(--line)}.it h3{font-size:1rem;margin:3px 0}.it p{color:var(--mut);font-size:.82rem}.it .img{position:relative}.it img{width:104px;height:96px;object-fit:cover;border-radius:12px;display:block}.it .add{position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);background:#fff;color:var(--acc);border:1px solid var(--acc);border-radius:9px;font-weight:800;padding:5px 22px;box-shadow:0 4px 10px rgba(0,0,0,.12)}.it.off{opacity:.5}
+.vg{display:inline-block;width:14px;height:14px;border:2px solid #16a34a;border-radius:3px;position:relative;vertical-align:-2px}.vg::after{content:"";position:absolute;inset:2px;border-radius:50%;background:#16a34a}.vg.nv{border-color:#b91c1c}.vg.nv::after{background:#b91c1c}
+.cb{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:min(456px,calc(100% - 24px));background:var(--acc);color:#fff;border:0;border-radius:14px;padding:14px 18px;display:flex;justify-content:space-between;font-weight:800;box-shadow:0 10px 30px rgba(120,40,0,.35);z-index:30}
+.tabs2{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(480px,100%);display:grid;grid-template-columns:1fr 1fr;background:#fff;border-top:1px solid var(--line);z-index:25}.tabs2 button{border:0;background:none;padding:12px;font-weight:800;color:var(--mut)}.tabs2 button.on{color:var(--acc)}
+.oc{margin:12px 14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:10px 0 4px}.steps i{height:5px;border-radius:5px;background:var(--line)}.steps i.on{background:var(--acc)}
+@media(max-width:520px){.ph{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="ph" id="ph"></div>
+<script src="../lib/ui.js"></script>
+<script src="../lib/ui2.js"></script>
+<script src="../lib/qrcode.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+(function () {
+	const { $, $$, esc, inr, toast, modal } = UI, qs = new URLSearchParams(location.search), T = (qs.get("t") || "T5").toUpperCase(), set = TT.settings();
+	let st = { tab: "menu", cat: "all", veg: "all", q: "", cart: [] };
+	const vg = (v) => `<span class="vg ${v ? "" : "nv"}" title="${v ? "Vegetarian" : "Non-vegetarian"}"></span>`;
+	const cartTot = () => st.cart.reduce((a, l) => a + (l.price + (l.addon || 0)) * l.qty, 0), cartN = () => st.cart.reduce((a, l) => a + l.qty, 0);
+	function draw() {
+		const M = TT.menu().filter((m) => (st.cat === "all" || m.cat === st.cat) && (st.veg === "all" || (st.veg === "veg") === m.veg) && (!st.q || m.name.toLowerCase().includes(st.q.toLowerCase())));
+		const ses = TT.sessions()[T], os = ses ? TT.orders().filter((o) => ses.orders.includes(o.id)) : [];
+		let h = `<div class="hero" style="background-image:url(img/hero.jpg)"><div><h1>${esc(set.name)}</h1><p>Table ${T} · order from your seat, pay when you are done</p></div></div>`;
+		if (st.tab === "menu") {
+			h += `<div class="stk"><div class="cats"><button data-c="all" class="${st.cat === "all" ? "on" : ""}">All</button>${TT.CATS.map((c) => `<button data-c="${c}" class="${st.cat === c ? "on" : ""}">${c}</button>`).join("")}</div><div class="tools"><input class="in" id="q" placeholder="Search the menu" value="${esc(st.q)}"><div class="vf">${[["all", "All"], ["veg", "Veg"], ["non", "Non-veg"]].map(([k, l]) => `<button data-v="${k}" class="${st.veg === k ? "on" : ""}">${l}</button>`).join("")}</div></div></div>`;
+			h += M.map((m) => `<div class="it ${m.avail ? "" : "off"}"><div>${vg(m.veg)} ${m.pop > 85 ? '<span class="chip warn" style="margin-left:4px">Bestseller</span>' : ""}<h3>${esc(m.name)}</h3><b>${inr(m.price)}</b><p style="margin-top:4px">${esc(m.desc)}</p></div><div class="img"><img src="img/${m.img}.jpg" alt="${esc(m.name)}" loading="lazy"><button class="add" data-add="${m.id}" ${m.avail ? "" : "disabled"}>${m.avail ? "ADD" : "OUT"}</button></div></div>`).join("") || '<p class="empty">Nothing matches. Try another category.</p>';
+			if (cartN()) h += `<button class="cb" id="cb"><span>${cartN()} item${cartN() > 1 ? "s" : ""}</span><span>View order · ${inr(cartTot())}</span></button>`;
+		} else {
+			h += `<div style="padding:14px 14px 0;display:flex;gap:8px"><button class="btn" id="cw" style="flex:1">Call waiter</button><button class="btn pri" id="rb" style="flex:1" ${os.length ? "" : "disabled"}>Ask for the bill</button></div>`;
+			h += os.slice().reverse().map((o) => { const i = ["new", "preparing", "ready", "served"].indexOf(o.status); return `<div class="oc"><div style="display:flex;justify-content:space-between"><b>Order ${o.no}</b>${`<span class="chip ${TT.STAT[o.status][1]}">${TT.STAT[o.status][0]}</span>`}</div><div class="steps">${[0, 1, 2, 3].map((k) => `<i class="${k <= i ? "on" : ""}"></i>`).join("")}</div><div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--mut)"><span>Sent</span><span>Cooking</span><span>Ready</span><span>Served</span></div><div style="margin-top:10px;font-size:.88rem">${o.items.map((x) => `${x.qty} x ${esc(x.name)}${x.mods ? " <span class='mut'>(" + esc(x.mods) + ")</span>" : ""}`).join("<br>")}</div></div>`; }).join("") || '<p class="empty">You have not ordered yet.</p>';
+			if (os.length) { const b = TT.bill(T); h += `<div class="oc"><div style="display:flex;justify-content:space-between"><span>Subtotal</span><span>${inr(b.sub)}</span></div>${b.svc ? `<div style="display:flex;justify-content:space-between"><span>Service charge ${set.svc}%</span><span>${inr(b.svc)}</span></div>` : ""}<div style="display:flex;justify-content:space-between"><span>GST ${set.gst}%</span><span>${inr(b.gst)}</span></div><div style="display:flex;justify-content:space-between;font-size:1.25rem;font-weight:800;margin-top:6px"><span>Total</span><span>${inr(b.total)}</span></div>${ses.billRequested ? `<div class="note" style="margin-top:10px">Bill requested. A waiter will bring it, or pay now by UPI.</div><div style="text-align:center;margin-top:10px"><div id="qrp" style="display:inline-block;background:#fff;padding:8px;border-radius:10px"></div><div class="mut" style="margin-top:6px">Scan to pay ${inr(b.total)}</div></div>` : ""}</div>`; }
+		}
+		h += `<div class="tabs2"><button data-t="menu" class="${st.tab === "menu" ? "on" : ""}">Menu</button><button data-t="orders" class="${st.tab === "orders" ? "on" : ""}">My orders ${os.length ? "(" + os.length + ")" : ""}</button></div>`;
+		const keep = window.scrollY; $("#ph").innerHTML = h; window.scrollTo(0, keep);
+		const q = $("#q"); if (q) q.oninput = (e) => { st.q = e.target.value; clearTimeout(draw.t); draw.t = setTimeout(() => { draw(); $("#q").focus(); $("#q").setSelectionRange(99, 99); }, 250); };
+		const qp = $("#qrp"); if (qp) UI.qr(qp, UI.upi(set.upi, set.name, TT.bill(T).total, "Table " + T), 140);
+	}
+	function addModal(id) {
+		const m = TT.menu().find((x) => x.id === id), spicy = ["Starters", "Mains", "Fast food"].includes(m.cat), extra = m.cat === "Fast food" ? ["Extra cheese", 30] : m.cat === "Drinks" ? ["Less sugar", 0] : null; let q = 1;
+		modal({ title: esc(m.name), body: `<p class="mut" style="margin-bottom:10px">${esc(m.desc)}</p>${spicy ? `<label class="f">Spice level<select class="in" id="sp"><option>Medium</option><option>Mild</option><option>Spicy</option></select></label>` : ""}${extra ? `<label class="row" style="gap:8px;margin-top:10px"><input type="checkbox" id="ex"> ${extra[0]}${extra[1] ? " (+" + inr(extra[1]) + ")" : ""}</label>` : ""}<div class="row" style="justify-content:space-between;margin-top:14px"><b>${inr(m.price)}</b><div class="row"><button class="btn sm" id="qm">−</button><b id="qn">1</b><button class="btn sm" id="qp2">+</button></div></div>`, onOpen: (bg) => { bg.querySelector("#qm").onclick = () => { q = Math.max(1, q - 1); bg.querySelector("#qn").textContent = q; }; bg.querySelector("#qp2").onclick = () => { q++; bg.querySelector("#qn").textContent = q; }; }, actions: [{ label: "Cancel" }, { label: "Add to order", cls: "pri", fn: (bg) => { const mods = [spicy ? bg.querySelector("#sp").value : "", extra && bg.querySelector("#ex").checked ? extra[0] : ""].filter(Boolean).join(", "), addon = extra && extra[1] && bg.querySelector("#ex").checked ? extra[1] : 0, l = st.cart.find((x) => x.id === id && x.mods === mods); if (l) l.qty += q; else st.cart.push({ id, name: m.name, price: m.price, qty: q, mods, addon }); draw(); } }] });
+	}
+	function cartModal() {
+		const body = () => st.cart.map((l, i) => `<div class="row" style="justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)"><div><b>${esc(l.name)}</b><div class="mut">${esc(l.mods)}</div></div><div class="row"><button class="btn sm" data-q="${i}|-1">−</button><b>${l.qty}</b><button class="btn sm" data-q="${i}|1">+</button><b style="min-width:62px;text-align:right">${inr((l.price + (l.addon || 0)) * l.qty)}</b></div></div>`).join("") + `<label class="f" style="margin-top:12px">Note for the kitchen<input class="in" id="nt" placeholder="Less oil, no onion, serve together..."></label><div class="row" style="justify-content:space-between;margin-top:12px;font-size:1.1rem"><b>Items total</b><b>${inr(cartTot())}</b></div><p class="mut" style="font-size:.8rem;margin-top:6px">GST and service charge are added on the final bill.</p>`;
+		modal({ title: "Your order, table " + T, body: body(), onOpen: (bg) => { bg.addEventListener("click", (e) => { const b = e.target.closest("[data-q]"); if (!b) return; const [i, d] = b.dataset.q.split("|"), nt = bg.querySelector("#nt").value; st.cart[+i].qty += +d; if (st.cart[+i].qty <= 0) st.cart.splice(+i, 1); if (!st.cart.length) { UI.close(); draw(); return; } bg.querySelector("#modal-body").innerHTML = body(); bg.querySelector("#nt").value = nt; }); }, actions: [{ label: "Keep browsing", fn: () => draw() }, { label: "Place order", cls: "pri", fn: (bg) => { const o = TT.place(T, st.cart.map((l) => ({ id: l.id, qty: l.qty, mods: l.mods, addon: l.addon })), bg.querySelector("#nt").value); st.cart = []; st.tab = "orders"; draw(); toast("Order " + o.no + " sent to the kitchen"); } }] });
+	}
+	document.addEventListener("click", (e) => {
+		const b = e.target.closest("button"); if (!b) return;
+		if (b.dataset.c) { st.cat = b.dataset.c; draw(); } else if (b.dataset.v) { st.veg = b.dataset.v; draw(); } else if (b.dataset.add) addModal(b.dataset.add); else if (b.id === "cb") cartModal(); else if (b.dataset.t) { st.tab = b.dataset.t; draw(); window.scrollTo(0, 0); }
+		else if (b.id === "cw") { TT.call(T, "waiter"); toast("A waiter is on the way"); } else if (b.id === "rb") { TT.call(T, "bill"); toast("We will bring the bill shortly"); draw(); }
+	});
+	TT.onChange(() => { if (!document.querySelector("#modal-bg.on")) draw(); }); draw();
+})();
+</script>
+<script src="../shared.js" defer></script>
+</body>
+</html>

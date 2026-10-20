@@ -42,6 +42,7 @@
 					<a href="../../index.html#about">About</a>
 					<a href="../../index.html#projects">Projects</a>
 					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
 					<a href="../../docs/index.html">Docs</a>
 					<a href="../../index.html#contact">Contact</a>
 				</nav>
@@ -167,7 +168,7 @@
 						</header>
 						<div class="doc-section">
 <div class="prose reveal">
-					<p>Inheritance lets one class (the derived class) reuse and extend another (the base class). Done well, it models a real is-a relationship: a Circle is-a Shape, an Employee is-a Person. Done badly, it's used purely for code reuse between classes that don't actually belong in the same hierarchy, which is the single most common inheritance mistake in real codebases.</p>
+					<p>Inheritance lets one class (the derived class) reuse and extend another (the base class). Done well, it models a real is-a relationship: a Circle is-a Shape, an Employee is-a Person. Done badly, it's used purely for code reuse between classes that don't belong in the same hierarchy, which is the single most common inheritance mistake in real codebases.</p>
 					<h3>The basics</h3>
 				</div>
 
@@ -206,7 +207,7 @@ int main() {
 					<h3>protected access</h3>
 					<p>protected members are visible to the class itself and to derived classes, but not to outside code, the same as private for everyone except your own subclasses. It's a middle ground: use it when a base class wants to let derived classes reach into its internals directly, but still hide those internals from the rest of the program.</p>
 					<h3>Overriding versus hiding</h3>
-					<p>If a derived class defines a member function with the exact same signature as a virtual function in the base, it overrides it: calling that function through a base pointer/reference dispatches to the derived version (more on this in the next chapter on virtual functions). If the base function is NOT virtual, or the signatures don't actually match (a common typo trap: different parameter types, or forgetting const), the derived function just hides the base one instead of overriding it, and you get surprising, non-polymorphic behavior. Always use the override keyword (covered in depth next chapter) so the compiler catches signature mismatches for you instead of silently hiding.</p>
+					<p>If a derived class defines a member function with the exact same signature as a virtual function in the base, it overrides it: calling that function through a base pointer/reference dispatches to the derived version (more on this in the next chapter on virtual functions). If the base function is NOT virtual, or the signatures don't match (a common typo trap: different parameter types, or forgetting const), the derived function just hides the base one instead of overriding it, and you get surprising, non-polymorphic behavior. Always use the override keyword (covered in depth next chapter) so the compiler catches signature mismatches for you instead of silently hiding.</p>
 					<h3>Multiple inheritance and the diamond problem</h3>
 					<p>C++ allows a class to inherit from more than one base class. This is used far less than single inheritance, and for good reason: if two base classes both inherit from a common ancestor, a derived class inheriting from both ends up with two copies of that ancestor's data, the classic diamond problem.</p>
 				</div>
@@ -227,7 +228,7 @@ int main() {
 </pre></noscript></div>
 
 <div class="prose reveal">
-					<p>C++ has virtual inheritance to solve this (a single shared Base subobject instead of two), but the honest advice is: avoid multiple inheritance of implementation entirely where you can. Multiple inheritance of pure interfaces (abstract classes with no data, covered in the next chapter) is much safer and common in real code; multiple inheritance of classes that actually hold state is where the trouble starts.</p>
+					<p>C++ has virtual inheritance to solve this (a single shared Base subobject instead of two), but the honest advice is: avoid multiple inheritance of implementation entirely where you can. Multiple inheritance of pure interfaces (abstract classes with no data, covered in the next chapter) is much safer and common in real code; multiple inheritance of classes that hold state is where the trouble starts.</p>
 					<h3>Inheritance for is-a, not for convenience</h3>
 					<p>The test from the previous chapter still applies here: can you truthfully say &quot;a Derived is a Base&quot; in every context the code will run in? A Stack that inherits from std::vector purely to reuse push_back is a classic anti-pattern: a Stack is not a vector (a vector lets you insert/remove anywhere; a stack shouldn't), and now every vector operation, including the ones that break the stack's invariants, is exposed on your Stack type. If you want the plumbing without the is-a contract, that's exactly what composition (previous chapter) is for.</p>
 				</div>

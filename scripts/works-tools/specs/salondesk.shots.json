@@ -1,0 +1,1 @@
+[{"name":"calendar","route":"calendar"},{"name":"clients","route":"clients"},{"name":"reports","route":"reports"},{"name":"campaigns","route":"campaigns"},{"name":"book","file":"book.html","w":900,"h":820,"js":"document.querySelector('[data-s=v8]').click();document.querySelector('[data-s=v14]').click()"}]
