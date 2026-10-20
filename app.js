@@ -100,10 +100,36 @@
 					}
 				});
 			},
-			{ rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+			// threshold 0: a ratio threshold can never be met by a block taller than the viewport, which left long sections invisible.
+			{ rootMargin: "0px 0px -8% 0px", threshold: 0 }
 		);
 		items.forEach(function (el) {
 			io.observe(el);
+		});
+		// Safety net: anything still hidden shortly after load that is already on screen, or taller than the screen, is shown.
+		var showStuck = function () {
+			var vh = window.innerHeight || document.documentElement.clientHeight;
+			items.forEach(function (el) {
+				if (el.classList.contains("in")) return;
+				var r = el.getBoundingClientRect();
+				// on screen, or already scrolled past (a jump link can skip a block, which would otherwise stay hidden above the fold)
+				if (r.top < vh * 0.92) {
+					el.classList.add("in");
+					io.unobserve(el);
+				}
+			});
+		};
+		window.addEventListener("scroll", showStuck, { passive: true });
+		window.addEventListener("load", function () {
+			// A block taller than the screen would be foreshortened by the 3D entrance and never read as one piece: show it flat.
+			var vh = window.innerHeight || document.documentElement.clientHeight;
+			items.forEach(function (el) {
+				if (!el.classList.contains("in") && el.offsetHeight > vh * 1.2) {
+					el.classList.add("in");
+					io.unobserve(el);
+				}
+			});
+			setTimeout(showStuck, 300);
 		});
 	}
 

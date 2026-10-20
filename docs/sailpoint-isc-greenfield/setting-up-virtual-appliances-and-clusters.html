@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Setting Up Virtual Appliances and Clusters: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Setting Up Virtual Appliances and Clusters · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/setting-up-virtual-appliances-and-clusters.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Setting Up Virtual Appliances and Clusters" />
+		<meta property="og:description" content="Setting Up Virtual Appliances and Clusters: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/setting-up-virtual-appliances-and-clusters.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Setting Up Virtual Appliances and Clusters" />
+		<meta name="twitter:description" content="Setting Up Virtual Appliances and Clusters: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="active">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Setting Up Virtual Appliances and Clusters</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#step-0-plan-the-clusters">Step 0: plan the clusters</a></li><li><a href="#step-1-sizing-and-prerequisites">Step 1: sizing and prerequisites</a></li><li><a href="#step-2-obtain-and-deploy-the-image">Step 2: obtain and deploy the image</a></li><li><a href="#step-3-network-settings-on-the-va">Step 3: network settings on the VA</a></li><li><a href="#step-4-create-the-cluster-in-the-tenant">Step 4: create the cluster in the tenant</a></li><li><a href="#step-5-pair-each-va-with-the-cluster">Step 5: pair each VA with the cluster</a></li><li><a href="#step-6-verify-before-you-attach-a-source">Step 6: verify before you attach a source</a></li><li><a href="#step-7-attach-sources">Step 7: attach sources</a></li><li><a href="#operating-the-cluster">Operating the cluster</a></li><li><a href="#disaster-recovery">Disaster recovery</a></li><li><a href="#build-checklist">Build checklist</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Every on-premises source in the program reached ISC through a virtual appliance (VA) in a cluster. This page is the build procedure, in the order we would do it again: plan the clusters, prepare the network, deploy the image, pair it with the tenant, verify, and then operate it. It follows SailPoint's published procedure (checked against the VA documentation in October 2026) and adds the planning and checks that the documentation leaves out. Commands are from the documentation unless marked otherwise. Re-check them against the current VA guide before use, because images and tooling change.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="step-0-plan-the-clusters">Step 0: plan the clusters</h3>
+					<p>Decide this before you deploy anything. Sources are attached to a cluster, and moving fifty sources later is painful.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Question</th><th>Guidance</th></tr></thead><tbody><tr><td>How many clusters?</td><td>At least one for production and one for sandbox. Add clusters per network boundary and per blast radius</td></tr><tr><td>How many VAs per cluster?</td><td><strong>At least two</strong>, sandbox included. Updates roll through one VA at a time, so one VA means an outage on every update</td></tr><tr><td>Where do VAs sit?</td><td>Close to the sources they serve. One VA per virtual machine host, spread across hosts or availability zones. SailPoint advises against the DMZ</td></tr><tr><td>Which sources on which cluster?</td><td>Group by reachability and risk. The program used a cluster for HR, one per directory estate, one for application sources and one for flat files and region-specific systems, 5 clusters and 9 appliances in all</td></tr><tr><td>What is the network method?</td><td>Standard (direct outbound), HTTP proxy, or network tunnel. Pick one per cluster and keep each cluster consistent</td></tr><tr><td>Time zone</td><td>Set per cluster. It governs aggregation schedules and does not shift for daylight saving</td></tr><tr><td>Cluster type</td><td>Standard, unless you also run the product that needs the harvester type. The type cannot be changed afterwards</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Write the plan as a table and keep it with the architecture document:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Cluster</th><th>Purpose</th><th>Sources</th><th>VAs</th><th>Host or zone</th><th>Network method</th><th>Owner</th></tr></thead><tbody><tr><td><code>&lt;env&gt;-&lt;purpose&gt;</code></td><td></td><td></td><td>2</td><td></td><td>Standard</td><td></td></tr></tbody></table></div>
+
+<!-- dgm:va-setup-flow -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 270" role="img" aria-labelledby="va-setup-flow-t va-setup-flow-d" xmlns="http://www.w3.org/2000/svg"><title id="va-setup-flow-t">Building a virtual appliance cluster</title><desc id="va-setup-flow-d">Plan, prepare the network, deploy, configure, create the cluster, pair each appliance, verify.</desc><defs><marker id="va-setup-flow-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="box " x="6" y="20" width="180" height="80" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="96.0" y="57.0" text-anchor="middle">1 Plan clusters</text><text class="s" x="96.0" y="72.0" text-anchor="middle">sources, hosts, method</text><rect class="box " x="215" y="20" width="180" height="80" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="305.0" y="57.0" text-anchor="middle">2 Network</text><text class="s" x="305.0" y="72.0" text-anchor="middle">firewall, DNS, NTP, proxy</text><rect class="box blue" x="424" y="20" width="180" height="80" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="514.0" y="50.5" text-anchor="middle">3 Deploy image</text><text class="s" x="514.0" y="65.5" text-anchor="middle">change the default</text><text class="s" x="514.0" y="78.5" text-anchor="middle">password</text><rect class="box blue" x="633" y="20" width="180" height="80" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="723.0" y="50.5" text-anchor="middle">4 Configure</text><text class="s" x="723.0" y="65.5" text-anchor="middle">static IP, NTP, hosts</text><text class="s" x="723.0" y="78.5" text-anchor="middle">file, proxy</text><path class="ln accent  " d="M186,60.0 L215,60.0" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-setup-flow-ar-accent)"/><path class="ln accent  " d="M395,60.0 L424,60.0" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-setup-flow-ar-accent)"/><path class="ln accent  " d="M604,60.0 L633,60.0" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-setup-flow-ar-accent)"/><rect class="box accent" x="6" y="160" width="180" height="80" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="96.0" y="197.0" text-anchor="middle">5 Create cluster</text><text class="s" x="96.0" y="212.0" text-anchor="middle">name, time zone, type</text><rect class="box accent" x="215" y="160" width="180" height="80" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="305.0" y="190.5" text-anchor="middle">6 Pair each VA</text><text class="s" x="305.0" y="205.5" text-anchor="middle">same passphrase, code</text><text class="s" x="305.0" y="218.5" text-anchor="middle">valid 4 hours</text><rect class="box " x="424" y="160" width="180" height="80" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="514.0" y="197.0" text-anchor="middle">7 Wait</text><text class="s" x="514.0" y="212.0" text-anchor="middle">about 30 minutes</text><rect class="box teal" x="633" y="160" width="180" height="80" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="723.0" y="190.5" text-anchor="middle">8 Verify</text><text class="s" x="723.0" y="205.5" text-anchor="middle">connected, test source,</text><text class="s" x="723.0" y="218.5" text-anchor="middle">failover</text><path class="ln accent  " d="M186,200.0 L215,200.0" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-setup-flow-ar-accent)"/><path class="ln accent  " d="M395,200.0 L424,200.0" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-setup-flow-ar-accent)"/><path class="ln accent  " d="M604,200.0 L633,200.0" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-setup-flow-ar-accent)"/><path class="ln accent  " d="M716,100 L716,130 L96,130 L96,160" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-setup-flow-ar-accent)"/></svg></div><figcaption><b>Order matters.</b> The network and the plan come first; sources are attached only after every appliance shows connected and a failover test has passed.</figcaption></figure>
+
+<div class="prose reveal">
+					<h3 id="step-1-sizing-and-prerequisites">Step 1: sizing and prerequisites</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Item</th><th>Requirement (per VA)</th></tr></thead><tbody><tr><td>Compute</td><td>4 processors, 16 GB memory, 128 GB storage as a minimum image. Cloud equivalents: a 4 vCPU general-purpose instance</td></tr><tr><td>Processor</td><td>A supported Intel or AMD generation exposed by the hypervisor</td></tr><tr><td>Hypervisor</td><td>vSphere 8.0 or later, Hyper-V Server 2016 or later, or a supported cloud</td></tr><tr><td>Network</td><td>Outbound 443 to SailPoint and the listed services, DNS (53), NTP (123), and the ports of the sources it serves</td></tr><tr><td>Time</td><td>Synchronised. Internal NTP if outbound 123 is closed</td></tr><tr><td>DNS</td><td>Reaches your internal DNS servers, so it can resolve source host names</td></tr><tr><td>Optional components</td><td>A Privileged Access Gateway or Data Access Security collector adds processors and memory</td></tr><tr><td>Restrictions</td><td>No third-party monitoring agents. Not in restricted geographies. Not in <code>10.255.255.241/28</code>, which a VA cannot route to</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Write these down for the network team before the build (see the network page for a firewall request template).</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="step-2-obtain-and-deploy-the-image">Step 2: obtain and deploy the image</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Platform</th><th>How</th></tr></thead><tbody><tr><td>vSphere</td><td>Download the package from the VA documentation page and deploy it with your standard process</td></tr><tr><td>Hyper-V</td><td>Use the package labelled for Azure, which contains a <code>sailpoint-va.vhd</code>. Create a <strong>Generation 1</strong> VM, give it the memory the requirements page states, connect it to an external virtual switch and attach the existing disk</td></tr><tr><td>AWS</td><td>Open a support request for an image (AMI) identifier, giving your account number and region. Launch it with an instance size that meets the requirements, enable instance metadata access with a <strong>hop limit of 2</strong>, and use a security group that allows port 22 from your range</td></tr><tr><td>Azure</td><td>The extracted disk is about 132 GB. Upload it to a storage container, create a managed disk from it, then create the VM from that disk (Linux, a size that meets the requirements) with a network security group that allows port 22</td></tr><tr><td>Google Cloud</td><td>Extract the image, upload it to a storage bucket, import it as a custom image without OS adaptation, and create an instance with a 128 GB boot disk</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>For every platform: start the VM, then sign in to the console or over SSH as the <code>sailpoint</code> user with the default password given in the documentation, and <strong>change it immediately</strong>:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">passwd</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Store the new password in your vault. If it is lost, a new VA has to be created. On a cloud VM, if a failed DHCP-related service is reported after login, the documentation says to disable it:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> systemctl</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> disable</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> esx_dhcp_bump.service</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>On Hyper-V, disable the Azure agent to prevent DNS and routing problems:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">systemctl</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> status</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> waagent</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> systemctl</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> mask</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> waagent</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> reboot</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<h3 id="step-3-network-settings-on-the-va">Step 3: network settings on the VA</h3>
+					<p><strong>Static IP (local deployments)</strong></p>
+					<p>Find the name of the second network interface, then create the network file:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">ip</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> addr</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudoedit</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /etc/systemd/network/static.network</span></span></code></pre></div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">text</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span>[Match]</span></span>
+<span class="line"><span>Name=&#x3C;interface name></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[Network]</span></span>
+<span class="line"><span>DNS=&#x3C;dns server></span></span>
+<span class="line"><span>Address=&#x3C;ip address>/&#x3C;prefix length></span></span>
+<span class="line"><span>Gateway=&#x3C;gateway></span></span>
+<span class="line"><span>Domains=&#x3C;search domain></span></span></code></pre></div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> reboot</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Interface names are assigned when the VM is created, so check each VA. Use a different file, not a copy, per VA.</p>
+					<p><strong>Local NTP</strong></p>
+					<p>Where outbound NTP is closed, point each VA to your internal server. Each VA is configured separately:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudoedit</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> /etc/systemd/timesyncd.conf</span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">        # set NTP=&#x3C;server names or addresses>, uncomment it</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> systemctl</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> restart</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> systemd-timesyncd</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">timedatectl</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> status</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>Host name mappings for sources</strong></p>
+					<p>If a source host name does not resolve through DNS, map it in <code>/home/sailpoint/hosts.yaml</code> and restart the service. Indentation is exact: two spaces before the address, four spaces then a dash before each name.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">yaml</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#85E89D;--shiki-light:#22863A">hosts</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">  10.20.30.40</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    - </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">host1.domain.example</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    - </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">host1</span></span></code></pre></div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">sudo</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> systemctl</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> restart</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> charon</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Prefer fixing DNS to maintaining a file on every VA.</p>
+					<p><strong>HTTP proxy</strong></p>
+					<p>Copy the proxy template from SailPoint's community into <code>/home/sailpoint/</code> and set it:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">yaml</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#85E89D;--shiki-light:#22863A">https_proxy</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">http://&#x3C;proxy>:&#x3C;port>/</span></span>
+<span class="line"><span style="--shiki-dark:#85E89D;--shiki-light:#22863A">http_proxy</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">http://&#x3C;proxy>:&#x3C;port>/</span></span>
+<span class="line"><span style="--shiki-dark:#85E89D;--shiki-light:#22863A">no_proxy</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">&#x3C;host1>|&#x3C;host2></span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">          # hosts to reach directly, such as local APIs</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Then pass the proxy to the bootstrap commands in the next step. In a cloud network, the VA must not be able to reach the instance metadata address (typically <code>169.254.169.254</code>) when it runs behind a proxy. A proxy that inspects TLS must present a certificate the VA trusts, because the VA rejects untrusted certificates.</p>
+					<p><strong>Network tunnel</strong></p>
+					<p>For firewalls that can allow IP addresses but not domain names. It needs outbound 443 to the regional tunnel addresses. The setup guide is on SailPoint's community, behind a login, and the tunnel is not available in some government environments.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="step-4-create-the-cluster-in-the-tenant">Step 4: create the cluster in the tenant</h3>
+					<ol><li><strong>Admin, Connections, Virtual Appliances, Create New.</strong></li><li>Enter a unique cluster name and description. Use a convention such as <code>&lt;env&gt;-&lt;purpose&gt;-&lt;nn&gt;</code>.</li><li>Choose the time zone.</li><li>Choose the cluster type (Standard).</li><li>Optionally enable debugging, which gives verbose logs for 24 hours.</li><li>Save. If you license other components, enable them under cluster components.</li></ol>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="step-5-pair-each-va-with-the-cluster">Step 5: pair each VA with the cluster</h3>
+					<p>On each VA, with the same passphrase for every VA in the cluster:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">va-bootstrap</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> set-passphrase</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">va-bootstrap</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> pair</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>For a proxy VA, add the proxy options to both commands:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">va-bootstrap</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> set-passphrase</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> --http-proxy</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">http://host:por</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> --https-proxy</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">http://host:por</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">va-bootstrap</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> pair</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">             --http-proxy</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">http://host:por</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> --https-proxy</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x3C;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">http://host:por</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">t</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">></span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Then:</p>
+					<ol><li>In the cluster, <strong>Edit, Virtual Appliances, Add New, VA</strong>.</li><li>Enter the pairing code shown on the VA in the configuration page, and select <strong>Pair</strong>.</li><li>Wait about 30 minutes.</li></ol>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Rule</th><th>Detail</th></tr></thead><tbody><tr><td>Passphrase</td><td>The same on every VA in the cluster. It cannot start with a special character or contain <code>!</code>, <code>/</code>, <code>\</code> or spaces</td></tr><tr><td>Pairing code</td><td>Valid for 4 hours. Generate a new one if it expires</td></tr><tr><td>Association</td><td>By passphrase and pairing code, not by a key file</td></tr><tr><td>Order</td><td>Add the second VA after the first shows as connected, and use the same passphrase</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="step-6-verify-before-you-attach-a-source">Step 6: verify before you attach a source</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Check</th><th>Pass</th></tr></thead><tbody><tr><td>VA status</td><td><strong>Connected</strong> for every VA in the cluster</td></tr><tr><td>Cluster badge</td><td>No &quot;Only 1 VA&quot;, &quot;Inactive VA&quot; or &quot;VA Did Not Update&quot; badge</td></tr><tr><td>Time</td><td><code>timedatectl status</code> shows synchronised</td></tr><tr><td>Name resolution</td><td>The source host resolves from the VA</td></tr><tr><td>Port reachability</td><td>The source port answers from the VA</td></tr><tr><td>Outbound</td><td>The required SailPoint hosts answer on 443</td></tr><tr><td>Source</td><td>A test source in the cluster passes <strong>Test Connection</strong> and a small aggregation</td></tr><tr><td>Failover</td><td>Take one VA out of service and confirm a source still aggregates</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Take a VM snapshot after a good configuration, as SailPoint suggests, and delete it once the VA has joined its cluster.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="step-7-attach-sources">Step 7: attach sources</h3>
+					<ul><li>Select the cluster on the source. If the source supports TLS, enable it, and the certificate is copied to the cluster.</li><li>Run <strong>Test Connection</strong>, then a first aggregation, then a full run.</li><li>Record the source, cluster and owner in the cluster plan.</li><li>For directory sources that write, install and test the directory agent on the Windows host (see the directory page).</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="operating-the-cluster">Operating the cluster</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Task</th><th>How</th></tr></thead><tbody><tr><td>Health</td><td>Cluster and VA badges in the tenant, plus the monitors from the hypercare page</td></tr><tr><td>Restart the cluster</td><td>Menu, Restart, confirm. This is the usual first step for a stuck or non-updating VA</td></tr><tr><td>Updates</td><td>Rolling, one VA at a time, not skippable, with no notice. A cluster with a disconnected VA receives no updates at all, so fix an inactive VA quickly</td></tr><tr><td>Pending OS update</td><td><code>sudo update_engine_client -status</code> shows &quot;need reboot&quot;</td></tr><tr><td>Debug logging</td><td>Enable only when needed, and turn it off, because it fills the disk</td></tr><tr><td>Disk, memory warnings</td><td>Check log levels, then the sizing against the requirements</td></tr><tr><td>Certificate expiry</td><td>Replace the expiring certificate under <code>/home/sailpoint/ca-certificates/</code> and remove the old one</td></tr><tr><td>Containers restarting repeatedly</td><td>If a container restarts more than 10 times in 30 minutes, update and restart the cluster</td></tr><tr><td>Password</td><td><code>passwd</code> as <code>sailpoint</code>, then <code>sudo reboot</code>. Save it</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Adding a VA to a cluster</strong></p>
+					<p>Deploy the image, apply the network settings, run <code>va-bootstrap set-passphrase</code> with the cluster's passphrase and <code>va-bootstrap pair</code>, and add it in the cluster. Keep two or more in every cluster.</p>
+					<p><strong>Replacing or retiring a VA</strong></p>
+					<ul><li><strong>Delete</strong> a VA from the cluster's edit page, then shut down the instance on your platform. A VA cannot be deleted if it is the only one in its cluster and still has a source attached.</li><li><strong>SailPoint advises against moving or migrating</strong> existing VAs. Replace by building new.</li><li><strong>A failed cluster</strong> is replaced by creating a new cluster with at least two VAs, pointing each source at it, checking the connections, and then deleting the old cluster. Expect to re-enter source credentials when a source moves to a different cluster.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="disaster-recovery">Disaster recovery</h3>
+					<p>The documented approach is a second cluster, not a standby VA: a new cluster is built, sources are re-pointed, and credentials are re-entered. Plan accordingly:</p>
+					<ul><li>Keep a runbook for building a replacement cluster, and rehearse it once.</li><li>Keep the credentials for every source retrievable from your vault, because failover needs them.</li><li>Decide which sources are critical enough to keep a warm second cluster for.</li><li>Remember that VAs and clusters are per tenant, so production and sandbox each need their own.</li></ul>
+				</div>
+
+<!-- dgm:va-ha-dr -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 300" role="img" aria-labelledby="va-ha-dr-t va-ha-dr-d" xmlns="http://www.w3.org/2000/svg"><title id="va-ha-dr-t">High availability and disaster recovery</title><desc id="va-ha-dr-d">Two or more appliances in the active cluster give high availability; a second cluster is the disaster recovery path and needs sources re-pointed and credentials re-entered.</desc><defs><marker id="va-ha-dr-ar-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk gold" style="fill:var(--gold);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="va-ha-dr-ar-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk teal" style="fill:var(--teal);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="box accent" x="330" y="10" width="160" height="50" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="410.0" y="38.5" text-anchor="middle">ISC tenant</text><rect class="grp teal" x="6" y="100" width="380" height="120" style="fill:none;stroke:var(--teal);stroke-opacity:0.65;stroke-dasharray:6 4"/><text class="h" x="16" y="115" text-anchor="start">Primary cluster (active)</text><rect class="box blue" x="26" y="130" width="150" height="66" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="101.0" y="160.0" text-anchor="middle">VA 1</text><text class="s" x="101.0" y="175.0" text-anchor="middle">host or zone A</text><rect class="box blue" x="206" y="130" width="160" height="66" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="286.0" y="160.0" text-anchor="middle">VA 2</text><text class="s" x="286.0" y="175.0" text-anchor="middle">host or zone B</text><rect class="grp gold" x="434" y="100" width="380" height="120" style="fill:none;stroke:var(--gold);stroke-opacity:0.65;stroke-dasharray:6 4"/><text class="h" x="444" y="115" text-anchor="start">DR cluster (standby)</text><rect class="box " x="454" y="130" width="150" height="66" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="529.0" y="160.0" text-anchor="middle">VA 3</text><text class="s" x="529.0" y="175.0" text-anchor="middle">other site</text><rect class="box " x="634" y="130" width="160" height="66" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="714.0" y="160.0" text-anchor="middle">VA 4</text><text class="s" x="714.0" y="175.0" text-anchor="middle">other site</text><path class="ln teal  " d="M196,100 L380,60" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-ha-dr-ar-teal)"/><path class="ln gold dash " d="M624,100 L440,60" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;stroke-dasharray:5 4;" marker-end="url(#va-ha-dr-ar-gold)"/><rect class="box " x="250" y="250" width="320" height="40" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="410.0" y="267.0" text-anchor="middle">Sources</text><text class="s" x="410.0" y="282.0" text-anchor="middle">attached to one cluster at a time</text><path class="ln teal  " d="M196,220 L330,250" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-ha-dr-ar-teal)"/><path class="ln gold dash " d="M624,220 L490,250" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;stroke-dasharray:5 4;" marker-end="url(#va-ha-dr-ar-gold)"/><text class="l" x="806" y="246" text-anchor="end">failover: re-point, re-enter credentials</text></svg></div><figcaption><b>Rolling updates need a pair.</b> One appliance at a time is updated, so two keep the cluster up. SailPoint advises building a new cluster rather than moving existing appliances.</figcaption></figure>
+
+<div class="prose reveal">
+					<h3 id="build-checklist">Build checklist</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Done</th><th>Item</th></tr></thead><tbody><tr><td></td><td>Cluster plan approved: names, sources, hosts, methods</td></tr><tr><td></td><td>Firewall requests raised and tested from the VA network</td></tr><tr><td></td><td>DNS and NTP confirmed</td></tr><tr><td></td><td>Image deployed, default password changed and stored</td></tr><tr><td></td><td>Static IP, hosts file or proxy configured</td></tr><tr><td></td><td>Cluster created in the tenant with the right time zone</td></tr><tr><td></td><td>Passphrase agreed and stored; each VA paired within four hours</td></tr><tr><td></td><td>Every VA <strong>Connected</strong>; two or more per cluster</td></tr><tr><td></td><td>Test source passes; failover tested</td></tr><tr><td></td><td>Sources attached and documented</td></tr><tr><td></td><td>Monitoring and alerting on cluster status</td></tr><tr><td></td><td>Rebuild runbook written</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Plan clusters in a table before you deploy, and give every cluster two or more VAs.</li><li>Build the network (firewall, DNS, NTP, proxy) before the image.</li><li>Change and vault the default password on first login.</li><li>Use one passphrase per cluster and store it.</li><li>Verify with Test Connection and a failover test before you attach production sources.</li><li>Alert on cluster badges, and treat &quot;Only 1 VA&quot; as an incident.</li><li>Rehearse a rebuild.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

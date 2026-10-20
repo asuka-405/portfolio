@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="The HR Authoritative Source and Identity Model: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>The HR Authoritative Source and Identity Model · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/the-hr-authoritative-source-and-identity-model.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="The HR Authoritative Source and Identity Model" />
+		<meta property="og:description" content="The HR Authoritative Source and Identity Model: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/the-hr-authoritative-source-and-identity-model.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="The HR Authoritative Source and Identity Model" />
+		<meta name="twitter:description" content="The HR Authoritative Source and Identity Model: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="active">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>The HR Authoritative Source and Identity Model</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#choose-the-authoritative-source-on-purpose">Choose the authoritative source on purpose</a></li><li><a href="#connecting-a-salesforce-based-hr-system-sage-people">Connecting a Salesforce-based HR system (Sage People)</a></li><li><a href="#the-join-key">The join key</a></li><li><a href="#identity-attribute-mapping">Identity attribute mapping</a></li><li><a href="#cloud-rules-that-compute-identity-attributes">Cloud rules that compute identity attributes</a></li><li><a href="#login-names-emails-and-distinguished-names">Login names, emails and distinguished names</a></li><li><a href="#writeback-to-hr">Writeback to HR</a></li><li><a href="#correlation">Correlation</a></li><li><a href="#data-reconciliation-before-cutover">Data reconciliation before cutover</a></li><li><a href="#what-sailpoint-s-documentation-adds">What SailPoint's documentation adds</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Everything ISC does to people starts with the authoritative source. On this program the HR system was the only real one, and the identity model built on it carried 60-odd attribute mappings, 40-odd transforms and a handful of cloud rules. Get this layer right and joiner, mover and leaver mostly behave. Get it wrong and every other page of this guide turns into firefighting.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="choose-the-authoritative-source-on-purpose">Choose the authoritative source on purpose</h3>
+					<ul><li><strong>One authoritative source for the workforce.</strong> A second profile existed only for a few administrator identities loaded from a delimited file with no cluster. Keep secondary profiles tiny and give them a lower priority number than the main one so correlation stays predictable.</li><li><strong>The HR system must carry what automation needs.</strong> If lifecycle automation needs a disable date, a time zone, a manager identifier or a reason for leaving, those fields must exist in HR and be mandatory. We added several integration-specific fields to the HR object: a disable-access date, an employment status flag for the identity system, a reason for leaving, the work location time zone, a last-modified timestamp, and fields to hold the email address and login name written back by ISC.</li><li><strong>Mandatory means enforced.</strong> The design assumed the disable date and leave date were mandatory. Hypercare then produced cases where HR forgot to update the disable date, or entered the wrong last day, and the account stayed live or was cut early. Put validation in the HR system, not in a document.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="connecting-a-salesforce-based-hr-system-sage-people">Connecting a Salesforce-based HR system (Sage People)</h3>
+					<p>The HR system was Sage People, which runs on Salesforce. The ISC Web Services connector talked to its REST query API.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Aspect</th><th>What we did</th><th>Why it matters</th></tr></thead><tbody><tr><td>Authentication</td><td>OAuth token endpoint called by a custom authentication step; the token is mapped into the source and sent as a bearer header</td><td>Credentials for the token call end up in the endpoint body, so check how the source stores them (see the security page)</td></tr><tr><td>Query</td><td>A SOQL query over the team member object joined to current employment, selecting around 40 fields</td><td>Select only what you map. Every extra field slows the sync and widens the blast radius of a rename</td></tr><tr><td>Paging</td><td>Termination step reads the <code>done</code> flag and follows <code>nextRecordsUrl</code> until finished</td><td>Without correct pagination steps the connector reads one page and stops</td></tr><tr><td>Schedule</td><td>Hourly, all 24 hours</td><td>Joiners and leavers react within an hour. The design promised hourly sync from day one</td></tr><tr><td>Timeout</td><td>200 seconds</td><td>The first full load is large; size the timeout for it</td></tr><tr><td>Delta</td><td>A delta query filtered on a last-modified field existed in the legacy design</td><td>Decide deliberately whether you use delta. Delta reads usually cannot detect records that disappeared, so even with delta you need periodic full aggregations</td></tr><tr><td>Test connection</td><td>A query with a hard <code>LIMIT 2</code></td><td>Confirms the credential and endpoint only. It does not validate your projection</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Writeback to the HR system (email address, login name) used a PATCH to the same object. It is covered below.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="the-join-key">The join key</h3>
+					<p>The design pinned the whole lifecycle to one HR field: the unique employee identifier, stable for the whole journey of a person including leaving and rehire. Everything keys on it.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Concept</th><th>Rule</th></tr></thead><tbody><tr><td>Joiner</td><td>An identifier ISC has never seen, with status <code>Active</code> or <code>Pre Joiner</code></td></tr><tr><td>Mover</td><td>An identifier ISC already has, with any change in a mapped attribute</td></tr><tr><td>Leaver</td><td>An existing identifier whose disable-access date is today or in the past, whatever the employment status says</td></tr><tr><td>Rehire</td><td>An existing identifier returning to <code>Active</code> or <code>Pre Joiner</code> with an empty reason for leaving</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>The rehire rule is an HR process, not an ISC feature</strong></p>
+					<p>The platform cannot decide whether someone is a rehire or a new person. The program put a rule on HR:</p>
+					<ul><li>Back within 6 months, <strong>same location and department:</strong> reuse the old identifier. ISC reactivates the old account.</li><li>Back within 6 months into a <strong>different department or location</strong>, or after 6 months in any case: HR creates a <strong>new</strong> record with a <strong>new</strong> identifier. ISC creates a new identity, a new login and a new mailbox.</li></ul>
+					<p>The reason was data protection. In one case an ex-employee moved between countries and wanted to keep the old mailbox, which held another entity's client data. Reactivating the old account would have exposed it. The 6-month rule was written into the risk log as the mitigation and communicated to HR, and it still produced hypercare tickets from regions that had not got the message.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="identity-attribute-mapping">Identity attribute mapping</h3>
+					<ul><li>The profile mapped account attributes straight across (names, department, title, country code), referenced transforms for anything that needed cleaning, and called cloud rules for computed values.</li><li>Directory identifiers were also read back in from the target accounts (login name, mail, distinguished name of the user and the manager) so later steps could build on them.</li><li>Manager is correlated by comparing the manager's HR identifier to each identity's own identifier; for directory accounts the built-in manager correlation by account ID was used.</li></ul>
+					<p><strong>Transforms: use lookups, not nested conditionals</strong></p>
+					<p>The legacy tool normalised location and country names with enormous nested <code>IIF(Eq(...))</code> expressions: more than fifty location rewrites in a single expression, plus employee-type mappings. Replacing those with ISC lookup transforms was one of the best decisions of the build.</p>
+					<p>The transforms that were worth having:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Purpose</th><th>Examples</th></tr></thead><tbody><tr><td>Normalisation</td><td>Remove diacritical marks, trim, spaces collapse, lower and upper case</td></tr><tr><td>Standards formats</td><td>E.164 phone, ISO 3166 country, RFC 5646 language, ISO 8601 date</td></tr><tr><td>Lookups</td><td>Country name, location name, office location code, RDC maps, employee type</td></tr><tr><td>Per-country contacts</td><td>HR contact, finance contact, local IT contact, driven by country or location lookups</td></tr><tr><td>Directory builders</td><td>Active and disabled distinguished names, login name, mail nickname</td></tr><tr><td>Date logic</td><td>Is the hire date today, past or future; is now past the end date</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Caveats:</p>
+					<ul><li><strong>Lookup tables hold business data inside the tenant.</strong> HR contacts, finance contacts and local IT contacts per country live in transform tables. They change monthly. Agree an owner, a delivery channel (we used a monthly file from HR) and a change procedure, or contacts go stale and mails go to people who left. Several hypercare tickets were exactly this.</li><li><strong>Transforms reference transforms.</strong> A directory DN transform referenced a location lookup that referenced a trim. Test the chain with real values, including blanks.</li><li><strong>A &quot;default&quot; on every lookup.</strong> A location missing from the table otherwise yields an empty value and, downstream, an account in the wrong container or none at all.</li><li><strong>Keep a naming scheme.</strong> We had separate &quot;on identity profile&quot; and &quot;SP&quot; variants of several DN transforms. Pick one set and retire the rest, or you will edit the wrong one.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="cloud-rules-that-compute-identity-attributes">Cloud rules that compute identity attributes</h3>
+					<p>Cloud rules run inside ISC with no network access. The program used them for values that need real logic.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Rule</th><th>Computes</th><th>Notes</th></tr></thead><tbody><tr><td>Lifecycle state generator</td><td>The <code>cloudLifecycleState</code> attribute from HR status, end date and time zone</td><td>Several variants (temp, latest, extended) existed in the tenant. Only one is referenced by the profile; the rest are clutter and a trap</td></tr><tr><td>Next processing date</td><td>The moment, in UTC, at which the identity's end date is reached at 22:00 local time</td><td>Used by schedule-driven leaver workflows</td></tr><tr><td>Login name generator</td><td>The sAMAccountName</td><td>Described below</td></tr><tr><td>Mail generator</td><td>The email address</td><td>Described below</td></tr><tr><td>End-date eligibility</td><td>A flag for a SaaS payroll app's half-month disable schedule</td><td>Shows how business calendars end up in rules</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Things to know about cloud rules:</p>
+					<ul><li><strong>You cannot read them back through a normal GET.</strong> To see the code you export configuration (a single export call limited to the rule type), which creates an export job. Treat that as part of discovery.</li><li><strong>Changes may go through SailPoint.</strong> In the early build the tracker recorded a &quot;rules upload ticket opened with SailPoint, awaiting review and upload&quot;. Ask what the current process and turnaround are for your tenant, and build that into the plan.</li><li><strong>No network, no model.</strong> A cloud rule cannot call an external service, so anything needing a lookup against another system has to run in a workflow or a connector rule.</li><li><strong>Delete the variants.</strong> Four near-identical lifecycle rules and two next-processing rules sat in the tenant. Keep one, name it plainly, and archive the others outside the tenant.</li></ul>
+					<p><strong>How the lifecycle rule thinks</strong></p>
+					<p>The core of the generator is worth copying as a pattern:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">java</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// Treat the end date as 00:00:01 on the day, move it to the person's own time zone, and</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// pin it to 22:00 local. Compare with "now" in UTC at hour precision.</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">endDateLocal </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> endDate.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">withZoneSameInstant</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(ZoneId.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">of</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(tz)).</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">withHour</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">22</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">).</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">truncatedTo</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(ChronoUnit.HOURS);</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">endUtc       </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> endDateLocal.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">withZoneSameInstant</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(ZoneId.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">of</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"UTC"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">));</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">nowUtc       </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> ZonedDateTime.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">now</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(ZoneId.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">of</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"UTC"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)).</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">truncatedTo</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(ChronoUnit.HOURS);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">!</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">nowUtc.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">isBefore</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(endUtc) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x26;&#x26;</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> !</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">status.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">startsWith</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Inactive"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "inactive"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (status.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">equalsIgnoreCase</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Active"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">))      </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "active"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (status.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">equalsIgnoreCase</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Pre Joiner"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">))  </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "preJoiner"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (status.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">startsWith</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Inactive"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">))          </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "active"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;   </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// paid or unpaid leave stays active</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "intermediate"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">;</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Design points that carry over:</p>
+					<ul><li><strong>A far-future default end date</strong> (year 9000) avoids null handling.</li><li><strong>An invalid or missing time zone falls back to a sensible default</strong> rather than throwing.</li><li><strong>Hour-level truncation</strong> makes the comparison deterministic for a rule that is recomputed on every refresh.</li><li><strong>Leave statuses are not leavers.</strong> Paid and unpaid leave kept the identity active.</li><li><strong>Log the inputs.</strong> The rule logs every input to every condition. That is verbose but it is the only way to explain a state change later.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="login-names-emails-and-distinguished-names">Login names, emails and distinguished names</h3>
+					<p>Joiner automation generated three identifiers. The rules are small and every one of them produced hypercare tickets.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Identifier</th><th>Rule</th><th>Caveat</th></tr></thead><tbody><tr><td>Login name</td><td>First 3 letters of first name + last 3 letters of last name + a two-digit counter, 8 characters maximum</td><td>The counter increments until <code>idn.accountExistsByDisplayName</code> says it is free. We capped the loop at 2,000 attempts. Short names are padded with random letters</td></tr><tr><td>Email</td><td><code>first.last</code>, then <code>first.last1</code>, <code>first.last2</code>... on collision</td><td>Checked against the directory, not only ISC. Name changes generate a new address; the old one becomes a secondary alias</td></tr><tr><td>Distinguished name</td><td>CN + region / department / work location path</td><td><strong>The CN is the login name</strong>, so the directory's &quot;Name&quot; shows <code>ABC123</code> rather than a human name</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>That last point caused several tickets: after the cutover date, new users appeared in the directory console under their login name. The explanation that worked for service desks: the directory's Name attribute defaults to the CN, display name is a different attribute and is still the human name, Outlook and Teams use display name, and for audit reports you should export display name, CN, login name and Name together. Publish that note before go-live.</p>
+					<p><strong>Display names</strong></p>
+					<ul><li><strong>Double spaces.</strong> A name attribute built from a directory CN gave &quot;First Last&quot; for people without a middle name. Normalise with a collapse-spaces transform and search with that in mind.</li><li><strong>Maiden names.</strong> If HR's full name includes a maiden name and you split it, you get &quot;First Last Last&quot;. Build the display name from first name and last name only, and keep a separate attribute for the app that needs a different format.</li><li><strong>Requested name changes.</strong> HR corrects a surname and expects a new email: that is a mover with a name change, handled by the directory before-provisioning logic (new address, UPN, SMTP and SIP proxy addresses, old SMTP kept as an alias). It needs to push the new address back to HR.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="writeback-to-hr">Writeback to HR</h3>
+					<p>Email and login name must be written back to the HR system so downstream systems and HR users see them. The pattern that worked:</p>
+					<ol><li><strong>Event-driven workflow</strong> fires on a change of the email or login name attribute (ignoring the literal value <code>none</code>), waits briefly, then PATCHes the HR record.</li><li><strong>Scheduled workflow</strong> runs twice a day and sweeps for identities whose values are not yet in HR, so a failed event is repaired automatically.</li><li>Both send a notification on failure.</li></ol>
+					<p>Caveats from the program:</p>
+					<ul><li>The HR OAuth call used a <strong>password grant</strong>, and the workflow HTTP step held the <strong>client secret in the body in plaintext</strong>. ISC lets you reference a stored secret in a workflow, but the secrets can only be created in the UI. Do that, not the plaintext version. See the workflows and security pages.</li><li>HR users kept asking &quot;please push the work email into the HR system&quot; for pre-joiners. The scheduled sweep exists because the event path is not perfect; tell HR the sweep interval so they know when to expect it.</li><li>Name corrections after the email was written back arrived as support requests (&quot;push the new work email&quot;). Decide who owns that path and whether it can be automated.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="correlation">Correlation</h3>
+					<p>Account-to-identity correlation was attribute-based on almost every source. Conventions that emerged:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Source type</th><th>Typical sequence</th></tr></thead><tbody><tr><td>Directory</td><td>login name, then email</td></tr><tr><td>Application with login = email</td><td>email only</td></tr><tr><td>SQL applications</td><td>login name, then email, then employee number</td></tr><tr><td>Mixed</td><td>email, then login name, then employee number</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Rules that follow from this:</p>
+					<ul><li><strong>Correlation is case sensitive unless you say otherwise.</strong> An email that differs only in case does not correlate, and the account lands in the uncorrelated pile rather than showing a mismatch. Set <code>ignoreCase</code> deliberately.</li><li><strong>A single-attribute correlation with no fallback is fragile.</strong> An identity with no email cannot correlate at all.</li><li><strong>Never correlate on a synthesised display name.</strong> One source built <code>userName</code> from first and last name in an after-rule; it was a display field, not a login.</li><li><strong>Align correlation and provisioning.</strong> The attributes you correlate on should be the same ones the create policy writes, otherwise a freshly created account fails to correlate.</li><li><strong>Plan for uncorrelated accounts.</strong> Access reviews need a source-owner campaign for them (see the campaigns page).</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="data-reconciliation-before-cutover">Data reconciliation before cutover</h3>
+					<p>A pre-go-live reconciliation of directory accounts against HR found well over a thousand active directory accounts with no employee ID, plus a long tail of other mismatches (accounts for people HR no longer had, staff on unpaid leave, service-like accounts in human OUs). Do this analysis early:</p>
+					<ol><li>Export directory accounts and HR records. Compare on employee ID, then email, then name.</li><li>Classify: matches, directory-only, HR-only, duplicates, non-human accounts in human OUs.</li><li>Agree a remediation owner and a deadline for each class. Backfilling the employee ID attribute in the directory is a legitimate one-off to enable correlation.</li><li>Define the <strong>standard human-account OU</strong> scope so the directory aggregation excludes service and shared accounts.</li></ol>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="what-sailpoint-s-documentation-adds">What SailPoint's documentation adds</h3>
+					<p>From the <a href="https://documentation.sailpoint.com/saas/help/setup/identity_profiles.html" target="_blank" rel="noopener">identity profile documentation</a>, the <a href="https://documentation.sailpoint.com/saas/help/accounts/loading_data.html" target="_blank" rel="noopener">account loading documentation</a> and community threads on correlation and authoritative-source migration, checked October 2026.</p>
+					<p><strong>Identity profiles</strong></p>
+					<ul><li><strong>One identity belongs to one profile,</strong> the highest-priority profile where it has an account on that profile's authoritative source. Priority follows creation order (10, 20, and so on) and can be changed through the update-identity-profile API. Plan the order before you create overlapping profiles.</li><li><strong>Required mappings:</strong> user name, work email and last name must be mapped in every profile and cannot be null. User name must be unique across identities; a duplicate raises an identity exception.</li><li><strong>Do not use the characters <code>* ( ) &amp; ! .</code></strong> in the source attribute mapped to the user name or alternative sign-in attribute.</li><li><strong>A multi-value attribute in a transform uses only its first value.</strong> Test with a person who has two.</li><li><strong>You cannot create or delete an identity profile while an account aggregation is running.</strong></li><li><strong>Deleting a profile deletes its identities</strong> unless they can be reassigned, and their accounts become uncorrelated. Remove source-owner and app-owner links from those identities first, or the deletion fails.</li><li><strong>After changing mappings the profile shows &quot;Needs Processing&quot;.</strong> Apply the changes, and use Preview on the mappings page with real data first.</li><li><strong>Rules need review by SailPoint before implementation; transforms do not.</strong> This is why a rule change can take calendar time.</li></ul>
+					<p><strong>Optimized aggregation and correlation</strong></p>
+				</div>
+
+<!-- dgm:optimized-agg -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 290" role="img" aria-labelledby="optimized-agg-t optimized-agg-d" xmlns="http://www.w3.org/2000/svg"><title id="optimized-agg-t">Optimized and unoptimized aggregation</title><desc id="optimized-agg-d">An optimized run skips unchanged accounts and does not re-run correlation. An unoptimized run reprocesses everything.</desc><defs><marker id="optimized-agg-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk " style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="optimized-agg-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="optimized-agg-ar-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk gold" style="fill:var(--gold);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="grp accent" x="6" y="8" width="520" height="274" style="fill:none;stroke:var(--accent);stroke-opacity:0.6;stroke-dasharray:6 4"/><text class="h" x="16" y="23" text-anchor="start">Optimized (default, UI and schedules)</text><rect class="box " x="24" y="110" width="120" height="52" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="84.0" y="125.5" text-anchor="middle">Read every</text><text class="t" x="84.0" y="140.5" text-anchor="middle">record</text><text class="s" x="84.0" y="155.5" text-anchor="middle">from the source</text><polygon class="box gold" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1" points="236,94.0 311.0,136 236,178.0 161.0,136"/><text class="s" style="fill:var(--ink);font-weight:700" x="236" y="133.5" text-anchor="middle">Changed since</text><text class="s" style="fill:var(--ink);font-weight:700" x="236" y="145.5" text-anchor="middle">last run?</text><path class="ln   " d="M144,136.0 L161,136" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#optimized-agg-ar)"/><rect class="box ghost" x="364" y="48" width="148" height="52" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="438.0" y="64.5" text-anchor="middle">Skip the account</text><text class="s" x="438.0" y="79.5" text-anchor="middle">no correlation, no</text><text class="s" x="438.0" y="92.5" text-anchor="middle">manager correlation</text><rect class="box accent" x="364" y="168" width="148" height="64" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="438.0" y="184.0" text-anchor="middle">Update attributes</text><text class="s" x="438.0" y="199.0" text-anchor="middle">evaluate correlation</text><text class="s" x="438.0" y="212.0" text-anchor="middle">and manager</text><text class="s" x="438.0" y="225.0" text-anchor="middle">correlation</text><path class="ln   " d="M236,94 L236,74 L364,74" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#optimized-agg-ar)"/><text class="l" x="300" y="68" text-anchor="middle">no</text><path class="ln accent  " d="M236,178 L236,200 L364,200" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#optimized-agg-ar-accent)"/><text class="l" x="300" y="194" text-anchor="middle">yes</text><rect class="grp gold" x="546" y="8" width="268" height="274" style="fill:none;stroke:var(--gold);stroke-opacity:0.65;stroke-dasharray:6 4"/><text class="h" x="556" y="23" text-anchor="start">Unoptimized (API only)</text><rect class="box gold" x="562" y="40" width="236" height="62" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="680.0" y="60.5" text-anchor="middle">load-accounts with</text><text class="t" x="680.0" y="75.5" text-anchor="middle">disableOptimization=true</text><text class="s" x="680.0" y="90.5" text-anchor="middle">that one run only</text><rect class="box " x="562" y="120" width="236" height="52" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="680.0" y="143.0" text-anchor="middle">Every record is processed</text><text class="s" x="680.0" y="158.0" text-anchor="middle">correlation re-run for all</text><rect class="box teal" x="562" y="190" width="236" height="70" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="680.0" y="214.5" text-anchor="middle">Manually correlated accounts</text><text class="t" x="680.0" y="229.5" text-anchor="middle">are kept</text><text class="s" x="680.0" y="244.5" text-anchor="middle">check them before you start</text><path class="ln gold  " d="M680,102 L680,120" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#optimized-agg-ar-gold)"/><path class="ln gold  " d="M680,172 L680,190" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#optimized-agg-ar-gold)"/></svg></div><figcaption><b>Why a fixed correlation rule can do nothing.</b> Accounts that did not change are skipped, so they are never re-matched. Use the unoptimized run after correcting correlation logic or the data it matches.</figcaption></figure>
+
+<div class="prose reveal">
+					<p>This is the most useful addition to the correlation section above. By default an aggregation is <strong>optimized</strong>: it reads every record, but an existing account with no detected change is skipped and <strong>neither account correlation nor manager correlation is evaluated for it</strong>. Consequences:</p>
+					<ul><li>Fixing a correlation rule, or fixing the data it matches on, does not re-correlate accounts that did not change. Accounts stay uncorrelated until you run an unoptimized aggregation.</li><li>Scheduled and manual runs from the UI are always optimized. An unoptimized run is available only through the API, by passing <code>disableOptimization=true</code> to the account-load call, and it applies to that run only.</li><li>Manually correlated accounts are kept on an unoptimized run, so check for them before you start.</li></ul>
+					<p>Community practice for changing correlation: confirm the new attribute is populated, unique and immutable on every existing account, add it as the <strong>first</strong> criterion with the old one as a temporary fallback (criteria are evaluated in order), run the unoptimized aggregation, then review what is still uncorrelated. Community threads also report a default fallback that compares the account name with the identity name when no configured criterion matches, which can correlate an account you did not expect. Treat that as observed by others, not documented.</p>
+				</div>
+
+<!-- dgm:profile-priority -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 270" role="img" aria-labelledby="profile-priority-t profile-priority-d" xmlns="http://www.w3.org/2000/svg"><title id="profile-priority-t">One identity belongs to one identity profile</title><desc id="profile-priority-d">An identity joins the highest priority profile whose authoritative source holds one of its accounts.</desc><defs><marker id="profile-priority-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk " style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="profile-priority-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="profile-priority-ar-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk blue" style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="profile-priority-ar-violet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk violet" style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="box " x="6" y="20" width="200" height="60" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="106.0" y="47.0" text-anchor="middle">Person A</text><text class="s" x="106.0" y="62.0" text-anchor="middle">account on the HR source only</text><rect class="box " x="6" y="170" width="200" height="70" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="106.0" y="195.5" text-anchor="middle">Person B</text><text class="s" x="106.0" y="210.5" text-anchor="middle">accounts on the HR source and</text><text class="s" x="106.0" y="223.5" text-anchor="middle">on the admin source</text><rect class="box blue" x="330" y="20" width="210" height="70" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="435.0" y="45.5" text-anchor="middle">HR profile, priority 20</text><text class="s" x="435.0" y="60.5" text-anchor="middle">authoritative source: HR</text><text class="s" x="435.0" y="73.5" text-anchor="middle">system</text><rect class="box violet" x="330" y="150" width="210" height="70" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="435.0" y="175.5" text-anchor="middle">Admin profile, priority 10</text><text class="s" x="435.0" y="190.5" text-anchor="middle">authoritative source: small</text><text class="s" x="435.0" y="203.5" text-anchor="middle">admin file</text><path class="ln accent  " d="M206,50 L330,55" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#profile-priority-ar-accent)"/><path class="ln accent  " d="M206,195 L330,190" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#profile-priority-ar-accent)"/><text class="l" x="268" y="176" text-anchor="middle">highest priority wins</text><path class="ln  dash " d="M206,185 L260,120 L330,75" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;stroke-dasharray:5 4;" marker-end="url(#profile-priority-ar)"/><rect class="box blue" x="630" y="20" width="180" height="70" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="720.0" y="38.0" text-anchor="middle">Identity in the HR</text><text class="t" x="720.0" y="53.0" text-anchor="middle">profile</text><text class="s" x="720.0" y="68.0" text-anchor="middle">mappings and lifecycle of</text><text class="s" x="720.0" y="81.0" text-anchor="middle">the HR profile</text><rect class="box violet" x="630" y="150" width="180" height="70" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="720.0" y="168.0" text-anchor="middle">Identity in the admin</text><text class="t" x="720.0" y="183.0" text-anchor="middle">profile</text><text class="s" x="720.0" y="198.0" text-anchor="middle">mappings of the admin</text><text class="s" x="720.0" y="211.0" text-anchor="middle">profile</text><path class="ln blue  " d="M540,55 L630,55" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#profile-priority-ar-blue)"/><path class="ln violet  " d="M540,185 L630,185" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#profile-priority-ar-violet)"/><text class="l" x="410" y="258" text-anchor="middle">Priority follows creation order by default (10, 20,...). Lower number wins. Change it with the update profile API.</text></svg></div><figcaption><b>Priority matters for second sources.</b> Plan the order before you create overlapping profiles; you cannot create or delete a profile while an account aggregation is running.</figcaption></figure>
+
+<div class="prose reveal">
+					<p><strong>Choosing the join key</strong></p>
+					<p>Both the documentation and the community's authoritative-source migration guide say the same thing we concluded: use an attribute that is unique, consistently captured in every system and immutable, and <strong>avoid personally identifiable values such as government identifiers.</strong></p>
+					<p><strong>Replacing or changing the HR system</strong></p>
+					<p>SailPoint's <a href="https://community.sailpoint.com/t5/Identity-Security-Cloud-Wiki/Migrating-Between-Authoritative-Sources/ta-p/194410" target="_blank" rel="noopener">migration guide</a> gives a sequence worth adopting if the HR platform will change during or after your program:</p>
+				</div>
+
+<!-- dgm:hr-migration -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 420" role="img" aria-labelledby="hr-migration-t hr-migration-d" xmlns="http://www.w3.org/2000/svg"><title id="hr-migration-t">Replacing the HR system without a big bang</title><desc id="hr-migration-d">Nine steps: move the HR system first, onboard it separately, mirror the identity profile, migrate access-driving attributes last.</desc><defs></defs><rect class="box gold" x="34" y="6" width="770" height="38" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="44" y="22.0" text-anchor="start">Go live with the new HR system first</text><text class="s" x="44" y="37.0" text-anchor="start">not the same day as the ISC switch. Watch the data for days, pause orchestrations</text><circle class="badge" cx="16" cy="25" r="9"/><text class="badge-t" x="16" y="28.6" text-anchor="middle">1</text><rect class="box " x="34" y="51" width="770" height="38" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="44" y="67.0" text-anchor="start">Onboard the new HR source</text><text class="s" x="44" y="82.0" text-anchor="start">let several aggregations run, configure manager correlation</text><circle class="badge" cx="16" cy="70" r="9"/><text class="badge-t" x="16" y="73.6" text-anchor="middle">2</text><rect class="box " x="34" y="96" width="770" height="38" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="44" y="112.0" text-anchor="start">Correlate to existing identities</text><text class="s" x="44" y="127.0" text-anchor="start">on the agreed unique attribute. Review the uncorrelated report</text><circle class="badge" cx="16" cy="115" r="9"/><text class="badge-t" x="16" y="118.6" text-anchor="middle">3</text><rect class="box " x="34" y="141" width="770" height="38" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="44" y="157.0" text-anchor="start">Create a mirrored identity profile</text><text class="s" x="44" y="172.0" text-anchor="start">same mappings and transforms. Confirm identity counts</text><circle class="badge" cx="16" cy="160" r="9"/><text class="badge-t" x="16" y="163.6" text-anchor="middle">4</text><rect class="box accent" x="34" y="186" width="770" height="38" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="44" y="202.0" text-anchor="start">Raise its priority</text><text class="s" x="44" y="217.0" text-anchor="start">check identities moved: counts, search, spot checks</text><circle class="badge" cx="16" cy="205" r="9"/><text class="badge-t" x="16" y="208.6" text-anchor="middle">5</text><rect class="box " x="34" y="231" width="770" height="38" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="44" y="247.0" text-anchor="start">Update role criteria</text><text class="s" x="44" y="262.0" text-anchor="start">add OR clauses so people qualify on old or new HR data</text><circle class="badge" cx="16" cy="250" r="9"/><text class="badge-t" x="16" y="253.6" text-anchor="middle">6</text><rect class="box accent" x="34" y="276" width="770" height="38" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="44" y="292.0" text-anchor="start">Migrate attributes gradually</text><text class="s" x="44" y="307.0" text-anchor="start">firstValid transforms. Lifecycle state and other access-driving attributes last</text><circle class="badge" cx="16" cy="295" r="9"/><text class="badge-t" x="16" y="298.6" text-anchor="middle">7</text><rect class="box " x="34" y="321" width="770" height="38" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="44" y="337.0" text-anchor="start">Re-point owners and groups</text><text class="s" x="44" y="352.0" text-anchor="start">governance groups, source owners, application owners</text><circle class="badge" cx="16" cy="340" r="9"/><text class="badge-t" x="16" y="343.6" text-anchor="middle">8</text><rect class="box teal" x="34" y="366" width="770" height="38" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="44" y="382.0" text-anchor="start">Clean up</text><text class="s" x="44" y="397.0" text-anchor="start">delete the old profile, optionally the old source</text><circle class="badge" cx="16" cy="385" r="9"/><text class="badge-t" x="16" y="388.6" text-anchor="middle">9</text></svg></div><figcaption><b>Sequence from SailPoint's authoritative-source migration guide.</b> Choose a low-impact window and keep a rollback plan with time to execute it.</figcaption></figure>
+
+<div class="prose reveal">
+					<ol><li>Go live with the new HR system first and do not switch ISC to it the same day. Pause orchestrations and watch its data for a few days to a week.</li><li>Onboard the new HR source, let several aggregations run and configure manager correlation.</li><li>Correlate its accounts to existing identities on the agreed unique attribute and review the uncorrelated report.</li><li>Create a new identity profile mirroring the old mappings and transforms, confirm identity counts, then raise its priority.</li><li>Update role criteria with OR clauses so people qualify on either the old or new HR data.</li><li>Migrate attributes gradually with <code>firstValid</code> transforms, <strong>moving lifecycle state and other access-driving attributes last.</strong></li><li>Re-point owners and governance groups, then delete the old profile.</li></ol>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Specify the HR fields automation needs and enforce them in HR.</li><li>Document the join key and the rehire rule and get HR's written agreement.</li><li>Replace conditional-heavy mappings with lookup transforms that have defaults, and name an owner for every table.</li><li>Keep one version of each cloud rule; export and archive the rest.</li><li>Publish the CN-equals-login-name explanation to service desks before go-live.</li><li>Reconcile directory accounts to HR at least a month before cutover.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

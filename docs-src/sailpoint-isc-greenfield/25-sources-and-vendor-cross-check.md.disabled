@@ -1,0 +1,112 @@
+---
+title: Sources and Vendor Cross-Check
+---
+
+This guide is built from one program's experience. To test it, we compared it in October 2026 with SailPoint's public documentation, the SailPoint Developer Community and Compass knowledge articles. This page records where they agree, where they add something, where they disagree, and which sources to trust for what. Re-run the comparison before you rely on any single number: the platform changes continuously.
+
+## How to weigh the sources
+
+| Source | Trust it for | Be careful about |
+|---|---|---|
+| [SailPoint documentation](https://documentation.sailpoint.com/) | Limits, supported objects, required fields, documented behaviour | Pages can lag a release, and two pages occasionally describe the same setting differently |
+| [Developer documentation](https://developer.sailpoint.com/docs/) | API behaviour, rate limits, configuration management | The `beta` endpoints change |
+| [Developer Community](https://developer.sailpoint.com/discuss/) | Real failure cases, workarounds, how others hit a limit | Individual posts are not official, are often old, and sometimes conflict. Check the date and look for a staff reply |
+| Compass and community knowledge articles | Planning guidance, phase sequences, migration steps | Written for the general case. Some are for IdentityIQ rather than ISC |
+| Vendor blogs | Direction of the product | Marketing. Several figures are not independently verifiable |
+
+A rule that served the program: **a number from the documentation is a starting point, a number from your own tenant is the answer.** Where this guide gives a limit we measured, it says so.
+
+## Where the vendor guidance agreed with us
+
+| Topic | Agreement |
+|---|---|
+| Two or more VAs per cluster | The requirements page says the same, including for sandbox |
+| Break-glass administrators per tenant | The readiness guide asks for them separately for sandbox and production |
+| Config Hub does not carry secrets | Documented in the backup page and the API reference |
+| Delete threshold as the guard against empty feeds | Documented as the recommended protection against misconfiguration |
+| Immutable, non-personal join key | Both the migration guide and community practice say it |
+| Verify data before certifying it | First phase of SailPoint's own phased approach |
+| Rules need SailPoint involvement | The identity profile page says rules must be reviewed before implementation |
+| Reviewers cannot certify themselves | Reassignment checks for self-review |
+| Create workflows with an administrator account that will not expire | The workflow documentation says an owner who leaves orphans the workflow and invalidates its token |
+
+## Where the vendor guidance added something we missed
+
+| Topic | What it adds | Where it is now covered |
+|---|---|---|
+| Optimized aggregation skips correlation for unchanged accounts | Explains why a fixed correlation rule did nothing. API-only unoptimized run | Identity Model, API Recipes |
+| Delete threshold rounding and cancel behaviour | Small sources round up; UI offers up to 20 percent but a typed value works | Connector Patterns |
+| Schedule time zone follows the cluster and ignores daylight saving | A real source of "an hour off" tickets | Connector Patterns |
+| API rate limit of 100 per client ID per 10 seconds | Needed by any script and by the campaign factory | Web Services and JDBC, Campaigns |
+| Reassignment stops after four hops | Explains items landing on an odd reviewer | Campaigns |
+| Config Hub silently skips unsupported types | `COMPLETE` does not mean everything moved | Testing and Go-Live |
+| Workflow execution quota and the two-hour first-enable delay | Planning facts for a workflow-heavy design | Forms and Workflows |
+| Parallel loop 250, serial loop 1,000 | Changes the workaround for large inputs | Forms and Workflows |
+| Identity profile creation order sets priority; cannot be changed during aggregation | Matters for second authoritative sources | Identity Model |
+| Prioritise by business priority, impact and readiness | Names readiness explicitly | Program Setup, Application Factory |
+| HR system replacement sequence | A tested playbook for a later HR change | Identity Model |
+| Identity deletion is blocked by ownership and active reviews; disabling does not touch source accounts | Fixes the order of offboarding | Implementation Team Offboarding |
+| Workflows are orphaned when their owner leaves; assigning to another administrator issues a new token | The highest-impact offboarding risk | Implementation Team Offboarding |
+
+## Where we corrected this guide
+
+| Earlier statement | Correction |
+|---|---|
+| Define Variable "caps at 50 variables" | The documentation says **50 operations per variable.** The page now says so |
+| Phase 1 chosen "for pattern diversity, not business size" | Criticality and diversity both mattered. The guide now says business criticality builds the shortlist and diversity makes the final selection |
+
+## Where sources disagree, and what we advise
+
+| Question | The disagreement | Advice |
+|---|---|---|
+| Does an over-threshold run cancel the aggregation or skip deletions? | One documentation page says cancel, another says no deletions | Test on your source type and alert on the warning |
+| Provisioning retries | Community reports say three attempts, one minute or sixty minutes apart, tunable or fixed | Test a retryable failure on your tenant and write down what you see |
+| Workflow step allowance | Posts quote different step counts by plan | Read the limit from the error on your own tenant. We saw 50 after the trigger |
+| VA sizing | The readiness guide and the requirements page quote different ranges and a different Azure size | Follow the requirements page |
+| Retry-After range on the Web Services connector | Documentation gives a small number of retries, community posts give extra detail on accepted ranges | Treat the vendor's own API limit as the real constraint |
+
+## What we could not find
+
+An honest list is part of the cross-check. Neither the documentation nor the community gave us:
+
+- An official limit on search-based campaign size.
+- An official per-execution timeout for workflows.
+- A documented order requirement for group aggregation before account aggregation. We kept it as a practice, since an account that references a group that has not aggregated yet is easy to explain and cheap to avoid.
+- A documented case-sensitivity rule for correlation. Community posts say matches must be exact. We observed case mismatches failing, so we kept the advice, but test your own source.
+- Any guidance on VA sizing by number of sources per cluster. The requirements page states no limit.
+- A built-in circuit breaker for bulk terminations, beyond the delete threshold.
+
+## Reading list
+
+Documentation:
+
+- [VA system and network requirements](https://documentation.sailpoint.com/saas/help/va/requirements_va.html)
+- [Loading account data](https://documentation.sailpoint.com/saas/help/accounts/loading_data.html)
+- [Creating identity profiles](https://documentation.sailpoint.com/saas/help/setup/identity_profiles.html)
+- [Workflows](https://documentation.sailpoint.com/saas/help/workflows/index.html) and [workflow operators](https://documentation.sailpoint.com/saas/help/workflows/workflow-operators.html)
+- [Config Hub backups](https://documentation.sailpoint.com/saas/help/confighub/config_hub_backup.html)
+- [Reassigning certifications](https://documentation.sailpoint.com/saas/user-help/certs/reassign_certs.html)
+- [Rate limiting](https://developer.sailpoint.com/docs/api/rate-limit/)
+- [SaaS configuration reference](https://developer.sailpoint.com/docs/extensibility/configuration-management/saas-configuration/)
+
+Planning guidance:
+
+- [A phased approach to identity security](https://community.sailpoint.com/knowledge/A-phased-approach-to-identity-security)
+- [The connectivity workstream](https://community.sailpoint.com/knowledge/The-Connectivity-Workstream)
+- [Tenant connectivity readiness](https://community.sailpoint.com/knowledge/Getting-Ready-for-Identity-Security-Cloud-Tenant-Connectivity)
+- [Migrating between authoritative sources](https://community.sailpoint.com/t5/Identity-Security-Cloud-Wiki/Migrating-Between-Authoritative-Sources/ta-p/194410)
+- [Accelerating application onboarding](https://www.sailpoint.com/blog/accelerating-application-onboarding-with-application-management)
+
+Community threads worth reading in full:
+
+- [Configuring termination thresholds](https://developer.sailpoint.com/discuss/t/configuring-termination-thresholds/173541)
+- [Workflows with 1K serial loops](https://developer.sailpoint.com/discuss/t/new-capability-workflows-with-1k-serial-loops/207478)
+- [How to configure retries for connector aggregations and provisioning](https://developer.sailpoint.com/discuss/t/how-to-configure-retries-for-connector-aggregations-and-provisioning-actions/63485)
+- [Choosing the right integration method for application onboarding](https://developer.sailpoint.com/discuss/t/choosing-the-right-integration-method-for-application-onboarding-in-sailpoint-identity-security-cloud-isc/217685)
+- [Changing correlation logic](https://developer.sailpoint.com/discuss/t/changing-correlation-logic-on-ad-connector/216614)
+
+## Actions
+
+- Before design sign-off, re-read the documentation pages above and note any change since October 2026.
+- Date every limit you record, and mark whether it came from the docs, the community or your own tenant.
+- Add a row to this page each time a documented behaviour surprises you.

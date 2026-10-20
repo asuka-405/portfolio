@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Phase 2 Application Onboarding Factory: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Phase 2 Application Onboarding Factory · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/phase-2-application-onboarding-factory.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Phase 2 Application Onboarding Factory" />
+		<meta property="og:description" content="Phase 2 Application Onboarding Factory: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/phase-2-application-onboarding-factory.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Phase 2 Application Onboarding Factory" />
+		<meta name="twitter:description" content="Phase 2 Application Onboarding Factory: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="active">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Phase 2 Application Onboarding Factory</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#the-tracker">The tracker</a></li><li><a href="#the-questionnaire">The questionnaire</a></li><li><a href="#per-application-artefacts">Per-application artefacts</a></li><li><a href="#worked-examples">Worked examples</a></li><li><a href="#prioritisation">Prioritisation</a></li><li><a href="#patterns-that-kept-the-factory-moving">Patterns that kept the factory moving</a></li><li><a href="#what-sailpoint-s-guidance-adds">What SailPoint's guidance adds</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Phase 1 brought in the directory, the HR system and about ten critical applications by hand. Phase 2 had a target of 120 to 135 more applications over five to six quarters, which cannot be done as a series of bespoke projects. This page describes the factory that was set up: how applications were tracked and chased, what the questionnaire asked, the repeatable artefacts for each one, and what the response data taught us about the realistic pace.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="the-tracker">The tracker</h3>
+					<p>A single workbook tracked every application. It had one sheet per phase, a backlog and a response tracker. For the 57 applications in the active list, the columns were:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Group</th><th>Columns</th></tr></thead><tbody><tr><td>Outreach</td><td>initial communication date, reminder, latest response, call scheduled</td></tr><tr><td>Questionnaire</td><td>status (received, partial, none)</td></tr><tr><td>People</td><td>application owner, technical single point of contact, country, office</td></tr><tr><td>Backlog sheet</td><td>status, minutes of meeting, escalated, priority (P1 or P2), call-schedule mail, environment access, region, when the technical contact is available, replaced by</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Keep the owner and the <strong>technical contact</strong> as separate columns. The business owner answers &quot;who needs access&quot;; the technical contact answers &quot;how is it stored and can we connect&quot;. Often they are different people, and about a dozen applications were first &quot;redirected to the technical contact&quot;.</p>
+					<p><strong>The response tracker</strong></p>
+					<p>From early December to February, about two months of chasing:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Measure</th><th>Start</th><th>End</th></tr></thead><tbody><tr><td>Full responses</td><td>21</td><td>32</td></tr><tr><td>Redirected to a technical contact</td><td>about 12</td><td>about 15</td></tr><tr><td>No response</td><td>7</td><td>0</td></tr><tr><td>Calls scheduled</td><td></td><td>25</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Reading it: <strong>chasing works, but slowly.</strong> No-response fell to zero, yet full responses (32) stayed well below the number of applications in the active list (57), with the rest redirected or scheduled for a call. Plan for a long tail of applications that never answer, and agree in advance what happens to them (retire, defer, or review as a flat file).</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="the-questionnaire">The questionnaire</h3>
+					<p>About 50 filled questionnaires exist. Each is a short workbook in three sections.</p>
+					<p><strong>1. Overview</strong></p>
+					<ul><li>Where it is hosted and who manages it (vendor or in-house).</li><li>Whether it has an API for users and groups, and whether the database can be read.</li><li>Which environments exist (development, test, production).</li></ul>
+					<p><strong>2. User management</strong></p>
+					<ul><li>Who gets access and how it is requested today.</li><li>The joiner, mover and leaver process.</li><li>Mandatory attributes for an account.</li><li>How access is defined (roles, groups, a table) and how changes are made.</li><li>How termination is handled.</li><li>How often the user list can be synchronised.</li><li>The ticket form used, and the team that handles it.</li><li>Whether the user list comes from HR or the directory, and whether the directory is mandatory.</li><li>Approvals in use.</li><li>Access review frequency and criteria.</li></ul>
+					<p><strong>3. Single point of contact details</strong></p>
+					<p>Names and contact details for the owner, the technical contact and a deputy.</p>
+					<p><strong>What the answers looked like</strong></p>
+					<p>Many answers were &quot;don't know&quot; or a row of question marks. Several applications turned out to be retired or about to be replaced, one payroll product was terminated, and others had no technical owner at all. This is not a failure of the questionnaire. It is the first useful output of the factory: <strong>an honest inventory of what is in use and who knows about it.</strong> Record the &quot;don't know&quot; answers, since they drive what you do next.</p>
+					<p>An outreach mail template (initial request, reminder, escalation) was kept with the tracker. Write it once and reuse it for every application.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="per-application-artefacts">Per-application artefacts</h3>
+					<p>Every application followed the same document trail:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Artefact</th><th>Purpose</th></tr></thead><tbody><tr><td>Requirements document</td><td>Purpose, application brief (user base, entitlements, environments), current provisioning process, in-scope and out-of-scope operations, demo notes</td></tr><tr><td>Sign-off on requirements</td><td>The application owner agrees what will and will not be automated</td></tr><tr><td>Demo</td><td>Show the integration working in the sandbox</td></tr><tr><td>Design document</td><td>Integration approach, source configuration, schemas, correlation, schedule, provisioning policies, forms, workflows, rules</td></tr><tr><td>System integration test results</td><td>Pass or fail per case, with evidence</td></tr><tr><td>User acceptance test</td><td>Business sign-off</td></tr><tr><td>Implementation and rollback plan</td><td>Ordered steps with a named rollback for each</td></tr><tr><td>End-user manual (SOP)</td><td>For the service desk and the approvers</td></tr><tr><td>Documentation pack</td><td>The five-file handover (see hypercare page)</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Effort heuristic</strong></p>
+					<p>The planning heuristic that held up: <strong>three to five sessions for requirements, three to five for system integration testing, one to two for production.</strong> An integration that needs a custom rule or a database schema takes the upper end or more. Budget the sessions as calendar time with the business, not as build hours; the waiting is what dominates.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="worked-examples">Worked examples</h3>
+					<p>Two applications that shared a vendor product but differed in structure became the templates:</p>
+					<ul><li><strong>A SQL Server application with one database per client.</strong> The integration discovers client databases, reads users and groups from each, and provisions into the right one. It needed a multi-database schema document, a JDBC provisioning rule, an access request execution description and a test-evidence document, on top of the usual artefacts.</li><li><strong>The single-instance version of the same product.</strong> One database, no client dimension. It followed the simple pattern: requirements, an approval process slide, an end-user manual, SIT results, and an implementation and rollback plan.</li></ul>
+					<p>The multi-database one is the harder case, and its documents are the more detailed. The lesson we would draw (a recommendation, not a measurement) is to pick the hardest representative application first, so its entitlement naming, approval routing, request form and evidence format can be reused by the simpler ones.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="prioritisation">Prioritisation</h3>
+					<p>Rank the backlog on three axes and make the ranking visible:</p>
+					<ol><li><strong>Risk.</strong> Finance, client data and privileged systems first.</li><li><strong>Integration readiness.</strong> An application with an API or a readable database ahead of one that needs a project.</li><li><strong>Responsiveness.</strong> An owner who answers quickly goes before one who does not, because it keeps the factory busy. This is a recommendation, not something the tracker enforced.</li></ol>
+					<p>Use P1 and P2 rather than a score. Anything that is not P1 or P2 is not in the plan.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="patterns-that-kept-the-factory-moving">Patterns that kept the factory moving</h3>
+					<ul><li><strong>A fixed onboarding checklist per source</strong> (see the checklists page), including the lifecycle source list and the delete threshold.</li><li><strong>Standard entitlement and profile naming,</strong> so rules and reports work across applications.</li><li><strong>A standard request form and approval chain</strong> so each application only supplies its list of options.</li><li><strong>Templates for every document,</strong> pre-populated with the answers from the questionnaire.</li><li><strong>Flat-file review as the fallback</strong> for applications that cannot be integrated (see the campaigns page). It satisfies audit while the harder integration waits.</li><li><strong>Weekly status</strong> with counts by stage, driven from the tracker, not from memory.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="what-sailpoint-s-guidance-adds">What SailPoint's guidance adds</h3>
+					<ul><li><strong>Discovery before onboarding.</strong> SailPoint's guidance is to gain visibility of as many applications as you can, governed or not, before choosing. Our questionnaire and tracker did this by hand. If you license an application discovery capability, use it to seed the tracker.</li><li><strong>Self-registration.</strong> A SailPoint blog describes a portal where application owners register their own systems and answer a few questions, from which prioritisation suggestions are made. A shared form feeding the tracker achieves the same effect with less effort for your team.</li><li><strong>Reuse patterns.</strong> The same blog recommends starting from templates for systems already seen elsewhere and collecting only customer-specific details (URLs, connection strings) at registration, instead of long technical discovery.</li><li><strong>Readiness assessments.</strong> The connectivity guidance warns that unknown ownership and missing information are the main causes of stalled onboarding. Run a readiness check before engineering time is spent.</li><li><strong>Require an IAM review for every new application,</strong> system development or vendor purchase, so the long tail does not grow back after phase 2.</li><li><strong>Document the onboarding steps</strong> for compliance and for the next application.</li><li><strong>Evaluate after onboarding.</strong> Review applications against new platform features periodically; a connector you built in phase 2 may have a standard replacement by phase 3.</li></ul>
+					<p>Sources: <a href="https://www.sailpoint.com/blog/accelerating-application-onboarding-with-application-management" target="_blank" rel="noopener">application management blog</a> and <a href="https://community.sailpoint.com/knowledge/The-Connectivity-Workstream" target="_blank" rel="noopener">the connectivity workstream</a>. Both are vendor material; the blog describes SailPoint's own services and tooling, so apply the ideas, not the sales pitch.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Build the tracker before the first outreach mail, with separate owner and technical contact columns.</li><li>Send a questionnaire that asks about the mechanics (API, database, environments, JML, mandatory attributes), and record &quot;don't know&quot; answers as data.</li><li>Agree what happens to applications that never answer.</li><li>Use the same artefact trail for every application and write the effort heuristic into the plan.</li><li>Do the hardest representative application first and turn it into the template.</li><li>Keep a visible P1 and P2 backlog with a reason for each.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

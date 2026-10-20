@@ -14,3 +14,4 @@ netlify.toml
 .cache
 data
 .netlifyignore
+docs-src

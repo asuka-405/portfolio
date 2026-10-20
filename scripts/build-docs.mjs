@@ -10,6 +10,7 @@ import { renderDocsHubPage, renderDocsPage } from "./render/docs-template.mjs";
 import { urlEntry, insertSitemapEntries } from "./render/sitemap.mjs";
 import { defaultOgImageUrl } from "./render/seo.mjs";
 import { humanizeHtml } from "./lib/humanize.mjs";
+import { loadLocalTopics, renderLocalTopic } from "./lib/local-docs.mjs";
 
 async function pruneStaleTopicDirs(currentSlugs) {
 	let entries;
@@ -82,10 +83,13 @@ async function main() {
 	const client = getNotionClient();
 	const topics = await fetchPublishedDocTopics();
 	console.log(`[build-docs] ${topics.length} published topic(s) found.`);
-	assertUniqueTopicSlugs(topics);
+	const localTopics = await loadLocalTopics();
+	console.log(`[build-docs] ${localTopics.length} local topic(s) in docs-src/.`);
+	const allTopics = [...topics, ...localTopics].sort((a, b) => a.order - b.order);
+	assertUniqueTopicSlugs(allTopics);
 
 	await fs.mkdir(DOCS_DIR, { recursive: true });
-	await pruneStaleTopicDirs(new Set(topics.map((t) => t.slug)));
+	await pruneStaleTopicDirs(new Set(allTopics.map((t) => t.slug)));
 	const ogImage = await defaultOgImageUrl();
 	const warnings = [];
 
@@ -94,10 +98,14 @@ async function main() {
 		console.log(`[build-docs] Rendering topic "${topic.title}" (${topic.slug})…`);
 		sitemapEntries = sitemapEntries.concat(await buildTopic(client, topic, ogImage, warnings));
 	}
+	for (const topic of localTopics) {
+		console.log(`[build-docs] Rendering local topic "${topic.title}" (${topic.slug})…`);
+		sitemapEntries = sitemapEntries.concat(await renderLocalTopic(topic, ogImage));
+	}
 
 	warnings.forEach((w) => console.warn(`[build-docs] ${w}`));
 
-	await fs.writeFile(DOCS_HUB_PATH, humanizeHtml(renderDocsHubPage(topics, ogImage)), "utf8");
+	await fs.writeFile(DOCS_HUB_PATH, humanizeHtml(renderDocsHubPage(allTopics, ogImage)), "utf8");
 
 	const existingSitemap = await fs.readFile(SITEMAP_PATH, "utf8");
 	await fs.writeFile(SITEMAP_PATH, insertSitemapEntries(existingSitemap, sitemapEntries), "utf8");

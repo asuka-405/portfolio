@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Implementation Team Offboarding and Ownership Risk: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Implementation Team Offboarding and Ownership Risk · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/implementation-team-offboarding-and-ownership-risk.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Implementation Team Offboarding and Ownership Risk" />
+		<meta property="og:description" content="Implementation Team Offboarding and Ownership Risk: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/implementation-team-offboarding-and-ownership-risk.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Implementation Team Offboarding and Ownership Risk" />
+		<meta name="twitter:description" content="Implementation Team Offboarding and Ownership Risk: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="active">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Implementation Team Offboarding and Ownership Risk</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#why-this-is-a-platform-risk">Why this is a platform risk</a></li><li><a href="#what-the-tenant-looked-like">What the tenant looked like</a></li><li><a href="#what-breaks-object-by-object">What breaks, object by object</a></li><li><a href="#the-other-issues">The other issues</a></li><li><a href="#a-sequence-that-keeps-the-platform-running">A sequence that keeps the platform running</a></li><li><a href="#handover-acceptance">Handover acceptance</a></li><li><a href="#symptoms-after-an-owner-leaves">Symptoms after an owner leaves</a></li><li><a href="#what-to-do-from-day-one">What to do from day one</a></li><li><a href="#sources-and-how-far-to-trust-them">Sources and how far to trust them</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Every implementation ends with the people who built it leaving. In ISC that departure is not an HR formality, because the platform ties <strong>objects, credentials, notifications and knowledge to named individuals</strong>. When those individuals are disabled or removed, workflows can stop, approvals can stall, sources can lose their owner, scripts can lose their tokens and the runbook can turn out to live in someone's head. This page describes what the tenant looked like at the end of the program, what breaks and why, and a sequence for leaving a platform that keeps working. Counts are rounded or exact from a read-only tenant dump, and no names appear.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="why-this-is-a-platform-risk">Why this is a platform risk</h3>
+					<p>An ISC object is rarely independent of a person. Four kinds of tie exist:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Tie</th><th>Example</th><th>What it does when the person goes</th></tr></thead><tbody><tr><td><strong>Ownership</strong></td><td>The owner of a source, a workflow, an access profile, a role, a form</td><td>The object has no accountable owner. Some objects block the person's deletion. Some lose their notifications</td></tr><tr><td><strong>Credential</strong></td><td>A workflow's personal access token, a token a script uses</td><td>The credential is disabled or invalid, and whatever uses it fails</td></tr><tr><td><strong>Routing</strong></td><td>An approver, a governance group member, a hard-coded email address, a certification reviewer</td><td>Work is sent to someone who no longer reads it</td></tr><tr><td><strong>Knowledge</strong></td><td>A script, a runbook that exists only locally, a vault entry only one person can open</td><td>The next person cannot reproduce or repair what was built</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>The implementation team is the worst case, because it created most of the platform and holds a disproportionate share of all four.</p>
+				</div>
+
+<!-- dgm:ownership-blast-radius -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 360" role="img" aria-labelledby="ownership-blast-radius-t ownership-blast-radius-d" xmlns="http://www.w3.org/2000/svg"><title id="ownership-blast-radius-t">What a departing implementer takes with them</title><desc id="ownership-blast-radius-d">Ownership, credentials, routing and knowledge, each with the objects and the impact if left untransferred.</desc><defs><marker id="ownership-blast-radius-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="box accent" x="300" y="140" width="220" height="80" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="410.0" y="177.0" text-anchor="middle">Departing implementer</text><text class="s" x="410.0" y="192.0" text-anchor="middle">created most of the platform</text><rect class="box accent" x="6" y="8" width="330" height="118" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="171.0" y="51.0" text-anchor="middle">Ownership</text><text class="s" x="171.0" y="66.0" text-anchor="middle">workflows 25 of 28, sources about 75 percent,</text><text class="s" x="171.0" y="79.0" text-anchor="middle">access profiles over 90 percent, roles 272 of 284</text><text class="m" x="171.0" y="92.0" text-anchor="middle">highest: automation stops</text><rect class="box gold" x="484" y="8" width="330" height="118" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="649.0" y="51.0" text-anchor="middle">Credentials</text><text class="s" x="649.0" y="66.0" text-anchor="middle">workflow tokens, personal tokens used by scripts</text><text class="s" x="649.0" y="79.0" text-anchor="middle">and tools, shared expiry dates</text><text class="m" x="649.0" y="92.0" text-anchor="middle">high: integrations fail</text><rect class="box gold" x="6" y="232" width="330" height="118" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="171.0" y="275.0" text-anchor="middle">Routing</text><text class="s" x="171.0" y="290.0" text-anchor="middle">approvers, governance groups of one, hard-coded</text><text class="s" x="171.0" y="303.0" text-anchor="middle">mail, no fallback approver</text><text class="m" x="171.0" y="316.0" text-anchor="middle">high: work waits forever</text><rect class="box violet" x="484" y="232" width="330" height="118" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="649.0" y="275.0" text-anchor="middle">Knowledge</text><text class="s" x="649.0" y="290.0" text-anchor="middle">scripts, local dumps, secret custody,</text><text class="s" x="649.0" y="303.0" text-anchor="middle">authenticator, support contacts</text><text class="m" x="649.0" y="316.0" text-anchor="middle">high: cannot repair</text><path class="ln accent  " d="M360,140 L330,126" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ownership-blast-radius-ar-accent)"/><path class="ln accent  " d="M460,140 L490,126" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ownership-blast-radius-ar-accent)"/><path class="ln accent  " d="M360,220 L330,232" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ownership-blast-radius-ar-accent)"/><path class="ln accent  " d="M460,220 L490,232" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ownership-blast-radius-ar-accent)"/></svg></div><figcaption><b>Four ties.</b> The same person usually appears in all four, which is why offboarding an implementer is a project and not a ticket. Figures are from the final tenant snapshot.</figcaption></figure>
+
+<div class="prose reveal">
+					<h3 id="what-the-tenant-looked-like">What the tenant looked like</h3>
+					<p>At the end of the program the tenant held the following. The dump is a snapshot from the final weeks.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Object type</th><th>Count</th><th>Concentration</th></tr></thead><tbody><tr><td>Workflows</td><td>28</td><td>25 owned by one person, 3 by another</td></tr><tr><td>Sources</td><td>146</td><td>Two people owned 109 of them (about three quarters)</td></tr><tr><td>Access profiles</td><td>3,333</td><td>One person owned about 3,050 (over 90 percent)</td></tr><tr><td>Roles</td><td>284</td><td>Two people owned 272</td></tr><tr><td>Campaign templates</td><td>519</td><td>Four people owned 483</td></tr><tr><td>Governance groups</td><td>45</td><td>Owned by a handful of individuals. 27 groups had one or two members, 4 had one</td></tr><tr><td>Saved searches</td><td>87</td><td>Three people owned 84</td></tr><tr><td>Scheduled searches</td><td>5</td><td>Two owners. Searches were also the source of the nightly joiner and leaver exports</td></tr><tr><td>Personal access tokens</td><td>10</td><td>Each tied to an individual. Six shared one expiry date, four had not been used for over three months</td></tr><tr><td>OAuth clients</td><td>14</td><td>Nine belonged to the appliances. Five served integrations (webhooks, a leaver search, external workflow triggers, a form portal)</td></tr><tr><td>Workflow email addresses</td><td>54 literal addresses</td><td>43 looked like shared mailboxes or lists, 11 looked personal</td></tr><tr><td>Org-wide approval settings</td><td></td><td>No fallback approver, no reminders, no escalation</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Three things stand out.</p>
+					<ol><li><strong>Ownership was concentrated.</strong> One identity owned nine in ten access profiles and most workflows. That is typical of a build done by a small team, and it is exactly what makes the departure dangerous.</li><li><strong>Credentials were personal.</strong> The tokens were created by individuals, and several were the sort of convenience credential (a script, an editor extension, a REST client) that outlives its purpose.</li><li><strong>There was no safety net.</strong> With no fallback approver and no reminders, an approval addressed to a removed person simply waits. The same is true of a certification.</li></ol>
+					<p>The administrator identities, too, came from a small delimited file with no appliance, not from the HR feed. <strong>Identities loaded that way are not touched by the HR leaver automation.</strong> Offboarding the implementers' own administrator accounts is a manual task unless you plan it.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="what-breaks-object-by-object">What breaks, object by object</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Object</th><th>What happens when the owner is disabled or removed</th><th>Impact</th></tr></thead><tbody><tr><td><strong>Workflow</strong></td><td>The admin who creates a workflow becomes its owner and gets a personal access token for it. If that owner leaves, SailPoint's documentation calls the workflow <strong>orphaned</strong>: it has no owner and its token becomes invalid, and executions can fail with unauthorised errors. Community reports say steps such as Get Identity and Manage Access run with the owner's permissions, so joiner, mover and leaver flows are the first to suffer</td><td><strong>Highest.</strong> The automation that provisions and disables people stops, usually without an obvious alarm</td></tr><tr><td><strong>Source</strong></td><td>A source must have an owner. The owner cannot be deleted while they own it. A source reset is blocked if any source owner holds an account on the source. The owner is also who reviews uncorrelated accounts in source-owner campaigns</td><td>High for operations and reviews</td></tr><tr><td><strong>Access profile, role, application</strong></td><td>An identity that owns any of these cannot be deleted. Where the profile's approval is &quot;owner&quot;, the approval goes to someone who is gone</td><td>High where owner approval is used. Silent elsewhere</td></tr><tr><td><strong>Entitlement</strong></td><td>The owner is used for review and approval routing. Entitlement owners are often forgotten</td><td>Medium</td></tr><tr><td><strong>Governance group</strong></td><td>Members vanish from approvals and reviews. A group of one becomes an empty group</td><td>High. 4 groups had a single member</td></tr><tr><td><strong>Campaign and template</strong></td><td>Notifications go to the template owner. A reviewer who is removed leaves items waiting. An identity that is a reviewer of an active certification cannot be deleted</td><td>High around review cycles</td></tr><tr><td><strong>Form and launcher</strong></td><td>Forms carry an owner. Forms are tied to workflows by identifier. We did not find a documented rule for what a form does when its owner is removed, so treat it as a risk to test</td><td>Medium. Unverified</td></tr><tr><td><strong>Saved and scheduled search</strong></td><td>Scheduled searches are owned. Whether they keep running after the owner is disabled depends on release, so test it. The program's nightly joiner and leaver exports were scheduled searches</td><td>Medium to high. Monitoring goes quiet</td></tr><tr><td><strong>Personal access token</strong></td><td>Belongs to the creating user and cannot exceed their access. Community reports say tokens are disabled when the identity is disabled, revoking bearer tokens immediately, and that re-enabling the identity does not bring them back. <strong>A token that a script, a pipeline or a campaign tool uses stops working</strong></td><td>High for automation</td></tr><tr><td><strong>API client (OAuth)</strong></td><td>Documented as not tied to a person. A client used by a workflow's external trigger or a webhook keeps working. Review what each client can do (scopes) and who knows its secret</td><td>Medium. The secret and the knowledge of it matter</td></tr><tr><td><strong>Appliance clients</strong></td><td>Created for the virtual appliances, independent of people</td><td>Low</td></tr><tr><td><strong>Notification, approval, escalation settings</strong></td><td>Hard-coded addresses, approvers by identifier, and an empty fallback approver mean mail and work go to inactive recipients</td><td>High where addressed to a person</td></tr><tr><td><strong>Admin user levels and MFA</strong></td><td>Administrator accounts need MFA. A shared or service administrator whose authenticator lives on one person's phone is a person-dependent credential</td><td>High, and discovered at the worst time</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Disable and delete are different</strong></p>
+					<p>From SailPoint's identity documentation:</p>
+					<ul><li><strong>Disabling</strong> an identity removes sign-in to the platform immediately. An active session continues until it ends. It <strong>does not disable the person's accounts in source systems</strong> or revoke access there. User levels are kept.</li><li><strong>Deleting</strong> an identity removes its correlated accounts from the identity (they are not deprovisioned at the source). <strong>Identities that own sources, roles, access profiles or applications cannot be deleted, nor can reviewers of active certifications.</strong> Assign new owners and reassign the reviews first.</li><li><strong>A deletion is only temporary if the person still exists in an authoritative source</strong>, because the next aggregation can recreate the identity with a new internal identifier. The person then has to be invited again and given back any elevated rights.</li></ul>
+					<p>So the order is: reassign everything, then disable, then observe, then delete if you must.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="the-other-issues">The other issues</h3>
+					<ul><li><strong>Credentials the team knows.</strong> Source credentials and client secrets that only the implementers have seen. Workflow secrets can only be created in the UI, so a rotation needs a person who can do it and has the vault.</li><li><strong>Local material.</strong> Tenant dumps, exported rules and workflows, scripts and workbooks on laptops, some containing credentials. These must be found, handed over or destroyed. The campaign tool's workbook holds an API client and a file server login.</li><li><strong>Tokens in tools.</strong> Editor extensions, REST clients and scripts each held a token. Unused tokens are not harmless: they are valid until expiry.</li><li><strong>Several tokens expiring together.</strong> Six tokens carried the same expiry date, which suggests a bulk update. They will all stop on the same day, and whoever remembers them will have left.</li><li><strong>Support and vendor channels.</strong> Support cases, expert services contacts, community accounts, the ITSM queue the integrator joined, mailing lists and chat channels.</li><li><strong>Approvals and notifications addressed to individuals.</strong> Eleven personal-looking addresses sat in workflow definitions, and the approval fallback was empty.</li><li><strong>Hard-coded identifiers.</strong> Workflows reference objects by identifier. Rebuilding or transferring them changes those identifiers.</li><li><strong>Service desk ownership.</strong> Who now answers &quot;the manager never got the form&quot; at two in the morning.</li><li><strong>Contract ends but access does not.</strong> Implementation accounts in downstream systems (directories, the ITSM tool, application consoles) are not removed by ISC. Offboard them in those systems.</li><li><strong>Support access.</strong> SailPoint's own support and services tokens are removed when tenant access expires. Re-grant it deliberately if you will need help.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="a-sequence-that-keeps-the-platform-running">A sequence that keeps the platform running</h3>
+				</div>
+
+<!-- dgm:offboarding-phases -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 340" role="img" aria-labelledby="offboarding-phases-t offboarding-phases-d" xmlns="http://www.w3.org/2000/svg"><title id="offboarding-phases-t">Offboarding timeline</title><desc id="offboarding-phases-d">Inventory, design, reassign, make repeatable, shadow, then disable, observe and delete after the departure.</desc><defs><marker id="offboarding-phases-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><path class="ln   " d="M30,170 L790,170" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;"/><path class="ln   " d="M30.0,164 L30.0,176" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;"/><text class="l" x="30.0" y="190" text-anchor="middle">T-90</text><path class="ln   " d="M182.0,164 L182.0,176" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;"/><text class="l" x="182.0" y="190" text-anchor="middle">T-60</text><path class="ln   " d="M334.0,164 L334.0,176" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;"/><text class="l" x="334.0" y="190" text-anchor="middle">T-30</text><path class="ln   " d="M486.0,164 L486.0,176" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;"/><text class="l" x="486.0" y="190" text-anchor="middle">departure</text><path class="ln   " d="M638.0,164 L638.0,176" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;"/><text class="l" x="638.0" y="190" text-anchor="middle">T+30</text><path class="ln   " d="M790.0,164 L790.0,176" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;"/><text class="l" x="790.0" y="190" text-anchor="middle">T+60</text><rect class="box blue" x="30.0" y="12" width="72.0" height="64" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="66.0" y="34.5" text-anchor="middle">Inventory</text><text class="s" x="66.0" y="49.5" text-anchor="middle">owner</text><text class="s" x="66.0" y="62.5" text-anchor="middle">register</text><rect class="box blue" x="106.0" y="84" width="72.0" height="64" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="142.0" y="106.5" text-anchor="middle">Design</text><text class="s" x="142.0" y="121.5" text-anchor="middle">target</text><text class="s" x="142.0" y="134.5" text-anchor="middle">owners</text><rect class="box accent" x="182.0" y="12" width="148.0" height="64" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="256.0" y="28.0" text-anchor="middle">Reassign</text><text class="s" x="256.0" y="43.0" text-anchor="middle">groups, items,</text><text class="s" x="256.0" y="56.0" text-anchor="middle">sources, workflows,</text><text class="s" x="256.0" y="69.0" text-anchor="middle">forms, tokens</text><rect class="box gold" x="334.0" y="84" width="148.0" height="64" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="408.0" y="106.5" text-anchor="middle">Shadow</text><text class="s" x="408.0" y="121.5" text-anchor="middle">receiving team runs</text><text class="s" x="408.0" y="134.5" text-anchor="middle">it</text><rect class="box teal" x="334.0" y="12" width="148.0" height="64" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="408.0" y="41.0" text-anchor="middle">Repeatable</text><text class="s" x="408.0" y="56.0" text-anchor="middle">register and monitors</text><rect class="box gold" x="486.0" y="206" width="148.0" height="70" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="560.0" y="231.5" text-anchor="middle">Disable, observe</text><text class="s" x="560.0" y="246.5" text-anchor="middle">failures, exports,</text><text class="s" x="560.0" y="259.5" text-anchor="middle">approvals</text><rect class="box violet" x="638.0" y="270" width="148.0" height="56" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="712.0" y="295.0" text-anchor="middle">Delete</text><text class="s" x="712.0" y="310.0" text-anchor="middle">when nothing is owned</text><path class="ln accent  " d="M486.0,176 L486.0,206" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#offboarding-phases-ar-accent)"/><text class="l" x="410" y="336" text-anchor="middle">Disable first, delete last. Offboard downstream accounts in the directories and applications yourself.</text></svg></div><figcaption><b>A sequence, not an event.</b> Dates are relative to the departure. Start the inventory three months out; the reassignments are the long pole.</figcaption></figure>
+
+<div class="prose reveal">
+					<p><strong>1. Inventory (about 90 days before)</strong></p>
+					<p>Build an <strong>owner register</strong>: every object, its type, its owner, a deputy and a review date. Produce it from the API, not from memory. The script below groups by owner and writes a file you can review.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">python</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">import</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> csv, json, os, time, urllib.request</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">TENANT</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> =</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> os.environ[</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"ISC_TENANT"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">]</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">TOKEN</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> =</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> os.environ[</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"ISC_TOKEN"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">]</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">BASE</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> =</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> f</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"https://</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">{TENANT}</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">.api.identitynow.com"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D"># path, name of the owner field in the response (names differ by object type; check each)</span></span>
+<span class="line"><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">ENDPOINTS</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> =</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> [</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    (</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/v2025/sources"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"owner"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">),</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    (</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/v2025/access-profiles"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"owner"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">),</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    (</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/v2025/roles"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"owner"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">),</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    (</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/v2025/workflows"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"owner"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">),</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    (</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/v2025/form-definitions"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"owner"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">),</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    (</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/v2025/governance-groups"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"owner"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">),</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    (</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/v2025/campaign-templates"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"ownerRef"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">),</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    (</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/v2025/saved-searches"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"ownerId"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">),</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    (</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/v2025/scheduled-searches"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"ownerId"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">),</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">def</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> get</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(path, offset</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">0</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, limit</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">250</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">):</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    req </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> urllib.request.Request(</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">f</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">{BASE}{</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">path</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">}</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">?limit=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">{</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">limit</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">}</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">&#x26;offset=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">{</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">offset</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">}</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">                                 headers</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">{</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Authorization"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">: </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">f</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Bearer </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">{TOKEN}</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">})</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">    for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> _ </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">in</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> range</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">5</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">):</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">        try</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">            with</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> urllib.request.urlopen(req) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">as</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> r:</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">                return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> json.load(r)</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">        except</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> urllib.error.HTTPError </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">as</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> e:</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">            if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> e.code </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">==</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 429</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">                time.sleep(</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">int</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(e.headers.get(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"Retry-After"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"5"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)))</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">            else</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">                raise</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">    raise</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> RuntimeError</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"rate limited"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">def</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> owner_of</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(obj, field):</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    v </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> obj.get(field)</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">    if</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> isinstance</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(v, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">dict</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">):</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">        return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> v.get(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"id"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">), v.get(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"name"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">    return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> v, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">None</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">with</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> open</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"owner_register.csv"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"w"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#FFAB70;--shiki-light:#E36209">newline</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">""</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">as</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> f:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    w </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> csv.writer(f)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">    w.writerow([</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"type"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"object id"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"object name"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"owner id"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"owner name"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">])</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">    for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> path, field </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">in</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> ENDPOINTS</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">        offset </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 0</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">        while</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> True</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">            page </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> get(path, offset)</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">            if</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> not</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> page:</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">                break</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">            for</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> o </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">in</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> page:</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">                oid, oname </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> owner_of(o, field)</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">                w.writerow([path.rsplit(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"/"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">)[</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">-</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">1</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">], o.get(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"id"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">), o.get(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"name"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">), oid, oname])</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">            if</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> len</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(page) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">&#x3C;</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 250</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">                break</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">            offset </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">+=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> 250</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>Notes: some endpoints do not take <code>limit</code> and <code>offset</code>, and some are in the beta namespace, so check each against the current API reference. Add the personal access tokens (listed per owner by an administrator), the OAuth clients and the scheduled searches' recipients. Sort the result by owner and <strong>count objects per departing person</strong>: that count is your effort estimate.</p>
+					<p>Also search the definitions for hard-coded addresses and identifiers:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">bash</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">grep</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -rnoE</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> exported-workflows/</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> |</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> sort</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> |</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> uniq</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -c</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> |</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> sort</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -rn</span></span>
+<span class="line"><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">grep</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -rnoE</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "\b[0-9a-f]{32}\b"</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> exported-workflows/</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> |</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> cut</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -d:</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -f3</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> |</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> sort</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> |</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> uniq</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -c</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> |</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> sort</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> -rn</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>2. Design the target ownership model (about 75 days before)</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Object</th><th>Owner after the handover</th><th>Why</th></tr></thead><tbody><tr><td>Workflows and their tokens</td><td>A <strong>dedicated, non-expiring administrator identity</strong> (a service identity), with its authenticator held by named people</td><td>SailPoint's guidance is to create workflows with an administrator account that will not expire, and community practice is a service identity</td></tr><tr><td>Sources</td><td>The platform team lead as technical owner, with the application owner as business contact</td><td>Source ownership drives operational notices and uncorrelated-account reviews</td></tr><tr><td>Access profiles and roles</td><td>The <strong>application owner or a governance group</strong>, never a person on a project</td><td>Ownership of thousands of objects must not sit with one person</td></tr><tr><td>Governance groups</td><td>At least three named members, from different teams</td><td>A group of one is an outage waiting for a holiday</td></tr><tr><td>Campaign templates</td><td>A governance group or the compliance function</td><td>Reviews outlive the project</td></tr><tr><td>Forms and launchers</td><td>The service identity</td><td>They are tied to workflows</td></tr><tr><td>Saved and scheduled searches</td><td>The service identity, with recipients as a shared mailbox</td><td>They are monitors</td></tr><tr><td>Tokens and clients</td><td>One per integration, owned by the service identity, with the least scope that works, an expiry, and a named human owner in the register</td><td>Credentials need an accountable owner that is not the creator</td></tr><tr><td>Notifications</td><td>Shared mailboxes and lists, never individuals</td><td>Mail should survive a departure</td></tr><tr><td>Approvals</td><td>A fallback approver, reminders and an escalation</td><td>A missing person should delay a request, not strand it</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>The service identity must be governed: record who holds its credentials and its multi-factor authenticator, keep break-glass credentials with named people, and review it quarterly. Some of the community material suggests the platform's service-account approach is being superseded by newer machine identity features, so confirm what your release recommends.</p>
+					<p><strong>3. Reassign (about 60 to 30 days before)</strong></p>
+					<p>Transfer in this order, testing after each group:</p>
+					<ol><li><strong>Governance groups:</strong> add members first, then change owners.</li><li><strong>Access profiles, roles, entitlements, applications.</strong> Use the list endpoints filtered by owner and update the owner. Do it in bulk, scripted, with a before and after count.</li><li><strong>Sources.</strong> Change the owner on each. Check that none of the owners is also an account holder on a source you will reset.</li><li><strong>Workflows.</strong> A workflow must be <strong>disabled before its owner is changed</strong>. Assigning it to another administrator generates a new personal access token and a new owner. Do one at a time, run it, check an execution.</li><li><strong>Forms, launchers, saved and scheduled searches.</strong> Transfer, then verify that a scheduled search still produces its output and its recipients still receive it.</li><li><strong>Campaign templates and active certifications.</strong> Reassign reviews and templates. Complete or reassign active campaigns before disabling a reviewer.</li><li><strong>Tokens and clients.</strong> Create replacements under the service identity, switch each consumer, confirm it works, then revoke the old one. Record the new expiry.</li></ol>
+					<p>The community has built workflows that react to a leaver by finding what the person owned and asking the manager for a new owner. Useful ideas, but note their limits (loop caps, search index lag) and that workflow reassignment may reassign requests, not ownership. Test them. There is also a product connector designed for governance reassignments, which may fit if you want this to be permanent.</p>
+					<p><strong>4. Make it repeatable (about 30 days before)</strong></p>
+					<ul><li>Keep the owner register current, with a quarterly review.</li><li>Add a monitor for <strong>objects whose owner is inactive, disabled or missing</strong>. A search for identities with an inactive lifecycle state that still own things is the simplest one.</li><li>Add a monitor for workflow execution failures with authorisation errors.</li><li>Add a monitor for tokens approaching expiry or not used for a long time.</li><li>Schedule the reassign automation if you use it.</li></ul>
+					<p><strong>5. Shadow period (about 30 days before)</strong></p>
+					<p>Have the receiving team run the platform while the implementers are still there. They should exercise every runbook (the hypercare page lists them) and make one real change safely each. Use the findings to correct the documentation.</p>
+					<p><strong>6. Disable, observe, then delete (cutover and the 30 days after)</strong></p>
+					<ul><li><strong>Disable</strong> the identities, do not delete them. Disabling stops sign-in and (according to community reports) their tokens, but it does not touch their accounts at source systems, so offboard those in the directories and applications themselves.</li><li><strong>Observe for 30 days.</strong> Watch the workflow failure rate, scheduled search output, joiner and leaver volumes, aggregation freshness, and approvals waiting.</li><li><strong>Delete</strong> only when nothing owns anything, no active certifications name them, and the owner register shows no references. Remember a person who is still in an authoritative source can reappear as a new identity.</li><li><strong>Remove vendor access:</strong> support cases, expert services, community and chat memberships, the ITSM queue.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="handover-acceptance">Handover acceptance</h3>
+					<p>Treat the handover as a deliverable with a signature, not an assumption.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Check</th><th>Evidence</th></tr></thead><tbody><tr><td>Owner register delivered and reconciled with the tenant</td><td>The register matches a fresh export</td></tr><tr><td>No object owned by a departing person</td><td>A zero-row owner query</td></tr><tr><td>Workflows run under the service identity</td><td>An execution after reassignment succeeds</td></tr><tr><td>Tokens and clients rotated</td><td>Old ones revoked, new expiry dates recorded</td></tr><tr><td>Secrets and authenticator custody documented</td><td>Who holds them, and a tested recovery</td></tr><tr><td>Runbooks exercised by the receiving team</td><td>A signed log of each exercise</td></tr><tr><td>Local material accounted for</td><td>A list of dumps, scripts and workbooks, handed over or destroyed</td></tr><tr><td>Support and vendor contacts updated</td><td>The new named contacts</td></tr><tr><td>Downstream accounts offboarded</td><td>Checks in the directories and application consoles</td></tr><tr><td>Open issues and risks transferred</td><td>A log with owners</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="symptoms-after-an-owner-leaves">Symptoms after an owner leaves</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody><tr><td>Joiner, mover or leaver workflow starts failing with unauthorised errors</td><td>The workflow's owner was disabled or removed, so its token is invalid</td><td>Disable the workflow, assign a new owner, enable it. Check the next execution</td></tr><tr><td>A script that used to work returns 401</td><td>The token belonged to the departed person</td><td>Issue a token under the service identity and update the script</td></tr><tr><td>Nightly exports or reports stopped arriving</td><td>A scheduled search's owner or recipient is gone</td><td>Reassign the search and confirm recipients</td></tr><tr><td>Approvals or reviews sit untouched</td><td>The approver or reviewer is gone and there is no fallback</td><td>Reassign, set a fallback approver and reminders</td></tr><tr><td>Cannot delete an identity</td><td>It still owns a source, role, profile or application, or is a reviewer</td><td>Reassign those, then retry</td></tr><tr><td>Cannot reset a source</td><td>A source owner holds an account on it</td><td>Remove that account or change the owner temporarily</td></tr><tr><td>A token stopped working after re-enabling an identity</td><td>Disabling disabled the token and re-enabling did not restore it (community report)</td><td>Create a new token</td></tr><tr><td>Many tokens stopped on the same day</td><td>They shared an expiry date</td><td>Renew, and stagger expiry dates</td></tr><tr><td>A form or launcher misbehaves</td><td>The owner or an identifier changed</td><td>Test it, and recreate or retarget it</td></tr><tr><td>Mail goes nowhere</td><td>A personal address in a workflow or template</td><td>Move to a shared mailbox</td></tr><tr><td>A returned identity has no admin rights</td><td>It was deleted and recreated by aggregation</td><td>Re-invite and re-grant levels</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="what-to-do-from-day-one">What to do from day one</h3>
+					<p>Offboarding is cheap if you start the project with the end in mind.</p>
+					<ul><li>Create workflows, forms and sources under the <strong>service identity</strong> from the start, not under a personal account that you later have to transfer.</li><li>Keep a live owner register from the first sprint.</li><li>Use governance groups for ownership of access items.</li><li>Prefer shared mailboxes in every template and workflow.</li><li>Give every token a purpose, an owner, an expiry and a review date, and stagger expiry dates.</li><li>Keep secrets in the vault with two people able to retrieve them.</li><li>Write the runbook as if the author were already gone.</li><li>Plan the offboarding date at kickoff and put the 90 day inventory in the project plan.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="sources-and-how-far-to-trust-them">Sources and how far to trust them</h3>
+					<ul><li><a href="https://documentation.sailpoint.com/saas/help/workflows/workflow-build.html" target="_blank" rel="noopener">Building a workflow</a>: owner, personal access token, orphaned workflows, reassigning to another administrator, using an account that will not expire. Official.</li><li><a href="https://documentation.sailpoint.com/saas/help/identities/identity_mgmt.html" target="_blank" rel="noopener">Working with identities</a>: what disabling and deleting an identity do, and the ownership and reviewer restrictions on deletion. Official.</li><li><a href="https://documentation.sailpoint.com/saas/help/common/api_keys.html" target="_blank" rel="noopener">Managing API keys and personal access tokens</a>: tokens belong to their creator, cannot exceed the owner's access, ten per user, default six month expiry, API clients are not tied to a person. Official. It does not say what happens to a token when its owner is disabled.</li><li>Community threads, which are <strong>not official</strong>: a reply that disabled identities' tokens are disabled too and are not restored on re-enable (<a href="https://developer.sailpoint.com/discuss/t/no-indicator-for-disabled-personal-access-tokens/75530" target="_blank" rel="noopener">PAT behaviour</a>); workflow-owner 401 errors and the owner-switch workaround (<a href="https://developer.sailpoint.com/discuss/t/identitynow-workflows-managing-pat-based-api-calls-when-workflow-owners-are-deactivated/191465" target="_blank" rel="noopener">workflow owners</a>); reassigning owned objects with workflows or the governance connector (<a href="https://developer.sailpoint.com/discuss/t/reassign-object-owners-using-identitynow-workflows/22371" target="_blank" rel="noopener">reassign owners</a>, <a href="https://developer.sailpoint.com/discuss/t/handling-acces-item-owner-termination-in-isc/211696" target="_blank" rel="noopener">owner termination</a>); and service identities as owners (<a href="https://developer.sailpoint.com/discuss/t/best-practice-for-authenticating-external-application-with-isc-apis/204687" target="_blank" rel="noopener">service accounts</a>).</li></ul>
+					<p>What we could not confirm: what a form does when its owner is removed, whether scheduled searches keep running for a disabled owner, and what happens to a token when its owner is <strong>deleted</strong>. Test these on a sandbox identity before you rely on an answer.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Produce the owner register now and count objects per implementer.</li><li>Name the service identity, its credential and authenticator custodians, and the break-glass holders.</li><li>Reassign in the order above, workflow by workflow, with a test after each.</li><li>Replace personal tokens and addresses with service-owned, shared ones.</li><li>Add the owner-inactive, workflow-failure and token-expiry monitors.</li><li>Run a 30 day shadow period and a 30 day observe period.</li><li>Disable first, delete last, and offboard accounts in the downstream systems yourself.</li><li>Sign the handover against the acceptance table.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

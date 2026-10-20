@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Hypercare, Operations and Handover: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Hypercare, Operations and Handover · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/hypercare-operations-and-handover.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Hypercare, Operations and Handover" />
+		<meta property="og:description" content="Hypercare, Operations and Handover: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/hypercare-operations-and-handover.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Hypercare, Operations and Handover" />
+		<meta name="twitter:description" content="Hypercare, Operations and Handover: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="active">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Hypercare, Operations and Handover</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#what-hypercare-looked-like">What hypercare looked like</a></li><li><a href="#operating-routine">Operating routine</a></li><li><a href="#monitors-worth-building">Monitors worth building</a></li><li><a href="#handover-to-run">Handover to run</a></li><li><a href="#support-model-recommended">Support model (recommended)</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Go-live is where the work changes shape: the build team stops writing and starts reading tickets. This page covers what the issue log looked like in the weeks after cutover, the operating routine the runbooks settled on, the monitors worth building, and how knowledge was handed to the team that would run the platform.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="what-hypercare-looked-like">What hypercare looked like</h3>
+					<p>The issue log from hypercare held about 75 rows. They fell into a small number of families, and <strong>almost none were about the core engine failing.</strong> They were about data, notifications and edge cases around people.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Category</th><th>Typical issue</th><th>Likely cause (our reading of the log)</th></tr></thead><tbody><tr><td>Re-add directory groups</td><td>A person lost a group and wanted it back</td><td>Role criteria changed, or a mover flow removed access</td></tr><tr><td>Display name issues</td><td>Wrong or inconsistent name in the directory</td><td>HR name fields, or a transform that cleaned them</td></tr><tr><td>Rehire account issues</td><td>A returning employee had an old account or a duplicate</td><td>Rehire path not fully covered by the joiner logic</td></tr><tr><td>Contact update</td><td>Phone or address stale after an HR change</td><td>The attribute feeding the lookup was not refreshed</td></tr><tr><td>Form and notification issues</td><td>The manager never got the form. Credentials mail went to the wrong person. Nobody could see whether a form had been completed</td><td>Routing by role, manager changes, no visibility of form state</td></tr><tr><td>Re-assignment</td><td>A form had to be resent to a new manager</td><td>The original approver left or changed</td></tr><tr><td>Email update</td><td>Work email needed pushing back to HR</td><td>Writeback gaps</td></tr><tr><td>Disable access</td><td>A leaver's end date in HR was wrong</td><td>HR data, not ISC</td></tr><tr><td>New account creation (old process)</td><td>Someone asked for an account through the legacy route</td><td>Change management and communication</td></tr><tr><td>Duplicate identifiers in the directory</td><td>Duplicate distinguished name or user principal name</td><td>Name collision handling</td></tr><tr><td>Finance consolidation tool</td><td>Read-only and legacy groups had no access profiles</td><td>Fixed by creating an &quot;Others&quot; application for leftover access</td></tr><tr><td>General access</td><td>A profile was missing or not requestable</td><td>Access model gaps</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>The log also recorded two program risks that persisted: the approval step for the most sensitive client system had been removed, and integration credentials were held in a vault that administrators download tokens from locally.</p>
+					<p><strong>Lessons from the pattern</strong></p>
+					<ol><li><strong>Most tickets are data or routing, not code.</strong> Staff the first weeks with people who can read HR data and mailbox rules, not only developers.</li><li><strong>Notifications are the biggest source of noise.</strong> Seven notification changes were made after go-live. Draw the matrix of template, trigger, recipient and fallback before go-live, and review it with the service desk.</li><li><strong>Give people visibility.</strong> &quot;Did my manager complete the form?&quot; is a question the platform does not answer by default. Decide who can see form state and how.</li><li><strong>Rehires are a whole flow, not a joiner variant.</strong> Write test cases for them in UAT.</li><li><strong>A reassignment path is a requirement.</strong> Approvers leave. A form that cannot be resent to a new manager becomes a manual task for the team.</li><li><strong>Leftover access needs a home.</strong> The &quot;Others&quot; application absorbed security groups nobody had modelled.</li></ol>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="operating-routine">Operating routine</h3>
+					<p>The per-integration runbooks converged on the same structure, and it is a good template for your own.</p>
+					<p><strong>Schedule calendar</strong></p>
+					<p>A table of every aggregation, every lifecycle job and every report, with time zone. A global deployment ran across four time zones, so write the zone down.</p>
+					<p><strong>Health checks</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Check</th><th>How</th></tr></thead><tbody><tr><td>Freshness</td><td>The last aggregation date per source, from a search over a <code>lastAggregationDate</code> attribute. Alert when older than the schedule plus a margin</td></tr><tr><td>Disabled count</td><td>A search for disabled accounts per source, compared to yesterday</td></tr><tr><td>Delete threshold</td><td>Confirm the configured value did not change</td></tr><tr><td>Uncorrelated list</td><td>Count and review the accounts with no identity</td></tr><tr><td>Entitlement count</td><td>A sudden halving means a truncated aggregation (see the page limit on listing)</td></tr><tr><td>Sentinel literal</td><td>A search for a placeholder such as a computed-by-rule marker that should never appear in a real value</td></tr><tr><td>Cluster status</td><td>Every VA healthy, no cluster down to one appliance</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Troubleshooting by symptom</strong></p>
+					<p>Each runbook has a table that maps a symptom to a likely cause, a way to confirm, and a fix. The generalised version is on the last page of this guide.</p>
+					<p><strong>Making a change safely</strong></p>
+					<p>A checklist, in this order: read the current configuration, take a backup or export, change in sandbox first, test one object before many, deploy, verify with a search, record the change. Include &quot;update the lifecycle state source list&quot; for any new source, and &quot;update the runbook&quot;.</p>
+					<p><strong>Read-only API recipes</strong></p>
+					<p>A list of GET calls an on-call engineer can run without risk, with the filters to use. They are also on the last page.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="monitors-worth-building">Monitors worth building</h3>
+					<p>The platform will not alert on most of the quiet failures. Build monitors for:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Monitor</th><th>Why</th></tr></thead><tbody><tr><td>Population count per aggregation run</td><td>A truncated feed shows as a sudden drop</td></tr><tr><td>Status counts per source (enabled, disabled, locked)</td><td>A broken status comparison makes every account look enabled</td></tr><tr><td>Age of last aggregation per source</td><td>Two production sources ran for months without a schedule</td></tr><tr><td>Failed and cancelled workflow rates</td><td>A rising rate means a downstream system changed</td></tr><tr><td>Cluster status</td><td>A VA down to one appliance is a risk before it is an outage</td></tr><tr><td>Delete threshold audit</td><td>A threshold edited during troubleshooting and left behind</td></tr><tr><td>Test and copy workflow clean-up</td><td>They are live objects</td></tr><tr><td>Rule inventory</td><td>New or changed rules since last review</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="handover-to-run">Handover to run</h3>
+					<p>The delivery team will leave, so knowledge transfer was treated as a deliverable with its own acceptance.</p>
+					<p><strong>The documentation pack</strong></p>
+					<p>For every integration, five files and a redacted configuration folder:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>File</th><th>Holds</th></tr></thead><tbody><tr><td>README</td><td>What it is, who owns it, status, links</td></tr><tr><td>01 Integration</td><td>How it works end to end: endpoints or queries, rules, workflows, mapping</td></tr><tr><td>02 Tenant context</td><td>The objects in the tenant that belong to this integration, their names and settings</td></tr><tr><td>03 Edge cases and dead ends</td><td>What was tried and did not work, so nobody repeats it</td></tr><tr><td>04 Runbook</td><td>Schedule, health checks, symptoms, change procedure, API recipes</td></tr><tr><td>config/</td><td>Redacted exports of the source, rules, workflows and forms</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>The &quot;dead ends&quot; file is the most valuable and the one teams skip. It saves the next engineer days.</p>
+					<p><strong>The closure document</strong></p>
+					<p>A closure document template covered the handover to the run team: scope delivered, open items, known issues, risks, support model, contacts and acceptance. Treat acceptance as a signature, not as an assumption.</p>
+					<p><strong>Acceptance checklist for run</strong></p>
+					<ul><li>Run team has read access to the tenant and has used it to run the health checks.</li><li>Every runbook has been exercised once by someone who did not write it.</li><li>Open issues and risks are in a log with owners.</li><li>Credentials are owned and have a rotation plan.</li><li>Support model is written: who is first line, what is second line, when ISC support is called.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="support-model-recommended">Support model (recommended)</h3>
+					<p>Decide before go-live:</p>
+					<ul><li><strong>First line</strong> answers &quot;how do I&quot; and routes tickets. Give them the FAQ and a short decision tree.</li><li><strong>Second line</strong> can read the tenant and run the health checks and recipes.</li><li><strong>Third line</strong> can change rules, workflows and sources. Limit this to a few named people.</li><li><strong>Vendor support</strong> for platform problems and for rule changes that cannot be made in the tenant.</li></ul>
+					<p>An ITSM queue, assignment group and mailbox should exist before go-live, along with membership for the integrator, so that the first ticket does not wait on access.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Staff hypercare for data and routing problems, not just defects.</li><li>Build the notification matrix before go-live and review it with the service desk.</li><li>Create the monitors above on day one, especially freshness and status counts.</li><li>Produce the five-file pack per integration, including the dead ends, and have a person who did not write each one run its runbook.</li><li>Define the support model and open the ITSM routes before cutover.</li><li>Keep an issue log with a category column; the pattern in it is your backlog.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

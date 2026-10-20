@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Choosing and Building Application Connectors: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Choosing and Building Application Connectors · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/choosing-and-building-application-connectors.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Choosing and Building Application Connectors" />
+		<meta property="og:description" content="Choosing and Building Application Connectors: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/choosing-and-building-application-connectors.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Choosing and Building Application Connectors" />
+		<meta name="twitter:description" content="Choosing and Building Application Connectors: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="active">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Choosing and Building Application Connectors</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#choose-the-pattern">Choose the pattern</a></li><li><a href="#what-to-establish-before-you-build">What to establish before you build</a></li><li><a href="#decide-what-isc-does-to-the-target">Decide what ISC does to the target</a></li><li><a href="#integration-styles-with-what-each-taught-us">Integration styles, with what each taught us</a></li><li><a href="#entitlement-shapes-you-will-meet">Entitlement shapes you will meet</a></li><li><a href="#account-status-convention">Account status convention</a></li><li><a href="#writing-the-integration-down">Writing the integration down</a></li><li><a href="#what-sailpoint-s-documentation-adds">What SailPoint's documentation adds</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Connecting an application is a pipeline of decisions, not a single configuration. This page covers how to choose a pattern, what to establish with the application team before you build, and what each integration style looked like in practice. The next page goes deep on the Web Services and JDBC connectors.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="choose-the-pattern">Choose the pattern</h3>
+					<p>Apply these in order and stop at the first that fits.</p>
+					<ol><li><strong>Does the application authenticate through Active Directory?</strong> Govern the AD groups with the AD connector. You get provisioning, aggregation and certification of the access for free, and joiner and leaver already work because the directory does.</li><li><strong>Is there a purpose-built connector?</strong> Use it (for example Dynamics 365, an ITSM product, a SaaS HR system). Check what it cannot do before you commit.</li><li><strong>Is there a documented REST API for user and role management?</strong> Use Web Services. Expect to write rules.</li><li><strong>Is there a database you may read, and a stored procedure or table you may write?</strong> Use JDBC. Expect to write a build-map rule and a provisioning rule.</li><li><strong>None of the above?</strong> Load a flat file over SFTP. It supports aggregation, correlation and certification. Provisioning stays manual or ticket-based.</li><li><strong>Nothing at all?</strong> Out of scope until the application changes.</li></ol>
+				</div>
+
+<!-- dgm:connector-choice -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 360" role="img" aria-labelledby="connector-choice-t connector-choice-d" xmlns="http://www.w3.org/2000/svg"><title id="connector-choice-t">Choosing an integration pattern</title><desc id="connector-choice-d">Apply the questions in order and stop at the first that fits.</desc><defs><marker id="connector-choice-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk " style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="connector-choice-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="connector-choice-ar-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk gold" style="fill:var(--gold);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="connector-choice-ar-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk teal" style="fill:var(--teal);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><polygon class="box gold" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1" points="150,10.0 295.0,38 150,66.0 5.0,38"/><text class="s" style="fill:var(--ink);font-weight:700" x="150" y="35.5" text-anchor="middle">Authenticates through Active</text><text class="s" style="fill:var(--ink);font-weight:700" x="150" y="47.5" text-anchor="middle">Directory?</text><rect class="box teal" x="430" y="14" width="200" height="48" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="530.0" y="35.0" text-anchor="middle">AD connector</text><text class="s" x="530.0" y="50.0" text-anchor="middle">govern the directory groups</text><path class="ln teal  " d="M295,38 L430,38" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#connector-choice-ar-teal)"/><text class="l" x="360" y="32" text-anchor="middle">yes</text><path class="ln   " d="M150,66 L150,86" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#connector-choice-ar)"/><polygon class="box gold" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1" points="150,76.0 295.0,104 150,132.0 5.0,104"/><text class="s" style="fill:var(--ink);font-weight:700" x="150" y="101.5" text-anchor="middle">A purpose-built connector</text><text class="s" style="fill:var(--ink);font-weight:700" x="150" y="113.5" text-anchor="middle">exists?</text><rect class="box teal" x="430" y="80" width="200" height="48" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="530.0" y="101.0" text-anchor="middle">Direct connector</text><text class="s" x="530.0" y="116.0" text-anchor="middle">check what it cannot do</text><path class="ln teal  " d="M295,104 L430,104" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#connector-choice-ar-teal)"/><text class="l" x="360" y="98" text-anchor="middle">yes</text><path class="ln   " d="M150,132 L150,152" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#connector-choice-ar)"/><polygon class="box gold" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1" points="150,142.0 295.0,170 150,198.0 5.0,170"/><text class="s" style="fill:var(--ink);font-weight:700" x="150" y="167.5" text-anchor="middle">A documented REST API for</text><text class="s" style="fill:var(--ink);font-weight:700" x="150" y="179.5" text-anchor="middle">users and roles?</text><rect class="box blue" x="430" y="146" width="200" height="48" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="530.0" y="167.0" text-anchor="middle">Web Services</text><text class="s" x="530.0" y="182.0" text-anchor="middle">expect to write rules</text><path class="ln accent  " d="M295,170 L430,170" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#connector-choice-ar-accent)"/><text class="l" x="360" y="164" text-anchor="middle">yes</text><path class="ln   " d="M150,198 L150,218" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#connector-choice-ar)"/><polygon class="box gold" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1" points="150,208.0 295.0,236 150,264.0 5.0,236"/><text class="s" style="fill:var(--ink);font-weight:700" x="150" y="233.5" text-anchor="middle">A database you may read and</text><text class="s" style="fill:var(--ink);font-weight:700" x="150" y="245.5" text-anchor="middle">write?</text><rect class="box blue" x="430" y="212" width="200" height="48" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="530.0" y="226.5" text-anchor="middle">JDBC</text><text class="s" x="530.0" y="241.5" text-anchor="middle">build map and provisioning</text><text class="s" x="530.0" y="254.5" text-anchor="middle">rules</text><path class="ln accent  " d="M295,236 L430,236" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#connector-choice-ar-accent)"/><text class="l" x="360" y="230" text-anchor="middle">yes</text><path class="ln   " d="M150,264 L150,284" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#connector-choice-ar)"/><polygon class="box gold" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1" points="150,274.0 295.0,302 150,330.0 5.0,302"/><text class="s" style="fill:var(--ink);font-weight:700" x="150" y="305.5" text-anchor="middle">None of the above?</text><rect class="box gold" x="430" y="278" width="200" height="48" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="530.0" y="292.5" text-anchor="middle">Flat file over SFTP</text><text class="s" x="530.0" y="307.5" text-anchor="middle">aggregation, correlation and</text><text class="s" x="530.0" y="320.5" text-anchor="middle">reviews</text><path class="ln gold  " d="M295,302 L430,302" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#connector-choice-ar-gold)"/><text class="l" x="360" y="296" text-anchor="middle">yes</text><rect class="box ghost" x="660" y="10" width="154" height="90" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="737.0" y="32.5" text-anchor="middle">Why this order</text><text class="s" x="737.0" y="47.5" text-anchor="middle">least custom code</text><text class="s" x="737.0" y="60.5" text-anchor="middle">first. Each step down</text><text class="s" x="737.0" y="73.5" text-anchor="middle">adds rules to build</text><text class="s" x="737.0" y="86.5" text-anchor="middle">and own</text><rect class="box ghost" x="660" y="130" width="154" height="100" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="737.0" y="151.0" text-anchor="middle">Disconnected</text><text class="s" x="737.0" y="166.0" text-anchor="middle">a ticket-based</text><text class="s" x="737.0" y="179.0" text-anchor="middle">application is the</text><text class="s" x="737.0" y="192.0" text-anchor="middle">last resort. Keep the</text><text class="s" x="737.0" y="205.0" text-anchor="middle">ticket as the audit</text><text class="s" x="737.0" y="218.0" text-anchor="middle">trail</text><rect class="box ghost" x="660" y="260" width="154" height="90" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="737.0" y="295.5" text-anchor="middle">Nothing at all</text><text class="s" x="737.0" y="310.5" text-anchor="middle">out of scope until the</text><text class="s" x="737.0" y="323.5" text-anchor="middle">application changes</text></svg></div><figcaption><b>Selection principle.</b> Directory first, then a purpose-built connector, then web services or JDBC, then a flat file. A flat file is not a failure; it gave review coverage to most of the estate.</figcaption></figure>
+
+<div class="prose reveal">
+					<p>Two corollaries:</p>
+					<ul><li><strong>A flat file is not a failure.</strong> It gave review coverage to a large part of the application estate with near-zero build effort and no change to the application.</li><li><strong>A ticket-based &quot;disconnected&quot; application is the last resort.</strong> If you must keep one, keep the ITSM ticket as the audit trail and plan to replace it.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="what-to-establish-before-you-build">What to establish before you build</h3>
+					<p>Use a standard questionnaire per application (a template is on the checklists page). The answers that changed the build most:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Question</th><th>Why it matters</th></tr></thead><tbody><tr><td>Hosting: SaaS, vendor-hosted or on-premises</td><td>Decides VA placement and who can change the API</td></tr><tr><td>Is there an API for user and group management? A backend database you can reach?</td><td>Decides the connector family</td></tr><tr><td>Lower environments and access to them</td><td>Without one you test in production. Ask in the first email</td></tr><tr><td>Who is in scope (employees only, clients too, bots)?</td><td>Keep scope to HR-sourced employees unless there is a reason</td></tr><tr><td>How is a user created today and who does it?</td><td>That is the process you automate or replace</td></tr><tr><td>Mandatory attributes for a new user</td><td>They become the create policy</td></tr><tr><td>How are accesses defined (roles, groups, client, location)?</td><td>Becomes the entitlement model</td></tr><tr><td>How are leavers handled? Immediately? How is the app told?</td><td>Becomes the disable path</td></tr><tr><td>How often and how are reviews done?</td><td>Becomes the campaign design</td></tr><tr><td>Does the application authenticate through AD or SSO?</td><td>If yes, disabling the AD account may already block access, which changes the risk of leaving the app account alone</td></tr><tr><td>Who are the business and technical owners?</td><td>Reviewers, approvers and source owners</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Treat unanswered questions as risks. The tracker for the phase 2 questionnaire round showed that many &quot;responses&quot; were partial or redirected to a technical contact; the response count is not the same as readiness.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="decide-what-isc-does-to-the-target">Decide what ISC does to the target</h3>
+					<p>For every application, write a one-paragraph <strong>capability statement</strong>. Do it per operation, in plain words, and publish it alongside the technical documentation.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Operation</th><th>Typical answers seen</th></tr></thead><tbody><tr><td>Read accounts and entitlements</td><td>Always</td></tr><tr><td>Create account</td><td>Yes on JDBC and some REST; <strong>no</strong> on a Dynamics 365 connector at the time</td></tr><tr><td>Update account attributes</td><td>Often <strong>no</strong>. Several integrations had no update policy at all</td></tr><tr><td>Enable and disable</td><td>Usually yes</td></tr><tr><td>Delete</td><td>Usually refused. Accounts are disabled, not deleted</td></tr><tr><td>Add and remove entitlements</td><td>Varies. One REST application could revoke but never grant</td></tr><tr><td>Password</td><td>Out of scope everywhere</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Why this matters: the <code>features</code> list on a source is a menu of <strong>claims</strong>, not a measurement. Several sources advertised password, authentication or delete features for which no endpoint or rule existed, and one refused deletes in code while the source declared them. Stakeholders read the feature list. Write the real answer down.</p>
+					<p><strong>Common scoping decisions that kept recurring</strong></p>
+					<ul><li><strong>Entitlement management is read-only.</strong> ISC does not create the application's roles or groups; it reads them. This was the default in almost every requirement document.</li><li><strong>No birthright access for applications.</strong> Application access is request-based, with one or two approval levels.</li><li><strong>Account attributes sync only when asked.</strong> Enable attribute sync per attribute, per application.</li><li><strong>Client users are out of scope.</strong> Only HR-sourced employees.</li><li><strong>One user type in scope.</strong> Where an application distinguishes types (operational, self-service, robot), only one was in scope.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="integration-styles-with-what-each-taught-us">Integration styles, with what each taught us</h3>
+					<p>Product names are used for commercial products; internal systems are described by pattern.</p>
+					<p><strong>Active-Directory-governed product (fund accounting)</strong></p>
+					<p>Access is membership of a handful of AD groups per instance. The product also requires a user to exist in the application before they can be granted access, and the reverse. ISC governs group membership; joiner, mover and leaver for the product itself stay out of scope because there is no API. Lesson: when an application is governed through AD, the integration is mostly access-model design.</p>
+					<p><strong>Dynamics 365 Finance and Operations (native connector)</strong></p>
+					<p>Users are synced from the cloud directory. The connector supported read, enable and disable, but not create, move, delete or group membership. The requirement document recorded that gap and that &quot;client access is not in scope&quot;. Entitlements outnumbered users many times over (tens of thousands of organisation roles for a few thousand users), so aggregation volume and campaign size need planning. Two D365-family sources were failing at the end of the program; watch native connector health.</p>
+					<p><strong>Workflow / BPM product with a REST API (Enate)</strong></p>
+					<p>Three entitlement types: a user group (optional, specific to region and service line), and two mandatory roles. Access depends on the account existing in the product and matching the directory email. Source scripts handled disable-status after aggregation, a contact-type check on create, and add and remove for the role and group entitlements. UX decision: a launcher form for joiners <strong>plus</strong> the request center for existing users produced two interfaces for one product. The recommendation, accepted, was to use the request center for both.</p>
+					<p><strong>Consolidation product (OneStream) over a generic API</strong></p>
+					<p>The product has no resource model; everything goes through two generic API calls that invoke named data adapters and data management steps. The first lesson: <strong>part of the integration lives inside the application</strong> (see the next page). The second: a user chooses security groups according to function scope, so the access model needed a mapping between function and group.</p>
+					<p><strong>Internal client-management portal (REST, POST only)</strong></p>
+					<p>Two disjoint user populations behind one list endpoint, paging by page size with no overflow signal, tokens that expire with an HTTP 200 body, and revocation done entirely in rules that parse identifiers out of the entitlement name. Read access was solid; granting was absent in production.</p>
+					<p><strong>Internal operations app on SQL Server (JDBC)</strong></p>
+					<p>Three entitlement types (role, local office, local client entity) that must be inserted together, selected by a custom form, carried to the JDBC rule in the <strong>access request comments</strong>, and written inside a database transaction. A second similar app used one database <strong>per client</strong> behind a mirror database. Both are covered in the next two pages.</p>
+					<p><strong>Global entity-management app with a SQL back end</strong></p>
+					<p>Account creation through plain SQL inserts into a handful of user and group tables; default administrator group and file access value supplied by the rule; enable and disable through an <code>InActive</code> flag column; entitlements restricted to a default for the first phase. Passwords are not passed. Because the table design was simple, SQL-only provisioning was enough.</p>
+					<p><strong>HR / payroll SaaS products with simple APIs</strong></p>
+					<p>Group aggregation did not exist (the product had no groups), so a &quot;dummy&quot; entitlement was created by an after-rule so access requests had something to attach to. Authentication for one of them was a hard-coded basic authorization header in two operations; fix it with a credential placeholder. A scheduled workflow, split into two half-month runs, disabled terminated users because the product needed it on a calendar basis.</p>
+					<p><strong>Service desk / ITSM product</strong></p>
+					<p>The deployment used mail to create tickets (a fixed subject convention) rather than the ISC service desk connector. The product itself synchronised from AD every 24 hours and took disabled users offline. The vendor connector supports ticket creation for manual provisioning and status check, authenticated by AR-JWT or OAuth2, and needs outbound 443 from the VA. If you want status synchronisation and closure tracking, use it. If you only need an audit trail, mail with a subject convention is simpler but ties you to the ITSM parser.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="entitlement-shapes-you-will-meet">Entitlement shapes you will meet</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Shape</th><th>Example</th><th>Handling</th></tr></thead><tbody><tr><td>Flat group</td><td>A security group name</td><td>Standard</td></tr><tr><td>Composite value</td><td><code>role &gt;&gt; client &gt;&gt; service line ((grantId::roleId))</code></td><td>The suffix is a key rules parse. Never change the format casually</td></tr><tr><td>Composite with status</td><td><code>group | client | status</code></td><td>The status changes with the person, so the same group exists as active and inactive values. Counts inflate</td></tr><tr><td>Scoped grant</td><td>Role + office, or role + client entity</td><td>Three attributes in one grant; carry them together via the request comment or a form</td></tr><tr><td>Multi-valued per user</td><td>A user in several groups</td><td>Needs a multi-valued account attribute and row merging if the SQL returns one row per pair</td></tr><tr><td>Catalogue not aggregated</td><td>Roles never granted do not appear</td><td>If there is no group aggregation endpoint, ISC only knows combinations currently held by someone</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="account-status-convention">Account status convention</h3>
+					<p>Every one of the six custom integrations used the same trick: a rule sets <code>IIQDisabled: true</code> on the account map when the source says the account is inactive. No source mapped a native flag straight to the disabled state. Three consequences:</p>
+					<ul><li>The decision is a <strong>string or boolean comparison in code</strong>. If the target changes its wording (<code>InActive</code> to <code>Inactive</code>), the comparison silently stops matching.</li><li>Rules that only ever set <code>true</code> rely on <strong>absence meaning enabled</strong>. Set both directions explicitly.</li><li>A token failure inside an after-rule that calls a second endpoint for the disabled list leaves <strong>everyone enabled</strong>. Log it and alert on it.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="writing-the-integration-down">Writing the integration down</h3>
+					<p>Per integration, keep a pack of five documents and one evidence folder. This is what made knowledge transfer routine:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>File</th><th>Content</th></tr></thead><tbody><tr><td>Overview</td><td>A 60-second version, read order and open items</td></tr><tr><td>Integration reference</td><td>Source configuration, endpoints or SQL, schemas, every rule, access model, request flow</td></tr><tr><td>Tenant context</td><td>The tenant conventions the integration relies on, so the pack stands alone</td></tr><tr><td>Edge cases and dead ends</td><td>Silent failures, hard ceilings and approaches proven not to work</td></tr><tr><td>Runbook</td><td>Schedules, health checks, troubleshooting by symptom, change checklist</td></tr><tr><td>Config evidence</td><td>Redacted copies of the live configuration</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<h3 id="what-sailpoint-s-documentation-adds">What SailPoint's documentation adds</h3>
+					<p>Checked against the <a href="https://documentation.sailpoint.com/saas/help/accounts/loading_data.html" target="_blank" rel="noopener">account loading documentation</a> and community threads on thresholds, October 2026.</p>
+					<p><strong>The account delete threshold, precisely</strong></p>
+					<ul><li>The setting is <strong>the maximum percentage of accounts that can be deleted in one aggregation.</strong> Over the limit, the documentation says the aggregation is cancelled and a warning generated. A related multi-host page says deletions are skipped instead, so confirm which you get on your source type by testing, and monitor for the warning either way.</li><li>It must be an <strong>integer from 1 to 100.</strong> The UI dropdown reportedly lists values only up to 20 percent, but a docs-team reply on the community says you can type a larger number.</li><li><strong>Small sources round.</strong> The value is rounded to the nearest whole account. If it rounds to less than one account, the aggregation is cancelled only when 100 percent of accounts would be deleted. At 5 percent on a 10-account source it rounds to one account, so any deletion cancels the run.</li><li>It applies to scheduled and flat-file aggregations too.</li><li>There is no built-in alert on a bulk status change such as many terminations. Community answers point to a workflow or a search-based monitor for that, which matches the monitors on the hypercare page.</li><li>A community case matches our concern exactly: a web-services source began returning an error with zero results and then deleted accounts. A low threshold (a few percent) was the suggested guard.</li></ul>
+					<p><strong>Optimized aggregation</strong></p>
+					<p>By default, aggregation is optimized and skips unchanged accounts without re-running correlation. See the identity model page before you debug an uncorrelated account.</p>
+					<p><strong>Scheduling facts</strong></p>
+					<ul><li>Frequencies are daily, every N, weekly and monthly. A daily recurrence ends at midnight, and monthly dates run from 1 to 28.</li><li><strong>The schedule time zone follows the VA cluster setting, and schedules do not shift for daylight saving time.</strong> For a global program, write the time zone next to every schedule.</li><li>Queued or in-progress operations can delay the start of an aggregation.</li></ul>
+					<p><strong>Flat files</strong></p>
+					<ul><li>For best results keep flat files under 500 MB.</li><li>A delimited file should be <strong>sorted by account ID.</strong> Otherwise you can see one entitlement per account, because rows for the same account are not adjacent.</li><li>Without a connected VA, the flat file source is loaded by upload (&quot;aggregate using latest file&quot;), not by a schedule.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Use the pattern selection order and record the reasons.</li><li>Send the questionnaire in the first email and ask for the lower environment immediately.</li><li>Publish a capability statement per application.</li><li>Set <code>IIQDisabled</code> in both directions in every rule.</li><li>Produce the document pack as part of the definition of done.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Platform Architecture, VAs and Networking: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Platform Architecture, VAs and Networking · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/platform-architecture-vas-and-networking.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Platform Architecture, VAs and Networking" />
+		<meta property="og:description" content="Platform Architecture, VAs and Networking: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/platform-architecture-vas-and-networking.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Platform Architecture, VAs and Networking" />
+		<meta name="twitter:description" content="Platform Architecture, VAs and Networking: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="active">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Platform Architecture, VAs and Networking</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#the-shape-of-the-solution">The shape of the solution</a></li><li><a href="#tenants-and-region">Tenants and region</a></li><li><a href="#virtual-appliances-and-clusters">Virtual appliances and clusters</a></li><li><a href="#iqservice-for-active-directory">IQService for Active Directory</a></li><li><a href="#connection-types-you-will-use">Connection types you will use</a></li><li><a href="#api-access-and-versions">API access and versions</a></li><li><a href="#administration-and-break-glass">Administration and break-glass</a></li><li><a href="#what-sailpoint-s-documentation-adds">What SailPoint's documentation adds</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>ISC is SaaS, but anything it governs inside your network is reached through virtual appliances you run. Most connectivity incidents on the program traced back to a network or cluster decision made in the design phase, so this page is about getting those decisions right.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="the-shape-of-the-solution">The shape of the solution</h3>
+				</div>
+
+<div class="arch reveal">
+	<div class="arch-tier"><div class="arch-node arch-node--accent"><span class="n">HR system (authoritative)</span><span class="d">Hires, moves, leavers, termination dates, manager, location, time zone</span><span class="tech">Web Services over REST, hourly</span></div></div>
+	<div class="arch-tier"><div class="arch-flow">▼</div></div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">ISC tenant (sandbox + production)</span><span class="d">Identity profile, transforms, cloud rules, lifecycle states, access model, workflows, forms, campaigns</span><span class="tech">SaaS, outbound-only from your network</span></div></div>
+	<div class="arch-tier"><div class="arch-flow">▼</div></div>
+	<div class="arch-tier">
+		<div class="arch-node"><span class="n">HR cluster</span><span class="d">2 VAs, close to the HR API</span></div>
+		<div class="arch-node"><span class="n">Directory clusters</span><span class="d">One per forest or region, with IQService for writes</span></div>
+		<div class="arch-node"><span class="n">App cluster A</span><span class="d">REST, SaaS and SQL Server apps</span></div>
+		<div class="arch-node"><span class="n">App cluster B</span><span class="d">Flat-file sources and region-specific apps</span></div>
+	</div>
+	<div class="arch-tier"><div class="arch-flow">▼</div></div>
+	<div class="arch-tier"><div class="arch-node"><span class="n">Targets</span><span class="d">Active Directory, REST applications, SQL databases, SaaS finance and workflow products, an ITSM mailbox</span></div></div>
+</div>
+
+<div class="prose reveal">
+					<h3 id="tenants-and-region">Tenants and region</h3>
+					<ul><li><strong>Two tenants: sandbox and production.</strong> Build in sandbox, promote to production. They are separate organisations, so credentials, VA registrations and some objects do not travel (see the migration page).</li><li><strong>Region is a one-time choice.</strong> Both tenants sat in the same cloud region. The VA firewall allow-list needs the region-specific service endpoints (object storage, queue, database, container registry) as well as the US-east defaults, so write the region into the network request.</li><li><strong>Org time zone matters.</strong> The tenant has an organisation time zone that governs scheduled aggregation times. Workflow schedules carry their own time zone, and identities carry a work-location time zone. That is three time zones in play. Document each one, because a &quot;run at 10pm local&quot; requirement spans all three.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="virtual-appliances-and-clusters">Virtual appliances and clusters</h3>
+					<p><strong>Principles that held up</strong></p>
+					<ol><li><strong>One cluster per network boundary and blast radius.</strong> Group sources by which network they can reach and by how badly you want a fault to spread. We had an HR cluster, a domain cluster per directory estate, an external-directory cluster in another geography, and two general application clusters.</li><li><strong>At least two VAs per cluster.</strong> VAs update by taking turns, so a single VA means an outage during every update. The design document said two per cluster; the production listing showed the busiest application cluster with one. It also sat in a warning state, and we never proved the cause. Do not run your biggest cluster on one appliance.</li><li><strong>Put a cluster near its targets.</strong> Latency between a VA and a database shows up as slow or timing-out aggregations. A region-specific app (a platform reachable only from one geography) justified its own placement.</li><li><strong>A source cannot simply be moved between clusters.</strong> The cluster decides what the source can reach, so choose before you onboard fifty sources onto it.</li><li><strong>Clusters fail together.</strong> When several unrelated integrations fail at once, suspect the cluster, not the integrations. Write that into your runbook.</li><li><strong>Watch cluster status.</strong> Two clusters showed a configuring state with an undefined version string for long periods while sources on them still worked. Learn what normal looks like on your tenant so you can spot a real change.</li></ol>
+				</div>
+
+<!-- dgm:va-clusters-prod -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 396" role="img" aria-labelledby="va-clusters-prod-t va-clusters-prod-d" xmlns="http://www.w3.org/2000/svg"><title id="va-clusters-prod-t">Production virtual appliance clusters</title><desc id="va-clusters-prod-d">Five clusters by purpose: HR, two directory estates with directory agents, and two application batches. Each has two appliances except one.</desc><defs><marker id="va-clusters-prod-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk " style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="va-clusters-prod-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="va-clusters-prod-ar-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk teal" style="fill:var(--teal);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="box " x="10" y="8" width="120" height="40" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="70.0" y="25.0" text-anchor="middle">NTP</text><text class="s" x="70.0" y="40.0" text-anchor="middle">time source</text><rect class="box accent" x="330" y="8" width="160" height="44" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="410.0" y="27.0" text-anchor="middle">ISC tenant</text><text class="s" x="410.0" y="42.0" text-anchor="middle">outbound TLS only</text><path class="ln accent  " d="M86,72 L734,72" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;"/><path class="ln accent  " d="M410,72 L410,52" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-clusters-prod-ar-accent)"/><text class="l" x="560" y="66" text-anchor="middle">TLS, encrypted payloads</text><path class="ln   dot" d="M130,28 L330,28" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:2;stroke-dasharray:1.5 4;stroke-linecap:round;" marker-end="url(#va-clusters-prod-ar)"/><text class="l" x="230" y="22" text-anchor="middle">123</text><path class="ln accent  " d="M86,72 L86,92" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;"/><rect class="box blue" x="10" y="92" width="152" height="184" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="86" y="110" text-anchor="middle">HR cluster</text><rect class="box " x="24" y="124" width="124" height="54" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="86.0" y="148.0" text-anchor="middle">VA 1</text><text class="s" x="86.0" y="163.0" text-anchor="middle">cloud, region 1</text><rect class="box " x="24" y="190" width="124" height="54" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="86.0" y="214.0" text-anchor="middle">VA 2</text><text class="s" x="86.0" y="229.0" text-anchor="middle">cloud, region 1</text><path class="ln accent  " d="M248,72 L248,92" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;"/><rect class="box teal" x="172" y="92" width="152" height="184" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="248" y="110" text-anchor="middle">Directory cluster A</text><rect class="box " x="186" y="124" width="124" height="54" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="248.0" y="148.0" text-anchor="middle">VA 1</text><text class="s" x="248.0" y="163.0" text-anchor="middle">on-prem, site 1</text><rect class="box " x="186" y="190" width="124" height="54" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="248.0" y="214.0" text-anchor="middle">VA 2</text><text class="s" x="248.0" y="229.0" text-anchor="middle">cloud, region 2</text><path class="ln accent  " d="M410,72 L410,92" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;"/><rect class="box teal" x="334" y="92" width="152" height="184" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="410" y="110" text-anchor="middle">Directory cluster B</text><rect class="box " x="348" y="124" width="124" height="54" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="410.0" y="148.0" text-anchor="middle">VA 1</text><text class="s" x="410.0" y="163.0" text-anchor="middle">on-prem, site 2</text><rect class="box " x="348" y="190" width="124" height="54" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="410.0" y="214.0" text-anchor="middle">VA 2</text><text class="s" x="410.0" y="229.0" text-anchor="middle">cloud, region 3</text><path class="ln accent  " d="M572,72 L572,92" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;"/><rect class="box violet" x="496" y="92" width="152" height="184" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="572" y="110" text-anchor="middle">Application batch 1</text><rect class="box " x="510" y="124" width="124" height="54" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="572.0" y="148.0" text-anchor="middle">VA 1</text><text class="s" x="572.0" y="163.0" text-anchor="middle">on-prem, site 3</text><rect class="box " x="510" y="190" width="124" height="54" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="572.0" y="214.0" text-anchor="middle">VA 2</text><text class="s" x="572.0" y="229.0" text-anchor="middle">cloud, region 1</text><path class="ln accent  " d="M734,72 L734,92" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;"/><rect class="box gold" x="658" y="92" width="152" height="184" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="734" y="110" text-anchor="middle">Application batch 2</text><rect class="box " x="672" y="124" width="124" height="54" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="734.0" y="141.5" text-anchor="middle">VA 1</text><text class="s" x="734.0" y="156.5" text-anchor="middle">cloud, other</text><text class="s" x="734.0" y="169.5" text-anchor="middle">geography</text><rect class="box ghost" x="672" y="190" width="124" height="54" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="734.0" y="207.5" text-anchor="middle">No second VA</text><text class="s" x="734.0" y="222.5" text-anchor="middle">single point of</text><text class="s" x="734.0" y="235.5" text-anchor="middle">failure</text><text class="s" x="10" y="288" text-anchor="middle"></text><rect class="box " x="10" y="298" width="152" height="40" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="86.0" y="315.0" text-anchor="middle">HR system</text><text class="s" x="86.0" y="330.0" text-anchor="middle">OAuth 2.0 over HTTPS</text><path class="ln   " d="M86,276 L86,298" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#va-clusters-prod-ar)"/><rect class="box gold" x="172" y="298" width="152" height="40" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="248.0" y="315.0" text-anchor="middle">Directory agent</text><text class="s" x="248.0" y="330.0" text-anchor="middle">TLS to the forest</text><rect class="box gold" x="334" y="298" width="152" height="40" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="410.0" y="315.0" text-anchor="middle">Directory agent</text><text class="s" x="410.0" y="330.0" text-anchor="middle">TLS to the forest</text><path class="ln teal  " d="M248,276 L248,298" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-clusters-prod-ar-teal)"/><path class="ln teal  " d="M410,276 L410,298" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-clusters-prod-ar-teal)"/><rect class="box " x="172" y="352" width="152" height="34" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="248.0" y="366.0" text-anchor="middle">Internal forest</text><text class="s" x="248.0" y="381.0" text-anchor="middle">389 / 636</text><rect class="box " x="334" y="352" width="152" height="34" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="410.0" y="366.0" text-anchor="middle">External forest</text><text class="s" x="410.0" y="381.0" text-anchor="middle">389 / 636</text><path class="ln teal  " d="M248,338 L248,352" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-clusters-prod-ar-teal)"/><path class="ln teal  " d="M410,338 L410,352" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-clusters-prod-ar-teal)"/><rect class="box " x="496" y="298" width="152" height="40" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="572.0" y="315.0" text-anchor="middle">Applications</text><text class="s" x="572.0" y="330.0" text-anchor="middle">REST, SaaS, SQL</text><rect class="box " x="658" y="298" width="152" height="40" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="734.0" y="315.0" text-anchor="middle">Applications</text><text class="s" x="734.0" y="330.0" text-anchor="middle">region-specific</text><path class="ln   " d="M572,276 L572,298" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#va-clusters-prod-ar)"/><path class="ln   " d="M734,276 L734,298" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#va-clusters-prod-ar)"/></svg></div><figcaption><b>Cluster layout.</b> Redrawn from the design's cluster segregation figure: one cluster for the HR system, one per directory estate (reading directly and writing through a directory agent) and two for applications. The cluster in another geography has a single appliance, a risk the design should have closed.</figcaption></figure>
+
+<div class="prose reveal">
+					<p><strong>Sizing and hosting</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Decision</th><th>Guidance</th></tr></thead><tbody><tr><td>VAs per cluster</td><td>Minimum two, in different hosts or availability zones</td></tr><tr><td>VM to VA ratio</td><td>One to one</td></tr><tr><td>Configuration</td><td>Standard (direct outbound). Deep packet inspection is not supported on the path</td></tr><tr><td>Hosting</td><td>Public cloud and on-premises hypervisors are both fine, but check the vendor's support list first</td></tr><tr><td>Unsupported hypervisor</td><td>We ran some VAs on a hyperconverged stack outside the official support list. SailPoint's answer was that it may work, config is not supported, and they would support the VA once running. Get that in writing before design sign-off</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Network requirements to hand to your network team</strong></p>
+					<p>The VA only makes outbound calls. Typical requirements:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Requirement</th><th>Detail</th></tr></thead><tbody><tr><td>Outbound HTTPS 443 to all destinations</td><td>Service, update and source traffic</td></tr><tr><td>DNS 53 and NTP 123</td><td>Use an internal NTP server if you block outbound 123, and configure each VA individually</td></tr><tr><td>SSH 22 inbound</td><td>Internal only, only if you want to log in to the appliance</td></tr><tr><td>URL allow-list</td><td>SailPoint domains, the update service for the appliance OS, feature-flag service, object storage, queue and database endpoints in the US-east region <strong>and</strong> your region, the container registry in both</td></tr><tr><td>No proxy interference</td><td>Web filters and caching products can break the VA. Allow the listed destinations without inspection</td></tr></tbody></table></div>
+
+<!-- dgm:va-paths -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 300" role="img" aria-labelledby="va-paths-t va-paths-d" xmlns="http://www.w3.org/2000/svg"><title id="va-paths-t">Three ways a virtual appliance reaches ISC</title><desc id="va-paths-d">Standard direct outbound, HTTP proxy, and DMZ placement. Only the administrator connection on port 22 is inbound.</desc><defs><marker id="va-paths-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk " style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker><marker id="va-paths-ar-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk accent" style="fill:var(--accent);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="va-paths-ar-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk gold" style="fill:var(--gold);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="va-paths-ar-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk teal" style="fill:var(--teal);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="grp " x="6" y="8" width="260" height="284" style="fill:none;stroke:var(--text);stroke-opacity:0.28;stroke-dasharray:6 4"/><text class="h" x="16" y="23" text-anchor="start">Standard (recommended)</text><rect class="box accent" x="51" y="34" width="170" height="40" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="136.0" y="51.0" text-anchor="middle">SailPoint tenant</text><text class="s" x="136.0" y="66.0" text-anchor="middle">and update services</text><rect class="grp " x="16" y="112" width="240" height="168" style="fill:none;stroke:var(--text);stroke-opacity:0.28;stroke-dasharray:6 4"/><text class="h" x="26" y="127" text-anchor="start">Your network</text><rect class="box blue" x="61" y="142" width="150" height="50" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="136.0" y="164.0" text-anchor="middle">Virtual appliance</text><text class="s" x="136.0" y="179.0" text-anchor="middle">cluster member</text><path class="ln accent  " d="M136,142 L136,76" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-paths-ar-accent)"/><text class="l" x="142" y="112" text-anchor="start">443 out</text><rect class="box teal" x="20" y="204" width="90" height="38" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="65.0" y="220.0" text-anchor="middle">Admin</text><text class="s" x="65.0" y="235.0" text-anchor="middle">SSH only</text><path class="ln teal  " d="M65,204 L88,188" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-paths-ar-teal)"/><text class="l" x="50" y="192" text-anchor="end">22 in</text><rect class="box " x="162" y="204" width="90" height="38" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="207.0" y="220.0" text-anchor="middle">NTP</text><text class="s" x="207.0" y="235.0" text-anchor="middle">internal</text><path class="ln   dot" d="M184,188 L202,204" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:2;stroke-dasharray:1.5 4;stroke-linecap:round;" marker-end="url(#va-paths-ar)"/><text class="l" x="202" y="192" text-anchor="start">123</text><rect class="grp " x="280" y="8" width="260" height="284" style="fill:none;stroke:var(--text);stroke-opacity:0.28;stroke-dasharray:6 4"/><text class="h" x="290" y="23" text-anchor="start">HTTP proxy</text><rect class="box accent" x="325" y="34" width="170" height="40" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="410.0" y="51.0" text-anchor="middle">SailPoint tenant</text><text class="s" x="410.0" y="66.0" text-anchor="middle">and update services</text><rect class="grp " x="290" y="88" width="240" height="192" style="fill:none;stroke:var(--text);stroke-opacity:0.28;stroke-dasharray:6 4"/><text class="h" x="300" y="103" text-anchor="start">Your network</text><rect class="box violet" x="355" y="104" width="110" height="34" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="410.0" y="124.5" text-anchor="middle">Proxy</text><path class="ln accent  " d="M410,104 L410,76" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-paths-ar-accent)"/><text class="l" x="416" y="94" text-anchor="start">443</text><rect class="box blue" x="335" y="168" width="150" height="50" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="410.0" y="190.0" text-anchor="middle">Virtual appliance</text><text class="s" x="410.0" y="205.0" text-anchor="middle">cluster member</text><path class="ln accent  " d="M410,168 L410,140" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-paths-ar-accent)"/><text class="l" x="416" y="158" text-anchor="start">all HTTP(S)</text><rect class="box teal" x="294" y="230" width="90" height="38" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="339.0" y="246.0" text-anchor="middle">Admin</text><text class="s" x="339.0" y="261.0" text-anchor="middle">SSH only</text><path class="ln teal  " d="M339,230 L362,214" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-paths-ar-teal)"/><text class="l" x="324" y="218" text-anchor="end">22 in</text><rect class="box " x="436" y="230" width="90" height="38" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="481.0" y="246.0" text-anchor="middle">NTP</text><text class="s" x="481.0" y="261.0" text-anchor="middle">internal</text><path class="ln   dot" d="M458,214 L476,230" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:2;stroke-dasharray:1.5 4;stroke-linecap:round;" marker-end="url(#va-paths-ar)"/><text class="l" x="476" y="218" text-anchor="start">123</text><rect class="grp gold" x="554" y="8" width="260" height="284" style="fill:none;stroke:var(--gold);stroke-opacity:0.65;stroke-dasharray:6 4"/><text class="h" x="564" y="23" text-anchor="start">DMZ (not recommended)</text><rect class="box accent" x="599" y="34" width="170" height="40" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="684.0" y="51.0" text-anchor="middle">SailPoint tenant</text><text class="s" x="684.0" y="66.0" text-anchor="middle">and update services</text><rect class="grp gold" x="564" y="92" width="240" height="62" style="fill:none;stroke:var(--gold);stroke-opacity:0.65;stroke-dasharray:6 4"/><text class="h" x="574" y="107" text-anchor="start">DMZ</text><rect class="box blue" x="614" y="108" width="140" height="38" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="684.0" y="123.0" text-anchor="middle">Virtual</text><text class="t" x="684.0" y="138.0" text-anchor="middle">appliance</text><path class="ln accent  " d="M684,108 L684,76" style="fill:none;stroke:var(--accent);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#va-paths-ar-accent)"/><text class="l" x="690" y="98" text-anchor="start">443 out</text><rect class="grp " x="564" y="176" width="240" height="106" style="fill:none;stroke:var(--text);stroke-opacity:0.28;stroke-dasharray:6 4"/><text class="h" x="574" y="191" text-anchor="start">Your network</text><rect class="box " x="604" y="214" width="160" height="50" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="684.0" y="229.5" text-anchor="middle">Sources</text><text class="s" x="684.0" y="244.5" text-anchor="middle">directories,</text><text class="s" x="684.0" y="257.5" text-anchor="middle">databases, apps</text><path class="ln gold dash " d="M684,146 L684,214" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;stroke-dasharray:5 4;" marker-end="url(#va-paths-ar-gold)"/><text class="l" x="690" y="190" text-anchor="start">a hole per source</text></svg></div><figcaption><b>Network methods.</b> The appliance only ever calls out; the one inbound connection is optional administrator SSH. A proxy carries all web traffic while time sync still goes direct. SailPoint advises against the DMZ for security, proximity and connectivity reasons.</figcaption></figure>
+
+<div class="prose reveal">
+					<h3 id="iqservice-for-active-directory">IQService for Active Directory</h3>
+					<p>Writes to Active Directory (create, move, disable, group changes) go through IQService, a small Windows service. Reads can go direct from the VA. Requirements to plan:</p>
+					<ul><li>A supported Windows Server with.NET Framework 4.5.2 or later and PowerShell 3.0 or later.</li><li>A service account that is a local administrator on the IQService host and an Account Operator or Domain Admin in AD. This is a high-privilege account; scope it as tightly as your model allows and put it under review.</li><li>Connectivity from the IQService host to domain controllers on the usual directory ports: LDAP and LDAPS (389, 636), Kerberos (88, 464), AD Web Services (9389), global catalog (3268, 3269), DNS (53), SMB (445) and NetBIOS name and authentication ports.</li><li>The Microsoft APIs IQService calls choose their own dynamic ports, so a firewall between the host and the domain controllers must be permissive. Put IQService close to the domain controllers.</li><li><strong>Transport security.</strong> Ours was configured without TLS to IQService and with plain LDAP to the domain. Decide on TLS from the start; retrofitting it later means touching every domain setting.</li></ul>
+					<p>Anything that used to be done by scripts in the legacy tool (mailbox conversion, out-of-office, adding licence groups, hiding from the address list) needs an explicit home in the new design. See the Active Directory page.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="connection-types-you-will-use">Connection types you will use</h3>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Pattern</th><th>Used for</th><th>Notes</th></tr></thead><tbody><tr><td>Active Directory connector</td><td>Domain accounts and groups</td><td>Preferred pattern wherever an application authenticates through AD</td></tr><tr><td>Web Services</td><td>HR system, REST applications</td><td>All logic in endpoint definitions plus before and after rules</td></tr><tr><td>JDBC</td><td>SQL Server applications</td><td>Aggregation SQL plus a provisioning rule; there is no provisioning SQL on the source</td></tr><tr><td>Flat file via SFTP (SQL Loader / delimited file)</td><td>Applications without an API, and access-review data</td><td>Cheap to build and ideal for review-only governance</td></tr><tr><td>Delimited file with no cluster</td><td>A tiny admin-identity profile</td><td>File upload, no VA needed</td></tr><tr><td>Native SaaS connectors</td><td>Dynamics 365, ITSM</td><td>Use when the product ships one</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Selection principle used in the design: <strong>AD connector first, then a purpose-built direct connector, then JDBC or Web Services, then flat file as fallback.</strong> Disconnected (ticket-based) fulfilment is the last resort and should be replaced as soon as a direct integration exists.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="api-access-and-versions">API access and versions</h3>
+					<ul><li>Admin automation uses OAuth 2.0 client credentials against the tenant token endpoint, or personal access tokens. Treat both as production secrets (see the security page).</li><li>API versions in use were v3, beta and v2025. Newer object families (forms, workflows, launchers) are only on the newest version. Beta endpoints can change shape.</li><li>You will script against the API for dumps, bulk changes and campaign creation. Give those scripts their own API client with a documented scope, rather than reusing someone's personal token.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="administration-and-break-glass">Administration and break-glass</h3>
+					<ul><li>Configure SSO to the production tenant and test it before go-live; the rollout checklist flagged this as a key task.</li><li>Create break-glass administrator accounts that do not depend on SSO, and confirm the client's administrators can log in with them.</li><li>Keep a <strong>Config Hub</strong> backup schedule running. The tenant had weekly automated backups plus manual full backups, which made it possible to compare and restore configuration.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="what-sailpoint-s-documentation-adds">What SailPoint's documentation adds</h3>
+					<p>Checked against the <a href="https://documentation.sailpoint.com/saas/help/va/requirements_va.html" target="_blank" rel="noopener">VA system and network requirements</a> and the <a href="https://community.sailpoint.com/knowledge/Getting-Ready-for-Identity-Security-Cloud-Tenant-Connectivity" target="_blank" rel="noopener">tenant connectivity readiness guide</a> in October 2026. Our design matched most of it; these are the details worth adding.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Topic</th><th>Documented position</th></tr></thead><tbody><tr><td>Minimum VA size</td><td>4 processors, 16 GB memory, 128 GB storage (AWS M5.xlarge, GCP n2-standard-4 or equivalent). The readiness guide quotes a smaller range for local hypervisors and a different Azure size, so trust the requirements page</td></tr><tr><td>Clusters</td><td>At least one production cluster and one sandbox cluster, and <strong>at least two VAs in each, sandbox included</strong>. No load balancer is needed</td></tr><tr><td>Placement</td><td>One VA per virtual machine host. Keep a local cluster close to its source system. A DMZ deployment is not recommended</td></tr><tr><td>Updates</td><td>Clusters update by rolling, one VA at a time, which is why one VA means an outage</td></tr><tr><td>Network methods</td><td>Standard (direct outbound through the firewall, recommended), HTTP proxy, or network tunnel for firewalls that cannot allow domain names. The tunnel is not available in the FedRAMP environment</td></tr><tr><td>Reserved ranges</td><td>A source in <code>10.255.255.241/28</code> cannot be routed to from any VA. <code>172.16.0.0/22</code> is also unusable with the network tunnel</td></tr><tr><td>Inspection</td><td>VAs can trust a private root CA but reject untrusted certificates, so a TLS-inspecting proxy needs its CA installed</td></tr><tr><td>Monitoring</td><td>Third-party monitoring of the VA is not supported</td></tr><tr><td>Geography</td><td>VAs cannot be installed in countries with data residency or transmission restrictions, and the page names Russia and China</td></tr><tr><td>Tenant naming</td><td>The org name is 3 to 13 characters, and sandbox gets an <code>-sb</code> suffix on its URL</td></tr><tr><td>Administrators</td><td>Name break-glass administrators separately for sandbox and production</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>The readiness guide also lists who should attend the connectivity kick-off: HR system owners, directory and entitlement source owners, identity architects, network and firewall engineers and an infrastructure lead. Invite the network team before the call, not after.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Write the cluster plan (names, VAs, hosts, networks, which sources go where) before onboarding sources.</li><li>Get platform-support confirmation in writing for any non-standard VA host.</li><li>Send the network team the URL, port and region list, and test from the VA with the real tenant.</li><li>Decide TLS for IQService and LDAP now.</li><li>Document the three time zones and their owners.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

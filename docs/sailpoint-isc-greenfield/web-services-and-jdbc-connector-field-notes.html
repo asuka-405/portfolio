@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Web Services and JDBC Connector Field Notes: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Web Services and JDBC Connector Field Notes · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/web-services-and-jdbc-connector-field-notes.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Web Services and JDBC Connector Field Notes" />
+		<meta property="og:description" content="Web Services and JDBC Connector Field Notes: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/web-services-and-jdbc-connector-field-notes.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Web Services and JDBC Connector Field Notes" />
+		<meta name="twitter:description" content="Web Services and JDBC Connector Field Notes: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="active">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Web Services and JDBC Connector Field Notes</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#part-1-the-web-services-connector">Part 1: the Web Services connector</a></li><li><a href="#part-2-the-jdbc-connector">Part 2: the JDBC connector</a></li><li><a href="#part-3-testing-a-custom-integration">Part 3: testing a custom integration</a></li><li><a href="#what-sailpoint-s-documentation-and-community-add">What SailPoint's documentation and community add</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Web Services and JDBC are the two connectors that carry a custom integration. Both look configuration-driven and both are really code-driven: the interesting behaviour lives in connector rules. This page collects the mechanics, the traps and the patterns that worked.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="part-1-the-web-services-connector">Part 1: the Web Services connector</h3>
+					<p><strong>Anatomy</strong></p>
+					<p>A Web Services source is a list of <strong>endpoints</strong>, each tagged with an operation type: Test Connection, Custom Authentication, Account Aggregation, Group Aggregation, Get Object, Create, Update, Enable, Disable, Add Entitlement, Remove Entitlement. Some placeholders recur everywhere:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Placeholder or field</th><th>Meaning</th></tr></thead><tbody><tr><td><code>$application.&lt;attr&gt;$</code></td><td>A connector attribute, for example the bearer token the authentication endpoint maintains</td></tr><tr><td><code>$plan.&lt;field&gt;$</code></td><td>A value from the provisioning plan</td></tr><tr><td><code>$response.&lt;field&gt;$</code></td><td>A field of the response in a chained Get Object call</td></tr><tr><td><code>rootPath</code></td><td>JSONPath where the records start in the response</td></tr><tr><td><code>resMappingObj</code></td><td>Maps response fields to schema attributes. <strong>An attribute absent from it is never populated</strong>, even if the schema declares it and the API returns it</td></tr><tr><td><code>parentEndpointName</code></td><td>Chains a Get Object call to an aggregation call, so a list returns thin records and each is fetched in full. Aggregation becomes N+1</td></tr><tr><td><code>beforeRule</code> / <code>afterRule</code></td><td>Attach a connector rule to an endpoint</td></tr><tr><td><code>possibleHttpErrors</code>, <code>authenticationFailedErrorMsg</code></td><td>Let the connector recognise an application-level error inside an HTTP 200</td></tr><tr><td><code>encrypted</code></td><td>The list of connector attributes stored encrypted. Anything not on it can be returned in clear text by the API</td></tr><tr><td><code>throwProvBeforeRuleException</code>, <code>throwProvAfterRuleException</code></td><td>When true, an exception in a rule fails the operation instead of being swallowed. Leave both true</td></tr></tbody></table></div>
+
+<!-- dgm:ws-pipeline -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 262" role="img" aria-labelledby="ws-pipeline-t ws-pipeline-d" xmlns="http://www.w3.org/2000/svg"><title id="ws-pipeline-t">Where rules run around a web services operation</title><desc id="ws-pipeline-d">Each operation can run a before rule, then the HTTP call, then an after rule that reshapes the response.</desc><defs><marker id="ws-pipeline-ar-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk gold" style="fill:var(--gold);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker><marker id="ws-pipeline-ar-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk teal" style="fill:var(--teal);fill-opacity:1" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="grp teal" x="0" y="8" width="820" height="112" style="fill:none;stroke:var(--teal);stroke-opacity:0.65;stroke-dasharray:6 4"/><text class="h" x="10" y="23" text-anchor="start">Aggregation</text><rect class="box " x="14" y="34" width="130" height="76" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="79.0" y="62.5" text-anchor="middle">Operation</text><text class="s" x="79.0" y="77.5" text-anchor="middle">account or group</text><text class="s" x="79.0" y="90.5" text-anchor="middle">aggregation</text><rect class="box violet" x="174" y="34" width="130" height="76" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="239.0" y="56.0" text-anchor="middle">Before rule</text><text class="s" x="239.0" y="71.0" text-anchor="middle">token, paging,</text><text class="s" x="239.0" y="84.0" text-anchor="middle">parameters</text><text class="m" x="239.0" y="97.0" text-anchor="middle">requestEndPoint</text><path class="ln teal  " d="M144,72.0 L174,72.0" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ws-pipeline-ar-teal)"/><rect class="box blue" x="334" y="34" width="130" height="76" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="399.0" y="62.5" text-anchor="middle">HTTP call</text><text class="s" x="399.0" y="77.5" text-anchor="middle">connector client</text><text class="s" x="399.0" y="90.5" text-anchor="middle">on the appliance</text><path class="ln teal  " d="M304,72.0 L334,72.0" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ws-pipeline-ar-teal)"/><rect class="box violet" x="494" y="34" width="130" height="76" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="559.0" y="56.0" text-anchor="middle">After rule</text><text class="s" x="559.0" y="71.0" text-anchor="middle">reshape, disabled</text><text class="s" x="559.0" y="84.0" text-anchor="middle">flag, allowlist</text><text class="m" x="559.0" y="97.0" text-anchor="middle">rawResponseObject</text><path class="ln teal  " d="M464,72.0 L494,72.0" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ws-pipeline-ar-teal)"/><rect class="box teal" x="654" y="34" width="130" height="76" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="719.0" y="69.0" text-anchor="middle">Accounts</text><text class="s" x="719.0" y="84.0" text-anchor="middle">mapped into ISC</text><path class="ln teal  " d="M624,72.0 L654,72.0" style="fill:none;stroke:var(--teal);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ws-pipeline-ar-teal)"/><rect class="grp gold" x="0" y="136" width="820" height="112" style="fill:none;stroke:var(--gold);stroke-opacity:0.65;stroke-dasharray:6 4"/><text class="h" x="10" y="151" text-anchor="start">Provisioning</text><rect class="box " x="14" y="160" width="130" height="76" style="fill:var(--sd-f0);stroke:var(--text);stroke-opacity:0.32;stroke-width:1.1"/><text class="t" x="79.0" y="188.5" text-anchor="middle">Plan</text><text class="s" x="79.0" y="203.5" text-anchor="middle">from a request or</text><text class="s" x="79.0" y="216.5" text-anchor="middle">lifecycle action</text><rect class="box violet" x="174" y="160" width="130" height="76" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="239.0" y="175.5" text-anchor="middle">Before rule</text><text class="s" x="239.0" y="190.5" text-anchor="middle">build body, read</text><text class="s" x="239.0" y="203.5" text-anchor="middle">comments, live</text><text class="s" x="239.0" y="216.5" text-anchor="middle">lookup</text><text class="m" x="239.0" y="229.5" text-anchor="middle">provisioningPlan</text><path class="ln gold  " d="M144,198.0 L174,198.0" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ws-pipeline-ar-gold)"/><rect class="box blue" x="334" y="160" width="130" height="76" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="399.0" y="188.5" text-anchor="middle">HTTP call</text><text class="s" x="399.0" y="203.5" text-anchor="middle">create, modify,</text><text class="s" x="399.0" y="216.5" text-anchor="middle">enable, disable</text><path class="ln gold  " d="M304,198.0 L334,198.0" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ws-pipeline-ar-gold)"/><rect class="box violet" x="494" y="160" width="130" height="76" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="559.0" y="188.5" text-anchor="middle">After rule</text><text class="s" x="559.0" y="203.5" text-anchor="middle">check the response</text><text class="s" x="559.0" y="216.5" text-anchor="middle">body</text><path class="ln gold  " d="M464,198.0 L494,198.0" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ws-pipeline-ar-gold)"/><rect class="box gold" x="654" y="160" width="130" height="76" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="719.0" y="188.5" text-anchor="middle">Result</text><text class="s" x="719.0" y="203.5" text-anchor="middle">committed or</text><text class="s" x="719.0" y="216.5" text-anchor="middle">failed</text><path class="ln gold  " d="M624,198.0 L654,198.0" style="fill:none;stroke:var(--gold);stroke-opacity:1;stroke-width:1.4;" marker-end="url(#ws-pipeline-ar-gold)"/></svg></div><figcaption><b>Rule hook points.</b> Rules run on the appliance, around the connector's own call. Logic that looks missing from the endpoint configuration is usually in the before rule.</figcaption></figure>
+
+<div class="prose reveal">
+					<p><strong>Authentication</strong></p>
+					<p>Use a <strong>Custom Authentication</strong> endpoint when the API issues its own tokens: ISC posts the credentials, reads the token from the response, and stores it in an encrypted attribute that every other endpoint references.</p>
+					<p>Traps seen:</p>
+					<ul><li><strong>Expired tokens returned as HTTP 200.</strong> One application returned <code>200</code> with <code>TOKEN_EXPIRED</code> or <code>JWT token expired!</code> in the body, not <code>401</code>. The connector only re-authenticates if those strings are listed in <code>authenticationFailedErrorMsg</code> and <code>possibleHttpErrors</code>. Misspell one or let the vendor reword it and error bodies flow into the account pipeline as data, with no alert.</li><li><strong>Tokens with no refresh.</strong> A 24-hour maximum token with no refresh token means the connector re-authenticates from scratch. Fine, but it makes the token endpoint a single point of failure.</li><li><strong>The token endpoint can fail under concurrency.</strong> In a sandbox test, five simultaneous request submissions timed out 5 out of 5 on one vendor's token endpoint. Stagger bulk work.</li><li><strong>Rules that mint their own tokens.</strong> Two rules on one source requested a token with the service account name and password embedded as query parameters in a URL literal in the rule source. When the service credential rotates it must be changed in the source <strong>and</strong> each rule, and a live <code>GET</code> of the rule returns the credential in clear text. Use <code>$application.token$</code> or a connector attribute instead.</li><li><strong>Credential halves left in clear.</strong> An API client id and secret pair was split: the secret was on the <code>encrypted</code> list, the id was not. Add every credential-like attribute to <code>encrypted</code> and then verify through the API that it returns masked.</li></ul>
+					<p><strong>Pagination, volume and ceilings</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Pattern</th><th>What happens</th></tr></thead><tbody><tr><td>Single page with a large <code>pageSize</code>, <code>enableHasMore</code> false, no paging steps</td><td>Works until the population exceeds the page size. Then the overflow is <strong>silently dropped</strong>. On a later run those accounts look deleted and, if the delete threshold allows, are removed with their entitlement links</td></tr><tr><td>Real pagination with <code>paginationSteps</code></td><td>Follow a &quot;next page&quot; indicator; a Salesforce-style <code>done</code> flag plus <code>nextRecordsUrl</code> was used for HR</td></tr><tr><td>N+1 Get Object</td><td>A 600-account population needs about 600 sequential calls. Raise the timeout (180 s versus a 120 s norm) and pick a quiet window</td></tr><tr><td>No partitioning, no delta</td><td>Every run is a full sweep. Partitioning is the lever if the population grows</td></tr><tr><td>An API built for the integration</td><td>May return everything in one response; no pagination needed. Confirm with the owner, do not assume</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Add <strong>population monitors</strong>: record the number of accounts returned per run and alert on a sudden drop or a count that sits exactly at a page size.</p>
+					<p><strong>After-rules: the contract and the patterns</strong></p>
+					<p>An after-rule receives the raw response and <strong>must return <code>{&quot;data&quot;: [ ... ]}</code></strong>, a list of account maps, even for one record. They are where most real logic sits.</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">java</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// Minimal shape of a status-aware after-rule.</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">Map newmap </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> new</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> HashMap</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">();</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">newmap.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">put</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"UserID"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, resp.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">get</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"UserID"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">));</span></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// ... copy the fields you want (allowlist) ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// Normalise the target's wording, set the flag in BOTH directions.</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">String enabled </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> String.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">valueOf</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(resp.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">get</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"UserIsEnabled"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">));</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">newmap.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">put</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"IIQDisabled"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">!</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"true"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">equalsIgnoreCase</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(enabled));</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">List data </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> new</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> ArrayList</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">();</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">data.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">add</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(newmap);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> Collections.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">singletonMap</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"data"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, data);</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>What after-rules did across the program:</p>
+					<ul><li>Built composite entitlement values and removed vendor-internal fields.</li><li>Exploded a comma-delimited role field into one entitlement per role.</li><li>Dropped roles by agreement (anything containing &quot;admin&quot; was excluded from governance on one integration).</li><li>Made a <strong>second HTTP call</strong> to merge in data the first call cannot return, for example a disabled-users list, or the second half of a group catalogue.</li><li>Synthesised a display name from first and last name.</li></ul>
+					<p>Cautions:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Caution</th><th>Detail</th></tr></thead><tbody><tr><td>Allowlist beats denylist</td><td>Copy named fields onto a fresh map. Stripping a denylist lets any new vendor field flow into the account. The allowlist has the opposite cost: a new field is dropped until the rule changes. Pick on purpose</td></tr><tr><td>Set both flag directions</td><td>A rule that only sets <code>IIQDisabled: true</code> depends on absence meaning enabled</td></tr><tr><td>Exact-string status checks</td><td><code>&quot;InActive&quot;.equals(status)</code> stops matching on <code>Inactive</code>, <code>INACTIVE</code>, <code>0</code> or a JSON boolean. Normalise first</td></tr><tr><td>Fail loudly on a second call</td><td>If the second call cannot be made (no token), log an unmistakable line and alert on it. Otherwise the population looks entirely enabled</td></tr><tr><td>Logging level</td><td>One rule logged every account at error level on every run, with the whole list, daily. Wrong severity buries real errors</td></tr><tr><td>Debug flags</td><td>Keep a <code>LOGGING_ENABLED</code>-style flag, default false, and switch it on only for a diagnostic window</td></tr><tr><td>Unreachable code</td><td>Dead statements after a <code>return</code> hide mistakes. Delete them</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Before-rules: rewriting what gets sent</strong></p>
+					<p>A before-rule receives the endpoint and the provisioning plan and returns a modified endpoint. They are used when the plan placeholders cannot build the request.</p>
+					<ul><li><strong>The endpoint body can be dead configuration.</strong> If the rule replaces the body, anything written in the endpoint's body field is misleading. We found endpoints whose <code>jsonBody</code> was null, and others whose body used a different key than the rule sent. Document that &quot;the rule is the only place the request exists&quot;.</li><li><strong>One rule for both add and remove.</strong> A single rule can serve both entitlement directions by reading each attribute request's own operation. Editing it changes both directions at once.</li><li><strong>Substitution-string encodings.</strong> One product took parameters as a flat string of comma-separated <code>name=value</code> pairs, with square brackets around values containing spaces. The rule builds the string. A value containing a comma or a bracket breaks it, and nothing escapes it.</li><li><strong>Swallowed exceptions.</strong> Wrapping the whole loop in <code>try/catch (Exception) { log }</code> converts a loud failure into a request with blank substitution variables. Let the exception propagate so the operation fails.</li><li><strong>Only some attributes sync.</strong> A before-rule that builds an update body from a <code>switch</code> over attribute names only supports the names in the switch. Anything else produces a plan that <strong>reaches the target with the field absent and succeeds</strong>. Name this limit in your capability statement.</li><li><strong>Policy-only fields.</strong> A field can exist only in the provisioning policy so the rule can read it, never in the schema. It will never appear on an aggregated account. That is elegant and looks like a mistake if you do not know it.</li><li><strong>Environment values hard-coded in rules.</strong> Base URL, application name and API version appeared as literals in both the endpoint and the rules. A URL change is a rule change. Read them from connector attributes.</li><li><strong>HTTP library choice.</strong> <code>HttpURLConnection</code> cannot send PATCH (use GET then PUT instead). An Apache HTTP client inside a rule produced consecutive aggregation errors and was reverted. Use the connector's own <code>WebServicesClient</code>.</li><li><strong>Time-limited calls.</strong> A call that exceeds the VA timeout (63 seconds in our measurement) wedged that requester for about an hour: every later request from the same identity came back cancelled.</li></ul>
+					<p><strong>Revocation done in rules</strong></p>
+					<p>On one REST integration the Remove Entitlement endpoint did almost nothing. Two before-rules, about 400 lines each, read live grants from the target, decided between removing one role, deleting a grant row or disabling the user, and called four endpoints directly.</p>
+					<p>Read the rules, not the endpoint, to learn what revocation does. A benefit of this design: it reads <strong>live</strong> data, so revocation stays correct even when the aggregated view in ISC is months old.</p>
+					<p><strong>The debug webhook</strong></p>
+					<p>Four production rules across the tenant posted diagnostics to an internal HTTP listener through a <code>sendLog</code> helper. Two versions existed:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Version</th><th>When the listener is down</th></tr></thead><tbody><tr><td>Unsafe: throws a runtime exception, no timeouts</td><td>The operation fails or hangs</td></tr><tr><td>Safe: catches, logs a warning, 2-second timeouts</td><td>The operation continues</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Remove debug webhooks before production.</strong> If you must keep one, use the safe version and a flag set to false.</p>
+					<p><strong>Names with whitespace</strong></p>
+					<p>Two traps cost real time:</p>
+					<ul><li>A schema named with <strong>two spaces</strong> between words propagates into every endpoint operation type and connector attribute. A single-space search finds nothing. Renaming detaches every entitlement and access profile, so leave it.</li><li>Two rules in the same set carried a <strong>double space</strong> after a prefix; the other two did not. Looking up by the &quot;obvious&quot; name returned nothing.</li><li>Header values with trailing spaces or leading spaces in keys are harmless until a stricter server arrives.</li></ul>
+					<p>Choose names without whitespace in the first place and lint for it.</p>
+					<p><strong>Test Connection is not a test</strong></p>
+					<p>Test Connection often calls a trivial endpoint (<code>LIMIT 2</code>, a filter that matches nothing). It proves reachability and authentication, not the aggregation projection. After a change, run a <strong>small-scope aggregation</strong> and compare counts and status distribution.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="part-2-the-jdbc-connector">Part 2: the JDBC connector</h3>
+					<p><strong>Anatomy</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Attribute</th><th>Purpose</th></tr></thead><tbody><tr><td><code>SQL</code> / <code>&lt;schema&gt;.SQL</code></td><td>The aggregation query for a schema</td></tr><tr><td><code>getObjectSQL</code></td><td>Single-account read, with the native identity substituted</td></tr><tr><td><code>testConnSQL</code></td><td>Used by Test Connection</td></tr><tr><td><code>url</code>, <code>user</code>, <code>password</code>, <code>driverClass</code></td><td>The connection</td></tr><tr><td><code>buildMapRule</code></td><td>A <strong>JDBCBuildMap</strong> rule that runs per result-set row</td></tr><tr><td><code>jdbcProvisionRule</code></td><td>A <strong>JDBCProvision</strong> rule that does <em>all</em> writes</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>There is no provisioning SQL on the source.</strong> <code>createSQL</code>, <code>updateSQL</code>, <code>enableSQL</code> and the entitlement maps are all null. Every write is a <code>PreparedStatement</code> opened inside the provisioning rule. To know what provisioning does, read the rule.</p>
+					<p><strong>Configuration traps</strong></p>
+					<ul><li><strong>Three copies of every setting.</strong> The UI writes the account schema's settings under the bare name, an <code>undefined.</code> prefix and, for groups, both <code>Group.</code> and <code>group.</code>. They are normally identical. On one source they were not: two different host addresses for the same database. Which was used depended on how the schema was addressed. <strong>Edit through the UI so all copies stay in step</strong>, and check all prefixes after any API change.</li><li><strong>The driver JAR is per source.</strong> A driver upgrade is repeated on every JDBC source.</li><li><strong>Duplicate entries in the <code>encrypted</code> list</strong> (<code>privateKey</code>, <code>passphrase</code> twice, an <code>undefined.password</code>) suggest hand editing. Tidy, but verify each name against a real attribute first.</li><li><strong>Environment names hard-coded in rule SQL.</strong> A sandbox rule backup named the sandbox database in every statement, so promoting it unchanged would point production at the sandbox. Parameterise environment-specific names.</li><li><strong>A production source on an instance named like a test instance.</strong> Confirm instance names with the DBA team.</li></ul>
+					<p><strong>Aggregation SQL traps</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Trap</th><th>Effect</th></tr></thead><tbody><tr><td><code>TOP (1000)</code></td><td>Silently truncates a catalogue</td></tr><tr><td>Hard-coded ID lists for groups (<code>WHERE ID = 254 OR ID = 255</code>)</td><td>Adding a group means editing SQL; there is no category filter</td></tr><tr><td>Filter <code>IsWindowADAccount = '1'</code></td><td>Only AD-linked accounts are visible. Counts are not user counts. A user who stops being AD-linked drops out and is deleted next run</td></tr><tr><td>Join to a group-user table producing a row per user-group pair</td><td>With <code>isMulti: false</code> and <code>mergeRows: false</code>, ISC has no instruction to merge rows into one account with two entitlement values. Set the attribute multi-valued and enable row merging</td></tr><tr><td>Status baked into the entitlement value</td><td>Same group-client pair exists as active and inactive values, inflating counts and campaigns</td></tr><tr><td>Schema with identity and display inverted</td><td>An access form drawing options from the schema empties if you change the identity attribute</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Build-map rules</strong></p>
+					<p>A build-map rule turns one row into an account map. A brittle version:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">java</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">Map map </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> JDBCConnector.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">buildMapFromResultSet</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(result, schema);</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">Boolean status </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (Boolean) map.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">get</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"IsActive"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);   </span><span style="--shiki-dark:#6A737D;--shiki-light:#6A737D">// throws on null or a non-boolean</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (status </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">==</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> false</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) map.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">put</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"IIQDisabled"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">true</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> map;</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>If the column is null or the driver returns a different type, the cast throws and <strong>that row fails</strong>. The account silently drops out of the aggregation and later becomes a deletion candidate. A robust version:</p>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">java</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">Map map </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> JDBCConnector.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">buildMapFromResultSet</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(result, schema);</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">Object v </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> map.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">get</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"IsActive"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">boolean</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> active </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> v </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">!=</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> null</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> &#x26;&#x26;</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62"> "true"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">equalsIgnoreCase</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(String.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">valueOf</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(v));</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">map.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">put</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"IIQDisabled"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">, </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">!</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">active);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">return</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> map;</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p><strong>Provisioning rules</strong></p>
+					<p>Patterns that worked:</p>
+					<ol><li><strong>Dispatch on <code>AccountRequest.Operation</code></strong>: Create, Modify, Disable, Enable, Delete.</li><li><strong>Use a transaction for multi-table writes.</strong> The most robust rule inserted into three tables with auto-commit off, committed on success, and rolled back on a SQL exception, then set <code>STATUS_FAILED</code>.</li><li><strong>Check for duplicates</strong> before inserting an assignment.</li><li><strong>Resolve names to IDs inside the rule</strong> (role name to role ID) rather than expecting ISC to supply IDs.</li><li><strong>Refuse delete explicitly</strong> with a clear message; accounts are disabled, not deleted.</li><li><strong>Call a stored procedure when the target has complex side effects.</strong> Let the application team own the procedure and its tests.</li><li><strong>Treat the status flags as two-sided.</strong> Disabling set one status column in one table and another account-status column in a second table, and enabling reversed both and cleared the termination date.</li></ol>
+					<p>Gotchas:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Gotcha</th><th>Detail</th></tr></thead><tbody><tr><td>An undeclared variable gates the whole create path</td><td>A rule's guard condition referenced two identifiers that were never declared (a corrupted spelling and a case mismatch). The condition could never evaluate as intended. The <strong>modify</strong> path, used by most requests, had separate code and worked, so nobody noticed. Exercise every operation in a lower environment, especially create for a person with no existing account</td></tr><tr><td>Failures in the target but not the mirror</td><td>See below</td></tr><tr><td>Credentials in rules</td><td>Rules on the Web Services sources carried service credentials as URL query parameters; check JDBC rules for embedded connection strings too. Rotation must change the source and every rule</td></tr><tr><td>Rule gate uses the access request comments</td><td>See below</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Carrying extra provisioning data: the comments channel</strong></p>
+					<p>The ISC provisioning plan has no field for &quot;which database&quot; or &quot;which client&quot;. Two integrations needed to insert <strong>several entitlement values in one write</strong> (role plus office plus client; group plus client plus database). The solution:</p>
+					<ol><li>The request form captures all selections.</li><li>The workflow writes them as <strong>JSON into the comments of the access request</strong> (<code>Manage Access</code> step).</li><li>The provisioning rule reads <code>attrReq.getComments()</code>, parses the JSON, clears the comment and acts on the values.</li></ol>
+				</div>
+
+<div class="code-block reveal"><div class="code-block-head"><span class="code-dots"><span></span><span></span><span></span></span><span class="code-lang">java</span></div><pre class="shiki shiki-themes github-dark github-light" style="--shiki-dark:#e1e4e8;--shiki-light:#24292e;--shiki-dark-bg:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">AttributeRequest ar </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> account.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">getAttributeRequest</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"databases"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">Map meta </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> JsonUtil.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">toMap</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(ar.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">getComments</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">());</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">ar.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">setComments</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5">null</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">if</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (meta </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">==</span><span style="--shiki-dark:#79B8FF;--shiki-light:#005CC5"> null</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">) </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">throw</span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49"> new</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1"> RuntimeException</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"METADATA IS NULL"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">String client   </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (String) meta.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">get</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"RequestedClientName"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">String database </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (String) meta.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">get</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"dataBaseToBeProvisioned"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span>
+<span class="line"><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">String group    </span><span style="--shiki-dark:#F97583;--shiki-light:#D73A49">=</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E"> (String) meta.</span><span style="--shiki-dark:#B392F0;--shiki-light:#6F42C1">get</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">(</span><span style="--shiki-dark:#9ECBFF;--shiki-light:#032F62">"RequestedGroup"</span><span style="--shiki-dark:#E1E4E8;--shiki-light:#24292E">);</span></span></code></pre></div>
+
+<div class="prose reveal">
+					<p>This works and is the best answer found to an out-of-the-box limitation. It has a hard coupling:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>If you do this</th><th>What happens</th></tr></thead><tbody><tr><td>Rename the JSON keys in the workflow</td><td>The rule throws <code>METADATA IS NULL</code> or reads nulls</td></tr><tr><td>Rename the keys in the rule</td><td>The workflow's payload is no longer understood</td></tr><tr><td>Grant the entitlement any other way (API call, role, certification remediation, access profile)</td><td>No comments arrive; the rule throws and provisioning fails</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>The only supported way to grant that entitlement is the launcher.</strong> Say so on the page where someone might try another route, or make the rule fall back to deriving the values from the entitlement itself. Change the workflow and the rule as one unit.</p>
+					<p><strong>A central database in front of many databases</strong></p>
+					<p>One application used a database <strong>per client</strong>. ISC cannot aggregate across many databases through one source. The solution was a <strong>centralised mirror schema</strong> that holds users, entitlements and a client-to-database map, with a stored procedure that writes into the right client database.</p>
+					<p>Consequences to design for:</p>
+					<ul><li>Every provisioning operation writes <strong>twice</strong>: through the procedure into the real client database, and into the mirror so the next aggregation sees it.</li><li>If the procedure fails but the mirror write succeeds, <strong>ISC reports the mirror's view</strong> and re-provisioning looks like a no-op. &quot;ISC says I have it, the application says no&quot; is the symptom.</li><li>The client-to-database map is itself an entitlement. A change to the schema's identity attribute empties the client dropdown on the request form.</li><li>A dedicated-instance sibling of the same application used plain SQL per client with a fixed group list; a shared, hard-coded build map served both.</li></ul>
+					<p><strong>Secrets, rotation and rule inventory</strong></p>
+					<ul><li>41 connector rules existed. Maintain an inventory: rule name, type, the source it is attached to, and <strong>every place it hard-codes an environment value or credential</strong>.</li><li>A rule is a record you can read with a normal API call. Exports and shared copies should be scrubbed of connection strings, query-string credentials and long hex literals.</li><li>Unattached rules (templates, older versions) accumulate. Prune them or label them.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="part-3-testing-a-custom-integration">Part 3: testing a custom integration</h3>
+					<p>A checklist that would have caught most of the defects above:</p>
+					<ol><li>Test Connection, then a <strong>small-scope aggregation</strong>, then a full one. Compare account and entitlement counts to the target.</li><li>Status: confirm a known-disabled account aggregates as disabled and a known-enabled one as enabled. Change a wording in the target in a lower environment and confirm the failure is visible.</li><li><strong>Overflow</strong>: temporarily reduce a page size or <code>TOP</code> and confirm you can see the drop.</li><li>Run each provisioning operation in a lower environment: create (for a person who has <strong>no</strong> account), enable, disable, add each entitlement type, remove each type, and an unsupported operation.</li><li>Run the same operation by every legitimate route (form, access profile, role, API).</li><li>Simulate a target outage mid-operation and confirm the plan fails rather than reports success.</li><li>Look in the target and confirm the result. Do not trust the ISC status.</li><li>Re-aggregate and confirm ISC shows the change.</li><li>Rotate the credential and confirm where it must change.</li><li>Turn logging on, read the log of one run, and turn it off.</li></ol>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="what-sailpoint-s-documentation-and-community-add">What SailPoint's documentation and community add</h3>
+					<p><strong>API rate limits</strong></p>
+					<p>The <a href="https://developer.sailpoint.com/docs/api/rate-limit/" target="_blank" rel="noopener">rate limit documentation</a> states a default of <strong>100 requests per client ID and API version per 10 seconds.</strong> Exceeding it returns HTTP 429 with a <code>Retry-After</code> header giving the seconds to wait. Individual APIs may differ, so check each specification. Practical impact for this guide:</p>
+					<ul><li>A script that loops over campaigns, sources or profiles needs backoff. Plan concurrency around the client ID, not the token, and note that two scripts sharing one client share the allowance.</li><li>Do not give every tool the same administrator client. Separate clients give separate allowances and a usable audit trail.</li><li>The Web Services connector backs off on 429 using <code>Retry-After</code>. Community reports describe a limited number of retries, so a vendor API with a tight limit can still fail an aggregation. Check the vendor's own limit before choosing page size and concurrency.</li></ul>
+					<p><strong>Provisioning retries</strong></p>
+					<p>Community threads describe a retry mechanism for provisioning: a retryable error is retried a limited number of times (three is commonly quoted), configured per source through <code>retryableErrors</code> with optional <code>provisioningMaxRetries</code> and <code>provisioningRetryThreshold</code>. Reports conflict on whether the threshold can be tuned and whether the spacing is one minute or one hour, and one report quotes support saying the values are fixed. <strong>Treat retries as a behaviour to test on your tenant, not a setting to rely on.</strong> Match error codes or stable message fragments, not messages containing dates or sequence numbers.</p>
+					<p><strong>Pagination cautions from the community</strong></p>
+					<ul><li>Identify the application's real paging parameter first; many are not <code>startIndex</code>.</li><li>Offset paging can break when data changes during the run. If the vendor offers a cursor or query token, prefer it.</li><li>Large page sizes can time out. One thread reports aggregation timing out above a count of 200.</li><li>A <code>TERMINATE_IF</code> check on record count must be placed correctly relative to the offset increment, or the loop ends early.</li><li>Mixing connectors is legitimate. A JDBC source for aggregation with a web-services path for provisioning is a documented community pattern where the application has no aggregation API.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Write the capability statement and publish it with the rule inventory.</li><li>Add population-count, status-count and last-aggregation-age monitors.</li><li>Remove debug webhooks and embedded credentials before production.</li><li>Edit multi-prefix JDBC attributes only in the UI.</li><li>Test each provisioning operation by each route in a lower environment.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>

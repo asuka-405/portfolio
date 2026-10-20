@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Forms, Launchers and Workflows: Limits and Workarounds: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta name="color-scheme" content="dark light" />
+		<title>Forms, Launchers and Workflows: Limits and Workarounds · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="canonical" href="https://archdev.in/docs/sailpoint-isc-greenfield/forms-launchers-and-workflows-limits-and-workarounds.html" />
+		<meta property="og:site_name" content="Suryansh Kapil" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Forms, Launchers and Workflows: Limits and Workarounds" />
+		<meta property="og:description" content="Forms, Launchers and Workflows: Limits and Workarounds: SailPoint ISC Greenfield Implementation Field Guide" />
+		<meta property="og:url" content="https://archdev.in/docs/sailpoint-isc-greenfield/forms-launchers-and-workflows-limits-and-workarounds.html" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Forms, Launchers and Workflows: Limits and Workarounds" />
+		<meta name="twitter:description" content="Forms, Launchers and Workflows: Limits and Workarounds: SailPoint ISC Greenfield Implementation Field Guide" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="section docs-page">
+				<div class="docs-layout">
+			<nav class="docs-sidebar" id="docs-sidebar">
+				<div class="docs-sidebar-topic-title">
+					<a href="index.html" class="">🧭 SailPoint ISC Greenfield Implementation Field Guide</a>
+				</div>
+				<ul>
+					<li>
+						<a href="program-setup-scope-and-governance.html" class="">Program Setup, Scope and Governance</a>
+					</li>
+					<li>
+						<a href="platform-architecture-vas-and-networking.html" class="">Platform Architecture, VAs and Networking</a>
+					</li>
+					<li>
+						<a href="the-hr-authoritative-source-and-identity-model.html" class="">The HR Authoritative Source and Identity Model</a>
+					</li>
+					<li>
+						<a href="lifecycle-states-and-joiner-mover-leaver-automation.html" class="">Lifecycle States and Joiner Mover Leaver Automation</a>
+					</li>
+					<li>
+						<a href="active-directory-and-mailbox-provisioning.html" class="">Active Directory and Mailbox Provisioning</a>
+					</li>
+					<li>
+						<a href="choosing-and-building-application-connectors.html" class="">Choosing and Building Application Connectors</a>
+					</li>
+					<li>
+						<a href="web-services-and-jdbc-connector-field-notes.html" class="">Web Services and JDBC Connector Field Notes</a>
+					</li>
+					<li>
+						<a href="access-model-request-center-and-approvals.html" class="">Access Model, Request Center and Approvals</a>
+					</li>
+					<li>
+						<a href="forms-launchers-and-workflows-limits-and-workarounds.html" class="active">Forms, Launchers and Workflows: Limits and Workarounds</a>
+					</li>
+					<li>
+						<a href="access-reviews-and-campaigns-at-scale.html" class="">Access Reviews and Campaigns at Scale</a>
+					</li>
+					<li>
+						<a href="security-secrets-and-tenant-hygiene.html" class="">Security, Secrets and Tenant Hygiene</a>
+					</li>
+					<li>
+						<a href="testing-migration-and-go-live.html" class="">Testing, Migration and Go-Live</a>
+					</li>
+					<li>
+						<a href="hypercare-operations-and-handover.html" class="">Hypercare, Operations and Handover</a>
+					</li>
+					<li>
+						<a href="phase-2-application-onboarding-factory.html" class="">Phase 2 Application Onboarding Factory</a>
+					</li>
+					<li>
+						<a href="limits-caveats-and-workarounds-reference.html" class="">Limits, Caveats and Workarounds Reference</a>
+					</li>
+					<li>
+						<a href="checklists-and-templates.html" class="">Checklists and Templates</a>
+					</li>
+					<li>
+						<a href="api-recipes-and-symptom-lookup.html" class="">API Recipes and Symptom Lookup</a>
+					</li>
+					<li>
+						<a href="complex-applications-cascading-entitlements-and-form-to-rule-data.html" class="">Complex Applications: Cascading Entitlements and Form-to-Rule Data</a>
+					</li>
+					<li>
+						<a href="cloud-rule-and-connector-rule-templates-and-snippets.html" class="">Cloud Rule and Connector Rule Templates and Snippets</a>
+					</li>
+					<li>
+						<a href="setting-up-an-sftp-server-for-flat-file-sources.html" class="">Setting Up an SFTP Server for Flat-File Sources</a>
+					</li>
+					<li>
+						<a href="setting-up-virtual-appliances-and-clusters.html" class="">Setting Up Virtual Appliances and Clusters</a>
+					</li>
+					<li>
+						<a href="network-problems-and-how-to-resolve-them.html" class="">Network Problems and How to Resolve Them</a>
+					</li>
+					<li>
+						<a href="workflow-form-and-api-snippets.html" class="">Workflow, Form and API Snippets</a>
+					</li>
+					<li>
+						<a href="implementation-team-offboarding-and-ownership-risk.html" class="">Implementation Team Offboarding and Ownership Risk</a>
+					</li>
+				</ul>
+			</nav>
+					<button type="button" class="docs-sidebar-toggle" id="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar">Contents ▾</button>
+					<div class="docs-content">
+						<a class="back-link reveal" href="index.html">← SailPoint ISC Greenfield Implementation Field Guide</a>
+						<header class="docs-page-head reveal">
+							<p class="doc-kicker">SailPoint ISC Greenfield Implementation Field Guide</p>
+							<h1>Forms, Launchers and Workflows: Limits and Workarounds</h1>
+						</header>
+						<div class="doc-section">
+<div class="prose reveal">
+					<p><strong>On this page</strong></p>
+					<ul><li><a href="#how-the-pieces-fit">How the pieces fit</a></li><li><a href="#forms-what-works-and-what-does-not">Forms: what works and what does not</a></li><li><a href="#workflows-engine-limits-and-behaviour">Workflows: engine limits and behaviour</a></li><li><a href="#design-patterns-that-worked">Design patterns that worked</a></li><li><a href="#workflow-health-what-to-monitor">Workflow health: what to monitor</a></li><li><a href="#what-sailpoint-s-documentation-adds">What SailPoint's documentation adds</a></li><li><a href="#actions">Actions</a></li></ul>
+				</div>
+
+<div class="prose reveal">
+					<p>Forms, launchers and workflows are how you build anything the standard Request Center cannot do: composite requests, manager questionnaires, lifecycle emails, HR writeback. They are also where the platform's sharpest edges are. Most of what follows was measured in a sandbox tenant while building form-driven flows, and it applies to any flow you build. Re-test before relying on a limit, because the engine changes.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="how-the-pieces-fit">How the pieces fit</h3>
+					<p>A form on its own is <strong>not reachable by anyone</strong>. The working chain is:</p>
+					<ol><li>A <strong>launcher</strong> (type interactive process) appears in the user's launchpad.</li><li>It starts a <strong>workflow</strong> whose trigger is &quot;interactive process launched&quot;, filtered on that workflow's own ID.</li><li>The workflow's first step is an <strong>interactive form</strong>.</li><li>The form's answers come back inline as <code>$.interactiveForm.formData</code>.</li><li>Later steps act: look up identities, call APIs, raise approvals, manage access, send mail.</li></ol>
+					<p>Launcher visibility: creating a launcher auto-creates an entitlement on the internal ISC source (attribute <code>assignedLaunchers</code>), non-requestable. Make it requestable and grant it (or grant it through a role) before anyone sees a Launch button. The button enables only when the launcher is <strong>assigned and its workflow is enabled</strong>. Launchers cannot be patched (405); the <code>owner</code> on create is overridden by the API client.</p>
+				</div>
+
+				<div class="callout reveal">
+					<p>A <code>usedBy: MySailPoint</code> marker on a form is only a usage marker. Writing it launches nothing.</p>
+				</div>
+
+<!-- dgm:form-launcher-chain -->
+<figure class="sd-fig reveal"><div class="dgm-scroll"><svg class="sd" viewBox="0 0 820 250" role="img" aria-labelledby="form-launcher-chain-t form-launcher-chain-d" xmlns="http://www.w3.org/2000/svg"><title id="form-launcher-chain-t">From launcher to action</title><desc id="form-launcher-chain-d">A form is reachable only through a launcher that starts a workflow whose first step is the form.</desc><defs><marker id="form-launcher-chain-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="mk " style="fill:var(--text);fill-opacity:0.6" d="M0,0 L10,5 L0,10z"/></marker></defs><rect class="box accent" x="6" y="40" width="140" height="96" style="fill:var(--sd-fa);stroke:var(--accent);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="76.0" y="72.0" text-anchor="middle">Launcher</text><text class="s" x="76.0" y="87.0" text-anchor="middle">needs the assigned</text><text class="s" x="76.0" y="100.0" text-anchor="middle">launcher</text><text class="s" x="76.0" y="113.0" text-anchor="middle">entitlement</text><rect class="box violet" x="174" y="40" width="140" height="96" style="fill:var(--sd-fv);stroke:var(--violet);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="244.0" y="65.5" text-anchor="middle">Workflow trigger</text><text class="s" x="244.0" y="80.5" text-anchor="middle">interactive process</text><text class="s" x="244.0" y="93.5" text-anchor="middle">launched, filtered</text><text class="s" x="244.0" y="106.5" text-anchor="middle">on the workflow&#x27;s</text><text class="s" x="244.0" y="119.5" text-anchor="middle">own ID</text><rect class="box blue" x="342" y="40" width="140" height="96" style="fill:var(--sd-fb);stroke:var(--blue);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="412.0" y="78.5" text-anchor="middle">Interactive form</text><text class="s" x="412.0" y="93.5" text-anchor="middle">first step of the</text><text class="s" x="412.0" y="106.5" text-anchor="middle">workflow</text><rect class="box teal" x="510" y="40" width="140" height="96" style="fill:var(--sd-ft);stroke:var(--teal);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="580.0" y="78.5" text-anchor="middle">Form data</text><text class="s" x="580.0" y="93.5" text-anchor="middle">returned inline to</text><text class="s" x="580.0" y="106.5" text-anchor="middle">the workflow</text><rect class="box gold" x="678" y="40" width="140" height="96" style="fill:var(--sd-fg);stroke:var(--gold);stroke-opacity:0.7;stroke-width:1.1"/><text class="t" x="748.0" y="72.0" text-anchor="middle">Actions</text><text class="s" x="748.0" y="87.0" text-anchor="middle">search, approve,</text><text class="s" x="748.0" y="100.0" text-anchor="middle">grant access, call</text><text class="s" x="748.0" y="113.0" text-anchor="middle">an API, send mail</text><path class="ln   " d="M146,88.0 L174,88.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#form-launcher-chain-ar)"/><path class="ln   " d="M314,88.0 L342,88.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#form-launcher-chain-ar)"/><path class="ln   " d="M482,88.0 L510,88.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#form-launcher-chain-ar)"/><path class="ln   " d="M650,88.0 L678,88.0" style="fill:none;stroke:var(--text);stroke-opacity:0.6;stroke-width:1.4;" marker-end="url(#form-launcher-chain-ar)"/><text class="h" x="6" y="20" text-anchor="start">WHAT MUST BE TRUE</text><rect class="box ghost" x="6" y="170" width="392" height="62" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="202.0" y="191.5" text-anchor="middle">The launch button appears only when</text><text class="s" x="202.0" y="206.5" text-anchor="middle">the launcher is assigned to the user and its workflow is</text><text class="s" x="202.0" y="219.5" text-anchor="middle">enabled</text><rect class="box ghost" x="424" y="170" width="390" height="62" style="fill:none;stroke-dasharray:5 4;stroke:var(--text);stroke-opacity:0.34;stroke-width:1.1"/><text class="t" x="619.0" y="191.5" text-anchor="middle">A form on its own is not reachable</text><text class="s" x="619.0" y="206.5" text-anchor="middle">retire a form, never delete it while a launch may still</text><text class="s" x="619.0" y="219.5" text-anchor="middle">point at it</text></svg></div><figcaption><b>The working chain.</b> Creating a launcher auto-creates a non-requestable entitlement; grant it directly or through a role before anyone sees the button.</figcaption></figure>
+
+<div class="prose reveal">
+					<h3 id="forms-what-works-and-what-does-not">Forms: what works and what does not</h3>
+					<p><strong>Dependent dropdowns cannot cascade</strong></p>
+					<p>A search data source on a form cannot filter one dropdown by another dropdown's selection. Two independent reasons:</p>
+					<ul><li>Entitlement <strong>attributes are not indexed</strong>. The search index returns null for them; only name, value, attribute, schema and source are queryable. A flag stored as an entitlement attribute (for example a Read or Write marker) cannot drive a filter.</li><li>Values containing hyphens tokenise, so wildcard prefix queries on them do not work.</li></ul>
+					<p>Also: data-source queries <strong>do not interpolate</strong> form values. Six reference syntaxes against four body shapes returned zero options while a literal returned one.</p>
+					<p>Workarounds that worked:</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Workaround</th><th>How</th></tr></thead><tbody><tr><td>Put the context in the display name</td><td><code>Asia · Client · A&amp;T</code>, or <code>(Read Only)</code> and <code>(Write)</code> suffixes on profile names</td></tr><tr><td>Put the context in entitlement tags</td><td>Query tags with a Lucene OR such as <code>tags:(&quot;A&quot; &quot;B&quot;)</code></td></tr><tr><td><strong>Multi-step interactive forms</strong></td><td>The solution that delivered true cascading: the first form collects a value, the workflow calls the Search API with that value, builds the option list, and presents it in the <em>next</em> form. Repeat for each dependent level. A group, then role, then client selection on one SQL application used this</td></tr><tr><td>Progressive disclosure</td><td>Hide a child field until the parent is chosen (using empty or not-empty conditions), without filtering its options</td></tr><tr><td>Hard-code a short list</td><td>If only two groups are ever requestable, say so in the query and accept that adding one is a query edit</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Multi-step forms are slower and heavier on the workflow tier limit but they are the only robust way to cascade.</p>
+					<p><strong>Conditions and effects</strong></p>
+					<ul><li>A condition or effect whose rule reads a form <strong>input</strong> did nothing (show, hide, default value, require). Rules on form <strong>elements</strong> work. Rebuilding with 26 inputs instead of 130 changed nothing, so it is not a size limit. One approval form fed by a workflow form step did honour input-sourced conditions, so verify in a browser before relying on it for a new field.</li><li><code>SHOW</code> works on a <strong>section</strong>, not an element, so invert show rules into hides.</li><li>Section labels are not rendered by the launcher. Put anything the user must see in a field <strong>label</strong>.</li><li>Operators <code>EQ</code>, <code>CO</code>, <code>NOT_CO</code>, <code>IN</code>, <code>NOT_IN</code>, <code>SW</code>, <code>EW</code> accept string or boolean only. A string list works only with empty and not-empty. <code>NOT_EQ</code>, <code>GT</code>, <code>LT</code>, <code>INCLUDES</code>, <code>ANY</code>, <code>ALL</code> are rejected.</li><li>A string rule reading a multi-select is rejected at submit (<code>must be a string</code>).</li><li>There is <strong>no native repeatable group</strong>. Use fixed blocks revealed by conditions, or loop over a multi-select in the workflow.</li><li>Conditions address elements by <strong>numeric element ID</strong>, not key. Preserve the IDs when editing a form or the prefill and lock silently stop working.</li><li>A casing trap: the form <em>input</em> may be <code>userSailpointId</code> and the <em>element</em> <code>userSailPointId</code>. Submitted data is keyed by <strong>element</strong>. Anything downstream must read the element's casing.</li></ul>
+					<p><strong>Reading what someone submitted</strong></p>
+					<p>Launcher-driven forms leave <code>formData: {}</code> in the execution history. The answers live only on the form <strong>instance</strong>, and only the instance <strong>list</strong> returns <code>formData</code>; a GET by ID does not. Use the list when you need to see what a user entered.</p>
+					<p><strong>Do not delete a form a launch may still point at</strong></p>
+					<p>Retire it. A launch in flight that holds a deleted form definition fails with HTTP 404 at submit time, and the submission cannot be recovered. This was learned by breaking a colleague's open request.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="workflows-engine-limits-and-behaviour">Workflows: engine limits and behaviour</h3>
+					<p><strong>Secrets and credentials</strong></p>
+					<ul><li><strong>Literal secrets written through the API are silently dropped.</strong> Writing an OAuth client secret as a plain value stores empty and the runtime receives an empty string. Read-back of an empty string looks identical to masking, so you only find out by executing.</li><li>The secret reference convention is produced <strong>only by the UI</strong>. There is no secrets API. Any workflow that needs credentials has a mandatory human step.</li><li>A full-object PUT <strong>wipes a UI-set secret</strong> unless you read back and preserve the reference. This is the easiest way to break a working workflow through the API: edit it, lose both secrets, and the HTTP steps fail authentication.</li><li>ISC pins <strong>one OAuth parameter reference per workflow</strong>. A new step strips the reference; an update overwrites all references with one shared value; a shared reference fails with <code>failed to retrieve Parameters for authentication type 'oauth'</code>. If a workflow has two HTTP steps with different credentials, it is fragile.</li><li>Our HR writeback workflows put the client secret and grant in plaintext in the HTTP body. Do not copy that. Create the secret in the UI and reference it.</li></ul>
+					<p><strong>Templating and data</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Behaviour</th><th>Consequence</th></tr></thead><tbody><tr><td>An unresolvable template path renders as literal <code>{{...}}</code> text</td><td>Never an error, never empty. A truncated field name corrupted a payload silently</td></tr><tr><td><code>.JSON()</code> is the only stringify function</td><td><code>.String()</code>, <code>.Quote()</code>, <code>.ToString()</code>, <code>.JSONEscape()</code> render literally</td></tr><tr><td>A list renders like <code>[5 2]</code></td><td><code>tags:([236 201])</code> is an HTTP 400 Lucene error. <code>tags:(&quot;A&quot; &quot;B&quot;)</code> works as OR</td></tr><tr><td>Define Variable and Update Variable allow at most 50 operations per variable (documented)</td><td>Plan grouping</td></tr><tr><td><code>sp:access:get</code> returns <code>{id, name, type}</code> only, no value</td><td>Use an HTTP search step when you need the value</td></tr><tr><td><code>sp:http</code> <strong>v3</strong> returns the raw API response including value</td><td>v2 hung forever</td></tr><tr><td>There is no &quot;create account&quot; action</td><td><code>sp:manage-account</code> only touches existing accounts. Creation goes through <code>POST /accounts</code>, which runs the connector's create operation and its before-rules. Linkage to an identity is by correlation only</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p><strong>Loops</strong></p>
+					<ul><li>Inside a loop the current item is <code>$.loop.loopInput</code>; things outside the loop are <code>$.loop.context...</code>; a sibling step <em>inside</em> the loop sits at the root.</li><li>A loop over an empty or absent input completes cleanly with zero iterations, so no guard step is needed.</li><li>Inner loop steps <strong>do not appear in the parent execution history</strong>. An approval step inside a loop cannot be debugged from the parent execution.</li></ul>
+					<p><strong>Limits and validation</strong></p>
+					<ul><li><strong>Tier limits count loop bodies, not top-level steps.</strong> A workflow with 36 steps across 24 loops enabled; one with 49 steps across 35 loops was rejected with <code>Tier Limit Violation: Your workflow must have 50 or fewer steps after the trigger</code>.</li><li><strong>Validation runs on enable, not on save.</strong> A PUT returns 200 with invalid content; the error appears when you enable. Step display names must be under 65 characters.</li><li><strong>You cannot PUT an enabled workflow.</strong> Disable it, PUT, enable it again.</li><li><code>sp:generic-approval</code> was <strong>not licensed</strong>. It saved and then failed on enable. Approval had to be form-based: an <code>sp:forms</code> step blocks and returns the form data inline.</li><li><code>sp:interactive-form</code> does not reliably raise <code>sp:form-submitted</code>. Do not build a second workflow on that event for a request form. Trigger the execution workflow on the <strong>approval</strong> form instead.</li></ul>
+					<p><strong>Triggers</strong></p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Trigger</th><th>Notes</th></tr></thead><tbody><tr><td>Identity attributes changed</td><td>Filter by attribute name and new value with JSONPath. Fires per change</td></tr><tr><td>Post-provisioning</td><td>Filter on committed result, target source and operation</td></tr><tr><td>Form submitted</td><td>Filter by form definition ID; keep the ID in sync if you recreate the form</td></tr><tr><td>Schedule</td><td>Has its own time zone</td></tr><tr><td>External HTTP</td><td>Used for welcome emails; authenticates with a client ID</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Useful property: workflow <strong>executions are kept</strong>, and the dump of 250 executions per workflow gave a quick health read (completed, failed, canceled, executing).</p>
+					<p><strong>Operational traps found the hard way</strong></p>
+					<ul><li>A <strong>63-second VA timeout wedges the requester</strong> for about an hour. Every later request from the same identity returns <code>CANCELLED</code>. It affects only that person and looks exactly like a rule fault. <strong>Two submissions in a row by one requester will show the second as cancelled.</strong></li><li>A workflow with a Wait step leaves executions in <code>Executing</code> for as long as it waits. A large count is normal; a growing count of <code>Canceled</code> needs explaining.</li><li>The same workflow in sandbox and production must have different recipients. Mail steps with hard-coded addresses are the commonest promotion defect.</li><li><strong>Email recipients:</strong> fix them to identities from the flow, not one named person. Our request workflow sent approvals and rejections to one fixed address, so the requester and the beneficiary were never told.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="design-patterns-that-worked">Design patterns that worked</h3>
+					<p><strong>A launcher flow with per-item approval</strong></p>
+					<p>For a request that names several clients: a loop over the multi-select raises <strong>one approval form instance per client</strong> (with a deadline), and each submission fires an execution workflow separately. Properties to document for users:</p>
+					<ul><li>There is <strong>no bundling</strong>. Three approvals and one rejection yields three grants.</li><li>A deadline that expires is <strong>silent</strong>. &quot;Never appeared&quot; and &quot;expired&quot; look the same to the requester.</li><li>The group dropdown was a hard-coded query for two names. Adding a third is a query edit.</li><li>Form visibility came from a criteria role, so the tile appears and disappears on identity refresh with no record explaining why.</li></ul>
+					<p><strong>Event plus sweep</strong></p>
+					<p>Pair every event-triggered workflow that must not miss work with a scheduled sweep (HR writeback, GreytHR disable, leaver off-boarding). Events are lost; a sweep repairs them.</p>
+					<p><strong>Execution workflow triggered by an approval form</strong></p>
+					<p>Because <code>sp:interactive-form</code> is unreliable for raising a submitted event, split the work: the request workflow collects and raises approval forms; a second workflow triggers on the <strong>approval</strong> form's submission and does the provisioning. Keep the execution workflow and the provisioning rule as one unit (they share the comments-channel contract; see the connector deep dive).</p>
+					<p><strong>Dead steps and duplicate searches</strong></p>
+					<p>A review of one production workflow found: two near-identical search steps (one matching an analysed field, one an exact field) feeding different values, so the database name and the entitlement ID could come from different entitlements; a variable step nobody read; and a replace pattern with a truncated field name. Use the <strong>exact</strong> match, delete the other, and review the workflow end to end after every edit.</p>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="workflow-health-what-to-monitor">Workflow health: what to monitor</h3>
+					<ul><li>Failed execution count and rate, per workflow, per week.</li><li>Executions stuck in <code>Executing</code> past the expected wait.</li><li>Enabled flag on every workflow that should be enabled (the tenant had 28, 21 enabled, with several test and copy workflows).</li><li>Test and copy workflows should be <strong>deleted</strong>, not left disabled. Ours included copies of the joiner flows, a manually triggered joiner and leaver, and two test workflows.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="what-sailpoint-s-documentation-adds">What SailPoint's documentation adds</h3>
+					<p>Checked against the <a href="https://documentation.sailpoint.com/saas/help/workflows/index.html" target="_blank" rel="noopener">workflows documentation</a>, the <a href="https://documentation.sailpoint.com/saas/help/workflows/workflow-operators.html" target="_blank" rel="noopener">operators page</a> and the community announcement of serial loops, October 2026.</p>
+				</div>
+
+<div class="tbl-wrap reveal"><table class="tbl"><thead><tr><th>Topic</th><th>Documented position</th></tr></thead><tbody><tr><td>Volume</td><td>Up to 400,000 executions per day run at full speed. Beyond that they still run, at about 5 per second. The quota resets every 24 hours</td></tr><tr><td>First use</td><td>After workflows are first enabled in a tenant, allow <strong>up to two hours</strong> before the feature is fully working. Errors during that time are expected</td></tr><tr><td>Structure</td><td>Exactly one trigger per workflow and at least one action</td></tr><tr><td>Permissions</td><td>Org Admin configures workflows. Two read-only roles exist: one cannot see execution history, the other can</td></tr><tr><td>Parallel loop</td><td>Input array of at most <strong>250 items.</strong> More fails the workflow</td></tr><tr><td>Serial loop</td><td>A newer operator with input of at most <strong>1,000 items.</strong> An iteration that fails stops the loop. A Break Loop operator exists. In test mode the loop is limited to 50 iterations</td></tr><tr><td>Define Variable</td><td>At most 50 operations per variable</td></tr><tr><td>Add Time</td><td>The result cannot be more than a year from the original date</td></tr></tbody></table></div>
+
+<div class="prose reveal">
+					<p>Notes for the design:</p>
+					<ul><li><strong>The 50-step tier limit we hit is plan-dependent.</strong> Community posts quote different step allowances by licence level, so read the limit off your own tenant error rather than from this guide, and re-check after a plan change.</li><li><strong>Older community threads describe loop limits of 100 items.</strong> That predates the current operators. Check the date on any limit you find.</li><li>A serial loop is the right choice when order matters, when one failure should stop the rest, or when you need more than 250 items. A parallel loop completes every iteration and lists successes and failures separately, which suits independent items. Our observation that inner loop steps do not appear in the parent execution history was measured on the parallel loop; check whether serial loops differ.</li><li>There is no documented per-execution timeout or workflow-level retry. Community designs build retries by hand with a counter in a serial loop.</li></ul>
+				</div>
+
+<div class="prose reveal">
+					<h3 id="actions">Actions</h3>
+					<ul><li>Design the request experience around the cascade limit before you build forms.</li><li>Create workflow secrets in the UI, by a named person, and document where.</li><li>Count loop steps against the tier limit during design.</li><li>Keep an inventory of workflows, forms, launchers and the IDs that tie them together.</li><li>Retire, never delete, forms with launches in flight.</li></ul>
+				</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../docs/index.html">More docs</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../docs.js" defer></script>
+	</body>
+</html>
