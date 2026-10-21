@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Run JSONPath (RFC 9535) and jq-style queries against pasted JSON in your browser. Shows each match with its path, and nothing is uploaded." />
+		<meta name="color-scheme" content="dark light" />
+		<title>JSONPath and jq playground · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="stylesheet" href="../shared/shell.css" />
+		<link rel="stylesheet" href="tool.css" />
+		<link rel="stylesheet" href="../shared/theme.css" />
+	</head>
+	<body class="tool-page">
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<nav class="site-rail" id="site-rail" aria-label="Site">
+			<div class="rail-bar">
+				<button class="rail-toggle" type="button" aria-expanded="false" aria-controls="rail-panel" aria-label="Open site menu"><span class="rail-burger" aria-hidden="true"></span></button>
+				<a class="rail-logo" href="../../index.html" aria-label="suryansh, home">s<span class="dot">.</span></a>
+				<button class="site-theme rail-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+			<div class="rail-panel" id="rail-panel">
+				<p class="rail-label">Site</p>
+				<a class="rail-link" href="../../index.html#about">About</a>
+				<a class="rail-link" href="../../index.html#projects">Projects</a>
+				<a class="rail-link" href="../../articles/index.html">Writing</a>
+				<a class="rail-link" href="../../works/index.html">Works</a>
+				<a class="rail-link" href="../../docs/index.html">Docs</a>
+				<a class="rail-link" href="../index.html">Tools</a>
+				<a class="rail-link" href="https://git.archdev.in">Git</a>
+				<a class="rail-link" href="../../index.html#contact">Contact</a>
+				<p class="rail-label">Tools</p>
+				<a class="rail-link rail-tool" href="../arch-installer/index.html" style="--h: var(--accent)"><span class="rail-dot" aria-hidden="true"></span>Arch installer</a>
+				<a class="rail-link rail-tool" href="../diff-tool/index.html" style="--h: var(--violet)"><span class="rail-dot" aria-hidden="true"></span>JSON and XML diff</a>
+				<a class="rail-link rail-tool" href="../regex-tester/index.html" style="--h: var(--teal)"><span class="rail-dot" aria-hidden="true"></span>Regex tester</a>
+				<a class="rail-link rail-tool" href="../ldap-toolkit/index.html" style="--h: var(--gold)"><span class="rail-dot" aria-hidden="true"></span>LDAP toolkit</a>
+				<a class="rail-link rail-tool" href="../cron-explainer/index.html" style="--h: var(--blue)"><span class="rail-dot" aria-hidden="true"></span>Cron explainer</a>
+				<a class="rail-link rail-tool" href="../jsonq-playground/index.html" style="--h: var(--green)" aria-current="page"><span class="rail-dot" aria-hidden="true"></span>JSONPath and jq playground</a>
+				<a class="rail-link rail-tool" href="../scim-builder/index.html" style="--h: var(--pink)"><span class="rail-dot" aria-hidden="true"></span>SCIM builder</a>
+				<a class="rail-link rail-tool" href="../sailpoint-rules/index.html" style="--h: var(--accent)"><span class="rail-dot" aria-hidden="true"></span>SailPoint rule templates</a>
+				<a class="rail-link rail-tool" href="../permissions-toolkit/index.html" style="--h: var(--violet)"><span class="rail-dot" aria-hidden="true"></span>Permissions and sudoers</a>
+				<a class="rail-link rail-tool" href="../fstab-linter/index.html" style="--h: var(--teal)"><span class="rail-dot" aria-hidden="true"></span>fstab linter</a>
+				<a class="rail-link rail-tool" href="../sailpoint-workbench/index.html" style="--h: var(--gold)"><span class="rail-dot" aria-hidden="true"></span>ISC workbench</a>
+			</div>
+		</nav>
+
+		<main class="tool wb" data-hue="5" id="jq">
+			<header class="wb-top">
+				<div class="wb-brand">
+					<a class="wb-back" href="../index.html">← Tools</a>
+					<h1 class="wb-title">JSONPath and jq <span class="text-accent">playground</span></h1>
+					<span class="wb-badge">Runs in your browser, nothing uploaded</span>
+				</div>
+				<div class="wb-top-actions">
+					<button id="jq-help-btn" class="btn btn--ghost wb-btn" type="button" aria-haspopup="dialog" aria-controls="jq-help" aria-expanded="false">Help</button>
+				</div>
+			</header>
+
+			<div class="wb-body">
+				<div class="wb-main">
+					<section class="wb-ws" aria-label="JSONPath and jq playground workspace">
+						<div class="wb-in" id="jq-inpane">
+							<div class="wb-pane-head"><span>Input</span></div>
+							<div class="wb-in-body" id="jq-in"></div>
+							<div class="wb-in-foot" id="jq-foot" hidden></div>
+						</div>
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<div class="diff-out-lead"><span class="wb-pane-title" id="jq-outtitle">Result</span><span class="diff-names" id="jq-outnote"></span></div>
+								<div class="wb-out-actions" id="jq-actions"></div>
+							</div>
+							<div class="wb-out-body" id="jq-out" aria-live="polite"></div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<footer class="wb-status">
+				<span id="wb-status-msg" aria-live="polite"></span>
+				<span class="wb-status-keys"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> runs · ? for help</span>
+			</footer>
+
+			<aside id="jq-help" class="wb-drawer" role="dialog" aria-labelledby="jq-help-title" hidden>
+				<div class="wb-pop-head">
+					<h2 id="jq-help-title" class="wb-pop-title">Help</h2>
+					<button id="jq-help-close" class="btn btn--ghost wb-btn" type="button">Close</button>
+				</div>
+				<div class="wb-drawer-body">
+					<section class="wb-help-sec">
+						<h3>JSONPath (RFC 9535)</h3>
+						<ul>
+							<li><code>$</code> is the root. <code>.name</code> or <code>['name']</code> picks a member, <code>[0]</code> an array element, <code>[-1]</code> the last one.</li>
+							<li><code>*</code> selects every child. <code>..name</code> searches at any depth.</li>
+							<li><code>[1:3]</code> slices, with an optional step: <code>[::2]</code>, <code>[::-1]</code>. <code>[0,2]</code> and <code>['a','b']</code> are unions.</li>
+							<li>Filters: <code>[?@.price &lt; 10 &amp;&amp; @.stock]</code>. <code>@</code> is the current element. Comparisons are <code>== != &lt; &lt;= &gt; &gt;=</code>. A bare query such as <code>@.isbn</code> tests that it exists. <code>!</code> negates.</li>
+							<li>Functions: <code>length(@.tags)</code>, <code>count(@..x)</code>, <code>match(@.name, 'A.*')</code> (whole string), <code>search(@.name, 'son')</code> (anywhere), <code>value(...)</code>.</li>
+						</ul>
+						<p>Each match is shown with its normalized path, for example <code>$['store']['books'][0]</code>. Regular expressions use JavaScript syntax here, which is close to the I-Regexp subset the RFC asks for.</p>
+					</section>
+					<section class="wb-help-sec">
+						<h3>jq subset</h3>
+						<p>Supported: <code>.</code> <code>.a.b</code> <code>.["a"]</code> <code>.[0]</code> <code>.[]</code> <code>.[1:3]</code> <code>..</code>, pipes <code>|</code>, commas, <code>?</code>, array and object construction (<code>[...]</code>, <code>{a, b: .c}</code>), <code>if/elif/else/end</code>, <code>//</code>, comparison, <code>and or not</code>, <code>+ - * / %</code> and string interpolation <code>"\(.a)"</code>.</p>
+						<p id="jq-fn-list"></p>
+						<p>Not supported: variables (<code>as $x</code>), <code>reduce</code>, <code>foreach</code>, <code>def</code>, assignment, <code>limit</code> beyond the basic form, date functions and modules. Programs that run too long are stopped after 200,000 steps.</p>
+					</section>
+				</div>
+			</aside>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../index.html">Home</a>
+				<a href="../index.html">Tools</a>
+				<a href="../../articles/index.html">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../shared/rail.js" defer></script>
+		<script type="module" src="ui.js"></script>
+	</body>
+</html>

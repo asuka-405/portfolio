@@ -315,3 +315,313 @@
 		max-height: 11rem;
 	}
 }
+
+/* ---- git-style diff ----------------------------------------------------- */
+
+.tool .diff-views {
+	margin: 0.75rem 0 0.5rem;
+}
+
+.tool .diff-git-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 0.4rem 1rem;
+	margin-bottom: 0.5rem;
+}
+
+.tool .diff-git-stat {
+	margin: 0;
+	font-family: var(--mono);
+	font-size: 0.85rem;
+	font-weight: 700;
+}
+
+.tool .diff-git-ctx {
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.tool .diff-git-ctx .tool-input {
+	width: auto;
+}
+
+.tool .gd {
+	--gd-add: var(--green);
+	--gd-del: var(--accent);
+	min-width: 0;
+	max-width: 100%;
+	overflow-x: auto;
+	font-family: var(--mono);
+	font-size: 0.8rem;
+	line-height: 1.5;
+	background: var(--canvas);
+	border: 1px solid var(--line);
+	box-shadow: 4px 4px 0 color-mix(in srgb, var(--h) 16%, transparent);
+}
+
+.tool .gd:focus-visible {
+	outline: 2px solid var(--h);
+	outline-offset: 2px;
+}
+
+.tool .gd-add-txt {
+	color: var(--green);
+}
+
+.tool .gd-del-txt {
+	color: var(--accent);
+}
+
+.tool .gd-file,
+.tool .gd-meta {
+	padding: 0.25rem 0.75rem;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.tool .gd-file {
+	padding-top: 0.45rem;
+	font-weight: 700;
+	color: var(--ink);
+	background: color-mix(in srgb, var(--h) 8%, var(--surface));
+}
+
+.tool .gd-meta {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 0.4rem;
+	background: color-mix(in srgb, var(--h) 8%, var(--surface));
+	border-bottom: 1px solid var(--line);
+}
+
+.tool .gd-hunk {
+	padding: 0.2rem 0.75rem;
+	color: var(--blue);
+	background: color-mix(in srgb, var(--blue) 11%, var(--surface));
+	border-top: 1px solid var(--line);
+	border-bottom: 1px solid var(--line);
+	user-select: none;
+}
+
+.tool .gd-hunk:first-of-type {
+	border-top: 0;
+}
+
+/* unified: old no | new no | sign | code */
+.tool .gd-row:not(.gd-split) {
+	display: grid;
+	grid-template-columns: 3.1rem 3.1rem 1.3rem minmax(0, 1fr);
+}
+
+.tool .gd-no {
+	padding: 0 0.5rem 0 0.25rem;
+	text-align: right;
+	color: var(--muted);
+	opacity: 0.8;
+	user-select: none;
+	border-right: 1px solid var(--line);
+}
+
+.tool .gd-sign {
+	text-align: center;
+	font-weight: 800;
+	user-select: none;
+}
+
+.tool .gd-code {
+	min-width: 0;
+	padding: 0 0.5rem;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	color: var(--text);
+}
+
+.tool .gd-add,
+.tool .gd-half.gd-add {
+	background: color-mix(in srgb, var(--gd-add) 15%, transparent);
+}
+
+.tool .gd-del,
+.tool .gd-half.gd-del {
+	background: color-mix(in srgb, var(--gd-del) 15%, transparent);
+}
+
+.tool .gd-add .gd-no,
+.tool .gd-half.gd-add .gd-no {
+	color: var(--gd-add);
+	background: color-mix(in srgb, var(--gd-add) 14%, transparent);
+}
+
+.tool .gd-del .gd-no,
+.tool .gd-half.gd-del .gd-no {
+	color: var(--gd-del);
+	background: color-mix(in srgb, var(--gd-del) 14%, transparent);
+}
+
+.tool .gd-add .gd-sign,
+.tool .gd-add .gd-code {
+	color: var(--ink);
+}
+
+.tool .gd-add .gd-sign {
+	color: var(--gd-add);
+}
+
+.tool .gd-del .gd-sign {
+	color: var(--gd-del);
+}
+
+.tool .gd-del .gd-code {
+	color: var(--ink);
+}
+
+/* split: two halves, each number | code */
+.tool .gd-row.gd-split {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.tool .gd-half {
+	display: grid;
+	grid-template-columns: 3rem minmax(0, 1fr);
+	min-width: 0;
+}
+
+.tool .gd-half + .gd-half {
+	border-left: 1px solid var(--line);
+}
+
+.tool .gd-half.gd-gap {
+	background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--line) 70%, transparent) 6px 7px);
+}
+
+@media (max-width: 760px) {
+	.tool .gd--split .gd-row.gd-split {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.tool .gd--split .gd-half + .gd-half {
+		border-left: 0;
+		border-top: 1px dashed var(--line);
+	}
+
+	.tool .gd--split .gd-half.gd-gap {
+		display: none;
+	}
+}
+
+/* ---- input out of the way ------------------------------------------------ */
+/* After a diff is asked for, the result takes the whole workspace. The input comes back as a drawer from Edit input. */
+
+.tool .wb-ws {
+	position: relative;
+}
+
+.tool .diff-out-lead {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.35rem 0.7rem;
+	min-width: 0;
+}
+
+.tool .diff-names {
+	min-width: 0;
+	font-family: var(--mono);
+	font-size: 0.76rem;
+	color: var(--muted);
+	overflow-wrap: anywhere;
+}
+
+.tool .wb-pane-head .diff-in-close {
+	margin-left: auto;
+	min-height: 1.7rem;
+	padding: 0.15rem 0.7rem;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.tool .wb-ws.is-collapsed {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.tool .wb-ws.is-collapsed .wb-in {
+	display: none;
+}
+
+.tool .wb-ws.is-collapsed.is-input-open .wb-in {
+	display: flex;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 15;
+	width: min(34rem, 100%);
+	background: var(--surface);
+	border-right: 1px solid color-mix(in srgb, var(--h) 35%, var(--line));
+	box-shadow: 8px 0 0 color-mix(in srgb, var(--h) 18%, transparent), 20px 0 40px -12px rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 760px) {
+	.tool .wb-ws.is-collapsed .wb-out {
+		min-height: 60vh;
+	}
+
+	.tool .wb-ws.is-collapsed.is-input-open .wb-in {
+		position: fixed;
+		top: 2.9rem;
+		bottom: 0;
+		left: 0;
+		z-index: 35;
+		width: 100%;
+	}
+
+	.tool .wb-ws.is-collapsed.is-input-open .wb-in-body {
+		overflow: auto;
+	}
+}
+
+/* ---- counts: a single quiet line, not tiles ------------------------------- */
+
+.tool .diff-meta {
+	margin: 0 0 0.35rem;
+	font-size: 0.74rem;
+}
+
+.tool #diff-summary {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.3rem 0.4rem;
+	margin: 0 0 0.5rem;
+	background: none;
+	border: 0;
+	box-shadow: none;
+}
+
+.tool #diff-summary .tool-stat {
+	flex-direction: row;
+	align-items: baseline;
+	gap: 0.35rem;
+	padding: 0.1rem 0.5rem;
+	background: color-mix(in srgb, var(--c) 10%, transparent);
+	border: 1px solid color-mix(in srgb, var(--c) 30%, var(--line));
+	box-shadow: none;
+}
+
+.tool #diff-summary .tool-stat-label {
+	font-size: 0.66rem;
+	letter-spacing: 0.08em;
+}
+
+.tool #diff-summary .tool-stat-num {
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0;
+}
+
+.tool .diff-views {
+	margin-top: 0.4rem;
+}

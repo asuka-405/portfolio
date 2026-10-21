@@ -1,0 +1,42 @@
+/* Tool-specific styles. The shared look is in ../shared/shell.css and ../shared/theme.css. */
+
+.tool .sc-ops {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.tool .sc-op {
+	display: grid;
+	grid-template-columns: 6.5rem minmax(0, 1fr);
+	gap: 0.3rem;
+	padding: 0.45rem;
+	background: color-mix(in srgb, var(--h) 5%, var(--canvas));
+	border: 1px solid var(--line);
+	border-left: 3px solid var(--h);
+}
+
+.tool .sc-op > :nth-child(3) {
+	grid-column: 1 / -1;
+}
+
+.tool .sc-op > :nth-child(4) {
+	grid-column: 1 / -1;
+	justify-self: end;
+}
+
+.tool .sc-words {
+	margin: 0;
+	font-size: 1rem;
+	color: var(--ink);
+}
+
+.tool .sc-miss {
+	margin: 0;
+	padding: 0.5rem 0.75rem;
+	font-weight: 700;
+	color: var(--accent);
+	border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+	border-left: 4px solid var(--accent);
+	background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
