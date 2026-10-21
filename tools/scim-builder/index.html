@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Build and check SCIM 2.0 requests: User and Group bodies, PATCH operations, filters with an explanation and a test, and curl commands. Runs in your browser." />
+		<meta name="color-scheme" content="dark light" />
+		<title>SCIM builder · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="stylesheet" href="../shared/shell.css" />
+		<link rel="stylesheet" href="tool.css" />
+		<link rel="stylesheet" href="../shared/theme.css" />
+	</head>
+	<body class="tool-page">
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<nav class="site-rail" id="site-rail" aria-label="Site">
+			<div class="rail-bar">
+				<button class="rail-toggle" type="button" aria-expanded="false" aria-controls="rail-panel" aria-label="Open site menu"><span class="rail-burger" aria-hidden="true"></span></button>
+				<a class="rail-logo" href="../../index.html" aria-label="suryansh, home">s<span class="dot">.</span></a>
+				<button class="site-theme rail-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+			<div class="rail-panel" id="rail-panel">
+				<p class="rail-label">Site</p>
+				<a class="rail-link" href="../../index.html#about">About</a>
+				<a class="rail-link" href="../../index.html#projects">Projects</a>
+				<a class="rail-link" href="../../articles/index.html">Writing</a>
+				<a class="rail-link" href="../../works/index.html">Works</a>
+				<a class="rail-link" href="../../docs/index.html">Docs</a>
+				<a class="rail-link" href="../index.html">Tools</a>
+				<a class="rail-link" href="https://git.archdev.in">Git</a>
+				<a class="rail-link" href="../../index.html#contact">Contact</a>
+				<p class="rail-label">Tools</p>
+				<a class="rail-link rail-tool" href="../arch-installer/index.html" style="--h: var(--accent)"><span class="rail-dot" aria-hidden="true"></span>Arch installer</a>
+				<a class="rail-link rail-tool" href="../diff-tool/index.html" style="--h: var(--violet)"><span class="rail-dot" aria-hidden="true"></span>JSON and XML diff</a>
+				<a class="rail-link rail-tool" href="../regex-tester/index.html" style="--h: var(--teal)"><span class="rail-dot" aria-hidden="true"></span>Regex tester</a>
+				<a class="rail-link rail-tool" href="../ldap-toolkit/index.html" style="--h: var(--gold)"><span class="rail-dot" aria-hidden="true"></span>LDAP toolkit</a>
+				<a class="rail-link rail-tool" href="../cron-explainer/index.html" style="--h: var(--blue)"><span class="rail-dot" aria-hidden="true"></span>Cron explainer</a>
+				<a class="rail-link rail-tool" href="../jsonq-playground/index.html" style="--h: var(--green)"><span class="rail-dot" aria-hidden="true"></span>JSONPath and jq playground</a>
+				<a class="rail-link rail-tool" href="../scim-builder/index.html" style="--h: var(--pink)" aria-current="page"><span class="rail-dot" aria-hidden="true"></span>SCIM builder</a>
+				<a class="rail-link rail-tool" href="../sailpoint-rules/index.html" style="--h: var(--accent)"><span class="rail-dot" aria-hidden="true"></span>SailPoint rule templates</a>
+				<a class="rail-link rail-tool" href="../permissions-toolkit/index.html" style="--h: var(--violet)"><span class="rail-dot" aria-hidden="true"></span>Permissions and sudoers</a>
+				<a class="rail-link rail-tool" href="../fstab-linter/index.html" style="--h: var(--teal)"><span class="rail-dot" aria-hidden="true"></span>fstab linter</a>
+				<a class="rail-link rail-tool" href="../sailpoint-workbench/index.html" style="--h: var(--gold)"><span class="rail-dot" aria-hidden="true"></span>ISC workbench</a>
+			</div>
+		</nav>
+
+		<main class="tool wb" data-hue="6" id="sc">
+			<header class="wb-top">
+				<div class="wb-brand">
+					<a class="wb-back" href="../index.html">← Tools</a>
+					<h1 class="wb-title">SCIM <span class="text-accent">builder</span></h1>
+					<span class="wb-badge">Runs in your browser, nothing uploaded</span>
+				</div>
+				<div class="wb-top-actions">
+					<button id="sc-help-btn" class="btn btn--ghost wb-btn" type="button" aria-haspopup="dialog" aria-controls="sc-help" aria-expanded="false">Help</button>
+				</div>
+			</header>
+
+			<div class="wb-body">
+				<div class="wb-main">
+					<section class="wb-ws" aria-label="SCIM builder workspace">
+						<div class="wb-in" id="sc-inpane">
+							<div class="wb-pane-head"><span>Input</span></div>
+							<div class="wb-in-body" id="sc-in"></div>
+							<div class="wb-in-foot" id="sc-foot" hidden></div>
+						</div>
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<div class="diff-out-lead"><span class="wb-pane-title" id="sc-outtitle">Result</span><span class="diff-names" id="sc-outnote"></span></div>
+								<div class="wb-out-actions" id="sc-actions"></div>
+							</div>
+							<div class="wb-out-body" id="sc-out" aria-live="polite"></div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<footer class="wb-status">
+				<span id="wb-status-msg" aria-live="polite"></span>
+				<span class="wb-status-keys"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> refreshes · ? for help</span>
+			</footer>
+
+			<aside id="sc-help" class="wb-drawer" role="dialog" aria-labelledby="sc-help-title" hidden>
+				<div class="wb-pop-head">
+					<h2 id="sc-help-title" class="wb-pop-title">Help</h2>
+					<button id="sc-help-close" class="btn btn--ghost wb-btn" type="button">Close</button>
+				</div>
+				<div class="wb-drawer-body">
+					<section class="wb-help-sec">
+						<h3>What each tab does</h3>
+						<ul>
+							<li><strong>User</strong> and <strong>Group</strong> fill in a request body that follows RFC 7643, check it, and give you a curl command. Empty fields are left out. The enterprise extension and its schema URN are added only when you fill an enterprise field.</li>
+							<li><strong>PATCH</strong> builds a PatchOp body from rows. A value that is valid JSON (<code>false</code>, <code>{"a":1}</code>, <code>["x"]</code>) is sent as JSON; anything else is sent as a string. Leave the path empty to add or replace several attributes in one object.</li>
+							<li><strong>Filter</strong> parses an RFC 7644 filter, explains it in words, shows the URL-encoded query string, and tests it against a sample resource.</li>
+							<li><strong>Validate</strong> checks any pasted User, Group or PATCH body.</li>
+						</ul>
+					</section>
+					<section class="wb-help-sec">
+						<h3>Filter syntax</h3>
+						<p>Operators: <code>eq ne co sw ew gt ge lt le</code> compare, <code>pr</code> tests that a value is present. Combine with <code>and</code>, <code>or</code> and <code>not ( ... )</code>. Strings are quoted with double quotes. <code>emails[type eq "work"]</code> filters inside a multi-valued attribute. An extension attribute is written with its URN: <code>urn:...:enterprise:2.0:User:department</code>.</p>
+						<p>String comparison here ignores case, which matches the default for most attributes. A server decides this per attribute (<code>caseExact</code>).</p>
+					</section>
+					<section class="wb-help-sec">
+						<h3>Things servers disagree on</h3>
+						<ul>
+							<li>Microsoft Entra ID sends <code>Add</code>, <code>Replace</code> and <code>Remove</code> with capital letters, and booleans as strings in some cases. Many servers accept this, the RFC says op values are case-insensitive.</li>
+							<li>Some servers do not support filters on every attribute, or limit <code>count</code>.</li>
+							<li>Group membership changes are best sent as <code>add</code> or <code>remove</code> on <code>members</code>. A <code>replace</code> swaps the whole membership.</li>
+						</ul>
+						<p>The curl commands read the token from an environment variable so no secret is written into the command.</p>
+					</section>
+				</div>
+			</aside>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../index.html">Home</a>
+				<a href="../index.html">Tools</a>
+				<a href="../../articles/index.html">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../shared/rail.js" defer></script>
+		<script type="module" src="ui.js"></script>
+	</body>
+</html>

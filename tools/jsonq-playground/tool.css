@@ -1,0 +1,54 @@
+/* Tool-specific styles. The shared look is in ../shared/shell.css and ../shared/theme.css. */
+
+.tool .fx-count {
+	margin: 0 0 0.6rem;
+	font-size: 0.9rem;
+}
+
+.tool .jq-matches {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tool .jq-match {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0.15rem;
+	min-width: 0;
+	padding: 0.4rem 0.6rem 0.5rem;
+	background: color-mix(in srgb, var(--surface) 92%, transparent);
+	border: 1px solid var(--line);
+	border-left: 3px solid var(--h);
+}
+
+.tool .jq-path {
+	font-family: var(--mono);
+	font-size: 0.74rem;
+	color: var(--h);
+	overflow-wrap: anywhere;
+}
+
+.tool .jq-idx {
+	font-family: var(--mono);
+	font-size: 0.72rem;
+	font-weight: 800;
+	color: var(--muted);
+}
+
+.tool .jq-val {
+	margin: 0;
+	padding: 0.15rem 0;
+	max-height: 16rem;
+	overflow: auto;
+	background: none;
+	font-size: 0.82rem;
+}
+
+.tool .jq-path {
+	padding: 0;
+	background: none;
+}

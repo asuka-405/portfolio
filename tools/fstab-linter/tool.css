@@ -1,0 +1,49 @@
+/* Tool-specific styles. The shared look is in ../shared/shell.css and ../shared/theme.css. */
+
+.tool .ft-entries {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tool .ft-entry {
+	min-width: 0;
+	padding: 0.45rem 0.65rem 0.55rem;
+	background: color-mix(in srgb, var(--surface) 92%, transparent);
+	border: 1px solid var(--line);
+	border-left: 3px solid var(--h);
+}
+
+.tool .ft-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.2rem 0.6rem;
+}
+
+.tool .ft-says {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: var(--ink);
+}
+
+.tool .ft-opts {
+	display: grid;
+	grid-template-columns: max-content minmax(0, 1fr);
+	gap: 0.15rem 0.8rem;
+	margin: 0.4rem 0 0;
+	font-size: 0.8rem;
+}
+
+.tool .ft-opts dt code {
+	padding: 0 0.3rem;
+	font-size: 0.76rem;
+}
+
+.tool .ft-opts dd {
+	margin: 0;
+	color: var(--muted);
+}

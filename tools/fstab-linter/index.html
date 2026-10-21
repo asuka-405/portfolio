@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Paste an /etc/fstab and get a line-by-line check: device specs, mount points, options per filesystem, fsck pass numbers, duplicates, ordering and security hints. Runs in your browser." />
+		<meta name="color-scheme" content="dark light" />
+		<title>fstab linter · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="stylesheet" href="../shared/shell.css" />
+		<link rel="stylesheet" href="tool.css" />
+		<link rel="stylesheet" href="../shared/theme.css" />
+	</head>
+	<body class="tool-page">
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<nav class="site-rail" id="site-rail" aria-label="Site">
+			<div class="rail-bar">
+				<button class="rail-toggle" type="button" aria-expanded="false" aria-controls="rail-panel" aria-label="Open site menu"><span class="rail-burger" aria-hidden="true"></span></button>
+				<a class="rail-logo" href="../../index.html" aria-label="suryansh, home">s<span class="dot">.</span></a>
+				<button class="site-theme rail-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+			<div class="rail-panel" id="rail-panel">
+				<p class="rail-label">Site</p>
+				<a class="rail-link" href="../../index.html#about">About</a>
+				<a class="rail-link" href="../../index.html#projects">Projects</a>
+				<a class="rail-link" href="../../articles/index.html">Writing</a>
+				<a class="rail-link" href="../../works/index.html">Works</a>
+				<a class="rail-link" href="../../docs/index.html">Docs</a>
+				<a class="rail-link" href="../index.html">Tools</a>
+				<a class="rail-link" href="https://git.archdev.in">Git</a>
+				<a class="rail-link" href="../../index.html#contact">Contact</a>
+				<p class="rail-label">Tools</p>
+				<a class="rail-link rail-tool" href="../arch-installer/index.html" style="--h: var(--accent)"><span class="rail-dot" aria-hidden="true"></span>Arch installer</a>
+				<a class="rail-link rail-tool" href="../diff-tool/index.html" style="--h: var(--violet)"><span class="rail-dot" aria-hidden="true"></span>JSON and XML diff</a>
+				<a class="rail-link rail-tool" href="../regex-tester/index.html" style="--h: var(--teal)"><span class="rail-dot" aria-hidden="true"></span>Regex tester</a>
+				<a class="rail-link rail-tool" href="../ldap-toolkit/index.html" style="--h: var(--gold)"><span class="rail-dot" aria-hidden="true"></span>LDAP toolkit</a>
+				<a class="rail-link rail-tool" href="../cron-explainer/index.html" style="--h: var(--blue)"><span class="rail-dot" aria-hidden="true"></span>Cron explainer</a>
+				<a class="rail-link rail-tool" href="../jsonq-playground/index.html" style="--h: var(--green)"><span class="rail-dot" aria-hidden="true"></span>JSONPath and jq playground</a>
+				<a class="rail-link rail-tool" href="../scim-builder/index.html" style="--h: var(--pink)"><span class="rail-dot" aria-hidden="true"></span>SCIM builder</a>
+				<a class="rail-link rail-tool" href="../sailpoint-rules/index.html" style="--h: var(--accent)"><span class="rail-dot" aria-hidden="true"></span>SailPoint rule templates</a>
+				<a class="rail-link rail-tool" href="../permissions-toolkit/index.html" style="--h: var(--violet)"><span class="rail-dot" aria-hidden="true"></span>Permissions and sudoers</a>
+				<a class="rail-link rail-tool" href="../fstab-linter/index.html" style="--h: var(--teal)" aria-current="page"><span class="rail-dot" aria-hidden="true"></span>fstab linter</a>
+				<a class="rail-link rail-tool" href="../sailpoint-workbench/index.html" style="--h: var(--gold)"><span class="rail-dot" aria-hidden="true"></span>ISC workbench</a>
+			</div>
+		</nav>
+
+		<main class="tool wb" data-hue="2" id="ft">
+			<header class="wb-top">
+				<div class="wb-brand">
+					<a class="wb-back" href="../index.html">← Tools</a>
+					<h1 class="wb-title">fstab <span class="text-accent">linter</span></h1>
+					<span class="wb-badge">Runs in your browser, nothing uploaded</span>
+				</div>
+				<div class="wb-top-actions">
+					<button id="ft-help-btn" class="btn btn--ghost wb-btn" type="button" aria-haspopup="dialog" aria-controls="ft-help" aria-expanded="false">Help</button>
+				</div>
+			</header>
+
+			<div class="wb-body">
+				<div class="wb-main">
+					<section class="wb-ws" aria-label="fstab linter workspace">
+						<div class="wb-in" id="ft-inpane">
+							<div class="wb-pane-head"><span>Input</span></div>
+							<div class="wb-in-body" id="ft-in"></div>
+							<div class="wb-in-foot" id="ft-foot" hidden></div>
+						</div>
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<div class="diff-out-lead"><span class="wb-pane-title" id="ft-outtitle">Result</span><span class="diff-names" id="ft-outnote"></span></div>
+								<div class="wb-out-actions" id="ft-actions"></div>
+							</div>
+							<div class="wb-out-body" id="ft-out" aria-live="polite"></div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<footer class="wb-status">
+				<span id="wb-status-msg" aria-live="polite"></span>
+				<span class="wb-status-keys"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> checks · ? for help</span>
+			</footer>
+
+			<aside id="ft-help" class="wb-drawer" role="dialog" aria-labelledby="ft-help-title" hidden>
+				<div class="wb-pop-head">
+					<h2 id="ft-help-title" class="wb-pop-title">Help</h2>
+					<button id="ft-help-close" class="btn btn--ghost wb-btn" type="button">Close</button>
+				</div>
+				<div class="wb-drawer-body">
+					<section class="wb-help-sec">
+						<h3>What is checked</h3>
+						<ul>
+							<li>Field count, device spec form (UUID, LABEL, PARTUUID, paths, host:/export, //host/share), and kernel names such as /dev/sda1 that can change.</li>
+							<li>Mount points: absolute paths, <code>none</code> for swap, duplicates, and a child listed before its parent.</li>
+							<li>Filesystem types and options: unknown options, contradictions (<code>ro</code> with <code>rw</code>), options that belong to another filesystem (<code>subvol=</code> outside btrfs), network mounts without <code>_netdev</code>, passwords in options, tmpfs without a size.</li>
+							<li>The dump and pass fields: only the root filesystem should use pass 1, and filesystems without fsck should use 0.</li>
+							<li>Hardening hints for /tmp, /dev/shm, /var/tmp, /home, /boot and the EFI partition.</li>
+						</ul>
+					</section>
+					<section class="wb-help-sec">
+						<h3>Limits</h3>
+						<p>This is a static check. It cannot see your disks, so it cannot tell whether a UUID exists. Run <code>blkid</code> to confirm UUIDs and <code>findmnt --verify</code> (util-linux 2.29 or newer) before you reboot. An error in fstab can drop the machine to emergency mode at the next boot.</p>
+						<p>The Arch installer tool has a fstab builder if you want to create entries instead of checking them.</p>
+					</section>
+				</div>
+			</aside>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../index.html">Home</a>
+				<a href="../index.html">Tools</a>
+				<a href="../../articles/index.html">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script src="../shared/rail.js" defer></script>
+		<script type="module" src="ui.js"></script>
+	</body>
+</html>

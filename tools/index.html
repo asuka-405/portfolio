@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta
 			name="description"
-			content="Small tools that run in your browser: a SailPoint ISC workbench, an Arch install generator, JSON and XML diff, a regex flavor checker, an LDAP toolkit and a cron explainer."
+			content="Small tools that run in your browser: a SailPoint ISC workbench and rule templates, a SCIM builder, an Arch install generator, JSON and XML diff, JSONPath and jq, a regex flavor checker, an LDAP toolkit, a cron explainer, chmod and sudoers, and an fstab linter."
 		/>
 		<meta name="color-scheme" content="dark light" />
 		<title>Tools · Suryansh Kapil</title>
@@ -39,7 +39,6 @@
 					<a href="../works/index.html">Works</a>
 					<a href="../docs/index.html">Docs</a>
 					<a href="../tools/index.html">Tools</a>
-					<a href="index.html">Tools</a>
 					<a href="https://git.archdev.in">Git</a>
 					<a href="../index.html#contact">Contact</a>
 				</nav>
@@ -136,7 +135,77 @@
 						</div>
 					</article>
 
-					<article class="project-card reveal" style="--d: 0.34s">
+					<article class="project-card reveal" style="--d: 0.39s">
+						<p class="project-badge">Data · Query</p>
+						<h3><a href="jsonq-playground/index.html">JSONPath and jq playground</a></h3>
+						<p>
+							Run JSONPath (RFC 9535) and a jq-style language against pasted JSON. Every match comes with its normalized path, errors point at the problem, and examples fill in a working query. Nothing leaves the page.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">JSONPath · jq</span>
+							<a class="project-link project-link--case" href="jsonq-playground/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.44s">
+						<p class="project-badge">IAM · SCIM</p>
+						<h3><a href="scim-builder/index.html">SCIM request builder and checker</a></h3>
+						<p>
+							Fill in a User or Group and get an RFC 7643 body, build PATCH operations, and parse SCIM filters with a plain-English explanation and a test against a sample resource. Validates bodies, and writes curl commands that read the token from an environment variable.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">SCIM 2.0 · PATCH · Filters</span>
+							<a class="project-link project-link--case" href="scim-builder/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.49s">
+						<p class="project-badge">SailPoint · Rules</p>
+						<h3><a href="sailpoint-rules/index.html">SailPoint rule and transform templates</a></h3>
+						<p>
+							Cloud rules, connector rules (JDBC, Web Services, delimited file) and transforms, with the input arguments each rule type really receives, a parameter form, and a checker for code SailPoint blocks. Output is the XML, script or JSON you submit.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">Cloud rules · Connector rules · Transforms</span>
+							<a class="project-link project-link--case" href="sailpoint-rules/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.54s">
+						<p class="project-badge">Linux · Security</p>
+						<h3><a href="permissions-toolkit/index.html">chmod, umask and sudoers explainer</a></h3>
+						<p>
+							Explain and convert octal, symbolic and chmod-expression modes with a step by step trace, work out what a umask produces, and read a sudoers file line by line with warnings for ALL, NOPASSWD, wildcards and shell escapes.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">chmod · umask · sudoers</span>
+							<a class="project-link project-link--case" href="permissions-toolkit/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.59s">
+						<p class="project-badge">Linux · Boot</p>
+						<h3><a href="fstab-linter/index.html">fstab linter</a></h3>
+						<p>
+							Paste /etc/fstab and get a report before the reboot that fails: unstable device names, bad options for the filesystem, passwords in options, network mounts without _netdev, fsck pass numbers, duplicates and hardening hints.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">fstab · mount options</span>
+							<a class="project-link project-link--case" href="fstab-linter/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.64s">
 						<p class="project-badge">SailPoint · ISC</p>
 						<h3><a href="sailpoint-workbench/index.html">ISC workbench</a></h3>
 						<p>

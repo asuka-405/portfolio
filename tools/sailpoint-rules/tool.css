@@ -1,0 +1,71 @@
+/* Tool-specific styles. The shared look is in ../shared/shell.css and ../shared/theme.css. */
+
+.tool .rt-list {
+	display: flex;
+	flex-direction: column;
+	max-height: 15rem;
+	overflow-y: auto;
+	background: color-mix(in srgb, var(--canvas) 80%, var(--surface));
+	border: 1px solid var(--line);
+}
+
+.tool .rt-item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.05rem;
+	padding: 0.4rem 0.6rem;
+	font: inherit;
+	text-align: left;
+	color: var(--text);
+	background: none;
+	border: 0;
+	border-left: 3px solid transparent;
+	border-bottom: 1px solid var(--line);
+	cursor: pointer;
+}
+
+.tool .rt-item:hover {
+	background: color-mix(in srgb, var(--h) 9%, transparent);
+}
+
+.tool .rt-item[aria-selected="true"] {
+	color: var(--ink);
+	background: color-mix(in srgb, var(--h) 15%, transparent);
+	border-left-color: var(--h);
+}
+
+.tool .rt-title {
+	font-size: 0.86rem;
+	font-weight: 700;
+}
+
+.tool .rt-type {
+	font-family: var(--mono);
+	font-size: 0.7rem;
+	color: var(--muted);
+}
+
+.tool .rt-none {
+	padding: 0.6rem;
+}
+
+.tool .rt-h {
+	margin: 0 0 0.2rem;
+	font-size: 1.15rem;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	color: var(--ink);
+}
+
+.tool .rt-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.4rem;
+	margin: 0 0 0.4rem;
+}
+
+.tool .rt-summary {
+	margin: 0 0 0.3rem;
+	color: var(--text);
+}

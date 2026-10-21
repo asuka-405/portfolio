@@ -23,6 +23,7 @@
 		<link rel="stylesheet" href="../../styles.css" />
 		<link rel="stylesheet" href="../shared/shell.css" />
 		<link rel="stylesheet" href="tool.css" />
+		<link rel="stylesheet" href="../shared/theme.css" />
 	</head>
 	<body class="tool-page">
 		<div class="bg-stack" aria-hidden="true">
@@ -31,27 +32,41 @@
 			<div class="bg-vignette"></div>
 		</div>
 
-		<header class="site-header">
-			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
-			<div class="header-right">
-				<nav class="site-nav">
-					<a href="../../index.html#about">About</a>
-					<a href="../../index.html#projects">Projects</a>
-					<a href="../../articles/index.html">Writing</a>
-					<a href="../../works/index.html">Works</a>
-					<a href="../../docs/index.html">Docs</a>
-					<a href="../index.html">Tools</a>
-					<a href="https://git.archdev.in">Git</a>
-					<a href="../../index.html#contact">Contact</a>
-				</nav>
-				<button class="site-theme" type="button" aria-label="Toggle color theme">
+		<nav class="site-rail" id="site-rail" aria-label="Site">
+			<div class="rail-bar">
+				<button class="rail-toggle" type="button" aria-expanded="false" aria-controls="rail-panel" aria-label="Open site menu"><span class="rail-burger" aria-hidden="true"></span></button>
+				<a class="rail-logo" href="../../index.html" aria-label="suryansh, home">s<span class="dot">.</span></a>
+				<button class="site-theme rail-theme" type="button" aria-label="Toggle color theme">
 					<span class="theme-ic-sun">☀</span>
 					<span class="theme-ic-moon">☾</span>
 				</button>
 			</div>
-		</header>
+			<div class="rail-panel" id="rail-panel">
+				<p class="rail-label">Site</p>
+				<a class="rail-link" href="../../index.html#about">About</a>
+				<a class="rail-link" href="../../index.html#projects">Projects</a>
+				<a class="rail-link" href="../../articles/index.html">Writing</a>
+				<a class="rail-link" href="../../works/index.html">Works</a>
+				<a class="rail-link" href="../../docs/index.html">Docs</a>
+				<a class="rail-link" href="../index.html">Tools</a>
+				<a class="rail-link" href="https://git.archdev.in">Git</a>
+				<a class="rail-link" href="../../index.html#contact">Contact</a>
+				<p class="rail-label">Tools</p>
+				<a class="rail-link rail-tool" href="../arch-installer/index.html" style="--h: var(--accent)"><span class="rail-dot" aria-hidden="true"></span>Arch installer</a>
+				<a class="rail-link rail-tool" href="../diff-tool/index.html" style="--h: var(--violet)" aria-current="page"><span class="rail-dot" aria-hidden="true"></span>JSON and XML diff</a>
+				<a class="rail-link rail-tool" href="../regex-tester/index.html" style="--h: var(--teal)"><span class="rail-dot" aria-hidden="true"></span>Regex tester</a>
+				<a class="rail-link rail-tool" href="../ldap-toolkit/index.html" style="--h: var(--gold)"><span class="rail-dot" aria-hidden="true"></span>LDAP toolkit</a>
+				<a class="rail-link rail-tool" href="../cron-explainer/index.html" style="--h: var(--blue)"><span class="rail-dot" aria-hidden="true"></span>Cron explainer</a>
+				<a class="rail-link rail-tool" href="../jsonq-playground/index.html" style="--h: var(--green)"><span class="rail-dot" aria-hidden="true"></span>JSONPath and jq playground</a>
+				<a class="rail-link rail-tool" href="../scim-builder/index.html" style="--h: var(--pink)"><span class="rail-dot" aria-hidden="true"></span>SCIM builder</a>
+				<a class="rail-link rail-tool" href="../sailpoint-rules/index.html" style="--h: var(--accent)"><span class="rail-dot" aria-hidden="true"></span>SailPoint rule templates</a>
+				<a class="rail-link rail-tool" href="../permissions-toolkit/index.html" style="--h: var(--violet)"><span class="rail-dot" aria-hidden="true"></span>Permissions and sudoers</a>
+				<a class="rail-link rail-tool" href="../fstab-linter/index.html" style="--h: var(--teal)"><span class="rail-dot" aria-hidden="true"></span>fstab linter</a>
+				<a class="rail-link rail-tool" href="../sailpoint-workbench/index.html" style="--h: var(--gold)"><span class="rail-dot" aria-hidden="true"></span>ISC workbench</a>
+			</div>
+		</nav>
 
-		<main class="tool wb" id="diff">
+		<main class="tool wb" data-hue="1" id="diff">
 			<header class="wb-top">
 				<div class="wb-brand">
 					<a class="wb-back" href="../index.html">← Tools</a>
@@ -65,10 +80,13 @@
 
 			<div class="wb-body">
 				<div class="wb-main">
-					<section class="wb-ws" aria-label="Compare two documents">
+					<section class="wb-ws" id="diff-ws" aria-label="Compare two documents">
 						<!-- ============================================================ Input -->
-						<div class="wb-in">
-							<div class="wb-pane-head">Input</div>
+						<div class="wb-in" id="diff-in">
+							<div class="wb-pane-head">
+								<span>Input</span>
+								<button id="diff-in-close" class="btn btn--ghost wb-btn diff-in-close" type="button" hidden>Done</button>
+							</div>
 							<div class="wb-in-body">
 								<div class="tool-field diff-side">
 									<label for="diff-left">Left (before)</label>
@@ -185,8 +203,13 @@
 						<!-- ============================================================ Output -->
 						<div class="wb-out">
 							<div class="wb-out-bar">
-								<span class="wb-pane-title">Result</span>
+								<div class="diff-out-lead">
+									<button id="diff-edit" class="btn btn--ghost wb-btn" type="button" aria-expanded="false" aria-controls="diff-in" hidden>Edit input</button>
+									<span class="wb-pane-title">Result</span>
+									<span id="diff-names" class="diff-names"></span>
+								</div>
 								<div class="wb-out-actions">
+									<button id="dl-git" class="btn btn--ghost wb-btn" type="button" disabled>Download .patch</button>
 									<button id="dl-md" class="btn btn--ghost wb-btn" type="button" disabled>Download report (.md)</button>
 									<button id="dl-patch" class="btn btn--ghost wb-btn" type="button" disabled aria-describedby="patch-hint">Download JSON Patch</button>
 									<button id="copy-paths" class="btn btn--ghost wb-btn" type="button" disabled>Copy paths</button>
@@ -214,27 +237,54 @@
 
 									<p id="diff-identical" class="tool-empty" hidden>No differences. The two documents match under the current options.</p>
 
-									<div id="diff-toolbar" class="diff-toolbar" hidden>
-										<fieldset class="tool-chips">
-											<legend>Show</legend>
-											<div id="diff-chips" class="diff-chips">
-												<button type="button" class="tool-chip" data-op="all" aria-pressed="true">All</button>
-												<button type="button" class="tool-chip diff-chip--add" data-op="add" aria-pressed="true">Added</button>
-												<button type="button" class="tool-chip diff-chip--remove" data-op="remove" aria-pressed="true">Removed</button>
-												<button type="button" class="tool-chip diff-chip--change" data-op="replace" aria-pressed="true">Changed</button>
-											</div>
-										</fieldset>
-										<div class="tool-field">
-											<label for="diff-search">Search paths and values</label>
-											<input id="diff-search" class="tool-input" type="search" placeholder="e.g. owner or 1700" autocomplete="off" />
-										</div>
-										<p id="diff-count" class="tool-muted" aria-live="polite"></p>
+									<div id="diff-views" class="wb-subtabs diff-views" role="tablist" aria-label="Result view" hidden>
+										<button id="view-split" type="button" role="tab" class="wb-subtab" data-view="split" aria-selected="true">Split</button>
+										<button id="view-unified" type="button" role="tab" class="wb-subtab" data-view="unified" aria-selected="false">Unified</button>
+										<button id="view-changes" type="button" role="tab" class="wb-subtab" data-view="changes" aria-selected="false">Changes</button>
 									</div>
 
-									<p id="diff-nomatch" class="tool-empty" hidden>No changes match these filters.</p>
-									<div id="diff-list" class="diff-list" aria-live="polite"></div>
-									<div class="tool-row diff-more-row">
-										<button id="diff-more" class="btn btn--ghost wb-btn" type="button" hidden>Show more</button>
+									<div id="diff-git" class="diff-git" hidden>
+										<div class="diff-git-bar">
+											<p id="git-stat" class="diff-git-stat" aria-live="polite"></p>
+											<div class="tool-field diff-git-ctx">
+												<label for="git-context">Context</label>
+												<select id="git-context" class="tool-input">
+													<option value="3">3 lines</option>
+													<option value="10">10 lines</option>
+													<option value="30">30 lines</option>
+													<option value="all">Whole file</option>
+												</select>
+											</div>
+										</div>
+										<div id="git-view" class="gd" role="region" aria-label="Diff" tabindex="0"></div>
+										<div class="tool-row diff-more-row">
+											<button id="git-more" class="btn btn--ghost wb-btn" type="button" hidden>Show more</button>
+										</div>
+									</div>
+
+									<div id="diff-changes" hidden>
+										<div id="diff-toolbar" class="diff-toolbar" hidden>
+											<fieldset class="tool-chips">
+												<legend>Show</legend>
+												<div id="diff-chips" class="diff-chips">
+													<button type="button" class="tool-chip" data-op="all" aria-pressed="true">All</button>
+													<button type="button" class="tool-chip diff-chip--add" data-op="add" aria-pressed="true">Added</button>
+													<button type="button" class="tool-chip diff-chip--remove" data-op="remove" aria-pressed="true">Removed</button>
+													<button type="button" class="tool-chip diff-chip--change" data-op="replace" aria-pressed="true">Changed</button>
+												</div>
+											</fieldset>
+											<div class="tool-field">
+												<label for="diff-search">Search paths and values</label>
+												<input id="diff-search" class="tool-input" type="search" placeholder="e.g. owner or 1700" autocomplete="off" />
+											</div>
+											<p id="diff-count" class="tool-muted" aria-live="polite"></p>
+										</div>
+
+										<p id="diff-nomatch" class="tool-empty" hidden>No changes match these filters.</p>
+										<div id="diff-list" class="diff-list" aria-live="polite"></div>
+										<div class="tool-row diff-more-row">
+											<button id="diff-more" class="btn btn--ghost wb-btn" type="button" hidden>Show more</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -275,7 +325,8 @@
 					<section class="wb-help-sec" aria-labelledby="help-results">
 						<h3 id="help-results">Results and downloads</h3>
 						<ul>
-							<li>ADD, REMOVE and CHANGE mark each difference. The path shows where it is. XML paths use element keys such as <code>/sailpoint/Application[name=HR Feed]/@type</code>.</li>
+							<li><strong>Split</strong> (side by side) and <strong>Unified</strong> show the result as a git diff: hunks with <code>@@</code> headers, line numbers, and context lines you can widen. Both documents are first normalised with your options (ignored keys removed, keys and matched elements in a common order, indented), so reordering is not a change. Line numbers refer to that normalised text, not your original. Download .patch gives a unified diff of it.</li>
+							<li><strong>Changes</strong> is the list of semantic differences. ADD, REMOVE and CHANGE mark each difference. The path shows where it is. XML paths use element keys such as <code>/sailpoint/Application[name=HR Feed]/@type</code>.</li>
 							<li>Filters and search narrow the list. Copy paths copies only the paths you can see.</li>
 							<li>The Markdown report always lists every difference, whatever the filters.</li>
 							<li>JSON Patch (RFC 6902) is offered only for JSON compared with Arrays set to By position, because patch paths are array positions.</li>
@@ -307,6 +358,7 @@
 		</footer>
 
 		<script src="../../app.js" defer></script>
+		<script src="../shared/rail.js" defer></script>
 		<script type="module" src="ui.js"></script>
 	</body>
 </html>

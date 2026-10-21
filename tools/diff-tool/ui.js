@@ -2,12 +2,15 @@
 // Text from files and engine output goes through h() or textContent. Nothing is parsed as HTML.
 
 import { h, $, setStatus, downloadText, bindDropZone, readTextFile, storageGet, storageSet, plural, fmtSize, errText, flash } from "../shared/kit.js";
-import { diff, diffMarkdown, toJsonPatch, detectFormat, SAMPLE, IIQ_VOLATILE_ATTRS } from "./diff.js";
+import { diff, diffMarkdown, toJsonPatch, detectFormat, gitDiff, hunkHeader, unifiedPatch, SAMPLE, IIQ_VOLATILE_ATTRS } from "./diff.js";
 
 const PAGE = 500; // change cards rendered per page
 const VALUE_MAX = 20000; // characters of one value shown in a card; the search still sees all of it
 const LARGE_FILE = 5 * 1024 * 1024;
 const OPTS_KEY = "sk-diff-options";
+const VIEW_KEY = "sk-diff-view";
+const GIT_PAGE = 2500; // diff lines rendered per page in the git views
+const VIEWS = ["split", "unified", "changes"];
 const ALL_OPS = ["add", "remove", "replace"];
 const OP = {
 	add: { label: "ADD", cls: "add" },
@@ -44,6 +47,13 @@ let shown = []; // entries that pass the filters and search
 let rendered = 0; // how many of `shown` have cards in the list
 let ops = new Set(ALL_OPS);
 let timer = null;
+let git = null; // gitDiff result for the last run
+let view = "split";
+let gitContext = "3";
+let gitRendered = 0; // diff lines drawn so far
+let collapsed = false; // result fills the pane and the input is out of the way
+let inputOpen = false; // the input drawer is showing over the result
+let lastTexts = null; // [left, right] of the last run, so a context change can redo only the line diff
 const fileNames = { left: null, right: null };
 
 // ------------------------------------------------------------------ helpers
@@ -163,7 +173,7 @@ async function loadFile(side, fileList) {
 		if (fileList.length > 1) notes.push("Only the first file is used.");
 		if (file.size > LARGE_FILE) notes.push("The file is large, so comparing it may be slow.");
 		setMsg([`Loaded ${file.name}.`, ...notes].join(" "));
-		run();
+		run("keep");
 	} catch (e) {
 		setMsg(`Could not read ${file ? file.name : "the file"}: ${errText(e)}`);
 	}
@@ -174,7 +184,7 @@ function loadSample(kind) {
 	setSide("left", l, null);
 	setSide("right", r, null);
 	setMsg(`Loaded the ${kind.toUpperCase()} sample.`);
-	run();
+	run("keep");
 }
 
 // ------------------------------------------------------------------ running the diff
@@ -184,7 +194,8 @@ function scheduleRun() {
 	timer = setTimeout(run, 300);
 }
 
-function run() {
+// `commit` is true when the user asked for the diff (button or shortcut) and "keep" after a file, sample or swap: the input then steps aside.
+function run(commit = false) {
 	clearTimeout(timer);
 	timer = null;
 	syncOptionGroups();
@@ -199,12 +210,43 @@ function run() {
 		return;
 	}
 	opts = readOptions();
+	lastTexts = [left, right];
 	try {
 		result = diff(left, right, opts);
 	} catch (e) {
 		result = { ok: false, error: errText(e) };
 	}
+	git = result.ok ? runGit() : null;
 	render();
+	if (result.ok) {
+		if (commit) {
+			// "keep" (a file, sample or swap) leaves an open drawer open so the other side can still be loaded.
+			if (commit === true || !collapsed) inputOpen = false;
+			collapsed = true;
+		}
+	} else {
+		collapsed = false;
+		inputOpen = false;
+	}
+	applyLayout();
+}
+
+// Docked: input and result side by side. Collapsed: result only, and the input opens as a drawer from Edit input.
+function applyLayout() {
+	const ws = $("diff-ws");
+	ws.classList.toggle("is-collapsed", collapsed);
+	ws.classList.toggle("is-input-open", collapsed && inputOpen);
+	show($("diff-edit"), collapsed);
+	show($("diff-in-close"), collapsed);
+	$("diff-edit").setAttribute("aria-expanded", collapsed && inputOpen ? "true" : "false");
+	$("diff-names").textContent = result && result.ok ? `${sideName("left")} \u2194 ${sideName("right")}` : "";
+}
+
+function setInputOpen(open, focus) {
+	inputOpen = open;
+	applyLayout();
+	if (!focus) return;
+	(open ? $(SIDES.left.ta) : $("diff-edit")).focus();
 }
 
 function showEmpty(msg) {
@@ -214,6 +256,10 @@ function showEmpty(msg) {
 	show($("diff-result"), false);
 	entries = [];
 	shown = [];
+	git = null;
+	collapsed = false;
+	inputOpen = false;
+	applyLayout();
 	updateActions();
 	setStatus(msg);
 }
@@ -240,6 +286,8 @@ function render() {
 		show(box, true);
 		entries = [];
 		shown = [];
+		git = null;
+		updateGitActions();
 		setStatus("Cannot compare. See the message in the result pane.");
 		return;
 	}
@@ -261,13 +309,165 @@ function render() {
 	);
 	$("diff-notes").replaceChildren(...result.notes.map((n) => h("p", { class: "tool-alert", role: "note", text: `Note: ${n}` })));
 
-	const none = s.total === 0;
+	const none = s.total === 0 && !(git && git.ok && git.hunks.length);
 	show($("diff-identical"), none);
-	show($("diff-toolbar"), !none);
+	show($("diff-views"), !none);
+	show($("diff-toolbar"), s.total > 0);
 	setStatus(none ? "Identical" : plural(s.total, "difference"));
 
 	entries = result.changes.map((change) => ({ change, hay: haystack(change) }));
 	applyFilter();
+	renderGit();
+	setView(view, false);
+	if (none) {
+		show($("diff-git"), false);
+		show($("diff-changes"), false);
+	}
+}
+
+// ------------------------------------------------------------------ git-style view
+
+function runGit() {
+	const ctx = gitContext === "all" ? Infinity : Number(gitContext);
+	try {
+		return gitDiff(lastTexts[0], lastTexts[1], opts, { context: ctx });
+	} catch (e) {
+		return { ok: false, error: errText(e) };
+	}
+}
+
+function sideName(side) {
+	const ext = result && result.format === "xml" ? "xml" : "json";
+	return fileNames[side] || `${side}.${ext}`;
+}
+
+function span(cls, text) {
+	return h("span", { class: cls, text });
+}
+
+// One unified row: old number, new number, sign, code.
+function unifiedRow(l) {
+	const kind = l.t === "+" ? "add" : l.t === "-" ? "del" : "ctx";
+	return h(
+		"div",
+		{ class: `gd-row gd-${kind}` },
+		span("gd-no", l.oldNo === undefined ? "" : String(l.oldNo)),
+		span("gd-no", l.newNo === undefined ? "" : String(l.newNo)),
+		span("gd-sign", l.t === " " ? "" : l.t),
+		span("gd-code", l.text),
+	);
+}
+
+// Split rows: a run of removals sits beside the run of additions that follows it, line for line.
+function splitRows(lines) {
+	const rows = [];
+	let i = 0;
+	while (i < lines.length) {
+		const l = lines[i];
+		if (l.t === " ") {
+			rows.push({ a: l, b: l });
+			i++;
+			continue;
+		}
+		const dels = [];
+		const adds = [];
+		while (i < lines.length && lines[i].t === "-") dels.push(lines[i++]);
+		while (i < lines.length && lines[i].t === "+") adds.push(lines[i++]);
+		for (let k = 0; k < Math.max(dels.length, adds.length); k++) rows.push({ a: dels[k] || null, b: adds[k] || null });
+	}
+	return rows;
+}
+
+function splitRow({ a, b }) {
+	const cell = (l, side) => {
+		if (!l) return [span("gd-no", ""), span("gd-code gd-empty", "")];
+		const no = side === "a" ? l.oldNo : l.newNo;
+		return [span("gd-no", String(no)), span("gd-code", l.text)];
+	};
+	const kindA = !a ? "gap" : a.t === "-" ? "del" : "ctx";
+	const kindB = !b ? "gap" : b.t === "+" ? "add" : "ctx";
+	return h(
+		"div",
+		{ class: "gd-row gd-split" },
+		h("div", { class: `gd-half gd-${kindA}` }, ...cell(a, "a")),
+		h("div", { class: `gd-half gd-${kindB}` }, ...cell(b, "b")),
+	);
+}
+
+function renderGit() {
+	const box = $("git-view");
+	box.replaceChildren();
+	gitRendered = 0;
+	if (!git || !git.ok || !git.hunks.length) {
+		$("git-stat").textContent = "";
+		show($("git-more"), false);
+		return;
+	}
+	const a = sideName("left");
+	const b = sideName("right");
+	box.append(
+		h("div", { class: "gd-file" }, h("span", { class: "gd-file-cmd", text: `diff --git a/${a} b/${b}` })),
+		h("div", { class: "gd-meta" }, span("gd-del-txt", `--- a/${a}`), span("gd-add-txt", `+++ b/${b}`)),
+	);
+	$("git-stat").replaceChildren(
+		span("gd-add-txt", `+${git.stats.added}`),
+		document.createTextNode(" "),
+		span("gd-del-txt", `\u2212${git.stats.removed}`),
+		span("tool-muted", ` lines in ${plural(git.hunks.length, "hunk")}`),
+	);
+	renderGitMore();
+}
+
+function renderGitMore() {
+	const box = $("git-view");
+	const split = view === "split";
+	box.classList.toggle("gd--split", split);
+	let budget = GIT_PAGE;
+	let seen = 0;
+	const frag = document.createDocumentFragment();
+	let stopped = false;
+	for (const hk of git.hunks) {
+		if (stopped) break;
+		if (seen + hk.lines.length <= gitRendered) {
+			seen += hk.lines.length;
+			continue;
+		}
+		const start = Math.max(0, gitRendered - seen);
+		if (start === 0) frag.append(h("div", { class: "gd-hunk", text: hunkHeader(hk) }));
+		const lines = hk.lines.slice(start);
+		const take = lines.slice(0, budget);
+		if (split) for (const r of splitRows(take)) frag.append(splitRow(r));
+		else for (const l of take) frag.append(unifiedRow(l));
+		budget -= take.length;
+		gitRendered += take.length;
+		seen += hk.lines.length;
+		if (budget <= 0) stopped = true;
+	}
+	box.append(frag);
+	const totalLines = git.hunks.reduce((n, hk) => n + hk.lines.length, 0);
+	show($("git-more"), gitRendered < totalLines);
+}
+
+function setView(v, focusTab) {
+	if (!VIEWS.includes(v)) v = "split";
+	const changed = v !== view;
+	view = v;
+	storageSet(VIEW_KEY, view);
+	for (const b of $("diff-views").querySelectorAll("[data-view]")) {
+		const on = b.dataset.view === view;
+		b.setAttribute("aria-selected", on ? "true" : "false");
+		b.tabIndex = on ? 0 : -1;
+	}
+	const ok = !!(result && result.ok);
+	const hasGit = ok && git && git.ok && git.hunks.length > 0;
+	show($("diff-git"), ok && view !== "changes" && hasGit);
+	show($("diff-changes"), ok && (view === "changes" || !hasGit));
+	if (changed && hasGit && view !== "changes") renderGit();
+	if (focusTab) $(`view-${view}`).focus();
+}
+
+function updateGitActions() {
+	$("dl-git").disabled = !(git && git.ok && git.hunks.length);
 }
 
 // ------------------------------------------------------------------ change list
@@ -351,6 +551,7 @@ function updateActions() {
 	const ok = !!(result && result.ok);
 	const canPatch = ok && result.format === "json" && !!opts && opts.arrayMode === "index";
 	$("dl-md").disabled = !ok;
+	updateGitActions();
 	$("copy-paths").disabled = !ok;
 	$("dl-patch").disabled = !canPatch;
 	$("patch-hint").textContent = patchHint(ok, canPatch);
@@ -393,7 +594,9 @@ function init() {
 		});
 	}
 
-	$("diff-run").addEventListener("click", run);
+	$("diff-run").addEventListener("click", () => run(true));
+	$("diff-edit").addEventListener("click", () => setInputOpen(!inputOpen, true));
+	$("diff-in-close").addEventListener("click", () => setInputOpen(false, true));
 	$("diff-swap").addEventListener("click", () => {
 		const l = sideText("left");
 		const r = sideText("right");
@@ -402,7 +605,7 @@ function init() {
 		setSide("left", r, nr);
 		setSide("right", l, nl);
 		setMsg("Swapped the sides.");
-		run();
+		run("keep");
 	});
 	$("diff-sample-json").addEventListener("click", () => loadSample("json"));
 	$("diff-sample-xml").addEventListener("click", () => loadSample("xml"));
@@ -431,6 +634,33 @@ function init() {
 		applyFilter();
 	});
 	$("diff-search").addEventListener("input", applyFilter);
+
+	const savedView = storageGet(VIEW_KEY);
+	if (VIEWS.includes(savedView)) view = savedView;
+	$("diff-views").addEventListener("click", (e) => {
+		const b = e.target.closest("[data-view]");
+		if (b) setView(b.dataset.view, false);
+	});
+	$("diff-views").addEventListener("keydown", (e) => {
+		if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+		e.preventDefault();
+		const i = VIEWS.indexOf(view) + (e.key === "ArrowRight" ? 1 : -1);
+		setView(VIEWS[(i + VIEWS.length) % VIEWS.length], true);
+	});
+	$("git-context").addEventListener("change", () => {
+		gitContext = $("git-context").value;
+		if (!result || !result.ok || !lastTexts) return;
+		git = runGit();
+		updateGitActions();
+		renderGit();
+		setView(view, false);
+	});
+	$("git-more").addEventListener("click", renderGitMore);
+	$("dl-git").addEventListener("click", () => {
+		if (!git || !git.ok || !git.hunks.length) return;
+		downloadText("diff.patch", unifiedPatch(git.hunks, sideName("left"), sideName("right")), "text/x-diff;charset=utf-8");
+		setStatus(`Patch downloaded: ${plural(git.hunks.length, "hunk")}.`);
+	});
 	$("diff-more").addEventListener("click", renderMore);
 
 	$("dl-md").addEventListener("click", () => {
@@ -466,9 +696,11 @@ function init() {
 	document.addEventListener("keydown", (e) => {
 		if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
 			e.preventDefault();
-			run();
+			run(true);
 		} else if (e.key === "Escape" && !$("diff-help").hidden) {
 			setHelp(false);
+		} else if (e.key === "Escape" && collapsed && inputOpen) {
+			setInputOpen(false, true);
 		}
 	});
 
