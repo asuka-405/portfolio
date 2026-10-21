@@ -28,6 +28,7 @@ const SITE_HEADER = `\t\t<header class="site-header">
 \t\t\t\t\t<a href="index.html">Writing</a>
 \t\t\t\t\t<a href="../works/index.html">Works</a>
 \t\t\t\t\t<a href="../docs/index.html">Docs</a>
+\t\t\t\t\t<a href="../tools/index.html">Tools</a>
 \t\t\t\t\t<a href="https://git.archdev.in">Git</a>
 \t\t\t\t\t<a href="../index.html#contact">Contact</a>
 \t\t\t\t</nav>

@@ -1,0 +1,253 @@
+/* LDAP toolkit: styles specific to this tool. Shared shell classes come from ../shared/shell.css.
+   Every rule is scoped under .tool. Colours come from the site tokens only, so both themes work. */
+
+/* ---- layout: the four sub-tabs sit above the workspace --------------- */
+
+.tool .tk-main {
+	flex-direction: column;
+}
+
+.tool .tk-tabbar {
+	flex: none;
+	min-height: 2.5rem;
+	padding: 0.2rem 0.6rem;
+}
+
+.tool .tk-tabbar .wb-subtab {
+	min-height: 2.2rem;
+}
+
+.tool .tk-stack {
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+	min-width: 0;
+}
+
+.tool .tk-block {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+	min-width: 0;
+}
+
+.tool .tk-block > .tool-subhead:first-child {
+	margin-top: 0;
+}
+
+.tool .tk-tool {
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	margin-top: 1.4rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--line);
+	min-width: 0;
+}
+
+.tool .tk-tool > .tool-subhead:first-child {
+	margin-top: 0;
+}
+
+.tool .tk-params {
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	min-width: 0;
+}
+
+/* ---- values: single lines, multi-line blocks and caret display ------- */
+
+.tool .tk-item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	min-width: 0;
+}
+
+.tool .tk-item-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.4rem;
+	min-width: 0;
+}
+
+.tool .tk-label {
+	font-size: 0.74rem;
+	font-weight: 600;
+	color: var(--muted);
+}
+
+.tool .tk-code {
+	display: block;
+	margin: 0;
+	padding: 0.4rem 0.5rem;
+	font-family: var(--mono);
+	font-size: 0.8rem;
+	line-height: 1.45;
+	color: var(--ink);
+	background: var(--canvas);
+	border: 1px solid var(--line);
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	min-width: 0;
+}
+
+.tool .tk-pre {
+	margin: 0;
+	max-height: 22rem;
+	padding: 0.5rem 0.6rem;
+	overflow: auto;
+	font-family: var(--mono);
+	font-size: 0.78rem;
+	line-height: 1.5;
+	color: var(--text);
+	background: var(--canvas);
+	border: 1px solid var(--line);
+	white-space: pre;
+	tab-size: 2;
+	min-width: 0;
+}
+
+.tool .tk-caret {
+	color: var(--ink);
+	border-left: 3px solid var(--accent);
+}
+
+.tool .tk-list {
+	margin: 0;
+	padding-left: 1.2rem;
+	font-size: 0.84rem;
+	color: var(--text);
+}
+
+.tool .tk-list li + li {
+	margin-top: 0.4rem;
+}
+
+.tool .tk-list .tk-item {
+	margin-top: 0.3rem;
+}
+
+.tool .tk-wrap {
+	overflow-wrap: anywhere;
+}
+
+/* Verdicts and summaries: plain text with a left rule, so the state is readable without colour. */
+.tool .tk-verdict {
+	margin: 0;
+	padding: 0.35rem 0.6rem;
+	font-size: 0.86rem;
+	color: var(--ink);
+	border-left: 3px solid var(--accent);
+	background: var(--surface);
+	overflow-wrap: anywhere;
+}
+
+/* ---- UAC flag checklist ---------------------------------------------- */
+
+.tool .tk-flags {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0.3rem;
+	min-width: 0;
+}
+
+.tool .tk-flag {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.15rem 0.5rem;
+	padding: 0.3rem 0.5rem;
+	font-size: 0.82rem;
+	color: var(--text);
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-left: 3px solid transparent;
+	cursor: pointer;
+	min-width: 0;
+}
+
+.tool .tk-flag:hover {
+	border-color: var(--accent);
+}
+
+.tool .tk-flag input[type="checkbox"] {
+	flex: none;
+	width: 1rem;
+	height: 1rem;
+	margin: 0;
+	accent-color: var(--accent);
+	cursor: pointer;
+}
+
+.tool .tk-flag-name {
+	flex: 1 1 auto;
+	min-width: 0;
+	font-family: var(--mono);
+	font-size: 0.78rem;
+	overflow-wrap: anywhere;
+}
+
+.tool .tk-flag-hex {
+	font-family: var(--mono);
+	font-size: 0.74rem;
+	color: var(--muted);
+}
+
+.tool .tk-state {
+	min-width: 4.5rem;
+	font-size: 0.74rem;
+	font-weight: 600;
+	color: var(--muted);
+	text-align: right;
+}
+
+.tool .tk-flag.is-set {
+	color: var(--ink);
+	background: var(--accent-soft);
+	border-left-color: var(--accent);
+}
+
+.tool .tk-flag.is-set .tk-state {
+	color: var(--ink);
+}
+
+/* ---- responsive ------------------------------------------------------ */
+
+@media (min-width: 640px) {
+	.tool .tk-flags {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+/* Stacked panes scroll inside the main area. Keep the sub-tab strip in view while scrolling. */
+@media (max-width: 760px) {
+	.tool .tk-tabbar {
+		position: sticky;
+		top: 0;
+		z-index: 2;
+	}
+
+	.tool .tk-pre {
+		max-height: 16rem;
+	}
+}
+
+@media (max-width: 380px) {
+	.tool .tk-tabbar .wb-subtabs {
+		width: 100%;
+	}
+
+	.tool .tk-tabbar .wb-subtab {
+		flex: 1 1 auto;
+		padding-left: 0.4rem;
+		padding-right: 0.4rem;
+		font-size: 0.78rem;
+	}
+
+	.tool .tk-state {
+		min-width: 0;
+	}
+}

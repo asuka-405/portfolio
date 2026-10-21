@@ -30,6 +30,7 @@ function siteHeader(rootPrefix) {
 \t\t\t\t\t<a href="${rootPrefix}articles/index.html">Writing</a>
 \t\t\t\t\t<a href="${rootPrefix}works/index.html">Works</a>
 \t\t\t\t\t<a href="${rootPrefix}docs/index.html">Docs</a>
+\t\t\t\t\t<a href="${rootPrefix}tools/index.html">Tools</a>
 \t\t\t\t\t<a href="https://git.archdev.in">Git</a>
 \t\t\t\t\t<a href="${rootPrefix}index.html#contact">Contact</a>
 \t\t\t\t</nav>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Browser-only LDAP toolkit: parses and explains search filters, analyses distinguished names, builds Active Directory filter recipes, decodes userAccountControl and converts directory timestamps. Nothing is uploaded."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>LDAP toolkit · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="stylesheet" href="../shared/shell.css" />
+		<link rel="stylesheet" href="tool.css" />
+	</head>
+	<body class="tool-page">
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../index.html">Tools</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main class="tool wb tk" id="tk">
+			<header class="wb-top">
+				<div class="wb-brand">
+					<a class="wb-back" href="../index.html">← Tools</a>
+					<h1 class="wb-title">LDAP <span class="text-accent">toolkit</span></h1>
+					<span class="wb-badge">Runs in your browser, nothing uploaded</span>
+				</div>
+				<div class="wb-top-actions">
+					<button id="wb-help-btn" class="btn btn--ghost wb-btn" type="button" aria-haspopup="dialog" aria-controls="wb-help" aria-expanded="false">Help</button>
+				</div>
+			</header>
+
+			<div class="wb-body">
+				<div class="wb-main tk-main">
+					<div class="wb-out-bar tk-tabbar">
+						<div class="wb-subtabs" role="tablist" aria-label="LDAP toolkit sections">
+							<button id="tab-filter" class="wb-subtab" type="button" role="tab" data-tab="filter" aria-selected="true" aria-controls="panel-filter" tabindex="0">Filter</button>
+							<button id="tab-dn" class="wb-subtab" type="button" role="tab" data-tab="dn" aria-selected="false" aria-controls="panel-dn" tabindex="-1">DN</button>
+							<button id="tab-recipes" class="wb-subtab" type="button" role="tab" data-tab="recipes" aria-selected="false" aria-controls="panel-recipes" tabindex="-1">AD recipes</button>
+							<button id="tab-uac" class="wb-subtab" type="button" role="tab" data-tab="uac" aria-selected="false" aria-controls="panel-uac" tabindex="-1">UAC and time</button>
+						</div>
+					</div>
+
+					<!-- ============================================================ 1. Filter -->
+					<section id="panel-filter" class="wb-ws" role="tabpanel" aria-labelledby="tab-filter" tabindex="-1">
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<div class="tool-field">
+									<label for="flt-input">LDAP search filter (RFC 4515)</label>
+									<textarea id="flt-input" class="tool-input tool-code" rows="6" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="flt-hint"></textarea>
+									<span id="flt-hint" class="tool-hint">Parses as you type. Values written as \XX are unescaped before matching.</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Result</span>
+							</div>
+							<div class="wb-out-body">
+								<div id="flt-result" class="tk-stack" aria-live="polite"></div>
+
+								<section class="tk-tool" aria-labelledby="flt-esc-title">
+									<h3 id="flt-esc-title" class="tool-subhead">Escape a value for a filter</h3>
+									<div class="tool-field">
+										<label for="flt-esc-in">Value</label>
+										<input id="flt-esc-in" class="tool-input" type="text" autocomplete="off" spellcheck="false" value="O'Brien (ops)*" />
+									</div>
+									<div class="tk-item">
+										<div class="tk-item-head">
+											<span class="tk-label">Escaped</span>
+											<span id="flt-esc-copy"></span>
+										</div>
+										<code id="flt-esc-out" class="tk-code" aria-live="polite"></code>
+									</div>
+									<div class="tool-field">
+										<label for="flt-unesc-in">Escaped value to unescape (\XX hex form)</label>
+										<input id="flt-unesc-in" class="tool-input" type="text" autocomplete="off" spellcheck="false" />
+										<p id="flt-unesc-err" class="tool-field-error" aria-live="polite" hidden></p>
+									</div>
+									<div class="tk-item">
+										<div class="tk-item-head">
+											<span class="tk-label">Unescaped</span>
+											<span id="flt-unesc-copy"></span>
+										</div>
+										<code id="flt-unesc-out" class="tk-code" aria-live="polite"></code>
+									</div>
+								</section>
+							</div>
+						</div>
+					</section>
+
+					<!-- ============================================================ 2. DN -->
+					<section id="panel-dn" class="wb-ws" role="tabpanel" aria-labelledby="tab-dn" tabindex="-1" hidden>
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<div class="tool-field">
+									<label for="dn-input">Distinguished name</label>
+									<textarea id="dn-input" class="tool-input tool-code" rows="4" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="dn-hint"></textarea>
+									<span id="dn-hint" class="tool-hint">Parses as you type. Commas inside a value must be escaped as \,</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Result</span>
+							</div>
+							<div class="wb-out-body">
+								<div id="dn-result" class="tk-stack" aria-live="polite"></div>
+
+								<section class="tk-tool" aria-labelledby="dn-cmp-title">
+									<h3 id="dn-cmp-title" class="tool-subhead">Compare two DNs</h3>
+									<div class="tool-field">
+										<label for="dn-cmp-a">First DN</label>
+										<textarea id="dn-cmp-a" class="tool-input tool-code" rows="2" spellcheck="false" autocomplete="off"></textarea>
+									</div>
+									<div class="tool-field">
+										<label for="dn-cmp-b">Second DN</label>
+										<textarea id="dn-cmp-b" class="tool-input tool-code" rows="2" spellcheck="false" autocomplete="off"></textarea>
+									</div>
+									<p id="dn-cmp-result" class="tk-verdict" aria-live="polite"></p>
+								</section>
+
+								<section class="tk-tool" aria-labelledby="dn-esc-title">
+									<h3 id="dn-esc-title" class="tool-subhead">Escape a value for a DN</h3>
+									<div class="tool-field">
+										<label for="dn-esc-in">Value</label>
+										<input id="dn-esc-in" class="tool-input" type="text" autocomplete="off" spellcheck="false" value="Lopez, Ana" />
+									</div>
+									<div class="tk-item">
+										<div class="tk-item-head">
+											<span class="tk-label">Escaped</span>
+											<span id="dn-esc-copy"></span>
+										</div>
+										<code id="dn-esc-out" class="tk-code" aria-live="polite"></code>
+									</div>
+									<div class="tool-field">
+										<label for="dn-unesc-in">Escaped value to unescape</label>
+										<input id="dn-unesc-in" class="tool-input" type="text" autocomplete="off" spellcheck="false" />
+										<p id="dn-unesc-err" class="tool-field-error" aria-live="polite" hidden></p>
+									</div>
+									<div class="tk-item">
+										<div class="tk-item-head">
+											<span class="tk-label">Unescaped</span>
+											<span id="dn-unesc-copy"></span>
+										</div>
+										<code id="dn-unesc-out" class="tk-code" aria-live="polite"></code>
+									</div>
+								</section>
+
+								<section class="tk-tool" aria-labelledby="dom-title">
+									<h3 id="dom-title" class="tool-subhead">Domain and DN</h3>
+									<div class="tool-field">
+										<label for="dom-in">DNS domain</label>
+										<input id="dom-in" class="tool-input" type="text" autocomplete="off" spellcheck="false" value="corp.example.test" />
+									</div>
+									<div class="tk-item">
+										<div class="tk-item-head">
+											<span class="tk-label">Domain as DN</span>
+											<span id="dom-copy"></span>
+										</div>
+										<code id="dom-out" class="tk-code" aria-live="polite"></code>
+									</div>
+									<div class="tool-field">
+										<label for="dom-dn-in">DN with DC components</label>
+										<input id="dom-dn-in" class="tool-input" type="text" autocomplete="off" spellcheck="false" value="DC=corp,DC=example,DC=test" />
+										<p id="dom-dn-err" class="tool-field-error" aria-live="polite" hidden></p>
+									</div>
+									<div class="tk-item">
+										<div class="tk-item-head">
+											<span class="tk-label">DNS domain from DN</span>
+											<span id="dom-dn-copy"></span>
+										</div>
+										<code id="dom-dn-out" class="tk-code" aria-live="polite"></code>
+									</div>
+								</section>
+							</div>
+						</div>
+					</section>
+
+					<!-- ============================================================ 3. AD recipes -->
+					<section id="panel-recipes" class="wb-ws" role="tabpanel" aria-labelledby="tab-recipes" tabindex="-1" hidden>
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<div class="tool-field">
+									<label for="rc-select">Recipe</label>
+									<select id="rc-select" class="tool-input"></select>
+								</div>
+								<div id="rc-params" class="tk-params"></div>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Generated filter</span>
+								<div class="wb-out-actions">
+									<button id="rc-open" class="btn btn--primary wb-btn" type="button" disabled>Open in Filter tab</button>
+								</div>
+							</div>
+							<div class="wb-out-body">
+								<div id="rc-result" class="tk-stack" aria-live="polite"></div>
+							</div>
+						</div>
+					</section>
+
+					<!-- ============================================================ 4. UAC and time -->
+					<section id="panel-uac" class="wb-ws" role="tabpanel" aria-labelledby="tab-uac" tabindex="-1" hidden>
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<div class="tool-field">
+									<label for="uac-num">userAccountControl</label>
+									<input id="uac-num" class="tool-input" type="number" min="0" max="4294967295" step="1" inputmode="numeric" value="66050" aria-describedby="uac-err" />
+									<span class="tool-hint">Tick flags in the output to compute the value.</span>
+									<p id="uac-err" class="tool-field-error" aria-live="polite" hidden></p>
+								</div>
+
+								<div class="tool-field">
+									<label for="tm-input">Timestamp</label>
+									<input id="tm-input" class="tool-input" type="text" autocomplete="off" spellcheck="false" value="20260101120000.0Z" aria-describedby="tm-hint" />
+									<span id="tm-hint" class="tool-hint">FILETIME (18 digits), GeneralizedTime (20260101120000.0Z), Unix seconds or milliseconds, or an ISO date.</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Result</span>
+							</div>
+							<div class="wb-out-body">
+								<section class="tk-block" aria-labelledby="uac-title">
+									<h3 id="uac-title" class="tool-subhead">userAccountControl</h3>
+									<p id="uac-summary" class="tk-verdict" aria-live="polite"></p>
+									<p id="uac-unknown" class="tool-muted" aria-live="polite"></p>
+									<div id="uac-list" class="tk-flags" role="group" aria-label="userAccountControl flags"></div>
+								</section>
+
+								<section class="tk-block" aria-labelledby="tm-title">
+									<h3 id="tm-title" class="tool-subhead">Timestamp</h3>
+									<div id="tm-result" class="tk-stack" aria-live="polite"></div>
+								</section>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<footer class="wb-status">
+				<span id="wb-status-msg" aria-live="polite"></span>
+				<span class="wb-status-keys">? for help</span>
+			</footer>
+
+			<aside id="wb-help" class="wb-drawer" role="dialog" aria-labelledby="wb-help-title" hidden>
+				<div class="wb-pop-head">
+					<h2 id="wb-help-title" class="wb-pop-title">Help</h2>
+					<button id="wb-help-close" class="btn btn--ghost wb-btn" type="button">Close</button>
+				</div>
+				<div class="wb-drawer-body">
+					<section class="wb-help-sec" data-help="filter" aria-labelledby="help-filter">
+						<h3 id="help-filter">Filter</h3>
+						<p>Parses an RFC 4515 search filter and shows it normalized and pretty-printed, with a plain-English reading and advice. A parse error points at the character where parsing failed.</p>
+						<p>The escape tools convert a value to and from the <code>\XX</code> form used inside filters, so <code>*</code>, <code>(</code>, <code>)</code> and <code>\</code> match literally.</p>
+						<p class="tool-note"><strong>Cannot do:</strong> check the filter against a directory, or know which attributes are indexed on your server.</p>
+					</section>
+
+					<section class="wb-help-sec" data-help="dn" aria-labelledby="help-dn">
+						<h3 id="help-dn">DN</h3>
+						<p>Splits a distinguished name into its RDNs, from leaf to base, and shows the normalized form, the canonical name (<code>domain/OU/CN</code>), the DNS domain from the DC components and the parent chain.</p>
+						<p>Compare reports Same when two DNs name the same object after normalization. Attribute types are case-insensitive, and values are compared case-insensitively here.</p>
+						<p>Domain and DN converts <code>corp.example.test</code> to <code>DC=corp,DC=example,DC=test</code> and back.</p>
+					</section>
+
+					<section class="wb-help-sec" data-help="recipes" aria-labelledby="help-recipes">
+						<h3 id="help-recipes">AD recipes</h3>
+						<p>Builds common Active Directory filters from a recipe and its parameters. The output is the filter, a note where the recipe needs one, and a plain-English reading. Open in Filter tab sends the filter to the Filter tab.</p>
+						<h4>Matching rule OIDs used by the recipes</h4>
+						<ul>
+							<li><code>1.2.840.113556.1.4.803</code> LDAP_MATCHING_RULE_BIT_AND: every listed bit must be set. Used for userAccountControl flags.</li>
+							<li><code>1.2.840.113556.1.4.804</code> LDAP_MATCHING_RULE_BIT_OR: any listed bit must be set.</li>
+							<li><code>1.2.840.113556.1.4.1941</code> LDAP_MATCHING_RULE_IN_CHAIN: follows nested group membership (memberOf) or parent links.</li>
+						</ul>
+						<p class="tool-note"><strong>Cost:</strong> LDAP_MATCHING_RULE_IN_CHAIN is expensive on large groups and deep trees. Narrow the search base, and avoid it in filters that run often.</p>
+					</section>
+
+					<section class="wb-help-sec" data-help="uac" aria-labelledby="help-uac">
+						<h3 id="help-uac">UAC and time</h3>
+						<p>userAccountControl is a bit field. Enter a number or tick flags to compute it. Bit 0x2 (ACCOUNTDISABLE) decides whether the account is enabled. Bits this tool does not know are shown as unknown and kept when you tick flags.</p>
+						<p>Timestamps accept Windows FILETIME (100 ns ticks since 1601 UTC), LDAP GeneralizedTime, Unix seconds or milliseconds, or an ISO date, and show every format.</p>
+						<p><strong>Special values:</strong> 0 in a FILETIME attribute usually means not set. 9223372036854775807 means never expires (for example accountExpires).</p>
+					</section>
+
+					<section class="wb-help-sec" aria-labelledby="help-keys">
+						<h3 id="help-keys">Keyboard</h3>
+						<ul>
+							<li><kbd>?</kbd> opens this help when you are not typing in a field.</li>
+							<li><kbd>Esc</kbd> closes Help.</li>
+							<li>Arrow keys move between sub-tabs.</li>
+						</ul>
+					</section>
+				</div>
+			</aside>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../index.html">Home</a>
+				<a href="../index.html">Tools</a>
+				<a href="../../articles/index.html">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script type="module" src="ui.js"></script>
+	</body>
+</html>
