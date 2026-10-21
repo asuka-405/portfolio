@@ -5,6 +5,13 @@ import { SITE_URL } from "./seo.mjs";
 const STATIC_PAGES = [
 	"",
 	"arch-setup.html",
+	"tools/index.html",
+	"tools/sailpoint-workbench/index.html",
+	"tools/arch-installer/index.html",
+	"tools/diff-tool/index.html",
+	"tools/regex-tester/index.html",
+	"tools/ldap-toolkit/index.html",
+	"tools/cron-explainer/index.html",
 	"works/index.html",
 	"works/brew-and-bean/about.html",
 	"works/brew-and-bean/catering.html",

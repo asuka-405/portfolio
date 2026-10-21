@@ -1,0 +1,254 @@
+/* Cron explainer: styles specific to this tool. Shell, buttons, fields, tables and the Help drawer come from ../shared/shell.css.
+   Every rule is scoped under .tool and uses the site tokens only, so both themes work. Zero radius. */
+
+/* ---- input pane ---------------------------------------------------------- */
+
+.tool .cron-expr {
+	min-height: 2.75rem;
+	padding: 0.5rem 0.65rem;
+	font-family: var(--mono);
+	font-size: 1.05rem;
+	letter-spacing: 0.01em;
+}
+
+.tool .cron-label {
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: var(--ink);
+}
+
+.tool .cron-fieldset {
+	margin: 0;
+	padding: 0;
+	min-width: 0;
+	border: 0;
+}
+
+.tool .cron-fieldset legend {
+	margin-bottom: 0.25rem;
+	padding: 0;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: var(--ink);
+}
+
+/* Segmented control: the radio is visually hidden, the span is the visible segment. */
+
+.tool .cron-seg-group {
+	display: inline-flex;
+	flex-wrap: wrap;
+	max-width: 100%;
+	border: 1px solid var(--line);
+	background: var(--canvas);
+}
+
+.tool .cron-seg {
+	position: relative;
+	display: inline-flex;
+	min-width: 0;
+}
+
+.tool .cron-seg + .cron-seg span {
+	border-left: 1px solid var(--line);
+}
+
+.tool .cron-seg span {
+	display: inline-flex;
+	align-items: center;
+	min-height: 2rem;
+	padding: 0.3rem 0.7rem;
+	font-size: 0.82rem;
+	color: var(--muted);
+	cursor: pointer;
+}
+
+.tool .cron-seg:hover span {
+	color: var(--ink);
+}
+
+.tool .cron-seg-input:checked + span {
+	color: var(--ink);
+	background: var(--accent-soft);
+	box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+.tool .cron-seg-input:focus-visible {
+	outline: none;
+}
+
+.tool .cron-seg-input:focus-visible + span {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+}
+
+/* Three fields side by side when there is room, one per row on phones. */
+
+.tool .cron-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+	gap: 0.6rem;
+}
+
+.tool .cron-from-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	align-items: center;
+}
+
+.tool .cron-from-row .tool-input {
+	flex: 1 1 9rem;
+	width: auto;
+}
+
+.tool .cron-examples {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+/* ---- output pane --------------------------------------------------------- */
+
+.tool .wb-pane-title {
+	margin: 0;
+}
+
+.tool .wb-out-bar p {
+	margin: 0;
+	font-size: 0.78rem;
+}
+
+.tool .cron-desc {
+	margin: 0 0 0.6rem;
+	font-size: 1.3rem;
+	line-height: 1.4;
+	font-weight: 500;
+	color: var(--ink);
+	overflow-wrap: anywhere;
+}
+
+.tool .cron-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.tool .cron-chips:empty {
+	display: none;
+}
+
+.tool .cron-chip {
+	display: inline-block;
+	padding: 0.1rem 0.45rem;
+	font-family: var(--mono);
+	font-size: 0.74rem;
+	color: var(--text);
+	background: var(--surface);
+	border: 1px solid var(--line);
+}
+
+.tool .cron-section {
+	margin-top: 1.1rem;
+}
+
+.tool .cron-section > .tool-subhead {
+	margin: 0 0 0.4rem;
+}
+
+.tool .cron-fields .cron-raw {
+	font-family: var(--mono);
+	color: var(--ink);
+	white-space: nowrap;
+}
+
+.tool .cron-fields tr.is-fault th,
+.tool .cron-fields tr.is-fault td {
+	background: var(--accent-soft);
+}
+
+.tool .cron-fields tr.is-fault th {
+	box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.tool .cron-fields tr.is-fault td:last-child {
+	color: var(--accent);
+	font-weight: 600;
+}
+
+.tool .cron-runs {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border: 1px solid var(--line);
+	background: var(--canvas);
+}
+
+.tool .cron-runs li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.15rem 0.7rem;
+	padding: 0.35rem 0.55rem;
+	border-top: 1px solid var(--line);
+	font-size: 0.82rem;
+}
+
+.tool .cron-runs li:first-child {
+	border-top: 0;
+}
+
+.tool .cron-run-time {
+	font-family: var(--mono);
+	color: var(--ink);
+}
+
+.tool .cron-list {
+	margin: 0;
+	padding-left: 1.1rem;
+	font-size: 0.84rem;
+	color: var(--text);
+}
+
+.tool .cron-list li + li {
+	margin-top: 0.25rem;
+}
+
+.tool .cron-convert-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.tool .cron-convert-expr {
+	padding: 0.35rem 0.55rem;
+	font-family: var(--mono);
+	font-size: 0.98rem;
+	color: var(--ink);
+	background: var(--canvas);
+	border: 1px solid var(--line);
+	overflow-wrap: anywhere;
+}
+
+/* ---- help drawer --------------------------------------------------------- */
+
+.tool .wb-drawer .tool-table-wrap {
+	margin: 0.4rem 0 0.6rem;
+}
+
+.tool .wb-drawer .tool-table th {
+	white-space: nowrap;
+}
+
+/* ---- phones -------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+	.tool .cron-expr {
+		font-size: 0.95rem;
+	}
+
+	.tool .cron-desc {
+		font-size: 1.12rem;
+	}
+}

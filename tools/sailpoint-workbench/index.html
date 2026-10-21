@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Browser-only ISC workbench: converts SailPoint IdentityIQ exports to ISC, scores migration gaps, simulates transforms, plans bulk entitlement edits and splits certification campaigns. Nothing is uploaded."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>ISC workbench · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="stylesheet" href="tool.css" />
+	</head>
+	<body class="tool-page">
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../index.html">Tools</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main class="tool wb" id="wb">
+			<header class="wb-top">
+				<div class="wb-brand">
+					<a class="wb-back" href="../index.html">← Tools</a>
+					<h1 class="wb-title">ISC <span class="text-accent">workbench</span></h1>
+					<span class="wb-badge">Runs in your browser, nothing uploaded</span>
+				</div>
+				<div class="wb-top-actions">
+					<button id="wb-help-btn" class="btn btn--ghost wb-btn" type="button" aria-haspopup="dialog" aria-controls="wb-help" aria-expanded="false">Help</button>
+					<button id="sample" class="btn btn--ghost wb-btn" type="button">Load sample</button>
+					<button id="wb-settings-btn" class="btn btn--ghost wb-btn" type="button" aria-haspopup="dialog" aria-controls="wb-settings" aria-expanded="false">Settings</button>
+				</div>
+			</header>
+
+			<div class="wb-body">
+				<nav class="wb-side" aria-label="Modules">
+					<div id="wb-side-list" class="wb-tabs" role="tablist" aria-orientation="vertical" aria-label="Workbench modules">
+						<button id="tab-migrate" class="wb-tab" type="button" role="tab" data-tab="migrate" aria-selected="false" aria-controls="panel-migrate" tabindex="-1" title="Migrate">
+							<span class="wb-tab-glyph" aria-hidden="true">M</span>
+							<span class="wb-tab-label">Migrate</span>
+							<span id="count-migrate" class="wb-count" hidden></span>
+						</button>
+						<button id="tab-gaps" class="wb-tab" type="button" role="tab" data-tab="gaps" aria-selected="false" aria-controls="panel-gaps" tabindex="-1" title="Gap analysis">
+							<span class="wb-tab-glyph" aria-hidden="true">G</span>
+							<span class="wb-tab-label">Gap analysis</span>
+							<span id="count-gaps" class="wb-count" hidden></span>
+						</button>
+						<button id="tab-transforms" class="wb-tab" type="button" role="tab" data-tab="transforms" aria-selected="false" aria-controls="panel-transforms" tabindex="-1" title="Transform lab">
+							<span class="wb-tab-glyph" aria-hidden="true">T</span>
+							<span class="wb-tab-label">Transform lab</span>
+							<span id="count-transforms" class="wb-count" hidden></span>
+						</button>
+						<button id="tab-entitlements" class="wb-tab" type="button" role="tab" data-tab="entitlements" aria-selected="false" aria-controls="panel-entitlements" tabindex="-1" title="Entitlements">
+							<span class="wb-tab-glyph" aria-hidden="true">E</span>
+							<span class="wb-tab-label">Entitlements</span>
+							<span id="count-entitlements" class="wb-count" hidden></span>
+						</button>
+						<button id="tab-campaigns" class="wb-tab" type="button" role="tab" data-tab="campaigns" aria-selected="false" aria-controls="panel-campaigns" tabindex="-1" title="Campaigns">
+							<span class="wb-tab-glyph" aria-hidden="true">C</span>
+							<span class="wb-tab-label">Campaigns</span>
+							<span id="count-campaigns" class="wb-count" hidden></span>
+						</button>
+					</div>
+					<button id="wb-side-toggle" class="wb-side-toggle" type="button" aria-expanded="true" aria-controls="wb-side-list">
+						<span aria-hidden="true">«</span>
+						<span class="wb-side-toggle-label">Collapse</span>
+					</button>
+				</nav>
+
+				<div class="wb-main">
+					<!-- ============================================================ 1. Migrate -->
+					<section id="panel-migrate" class="wb-ws" role="tabpanel" aria-labelledby="tab-migrate" tabindex="-1" hidden>
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<p class="wb-hint">Export from IdentityIQ with <code>export &lt;ObjectType&gt; "&lt;name&gt;"</code> or <code>export -clean all.xml</code>.</p>
+
+								<div id="drop" class="tool-drop" role="button" tabindex="0" aria-describedby="drop-help">
+									<span class="tool-drop-title">Drop .xml files here</span>
+									<span id="drop-help" class="tool-muted">or press Enter or Space to choose files</span>
+								</div>
+								<input id="file-input" type="file" accept=".xml,text/xml,application/xml" multiple hidden />
+								<p id="input-msg" class="tool-msg" role="status" aria-live="polite"></p>
+
+								<h3 class="tool-subhead">Loaded files</h3>
+								<ul id="file-list" class="tool-list" aria-label="Loaded files"></ul>
+
+								<div class="tool-field">
+									<label for="paste">Or paste XML</label>
+									<textarea id="paste" class="tool-input tool-code" rows="5" spellcheck="false" placeholder="<sailpoint>…</sailpoint>"></textarea>
+									<div class="tool-row">
+										<button id="paste-add" class="btn btn--ghost wb-btn" type="button">Add pasted XML</button>
+										<button id="clear" class="btn btn--ghost wb-btn" type="button">Clear</button>
+									</div>
+								</div>
+							</div>
+							<div class="wb-in-foot">
+								<button id="convert" class="btn btn--primary wb-btn" type="button" disabled>Convert</button>
+								<p id="convert-hint" class="tool-muted">Load at least one file to convert.</p>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<div class="wb-subtabs" role="tablist" aria-label="Migration output">
+									<button id="mig-tab-summary" class="wb-subtab" type="button" role="tab" data-sub="summary" aria-selected="true" aria-controls="mig-summary" tabindex="0">Summary</button>
+									<button id="mig-tab-objects" class="wb-subtab" type="button" role="tab" data-sub="objects" aria-selected="false" aria-controls="mig-objects" tabindex="-1">Objects</button>
+									<button id="mig-tab-files" class="wb-subtab" type="button" role="tab" data-sub="files" aria-selected="false" aria-controls="mig-files" tabindex="-1">Files</button>
+								</div>
+								<div class="wb-out-actions">
+									<button id="dl-zip" class="btn btn--primary wb-btn" type="button" disabled>Download all (.zip)</button>
+									<button id="dl-report" class="btn btn--ghost wb-btn" type="button" disabled>REPORT.md</button>
+									<button id="dl-deploy" class="btn btn--ghost wb-btn" type="button" disabled>deploy.mjs</button>
+								</div>
+							</div>
+
+							<div class="wb-out-body">
+								<div id="mig-empty" class="wb-empty">
+									<p>Drop an IIQ export here, or load the sample to see a conversion.</p>
+									<div class="tool-row">
+										<button id="mig-empty-sample" class="btn btn--ghost wb-btn" type="button">Load sample</button>
+									</div>
+								</div>
+
+								<div id="results" hidden>
+									<div id="mig-summary" role="tabpanel" aria-labelledby="mig-tab-summary">
+										<div id="banner" class="tool-alert tool-alert--error" role="alert" hidden></div>
+										<div id="summary" class="tool-summary" aria-live="polite"></div>
+									</div>
+
+									<div id="mig-objects" role="tabpanel" aria-labelledby="mig-tab-objects" hidden>
+										<div class="tool-filters">
+											<fieldset class="tool-chips">
+												<legend>Status</legend>
+												<div id="chips" class="tool-row"></div>
+											</fieldset>
+											<div class="tool-filter-row">
+												<div class="tool-field">
+													<label for="kind-filter">Kind</label>
+													<select id="kind-filter" class="tool-input"></select>
+												</div>
+												<div class="tool-field">
+													<label for="search">Search</label>
+													<input id="search" class="tool-input" type="search" placeholder="Name, kind or notes" autocomplete="off" />
+												</div>
+											</div>
+											<p id="filter-count" class="tool-muted" aria-live="polite"></p>
+										</div>
+										<div id="items" class="tool-items"></div>
+										<p id="no-match" class="tool-empty" hidden>No items match these filters.</p>
+									</div>
+
+									<div id="mig-files" class="wb-files" role="tabpanel" aria-labelledby="mig-tab-files" hidden>
+										<div class="tool-tree-wrap">
+											<nav id="tree" class="tool-tree" aria-label="Output files"></nav>
+										</div>
+										<div class="tool-viewer">
+											<div class="tool-viewer-bar">
+												<span id="viewer-path" class="tool-path">No file selected</span>
+												<span class="tool-viewer-actions">
+													<button id="copy" class="btn btn--ghost wb-btn" type="button" disabled>Copy</button>
+													<button id="dl-one" class="btn btn--ghost wb-btn" type="button" disabled>Download</button>
+												</span>
+											</div>
+											<pre id="viewer" class="tool-pre" tabindex="0" aria-label="File contents"></pre>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- ============================================================ 2. Gap analysis -->
+					<section id="panel-gaps" class="wb-ws" role="tabpanel" aria-labelledby="tab-gaps" tabindex="-1" hidden>
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<p class="wb-hint">Uses the last Migrate conversion, so the same input is analysed.</p>
+								<p id="gaps-source" class="tool-status"></p>
+								<div class="tool-row">
+									<button id="gaps-go" class="btn btn--ghost wb-btn" type="button">Go to Migrate</button>
+									<button id="gaps-sample" class="btn btn--ghost wb-btn" type="button">Load sample and analyse</button>
+								</div>
+							</div>
+							<div class="wb-in-foot">
+								<button id="gaps-run" class="btn btn--primary wb-btn" type="button">Analyse</button>
+								<p class="tool-muted">Ranks relative effort. Not a time estimate.</p>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Gap report</span>
+								<div class="wb-out-actions">
+									<button id="gaps-download" class="btn btn--primary wb-btn" type="button" disabled>Download gap report (.md)</button>
+								</div>
+							</div>
+							<div class="wb-out-body">
+								<div id="gaps-empty" class="wb-empty">
+									<p>Nothing has been converted yet. Convert an export on Migrate, or load the sample and analyse it here.</p>
+									<div class="tool-row">
+										<button id="gaps-empty-sample" class="btn btn--ghost wb-btn" type="button">Load sample and analyse</button>
+									</div>
+								</div>
+								<p id="gaps-error" class="tool-alert tool-alert--error" role="alert" hidden></p>
+								<div id="gaps-body" hidden>
+									<div id="gaps-summary" class="tool-gaps-summary" aria-live="polite"></div>
+									<h3 class="tool-subhead">Weights</h3>
+									<div class="tool-table-wrap">
+										<table id="gaps-weights" class="tool-table"></table>
+									</div>
+									<h3 class="tool-subhead">Findings by risk</h3>
+									<div id="gaps-findings"></div>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- ============================================================ 3. Transform lab -->
+					<section id="panel-transforms" class="wb-ws" role="tabpanel" aria-labelledby="tab-transforms" tabindex="-1" hidden>
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<p class="wb-hint">Simulates a subset of ISC transform types. Confirm with ISC's transform preview.</p>
+
+								<div class="tool-field">
+									<label for="tx-select">Load a transform from the migration result</label>
+									<select id="tx-select" class="tool-input"></select>
+									<span id="tx-select-hint" class="tool-hint"></span>
+								</div>
+
+								<div class="tool-field">
+									<label for="tx-transform">Transform JSON</label>
+									<textarea id="tx-transform" class="tool-input tool-code" rows="9" spellcheck="false" aria-describedby="tx-err-transform"></textarea>
+									<p id="tx-err-transform" class="tool-field-error" aria-live="polite" hidden></p>
+								</div>
+
+								<div class="tool-field">
+									<label for="tx-identity">Sample identity attributes (JSON object)</label>
+									<textarea id="tx-identity" class="tool-input tool-code" rows="3" spellcheck="false" aria-describedby="tx-err-identity"></textarea>
+									<p id="tx-err-identity" class="tool-field-error" aria-live="polite" hidden></p>
+								</div>
+
+								<div class="tool-field">
+									<label for="tx-accounts">Sample accounts (JSON: source name to attribute object or array of objects)</label>
+									<textarea id="tx-accounts" class="tool-input tool-code" rows="4" spellcheck="false" aria-describedby="tx-err-accounts"></textarea>
+									<p id="tx-err-accounts" class="tool-field-error" aria-live="polite" hidden></p>
+								</div>
+
+								<div class="tool-field">
+									<label for="tx-library">Library (JSON object of transform name to transform, used by <code>reference</code>)</label>
+									<textarea id="tx-library" class="tool-input tool-code" rows="3" spellcheck="false" aria-describedby="tx-err-library"></textarea>
+									<p id="tx-err-library" class="tool-field-error" aria-live="polite" hidden></p>
+								</div>
+							</div>
+							<div class="wb-in-foot">
+								<button id="tx-run" class="btn btn--primary wb-btn" type="button">Run</button>
+								<p id="tx-status" class="tool-status" aria-live="polite"></p>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Output</span>
+								<div class="wb-out-actions">
+									<span id="tx-copy-slot"></span>
+								</div>
+							</div>
+							<div class="wb-out-body">
+								<p id="tx-error" class="tool-alert tool-alert--error" role="alert" hidden></p>
+
+								<h3 class="tool-subhead">Output</h3>
+								<pre id="tx-output" class="tool-output-big" tabindex="0" aria-label="Simulated output">No run yet. Press Run to simulate the transform.</pre>
+
+								<h3 class="tool-subhead">Trace</h3>
+								<div id="tx-trace" class="tool-trace-wrap"></div>
+
+								<h3 class="tool-subhead">Warnings</h3>
+								<div id="tx-warnings" class="tool-muted"></div>
+
+								<h3 class="tool-subhead">Test cases</h3>
+								<p class="tool-muted">Blank identity or accounts cells use the sample values from the input. Expected output is compared as text.</p>
+								<div class="tool-table-wrap">
+									<table class="tool-table tool-cases">
+										<caption class="tool-sr-only">Transform test cases</caption>
+										<thead>
+											<tr>
+												<th scope="col">Name</th>
+												<th scope="col">Identity JSON</th>
+												<th scope="col">Accounts JSON</th>
+												<th scope="col">Expected output</th>
+												<th scope="col">Result</th>
+												<th scope="col"><span class="tool-sr-only">Actions</span></th>
+											</tr>
+										</thead>
+										<tbody id="tx-cases-body"></tbody>
+									</table>
+								</div>
+								<div class="tool-row tool-out-actions">
+									<button id="tx-add" class="btn btn--ghost wb-btn" type="button">Add case</button>
+									<button id="tx-run-all" class="btn btn--ghost wb-btn" type="button">Run all</button>
+									<p id="tx-cases-status" class="tool-status" aria-live="polite"></p>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- ============================================================ 4. Entitlements -->
+					<section id="panel-entitlements" class="wb-ws" role="tabpanel" aria-labelledby="tab-entitlements" tabindex="-1" hidden>
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<p class="wb-hint">Owners, descriptions, requestable and privileged, one CSV row per entitlement. Columns are in Help.</p>
+								<div id="en-drop" class="tool-drop" role="button" tabindex="0" aria-describedby="en-drop-help">
+									<span class="tool-drop-title">Drop a .csv file here</span>
+									<span id="en-drop-help" class="tool-muted">or press Enter or Space to choose a file</span>
+								</div>
+								<input id="en-file" type="file" accept=".csv,text/csv" hidden />
+								<p id="en-msg" class="tool-msg" role="status" aria-live="polite"></p>
+
+								<div class="tool-field">
+									<label for="en-csv">Or paste CSV</label>
+									<textarea id="en-csv" class="tool-input tool-code" rows="9" spellcheck="false" placeholder="source,entitlement,owner,description,requestable,privileged"></textarea>
+								</div>
+								<div class="tool-row">
+									<button id="en-example" class="btn btn--ghost wb-btn" type="button">Load example</button>
+									<button id="en-template" class="btn btn--ghost wb-btn" type="button">Download CSV template</button>
+								</div>
+
+								<div class="tool-field">
+									<label for="en-owner-key">Look up owners by</label>
+									<select id="en-owner-key" class="tool-input">
+										<option value="email">Email (default)</option>
+										<option value="uid">uid</option>
+										<option value="name">Name</option>
+									</select>
+								</div>
+								<p id="en-input-error" class="tool-alert tool-alert--error" role="alert" hidden></p>
+							</div>
+							<div class="wb-in-foot">
+								<button id="en-build" class="btn btn--primary wb-btn" type="button">Build plan</button>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Plan</span>
+								<div class="wb-out-actions">
+									<button id="en-kit" class="btn btn--primary wb-btn" type="button" disabled>Download kit (.zip)</button>
+								</div>
+							</div>
+							<div class="wb-out-body">
+								<div id="en-empty" class="wb-empty">
+									<p>Drop a CSV, paste one, or load the example, then build the plan.</p>
+									<div class="tool-row">
+										<button id="en-empty-example" class="btn btn--ghost wb-btn" type="button">Load example</button>
+									</div>
+								</div>
+								<div id="en-results" hidden>
+									<div id="en-summary" class="tool-summary" aria-live="polite"></div>
+									<h3 class="tool-subhead">Problems</h3>
+									<div id="en-problems"></div>
+									<h3 class="tool-subhead">Planned changes</h3>
+									<p class="tool-muted">Only valid rows are listed. Each operation is a JSON Patch step.</p>
+									<div class="tool-table-wrap">
+										<table id="en-preview" class="tool-table"></table>
+									</div>
+									<h3 class="tool-subhead">Kit files</h3>
+									<ul id="en-files" class="tool-list" aria-label="Kit files"></ul>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- ============================================================ 5. Campaigns -->
+					<section id="panel-campaigns" class="wb-ws" role="tabpanel" aria-labelledby="tab-campaigns" tabindex="-1" hidden>
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<p class="wb-hint">One identity per row, with an id or uid column. Set the limit and grouping below.</p>
+								<div id="cp-drop" class="tool-drop" role="button" tabindex="0" aria-describedby="cp-drop-help">
+									<span class="tool-drop-title">Drop a .csv file here</span>
+									<span id="cp-drop-help" class="tool-muted">or press Enter or Space to choose a file</span>
+								</div>
+								<input id="cp-file" type="file" accept=".csv,text/csv" hidden />
+								<p id="cp-msg" class="tool-msg" role="status" aria-live="polite"></p>
+
+								<div class="tool-field">
+									<label for="cp-csv">Or paste CSV</label>
+									<textarea id="cp-csv" class="tool-input tool-code" rows="5" spellcheck="false" placeholder="uid,department,region,items"></textarea>
+								</div>
+								<div class="tool-row">
+									<button id="cp-example" class="btn btn--ghost wb-btn" type="button">Load example</button>
+								</div>
+
+								<form id="cp-form" class="tool-form" autocomplete="off" onsubmit="return false">
+									<fieldset class="tool-checks-wrap">
+										<legend class="tool-legend-label">Group by</legend>
+										<p id="cp-groups-empty" class="tool-hint">Load a CSV to choose columns.</p>
+										<div id="cp-groups" class="tool-checks"></div>
+									</fieldset>
+
+									<div class="tool-field">
+										<label for="cp-weight">Weight column</label>
+										<select id="cp-weight" class="tool-input"></select>
+										<span class="tool-hint">Optional numeric column counted against the limit instead of 1 per identity.</span>
+									</div>
+
+									<div class="tool-field">
+										<label for="cp-max">Max per campaign</label>
+										<input id="cp-max" class="tool-input" type="number" min="1" step="1" value="5000" />
+									</div>
+
+									<div class="tool-field">
+										<label for="cp-prefix">Name prefix</label>
+										<input id="cp-prefix" class="tool-input" type="text" value="Certification" />
+									</div>
+
+									<div class="tool-field">
+										<label for="cp-desc">Description</label>
+										<input id="cp-desc" class="tool-input" type="text" />
+									</div>
+
+									<div class="tool-field">
+										<label for="cp-deadline">Deadline</label>
+										<input id="cp-deadline" class="tool-input" type="datetime-local" />
+										<span class="tool-hint">Blank leaves a placeholder in the plan.</span>
+									</div>
+
+									<div class="tool-field">
+										<label for="cp-type">Campaign type</label>
+										<select id="cp-type" class="tool-input">
+											<option value="IDENTITY">IDENTITY</option>
+											<option value="ACCESS">ACCESS</option>
+										</select>
+									</div>
+
+									<div class="tool-field">
+										<label for="cp-constraints">Access constraints (JSON array, ACCESS only)</label>
+										<textarea id="cp-constraints" class="tool-input tool-code" rows="3" spellcheck="false" aria-describedby="cp-err-constraints"></textarea>
+										<p id="cp-err-constraints" class="tool-field-error" aria-live="polite" hidden></p>
+									</div>
+
+									<div class="tool-field">
+										<label for="cp-reviewer-name">Reviewer name</label>
+										<input id="cp-reviewer-name" class="tool-input" type="text" />
+									</div>
+
+									<div class="tool-field">
+										<label for="cp-reviewer-type">Reviewer type</label>
+										<select id="cp-reviewer-type" class="tool-input">
+											<option value="IDENTITY">Identity</option>
+											<option value="GOVERNANCE_GROUP">Governance group</option>
+										</select>
+									</div>
+								</form>
+							</div>
+							<div class="wb-in-foot">
+								<button id="cp-split" class="btn btn--primary wb-btn" type="button">Split</button>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Campaigns</span>
+								<div class="wb-out-actions">
+									<button id="cp-kit" class="btn btn--primary wb-btn" type="button" disabled>Download kit (.zip)</button>
+									<button id="cp-plan" class="btn btn--ghost wb-btn" type="button" disabled>plan.json</button>
+								</div>
+							</div>
+							<div class="wb-out-body">
+								<div id="cp-empty" class="wb-empty">
+									<p>Load an identity CSV, choose the grouping and limit, then press Split.</p>
+									<div class="tool-row">
+										<button id="cp-empty-example" class="btn btn--ghost wb-btn" type="button">Load example</button>
+									</div>
+								</div>
+								<div id="cp-results" hidden>
+									<div id="cp-summary" class="tool-summary" aria-live="polite"></div>
+									<h3 class="tool-subhead">Problems</h3>
+									<div id="cp-problems"></div>
+									<h3 class="tool-subhead">Campaigns</h3>
+									<div class="tool-table-wrap">
+										<table id="cp-table" class="tool-table"></table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<footer class="wb-status">
+				<span id="wb-status-msg" aria-live="polite"></span>
+				<span class="wb-status-keys">Ctrl+Enter runs · ? for help</span>
+			</footer>
+
+			<div id="wb-settings" class="wb-pop" role="dialog" aria-labelledby="wb-settings-title" hidden>
+				<div class="wb-pop-head">
+					<h2 id="wb-settings-title" class="wb-pop-title">Settings</h2>
+					<button id="wb-settings-close" class="btn btn--ghost wb-btn" type="button">Close</button>
+				</div>
+				<form id="options" class="tool-form" autocomplete="off" onsubmit="return false">
+					<div class="tool-field">
+						<label for="opt-owner">Default owner</label>
+						<input id="opt-owner" class="tool-input" type="text" />
+						<span class="tool-hint">ISC identity name, used when an object has no owner.</span>
+					</div>
+					<div class="tool-field">
+						<label for="opt-cluster">Cluster id</label>
+						<input id="opt-cluster" class="tool-input" type="text" />
+						<span class="tool-hint">VA cluster for sources.</span>
+					</div>
+					<div class="tool-field">
+						<label for="opt-prefix">Name prefix</label>
+						<input id="opt-prefix" class="tool-input" type="text" />
+					</div>
+					<div class="tool-field">
+						<label for="opt-tenant">Tenant</label>
+						<input id="opt-tenant" class="tool-input" type="text" />
+						<span class="tool-hint">Informational, written into the manifest.</span>
+					</div>
+				</form>
+			</div>
+
+			<aside id="wb-help" class="wb-drawer" role="dialog" aria-labelledby="wb-help-title" hidden>
+				<div class="wb-pop-head">
+					<h2 id="wb-help-title" class="wb-pop-title">Help</h2>
+					<button id="wb-help-close" class="btn btn--ghost wb-btn" type="button">Close</button>
+				</div>
+				<div class="wb-drawer-body">
+					<section class="wb-help-sec" data-help="migrate" aria-labelledby="help-migrate">
+						<h3 id="help-migrate">Migrate</h3>
+						<p>Converts an IdentityIQ XML export into ISC-ready JSON: sources, schemas, identity profiles, transforms, access profiles, roles, SOD policies and schedules. It flags what needs a human and generates a deploy script. The result is shared with Gap analysis and Transform lab.</p>
+						<p class="tool-note"><strong>Cannot do:</strong> move workflows, forms, certifications, email templates, lifecycle triggers or quick links. They are reported as needing a human.</p>
+						<h4>How to deploy</h4>
+						<ol>
+							<li>In ISC, create a personal access token (or an API client) with the admin scopes needed to create sources, profiles and roles.</li>
+							<li>Set <code>ISC_BASE_URL</code>, <code>ISC_CLIENT_ID</code> and <code>ISC_CLIENT_SECRET</code> in your shell.</li>
+							<li>Unzip the output and open a terminal in that folder.</li>
+							<li>Run <code>node deploy.mjs</code> for a dry run. It lists what would be created and changes nothing.</li>
+							<li>Run <code>node deploy.mjs --apply --stage 1</code> to create transforms, sources, schemas, identity attributes and profiles.</li>
+							<li>Aggregate the new sources in ISC so their entitlements exist.</li>
+							<li>Run <code>node deploy.mjs --apply --stage 2</code> to create access profiles, roles and SOD policies.</li>
+							<li>Provide secrets through the <code>SECRET__*</code> environment variables listed in the report, then re-run the affected stage.</li>
+						</ol>
+						<h4>What it covers and what it does not</h4>
+						<p><strong>Converted automatically</strong></p>
+						<ul>
+							<li>Applications to sources: connector mapping, schemas, correlation, manager correlation, provisioning forms to policies.</li>
+							<li>Identity attribute configuration to identity attributes and identity profiles.</li>
+							<li>Simple BeanShell rules to transforms.</li>
+							<li>IT roles to access profiles.</li>
+							<li>Business roles to roles with membership criteria.</li>
+							<li>SOD policies.</li>
+							<li>Aggregation schedules.</li>
+						</ul>
+						<p><strong>Needs a human</strong></p>
+						<ul>
+							<li>Complex BeanShell rules. Cloud and connector rules need SailPoint review.</li>
+							<li>Workflows (skeleton only), forms, certifications, email templates, lifecycle triggers and quick links.</li>
+							<li>Secrets.</li>
+							<li>Connector attribute names for less common connectors.</li>
+						</ul>
+						<p><strong>No ISC equivalent</strong></p>
+						<ul>
+							<li>Identity refresh options.</li>
+							<li>Activity monitoring.</li>
+							<li>Rule-based owners.</li>
+							<li>Role hierarchy (flattened).</li>
+							<li>Permitted roles.</li>
+						</ul>
+						<p><strong>Caveat:</strong> the generated JSON targets the public ISC v3 and beta APIs as documented. Verify it against your tenant before production use.</p>
+					</section>
+
+					<section class="wb-help-sec" data-help="gaps" aria-labelledby="help-gaps">
+						<h3 id="help-gaps">Gap analysis</h3>
+						<p>Scores the last migration by how hard each part is to move to ISC, then lists the objects behind every finding. The weights are shown so the score can be argued with.</p>
+						<p class="tool-note"><strong>Cannot do:</strong> estimate time. The score ranks relative effort. It only sees what is in the export, so plugins, activity and manual processes are not measured.</p>
+					</section>
+
+					<section class="wb-help-sec" data-help="transforms" aria-labelledby="help-transforms">
+						<h3 id="help-transforms">Transform lab</h3>
+						<p>Runs an ISC transform in the browser against sample identity and account data. The trace shows every step. Test cases check expected outputs.</p>
+						<p class="tool-note"><strong>Cannot do:</strong> run ISC's own transform engine. This is a simulation of a subset of ISC transform types. Types it does not model are reported, not guessed. Confirm anything that matters with ISC's own transform preview.</p>
+						<details class="tool-details">
+							<summary>Which transform types are simulated</summary>
+							<div id="tx-types"></div>
+						</details>
+					</section>
+
+					<section class="wb-help-sec" data-help="entitlements" aria-labelledby="help-entitlements">
+						<h3 id="help-entitlements">Entitlements</h3>
+						<p>Plans bulk edits to entitlement owners, descriptions, requestable and privileged flags from a CSV. Every row is checked. The kit is a plan plus a small script you run against your own tenant.</p>
+						<p class="tool-note"><strong>Cannot do:</strong> call ISC from the browser or change anything itself. ISC's bulk endpoint only changes requestable and privileged (up to 50 ids per call), so owners and descriptions are patched one entitlement at a time.</p>
+						<dl id="en-columns" class="tool-cols"></dl>
+						<ul class="tool-rules">
+							<li>Two rows that name the same entitlement are rejected.</li>
+							<li>requestable and privileged accept true or false (also yes/no and 1/0). A blank cell leaves the value alone.</li>
+							<li>Owners are looked up in ISC by the key chosen in the input pane. The lookup must match exactly one identity.</li>
+							<li>Descriptions are written one at a time. Run the kit with <code>--protect</code> to mark them as manually updated so aggregation keeps them.</li>
+						</ul>
+						<p><strong>Run the kit</strong></p>
+						<ol>
+							<li>Unzip the kit and open a terminal in the <code>entitlements</code> folder.</li>
+							<li>Set <code>ISC_BASE_URL</code> (for example <code>https://TENANT.api.identitynow.com</code>), <code>ISC_CLIENT_ID</code> and <code>ISC_CLIENT_SECRET</code>.</li>
+							<li>Run <code>node entitlements.mjs</code> for a dry run. It prints each patch and changes nothing.</li>
+							<li>Run <code>node entitlements.mjs --apply</code> to resolve ids and send the patches.</li>
+							<li>Optional: add <code>--protect</code> to mark descriptions as manually updated.</li>
+						</ol>
+					</section>
+
+					<section class="wb-help-sec" data-help="campaigns" aria-labelledby="help-campaigns">
+						<h3 id="help-campaigns">Campaigns</h3>
+						<p>Splits an identity list into certification campaigns that stay under a size limit. Each identity appears in exactly one campaign. Group columns keep related identities together, for example by department.</p>
+						<p class="tool-note"><strong>Cannot do:</strong> know ISC's real limit. Users report a search-campaign cap of about 10,000 items, so set your own limit. The kit creates campaigns but does not activate them, and it does not check that reviewers exist until you run it.</p>
+						<p><strong>Run the kit</strong></p>
+						<ol>
+							<li>Unzip the kit and open a terminal in the <code>campaigns</code> folder.</li>
+							<li>Set <code>ISC_BASE_URL</code>, <code>ISC_CLIENT_ID</code> and <code>ISC_CLIENT_SECRET</code>.</li>
+							<li>Run <code>node campaigns.mjs</code> for a dry run.</li>
+							<li>Run <code>node campaigns.mjs --apply</code> to create the campaigns. They are not activated, so review them in ISC first.</li>
+						</ol>
+					</section>
+
+					<section class="wb-help-sec" aria-labelledby="help-keys">
+						<h3 id="help-keys">Keyboard</h3>
+						<ul>
+							<li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> (or <kbd>⌘</kbd>+<kbd>Enter</kbd>) runs the current module's main action.</li>
+							<li><kbd>?</kbd> opens this help when you are not typing in a field.</li>
+							<li><kbd>Esc</kbd> closes Help and Settings.</li>
+							<li>Arrow keys move between modules in the sidebar and between sub-tabs.</li>
+						</ul>
+					</section>
+				</div>
+			</aside>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../index.html">Home</a>
+				<a href="../index.html">Tools</a>
+				<a href="../../articles/index.html">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script type="module" src="ui.js"></script>
+	</body>
+</html>

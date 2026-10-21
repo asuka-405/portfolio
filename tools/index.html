@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Small tools that run in your browser: a SailPoint ISC workbench, an Arch install generator, JSON and XML diff, a regex flavor checker, an LDAP toolkit and a cron explainer."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Tools · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../articles/index.html">Writing</a>
+					<a href="../works/index.html">Works</a>
+					<a href="../docs/index.html">Docs</a>
+					<a href="../tools/index.html">Tools</a>
+					<a href="index.html">Tools</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="doc-hero">
+				<div class="hero-ambient" aria-hidden="true"><div class="hero-orbit"></div></div>
+				<a class="back-link reveal" href="../index.html">← Home</a>
+				<p class="doc-status reveal" style="--d: 0.04s">Tools · In-browser</p>
+				<h1 class="doc-title reveal" style="--d: 0.08s">
+					Small <span class="text-accent">tools</span>
+				</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">
+					Utilities I built for real work. They run entirely in your
+					browser, so nothing you paste or drop in is uploaded.
+				</p>
+			</section>
+
+			<section class="section" id="tools">
+				<div class="project-list">
+					<article class="project-card reveal" style="--d: 0.09s">
+						<p class="project-badge">Linux · Arch</p>
+						<h3><a href="arch-installer/index.html">Arch install script and fstab generator</a></h3>
+						<p>
+							Pick disk layout, filesystem (ext4, btrfs with subvolumes, xfs), LUKS, swap, bootloader and packages, and get a reviewed install script plus a validated fstab builder with option explanations. The script asks you to retype the disk path before it erases anything.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">Script generator · fstab</span>
+							<a class="project-link project-link--case" href="arch-installer/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.14s">
+						<p class="project-badge">Data · Config</p>
+						<h3><a href="diff-tool/index.html">JSON and XML diff</a></h3>
+						<p>
+							A semantic diff for config exports. JSON arrays match by key, position or as sets; XML elements match by tag and name, so reordering is not a change. Includes a SailPoint IdentityIQ preset that ignores volatile attributes, and a report download.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">Diff · JSON Patch</span>
+							<a class="project-link project-link--case" href="diff-tool/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.19s">
+						<p class="project-badge">Dev · Regex</p>
+						<h3><a href="regex-tester/index.html">Regex tester with flavor warnings</a></h3>
+						<p>
+							Run a pattern in JavaScript and see, statically, where it breaks or changes meaning in Java and Go (RE2): lookbehind, backreferences, named groups, possessive quantifiers, replacement syntax and catastrophic backtracking risk. Source literals for all three.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">Regex · Java · Go · JS</span>
+							<a class="project-link project-link--case" href="regex-tester/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.24s">
+						<p class="project-badge">IAM · Directory</p>
+						<h3><a href="ldap-toolkit/index.html">LDAP filter and DN toolkit</a></h3>
+						<p>
+							Parse, explain and escape LDAP filters and DNs, build common Active Directory filters from recipes, decode userAccountControl, and convert FILETIME and GeneralizedTime values.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">LDAP · Active Directory</span>
+							<a class="project-link project-link--case" href="ldap-toolkit/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.29s">
+						<p class="project-badge">Ops · Scheduling</p>
+						<h3><a href="cron-explainer/index.html">Quartz and cron explainer</a></h3>
+						<p>
+							Paste a Unix or Quartz cron expression and get plain English, the next run times in any time zone, and a conversion between the two syntaxes, with warnings where they cannot match.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">Cron · Quartz</span>
+							<a class="project-link project-link--case" href="cron-explainer/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+
+					<article class="project-card reveal" style="--d: 0.34s">
+						<p class="project-badge">SailPoint · ISC</p>
+						<h3><a href="sailpoint-workbench/index.html">ISC workbench</a></h3>
+						<p>
+							One tool, five jobs. <strong>Migrate</strong> converts an
+							IdentityIQ XML export into ISC sources, identity profiles,
+							transforms, access profiles, roles and SOD policies, with a
+							staged deploy script. <strong>Gap analysis</strong> scores
+							how hard the migration will be. <strong>Transform lab</strong>
+							runs transforms offline with a trace. <strong>Entitlements</strong>
+							bulk-edits owners and descriptions from a CSV.
+							<strong>Campaigns</strong> splits certifications under the
+							size limit.
+						</p>
+						<div class="project-foot">
+							<span class="project-tag">Converter · Simulator · Scripts</span>
+							<a class="project-link project-link--case" href="sailpoint-workbench/index.html"
+								>Open tool →</a
+							>
+						</div>
+					</article>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../index.html">Home</a>
+				<a href="../articles/index.html">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+	</body>
+</html>

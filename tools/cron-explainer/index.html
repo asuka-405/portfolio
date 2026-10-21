@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Browser-only cron explainer: reads Unix 5-field and Quartz 6/7-field expressions, describes them in plain English, lists the next runs in any time zone and converts between the two syntaxes. Nothing is uploaded."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Cron explainer · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="stylesheet" href="../shared/shell.css" />
+		<link rel="stylesheet" href="tool.css" />
+	</head>
+	<body class="tool-page">
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../index.html">Tools</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main class="tool wb" id="cron">
+			<header class="wb-top">
+				<div class="wb-brand">
+					<a class="wb-back" href="../index.html">← Tools</a>
+					<h1 class="wb-title">Cron <span class="text-accent">explainer</span></h1>
+					<span class="wb-badge">Runs in your browser, nothing uploaded</span>
+				</div>
+				<div class="wb-top-actions">
+					<button id="cron-help-btn" class="btn btn--ghost wb-btn" type="button" aria-haspopup="dialog" aria-controls="cron-help" aria-expanded="false">Help</button>
+				</div>
+			</header>
+
+			<div class="wb-body">
+				<div class="wb-main">
+					<section class="wb-ws" aria-label="Cron explainer workspace">
+						<!-- ============================================================ Input -->
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<div class="tool-field">
+									<label for="expr">Cron expression</label>
+									<input id="expr" class="tool-input cron-expr" type="text" autofocus autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="*/15 * * * *" aria-describedby="expr-hint" />
+									<p id="expr-hint" class="tool-hint">Unix: 5 fields. Quartz: 6 or 7 fields, with an optional leading seconds field. Macros such as @daily also work.</p>
+								</div>
+
+								<fieldset class="cron-fieldset">
+									<legend>Flavor</legend>
+									<div class="cron-seg-group">
+										<label class="cron-seg">
+											<input class="cron-seg-input tool-sr-only" type="radio" name="flavor" value="auto" checked />
+											<span>Auto</span>
+										</label>
+										<label class="cron-seg">
+											<input class="cron-seg-input tool-sr-only" type="radio" name="flavor" value="unix" />
+											<span>Unix 5-field</span>
+										</label>
+										<label class="cron-seg">
+											<input class="cron-seg-input tool-sr-only" type="radio" name="flavor" value="quartz" />
+											<span>Quartz 6/7-field</span>
+										</label>
+									</div>
+								</fieldset>
+
+								<div class="cron-grid">
+									<div class="tool-field">
+										<label for="zone">Time zone</label>
+										<select id="zone" class="tool-input"></select>
+									</div>
+									<div class="tool-field">
+										<label for="count">Show next</label>
+										<select id="count" class="tool-input">
+											<option value="5">5 runs</option>
+											<option value="10" selected>10 runs</option>
+											<option value="20">20 runs</option>
+										</select>
+									</div>
+									<div class="tool-field">
+										<label for="from">Start from (your local time)</label>
+										<div class="cron-from-row">
+											<input id="from" class="tool-input" type="datetime-local" />
+											<button id="from-clear" class="btn btn--ghost wb-btn" type="button">Now</button>
+										</div>
+										<p class="tool-hint">Blank means the current time.</p>
+									</div>
+								</div>
+
+								<div class="tool-field">
+									<span class="cron-label">Examples</span>
+									<div id="examples" class="cron-examples" role="group" aria-label="Example expressions"></div>
+								</div>
+							</div>
+							<div class="wb-in-foot">
+								<button id="refresh" class="btn btn--primary wb-btn" type="button">Explain</button>
+								<p class="tool-muted">Updates as you type. Ctrl+Enter also refreshes.</p>
+							</div>
+						</div>
+
+						<!-- ============================================================ Output -->
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<p class="wb-pane-title">Explanation</p>
+								<p id="zone-note" class="tool-muted"></p>
+							</div>
+
+							<div id="result" class="wb-out-body" aria-live="polite">
+								<div id="empty" class="wb-empty">
+									<p>Type a cron expression, or pick an example, to see what it means and when it runs.</p>
+								</div>
+
+								<div id="output" hidden>
+									<div id="alert" class="tool-alert" role="alert" hidden></div>
+
+									<p id="desc" class="cron-desc"></p>
+									<div id="chips" class="cron-chips"></div>
+
+									<section class="cron-section" aria-labelledby="fields-title">
+										<h2 id="fields-title" class="tool-subhead">Fields</h2>
+										<div class="tool-table-wrap">
+											<table class="tool-table cron-fields">
+												<caption class="tool-sr-only">Fields parsed from the expression</caption>
+												<thead>
+													<tr>
+														<th scope="col">Field</th>
+														<th scope="col">Token</th>
+														<th scope="col">Status</th>
+													</tr>
+												</thead>
+												<tbody id="fields-body"></tbody>
+											</table>
+										</div>
+									</section>
+
+									<section class="cron-section" aria-labelledby="runs-title">
+										<h2 id="runs-title" class="tool-subhead">Next runs</h2>
+										<ol id="runs" class="cron-runs"></ol>
+										<p id="runs-none" class="tool-muted" hidden>No upcoming run was found in the search window.</p>
+									</section>
+
+									<section id="warnings-sec" class="cron-section" aria-labelledby="warnings-title" hidden>
+										<h2 id="warnings-title" class="tool-subhead">Warnings</h2>
+										<ul id="warnings" class="cron-list"></ul>
+									</section>
+
+									<section id="convert-sec" class="cron-section" aria-labelledby="convert-title" hidden>
+										<h2 id="convert-title" class="tool-subhead">Convert</h2>
+										<div id="convert-body"></div>
+									</section>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<footer class="wb-status">
+				<span id="wb-status-msg" aria-live="polite"></span>
+				<span class="wb-status-keys">Ctrl+Enter refreshes · ? for help</span>
+			</footer>
+
+			<aside id="cron-help" class="wb-drawer" role="dialog" aria-labelledby="cron-help-title" hidden>
+				<div class="wb-pop-head">
+					<h2 id="cron-help-title" class="wb-pop-title">Help</h2>
+					<button id="cron-help-close" class="btn btn--ghost wb-btn" type="button">Close</button>
+				</div>
+				<div class="wb-drawer-body">
+					<section class="wb-help-sec">
+						<h3>Syntax</h3>
+						<p>Paste a cron expression. The explanation, the next runs and the conversion update as you type.</p>
+
+						<h4>Unix (5 fields)</h4>
+						<div class="tool-table-wrap">
+							<table class="tool-table">
+								<thead>
+									<tr><th scope="col">Field</th><th scope="col">Range</th><th scope="col">Names</th></tr>
+								</thead>
+								<tbody>
+									<tr><th scope="row">Minute</th><td>0-59</td><td></td></tr>
+									<tr><th scope="row">Hour</th><td>0-23</td><td></td></tr>
+									<tr><th scope="row">Day of month</th><td>1-31</td><td></td></tr>
+									<tr><th scope="row">Month</th><td>1-12</td><td>JAN-DEC</td></tr>
+									<tr><th scope="row">Day of week</th><td>0-7 (0 and 7 are Sunday)</td><td>SUN-SAT</td></tr>
+								</tbody>
+							</table>
+						</div>
+						<p>Seconds are implied as 0. When both day-of-month and day-of-week are restricted, Unix runs when either one matches.</p>
+
+						<h4>Quartz (6 or 7 fields)</h4>
+						<div class="tool-table-wrap">
+							<table class="tool-table">
+								<thead>
+									<tr><th scope="col">Field</th><th scope="col">Range</th><th scope="col">Names and extras</th></tr>
+								</thead>
+								<tbody>
+									<tr><th scope="row">Second</th><td>0-59</td><td></td></tr>
+									<tr><th scope="row">Minute</th><td>0-59</td><td></td></tr>
+									<tr><th scope="row">Hour</th><td>0-23</td><td></td></tr>
+									<tr><th scope="row">Day of month</th><td>1-31</td><td>L, LW, L-n, nW</td></tr>
+									<tr><th scope="row">Month</th><td>1-12</td><td>JAN-DEC</td></tr>
+									<tr><th scope="row">Day of week</th><td>1-7 (1 = Sunday, 7 = Saturday)</td><td>SUN-SAT, nL, n#k</td></tr>
+									<tr><th scope="row">Year (optional)</th><td>1970-2099</td><td></td></tr>
+								</tbody>
+							</table>
+						</div>
+						<p>Quartz needs <code>?</code> in exactly one of day-of-month and day-of-week.</p>
+
+						<h4>Special characters</h4>
+						<div class="tool-table-wrap">
+							<table class="tool-table">
+								<thead>
+									<tr><th scope="col">Char</th><th scope="col">Meaning</th><th scope="col">Example</th></tr>
+								</thead>
+								<tbody>
+									<tr><td><code>*</code></td><td>Every value in the field</td><td><code>*/15</code> every 15 units</td></tr>
+									<tr><td><code>,</code></td><td>List of values</td><td><code>1,15</code></td></tr>
+									<tr><td><code>-</code></td><td>Range</td><td><code>9-17</code></td></tr>
+									<tr><td><code>/</code></td><td>Step</td><td><code>0/10</code> from 0, every 10</td></tr>
+									<tr><td><code>?</code></td><td>No specific value (Quartz day fields only)</td><td><code>0 0 2 * * ?</code></td></tr>
+									<tr><td><code>L</code></td><td>Last day of month, or last weekday of the month</td><td><code>L</code>, <code>6L</code> (last Friday)</td></tr>
+									<tr><td><code>W</code></td><td>Nearest weekday to a day</td><td><code>15W</code></td></tr>
+									<tr><td><code>#</code></td><td>Nth weekday of the month</td><td><code>2#2</code> (second Monday)</td></tr>
+								</tbody>
+							</table>
+						</div>
+						<p>Day-of-week numbers differ. Quartz uses 1-7 with 1 = Sunday. Unix uses 0-6, or 7 for Sunday.</p>
+					</section>
+
+					<section class="wb-help-sec">
+						<h3>Times and clock changes</h3>
+						<p>Times are computed in the zone you pick. Clock changes: a time that does not exist is skipped, and an ambiguous time is shown once.</p>
+						<p>Start from uses your local clock. Blank means now.</p>
+					</section>
+
+					<section class="wb-help-sec">
+						<h3>Keys</h3>
+						<ul>
+							<li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> (or <kbd>⌘</kbd>+<kbd>Enter</kbd>) refreshes the result.</li>
+							<li><kbd>?</kbd> opens this help when you are not typing in a field.</li>
+							<li><kbd>Esc</kbd> closes this help.</li>
+						</ul>
+					</section>
+				</div>
+			</aside>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../index.html">Home</a>
+				<a href="../index.html">Tools</a>
+				<a href="../../articles/index.html">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script type="module" src="ui.js"></script>
+	</body>
+</html>

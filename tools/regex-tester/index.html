@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Browser regex tester: runs JavaScript patterns in a worker and warns where Java and Go (RE2) read the same pattern differently. Nothing is uploaded."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Regex tester · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="stylesheet" href="../shared/shell.css" />
+		<link rel="stylesheet" href="tool.css" />
+	</head>
+	<body class="tool-page">
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../index.html">Tools</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main class="tool wb" id="wb">
+			<header class="wb-top">
+				<div class="wb-brand">
+					<a class="wb-back" href="../index.html">← Tools</a>
+					<h1 class="wb-title">Regex <span class="text-accent">tester</span></h1>
+					<span class="wb-badge">Runs in your browser, nothing uploaded</span>
+				</div>
+				<div class="wb-top-actions">
+					<button id="rx-help-btn" class="btn btn--ghost wb-btn" type="button" aria-haspopup="dialog" aria-controls="rx-help" aria-expanded="false">Help</button>
+				</div>
+			</header>
+
+			<div class="wb-body">
+				<div class="wb-main">
+					<section class="wb-ws" aria-label="Regex workspace">
+						<!-- ============================================================ Input -->
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<div class="tool-field">
+									<label for="rx-pattern">Pattern</label>
+									<input id="rx-pattern" class="tool-input rx-pattern" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-describedby="rx-pattern-hint" />
+									<span id="rx-pattern-hint" class="tool-hint">Without slashes or flags. Enter runs now.</span>
+								</div>
+
+								<div class="tool-field">
+									<label for="rx-flavor">Written for</label>
+									<select id="rx-flavor" class="tool-input">
+										<option value="js">JavaScript</option>
+										<option value="java">Java</option>
+										<option value="go">Go (RE2)</option>
+									</select>
+									<span class="tool-hint">Java and Go patterns are checked, not run. Try in JS runs a translated copy.</span>
+								</div>
+
+								<fieldset class="rx-flags">
+									<legend>Flags</legend>
+									<label class="rx-flag" for="rx-flag-g">
+										<input id="rx-flag-g" type="checkbox" />
+										<span><code>g</code> <span class="tool-hint">all matches</span></span>
+									</label>
+									<label class="rx-flag" for="rx-flag-i">
+										<input id="rx-flag-i" type="checkbox" />
+										<span><code>i</code> <span class="tool-hint">ignore case</span></span>
+									</label>
+									<label class="rx-flag" for="rx-flag-m">
+										<input id="rx-flag-m" type="checkbox" />
+										<span><code>m</code> <span class="tool-hint">^ and $ per line</span></span>
+									</label>
+									<label class="rx-flag" for="rx-flag-s">
+										<input id="rx-flag-s" type="checkbox" />
+										<span><code>s</code> <span class="tool-hint">dot matches newline</span></span>
+									</label>
+									<label class="rx-flag" for="rx-flag-u">
+										<input id="rx-flag-u" type="checkbox" />
+										<span><code>u</code> <span class="tool-hint">Unicode mode</span></span>
+									</label>
+									<label class="rx-flag" for="rx-flag-y">
+										<input id="rx-flag-y" type="checkbox" />
+										<span><code>y</code> <span class="tool-hint">sticky, contiguous only</span></span>
+									</label>
+									<label class="rx-flag" for="rx-flag-d">
+										<input id="rx-flag-d" type="checkbox" />
+										<span><code>d</code> <span class="tool-hint">group indices</span></span>
+									</label>
+								</fieldset>
+								<p class="tool-hint">Inline flags such as (?i) are not JavaScript. Try in JS moves them to flags.</p>
+
+								<div class="tool-field">
+									<label for="rx-input">Test input</label>
+									<textarea id="rx-input" class="tool-input tool-code" rows="5" spellcheck="false" autocomplete="off"></textarea>
+								</div>
+
+								<div class="tool-field">
+									<label for="rx-replacement">Replacement <span class="tool-hint">(optional)</span></label>
+									<input id="rx-replacement" class="tool-input tool-code" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" />
+								</div>
+
+								<div class="tool-field">
+									<p id="rx-examples-label" class="tool-hint">Examples</p>
+									<div id="rx-examples" class="tool-row" role="group" aria-labelledby="rx-examples-label"></div>
+								</div>
+							</div>
+							<div class="wb-in-foot">
+								<button id="rx-run" class="btn btn--primary wb-btn" type="button">Run</button>
+								<button id="rx-clear" class="btn btn--ghost wb-btn" type="button">Clear</button>
+								<p class="tool-muted">Also runs as you type.</p>
+							</div>
+						</div>
+
+						<!-- ============================================================ Output -->
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Output</span>
+								<span class="tool-muted">JavaScript runs here. Java and Go are checked.</span>
+							</div>
+
+							<div class="wb-out-body">
+								<div id="rx-empty" class="wb-empty">
+									<p>Type a pattern, or load an example, to see portability warnings and matches.</p>
+								</div>
+
+								<div id="rx-results" class="rx-out" hidden>
+									<section id="rx-banner" class="tool-alert rx-banner" aria-labelledby="rx-banner-title" aria-live="polite" hidden>
+										<p id="rx-banner-title" class="tool-alert-title"></p>
+										<p id="rx-banner-text"></p>
+										<div id="rx-banner-lists" class="rx-banner-lists"></div>
+										<div class="tool-row">
+											<button id="rx-try" class="btn btn--primary wb-btn" type="button">Try in JS</button>
+										</div>
+									</section>
+
+									<h3 class="tool-subhead">Portability</h3>
+									<div id="rx-cards" class="rx-cards" aria-live="polite"></div>
+
+									<h3 class="tool-subhead">Matches</h3>
+									<p id="rx-alert" class="tool-alert tool-alert--error" role="alert" hidden></p>
+									<p id="rx-notice" class="tool-note" aria-live="polite" hidden></p>
+									<div id="rx-matches" hidden>
+										<p id="rx-summary" class="tool-status" aria-live="polite"></p>
+										<p class="tool-hint">Test input with matches highlighted</p>
+										<div id="rx-highlight" class="rx-highlight" tabindex="0" aria-label="Test input with matches highlighted"></div>
+										<div id="rx-table-wrap" class="tool-table-wrap">
+											<table class="tool-table rx-match-table">
+												<caption class="tool-sr-only">Matches found in the test input</caption>
+												<thead>
+													<tr>
+														<th scope="col">#</th>
+														<th scope="col">Index</th>
+														<th scope="col">Text</th>
+														<th scope="col">Groups</th>
+														<th scope="col">Named groups</th>
+													</tr>
+												</thead>
+												<tbody id="rx-rows"></tbody>
+											</table>
+										</div>
+										<p id="rx-no-matches" class="tool-empty" hidden>No matches.</p>
+									</div>
+
+									<section id="rx-repl-sec" aria-labelledby="rx-repl-title" hidden>
+										<h3 id="rx-repl-title" class="tool-subhead">Replacement</h3>
+										<div id="rx-repl-body"></div>
+									</section>
+
+									<h3 class="tool-subhead">Use it in code</h3>
+									<p class="tool-hint">The pattern as typed, written as a source literal for each language.</p>
+									<div id="rx-code"></div>
+
+									<details class="tool-details">
+										<summary>Behaviour differences between flavors</summary>
+										<div class="tool-table-wrap">
+											<table class="tool-table rx-diff-table">
+												<caption class="tool-sr-only">Behaviour differences between JavaScript, Java and Go</caption>
+												<thead>
+													<tr>
+														<th scope="col">Topic</th>
+														<th scope="col">JavaScript</th>
+														<th scope="col">Java</th>
+														<th scope="col">Go (RE2)</th>
+													</tr>
+												</thead>
+												<tbody id="rx-diff-body"></tbody>
+											</table>
+										</div>
+									</details>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<footer class="wb-status">
+				<span id="wb-status-msg" aria-live="polite"></span>
+				<span class="wb-status-keys">Ctrl+Enter runs · ? for help</span>
+			</footer>
+
+			<aside id="rx-help" class="wb-drawer" role="dialog" aria-labelledby="rx-help-title" hidden>
+				<div class="wb-pop-head">
+					<h2 id="rx-help-title" class="wb-pop-title">Help</h2>
+					<button id="rx-help-close" class="btn btn--ghost wb-btn" type="button">Close</button>
+				</div>
+				<div class="wb-drawer-body">
+					<section class="wb-help-sec" aria-labelledby="help-what">
+						<h3 id="help-what">What it does</h3>
+						<ul>
+							<li>Runs the pattern against your test input in JavaScript. Matching runs in a Web Worker, so a pattern that backtracks for a long time cannot freeze the page. A run that passes 1.5 s is stopped.</li>
+							<li>Checks the pattern for syntax that Java and Go read differently, or reject, and lists each issue for all three flavors.</li>
+							<li>Runs the replacement in JavaScript, warns about replacement syntax per flavor, and gives Java and Go versions of the replacement.</li>
+							<li>Writes the pattern as a Java string, a Go literal and a JavaScript literal, ready to paste.</li>
+						</ul>
+					</section>
+
+					<section class="wb-help-sec" aria-labelledby="help-not">
+						<h3 id="help-not">What it does not do</h3>
+						<p class="tool-note"><strong>Cannot do:</strong> run Java or Go in the browser. Only JavaScript runs. Java and Go results are static checks of known syntax differences, not executions.</p>
+						<ul>
+							<li>Try in JS runs a rewritten copy in JavaScript. Constructs it cannot rewrite are listed, and they may change the result.</li>
+							<li>Compatible means no construct on the known list was rejected or changed. It does not prove the pattern behaves the same in every engine.</li>
+							<li>Timing is measured in your browser only. Nothing is uploaded.</li>
+						</ul>
+					</section>
+
+					<section class="wb-help-sec" aria-labelledby="help-status">
+						<h3 id="help-status">The four statuses</h3>
+						<ul>
+							<li><strong>Compatible</strong>: no construct on the known list is rejected or means something different in this flavor.</li>
+							<li><strong>Differs</strong>: the pattern compiles, but some construct means something else or is ignored in this flavor.</li>
+							<li><strong>Incompatible</strong>: at least one construct is rejected in this flavor, so the pattern will not compile there.</li>
+							<li><strong>Risky</strong>: no other issue found, but the pattern has a shape that can backtrack catastrophically in JavaScript and Java. Go (RE2) runs in linear time and is not affected.</li>
+						</ul>
+					</section>
+
+					<section class="wb-help-sec" aria-labelledby="help-traps">
+						<h3 id="help-traps">Common portability traps</h3>
+						<ul>
+							<li><strong>Lookbehind and lookahead</strong>: Go (RE2) rejects them. Java needs lookbehind of bounded length.</li>
+							<li><strong>Backreferences</strong> such as <code>\1</code> or <code>\k&lt;name&gt;</code>: Go does not support them.</li>
+							<li><strong>\A and \z</strong>: JavaScript reads them as the letters A and z. Use <code>^</code> and <code>$</code> there.</li>
+							<li><strong>Named groups</strong>: <code>(?&lt;name&gt;...)</code> works in Java and JavaScript. <code>(?P&lt;name&gt;...)</code> is Go (before 1.22) and Python. Java group names reject underscores.</li>
+							<li><strong>Possessive and atomic</strong>: <code>a++</code> and <code>(?&gt;...)</code> are Java only.</li>
+							<li><strong>Literal {</strong>: Java rejects an unescaped <code>{</code> that does not start a quantifier. Escape it as <code>\{</code>.</li>
+							<li><strong>Catastrophic backtracking</strong>: nested quantifiers such as <code>(a+)+</code> can take exponential time in JavaScript and Java. Go is not affected.</li>
+							<li><strong>Replacements</strong>: JavaScript and Java use <code>$1</code>, Go uses <code>${1}</code>. A literal dollar sign in Java is <code>\$</code>.</li>
+							<li><strong>Inline flags</strong>: <code>(?i)</code> works in Java and Go. JavaScript has no inline flags, so Try in JS moves a leading one to the flags.</li>
+						</ul>
+					</section>
+
+					<section class="wb-help-sec" aria-labelledby="help-keys">
+						<h3 id="help-keys">Keyboard</h3>
+						<ul>
+							<li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> (or <kbd>⌘</kbd>+<kbd>Enter</kbd>) runs now.</li>
+							<li><kbd>?</kbd> opens this help when you are not typing in a field.</li>
+							<li><kbd>Esc</kbd> closes Help.</li>
+						</ul>
+					</section>
+				</div>
+			</aside>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../index.html">Home</a>
+				<a href="../index.html">Tools</a>
+				<a href="../../articles/index.html">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script type="module" src="ui.js"></script>
+	</body>
+</html>

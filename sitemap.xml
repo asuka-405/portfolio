@@ -7,6 +7,27 @@
 		<loc>https://archdev.in/arch-setup.html</loc>
 	</url>
 	<url>
+		<loc>https://archdev.in/tools/index.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/tools/sailpoint-workbench/index.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/tools/arch-installer/index.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/tools/diff-tool/index.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/tools/regex-tester/index.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/tools/ldap-toolkit/index.html</loc>
+	</url>
+	<url>
+		<loc>https://archdev.in/tools/cron-explainer/index.html</loc>
+	</url>
+	<url>
 		<loc>https://archdev.in/works/index.html</loc>
 	</url>
 	<url>

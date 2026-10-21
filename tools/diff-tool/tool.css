@@ -1,0 +1,317 @@
+/* JSON and XML diff: styles specific to this tool. The shell (layout, fields, buttons, stats, alerts,
+   help drawer) comes from ../shared/shell.css. Every rule is scoped under .tool and uses site tokens only. */
+
+/* ---- input pane ---------------------------------------------------------- */
+
+.tool .diff-side {
+	gap: 0.3rem;
+}
+
+.tool .diff-drop {
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.15rem 0.5rem;
+	padding: 0.35rem 0.6rem;
+}
+
+.tool .diff-drop .tool-drop-title {
+	font-size: 0.8rem;
+}
+
+.tool .diff-drop .tool-muted {
+	font-size: 0.76rem;
+}
+
+.tool .diff-text {
+	min-height: 6rem;
+}
+
+.tool .diff-opts {
+	border: 1px solid var(--line);
+	background: var(--canvas);
+}
+
+.tool .diff-opts > summary {
+	padding: 0.45rem 0.6rem;
+	cursor: pointer;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: var(--ink);
+}
+
+.tool .diff-opts-body {
+	padding: 0.2rem 0.6rem 0.7rem;
+	border-top: 1px solid var(--line);
+}
+
+.tool .diff-group-title {
+	margin: 0.2rem 0 0;
+	font-size: 0.7rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.tool .diff-check {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.45rem;
+	font-size: 0.82rem;
+	color: var(--text);
+	cursor: pointer;
+	overflow-wrap: anywhere;
+}
+
+.tool .diff-check input {
+	flex: none;
+	width: 0.95rem;
+	height: 0.95rem;
+	margin: 0.15rem 0 0;
+	accent-color: var(--accent);
+}
+
+/* ---- output pane --------------------------------------------------------- */
+
+.tool .diff-out-hint {
+	flex: 1 0 100%;
+	order: 3;
+	margin: 0;
+	font-size: 0.78rem;
+	color: var(--muted);
+}
+
+.tool .tool-alert--error {
+	border-color: var(--accent);
+	border-left-color: var(--accent);
+	color: var(--ink);
+}
+
+.tool .tool-alert p {
+	margin: 0;
+}
+
+.tool .tool-alert p + p {
+	margin-top: 0.3rem;
+}
+
+.tool .diff-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.4rem;
+	margin-bottom: 0.6rem;
+	font-size: 0.82rem;
+	color: var(--muted);
+}
+
+.tool .diff-format {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.tool .diff-notes .tool-alert {
+	margin-bottom: 0.4rem;
+}
+
+.tool .diff-notes .tool-alert:last-child {
+	margin-bottom: 0.6rem;
+}
+
+/* sticky filter bar at the top of the scrolling result area */
+
+.tool .diff-toolbar {
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin: 0 -0.75rem 0.6rem;
+	padding: 0.6rem 0.75rem;
+	background: var(--canvas);
+	border-bottom: 1px solid var(--line);
+}
+
+.tool .diff-toolbar .tool-chips legend {
+	margin-bottom: 0.3rem;
+	padding: 0;
+	font-size: 0.74rem;
+	color: var(--muted);
+}
+
+.tool .tool-chips {
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.tool .diff-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.3rem;
+}
+
+.tool .tool-chip {
+	min-height: 1.9rem;
+	padding: 0.2rem 0.55rem;
+	font: inherit;
+	font-size: 0.8rem;
+	color: var(--text);
+	background: var(--surface);
+	border: 1px solid var(--line);
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.tool .tool-chip:hover {
+	border-color: var(--accent);
+}
+
+.tool .tool-chip.is-on {
+	color: var(--ink);
+	background: var(--accent-soft);
+	border-color: var(--accent);
+}
+
+.tool .tool-chip.diff-chip--add.is-on {
+	background: color-mix(in srgb, var(--green) 16%, transparent);
+	border-color: var(--green);
+}
+
+.tool .tool-chip.diff-chip--remove.is-on {
+	background: color-mix(in srgb, var(--accent) 16%, transparent);
+	border-color: var(--accent);
+}
+
+.tool .tool-chip.diff-chip--change.is-on {
+	background: color-mix(in srgb, var(--gold) 16%, transparent);
+	border-color: var(--gold);
+}
+
+/* change cards */
+
+.tool .diff-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	min-width: 0;
+}
+
+.tool .diff-card {
+	--c: var(--line);
+	min-width: 0;
+	padding: 0.5rem 0.6rem 0.55rem;
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-left: 3px solid var(--c);
+}
+
+.tool .diff-card--add {
+	--c: var(--green);
+}
+
+.tool .diff-card--remove {
+	--c: var(--accent);
+}
+
+.tool .diff-card--change {
+	--c: var(--gold);
+}
+
+.tool .diff-card-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 0.35rem 0.5rem;
+}
+
+.tool .diff-badge {
+	flex: none;
+	padding: 0.05rem 0.4rem;
+	font-size: 0.68rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	border: 1px solid currentColor;
+}
+
+.tool .diff-badge--add {
+	color: var(--green);
+}
+
+.tool .diff-badge--remove {
+	color: var(--accent);
+}
+
+.tool .diff-badge--change {
+	color: var(--gold);
+}
+
+.tool .diff-path {
+	flex: 1 1 auto;
+	min-width: 0;
+	font-family: var(--mono);
+	font-size: 0.78rem;
+	color: var(--ink);
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+
+.tool .diff-type {
+	margin: 0.35rem 0 0;
+	font-size: 0.76rem;
+	color: var(--muted);
+}
+
+.tool .diff-val {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+	margin-top: 0.4rem;
+	min-width: 0;
+}
+
+.tool .diff-val-label {
+	font-size: 0.68rem;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.tool .diff-pre {
+	margin: 0;
+	max-height: 14rem;
+	padding: 0.4rem 0.5rem;
+	overflow: auto;
+	font-family: var(--mono);
+	font-size: 0.76rem;
+	line-height: 1.4;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	color: var(--text);
+	background: var(--canvas);
+	border: 1px solid var(--line);
+}
+
+.tool .diff-more-row {
+	margin-top: 0.6rem;
+}
+
+/* ---- phones and narrow panes --------------------------------------------- */
+
+@media (max-width: 760px) {
+	/* The result toolbar is the sticky element here, so the action bar scrolls away. */
+	.tool .wb-out-bar {
+		position: static;
+	}
+}
+
+@media (max-width: 639px) {
+	.tool .diff-pre {
+		max-height: 11rem;
+	}
+}

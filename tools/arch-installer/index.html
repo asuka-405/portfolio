@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Browser-only Arch Linux install script and fstab generator. Writes an install.sh you read and run from the Arch ISO, plus a validated fstab. Nothing is uploaded."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>Arch installer · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../../styles.css" />
+		<link rel="stylesheet" href="../shared/shell.css" />
+		<link rel="stylesheet" href="tool.css" />
+	</head>
+	<body class="tool-page">
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../../index.html#about">About</a>
+					<a href="../../index.html#projects">Projects</a>
+					<a href="../../articles/index.html">Writing</a>
+					<a href="../../works/index.html">Works</a>
+					<a href="../../docs/index.html">Docs</a>
+					<a href="../index.html">Tools</a>
+					<a href="https://git.archdev.in">Git</a>
+					<a href="../../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main class="tool wb" id="arch">
+			<header class="wb-top">
+				<div class="wb-brand">
+					<a class="wb-back" href="../index.html">← Tools</a>
+					<h1 class="wb-title">Arch <span class="text-accent">installer</span></h1>
+					<span class="wb-badge">Runs in your browser, nothing uploaded</span>
+				</div>
+				<div class="wb-top-actions">
+					<button id="arch-help-btn" class="btn btn--ghost wb-btn" type="button" aria-haspopup="dialog" aria-controls="arch-help" aria-expanded="false">Help</button>
+				</div>
+			</header>
+
+			<div class="arch-body">
+				<div class="arch-modebar">
+					<div id="mode-tabs" class="wb-subtabs" role="tablist" aria-label="Installer sections">
+						<button id="tab-install" class="wb-subtab" type="button" role="tab" data-mode="install" aria-selected="true" aria-controls="panel-install" tabindex="0">Install script</button>
+						<button id="tab-fstab" class="wb-subtab" type="button" role="tab" data-mode="fstab" aria-selected="false" aria-controls="panel-fstab" tabindex="-1">fstab builder</button>
+					</div>
+				</div>
+
+				<div class="wb-main">
+					<!-- ============================================================ 1. Install script -->
+					<section id="panel-install" class="wb-ws" role="tabpanel" aria-labelledby="tab-install" tabindex="-1">
+						<div class="wb-in">
+							<div class="wb-pane-head">Input</div>
+							<div class="wb-in-body">
+								<div class="arch-presets">
+									<span class="arch-presets-label">Presets</span>
+									<div class="tool-row">
+										<button id="preset-laptop" class="btn btn--ghost wb-btn" type="button">Laptop (UEFI, btrfs, LUKS, systemd-boot, zram)</button>
+										<button id="preset-simple" class="btn btn--ghost wb-btn" type="button">Simple (UEFI, ext4, GRUB)</button>
+									</div>
+								</div>
+
+								<form id="install-form" class="tool-form arch-form" autocomplete="off" onsubmit="return false">
+									<fieldset class="arch-group">
+										<legend>Disk and boot</legend>
+										<div class="tool-field">
+											<label for="in-disk">Disk device</label>
+											<input id="in-disk" class="tool-input" type="text" spellcheck="false" autocomplete="off" />
+											<span class="tool-hint">Whole disk, for example /dev/sda or /dev/nvme0n1. Everything on it is erased.</span>
+										</div>
+										<div class="arch-grid">
+											<div class="tool-field">
+												<label for="in-boot">Boot mode</label>
+												<select id="in-boot" class="tool-input">
+													<option value="uefi">UEFI</option>
+													<option value="bios">BIOS (legacy)</option>
+												</select>
+											</div>
+											<div class="tool-field">
+												<label for="in-esp-size">Boot partition size</label>
+												<input id="in-esp-size" class="tool-input" type="text" spellcheck="false" autocomplete="off" />
+												<span class="tool-hint">EFI system partition on UEFI, /boot on BIOS. Format 512M or 1G.</span>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset class="arch-group">
+										<legend>Filesystem</legend>
+										<div class="arch-grid">
+											<div class="tool-field">
+												<label for="in-fs">Root filesystem</label>
+												<select id="in-fs" class="tool-input">
+													<option value="ext4">ext4</option>
+													<option value="btrfs">btrfs</option>
+													<option value="xfs">xfs</option>
+												</select>
+											</div>
+										</div>
+										<div class="arch-check">
+											<input id="in-luks" type="checkbox" />
+											<label for="in-luks">Encrypt root with LUKS2</label>
+										</div>
+										<span class="tool-hint">You choose the passphrase during the install.</span>
+
+										<fieldset id="fs-btrfs" class="arch-group arch-group--inner" hidden>
+											<legend>Btrfs options</legend>
+											<div class="arch-grid">
+												<div class="arch-check">
+													<input id="in-noatime" type="checkbox" />
+													<label for="in-noatime">noatime</label>
+												</div>
+												<div class="arch-check">
+													<input id="in-ssd" type="checkbox" />
+													<label for="in-ssd">ssd</label>
+												</div>
+												<div class="tool-field">
+													<label for="in-compress">Compression</label>
+													<select id="in-compress" class="tool-input">
+														<option value="none">none</option>
+														<option value="zstd:1">zstd:1</option>
+														<option value="zstd:3">zstd:3</option>
+														<option value="zstd:6">zstd:6</option>
+														<option value="lzo">lzo</option>
+													</select>
+												</div>
+												<div class="tool-field">
+													<label for="in-discard">discard</label>
+													<select id="in-discard" class="tool-input">
+														<option value="none">none</option>
+														<option value="async">async (batched)</option>
+														<option value="sync">sync (continuous)</option>
+													</select>
+												</div>
+											</div>
+
+											<fieldset class="arch-group arch-group--inner">
+												<legend>Subvolumes</legend>
+												<div class="tool-row">
+													<button id="subvol-preset-minimal" class="btn btn--ghost wb-btn" type="button">Minimal (@, @home)</button>
+													<button id="subvol-preset-snapper" class="btn btn--ghost wb-btn" type="button">Snapper-friendly (@, @home, @log, @pkg, @snapshots)</button>
+												</div>
+												<div class="arch-subhead" aria-hidden="true">
+													<span>Name</span>
+													<span>Mount point</span>
+												</div>
+												<div id="subvol-rows" class="arch-subvols"></div>
+												<div class="tool-row">
+													<button id="subvol-add" class="btn btn--ghost wb-btn" type="button">Add subvolume</button>
+												</div>
+												<span class="tool-hint">Names start with @. Mount points are absolute paths. One subvolume must mount at /.</span>
+											</fieldset>
+										</fieldset>
+									</fieldset>
+
+									<fieldset class="arch-group">
+										<legend>Swap</legend>
+										<div class="arch-grid">
+											<div class="tool-field">
+												<label for="in-swap">Swap type</label>
+												<select id="in-swap" class="tool-input">
+													<option value="none">none</option>
+													<option value="zram">zram (compressed RAM)</option>
+													<option value="file">swap file</option>
+													<option value="partition">swap partition</option>
+												</select>
+											</div>
+											<div class="tool-field">
+												<label for="in-swap-size">Swap size</label>
+												<input id="in-swap-size" class="tool-input" type="text" spellcheck="false" autocomplete="off" />
+												<span class="tool-hint">Used by swap file and swap partition only. Format 8G.</span>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset class="arch-group">
+										<legend>Bootloader and kernel</legend>
+										<div class="arch-grid">
+											<div class="tool-field">
+												<label for="in-bootloader">Bootloader</label>
+												<select id="in-bootloader" class="tool-input">
+													<option value="systemd-boot">systemd-boot (UEFI only)</option>
+													<option value="grub">GRUB</option>
+												</select>
+												<span id="bootloader-hint" class="tool-hint">Choosing BIOS switches the bootloader to GRUB.</span>
+											</div>
+											<div class="tool-field">
+												<label for="in-kernel">Kernel</label>
+												<select id="in-kernel" class="tool-input">
+													<option value="linux">linux</option>
+													<option value="linux-lts">linux-lts</option>
+													<option value="linux-zen">linux-zen</option>
+													<option value="linux-hardened">linux-hardened</option>
+												</select>
+											</div>
+											<div class="tool-field">
+												<label for="in-microcode">CPU microcode</label>
+												<select id="in-microcode" class="tool-input">
+													<option value="amd">AMD</option>
+													<option value="intel">Intel</option>
+													<option value="none">none</option>
+												</select>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset class="arch-group">
+										<legend>System</legend>
+										<div class="arch-grid">
+											<div class="tool-field">
+												<label for="in-hostname">Hostname</label>
+												<input id="in-hostname" class="tool-input" type="text" spellcheck="false" autocomplete="off" />
+											</div>
+											<div class="tool-field">
+												<label for="in-username">Username</label>
+												<input id="in-username" class="tool-input" type="text" spellcheck="false" autocomplete="off" />
+											</div>
+											<div class="tool-field">
+												<label for="in-timezone">Time zone</label>
+												<input id="in-timezone" class="tool-input" type="text" spellcheck="false" autocomplete="off" />
+												<span class="tool-hint">Like Europe/London.</span>
+											</div>
+											<div class="tool-field">
+												<label for="in-locale">Locale</label>
+												<input id="in-locale" class="tool-input" type="text" spellcheck="false" autocomplete="off" />
+												<span class="tool-hint">Like en_US.UTF-8.</span>
+											</div>
+											<div class="tool-field">
+												<label for="in-keymap">Console keymap</label>
+												<input id="in-keymap" class="tool-input" type="text" spellcheck="false" autocomplete="off" />
+											</div>
+											<div class="tool-field">
+												<label for="in-network">Network</label>
+												<select id="in-network" class="tool-input">
+													<option value="networkmanager">NetworkManager</option>
+													<option value="systemd-networkd">systemd-networkd</option>
+													<option value="none">none</option>
+												</select>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset class="arch-group">
+										<legend>Extra packages</legend>
+										<div class="tool-field">
+											<label for="in-extra">Packages to add to pacstrap</label>
+											<input id="in-extra" class="tool-input" type="text" spellcheck="false" autocomplete="off" />
+											<span class="tool-hint">Space separated pacman package names, for example vim git tmux.</span>
+										</div>
+									</fieldset>
+								</form>
+
+								<div id="install-errors-box" class="tool-alert arch-errors" aria-live="polite" hidden>
+									<p class="tool-alert-title">Fix these before generating</p>
+									<ul id="install-errors"></ul>
+								</div>
+							</div>
+							<div class="wb-in-foot">
+								<button id="install-generate" class="btn btn--primary wb-btn" type="button">Generate</button>
+								<p id="install-status" class="tool-muted"></p>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">Install script</span>
+								<div class="wb-out-actions">
+									<button id="install-zip" class="btn btn--primary wb-btn" type="button" disabled>Download all (.zip)</button>
+								</div>
+							</div>
+
+							<div class="wb-out-body">
+								<div class="arch-danger" role="note">
+									<strong>Destructive.</strong>
+									This script erases the whole disk you name. Read it before running. You are responsible for the result.
+								</div>
+
+								<p id="install-result-status" class="tool-status" aria-live="polite"></p>
+
+								<div id="install-empty" class="wb-empty">
+									<p>No script yet. Fix the errors listed under the form to generate install.sh, fstab.preview and NOTES.md.</p>
+								</div>
+
+								<div id="install-body" hidden>
+									<h3 class="tool-subhead">Partition plan</h3>
+									<div class="tool-table-wrap">
+										<table class="tool-table">
+											<caption class="tool-sr-only">Partition plan for the chosen disk</caption>
+											<thead>
+												<tr>
+													<th scope="col">No.</th>
+													<th scope="col">Role</th>
+													<th scope="col">Size</th>
+													<th scope="col">Type</th>
+													<th scope="col">Label</th>
+													<th scope="col">Filesystem</th>
+													<th scope="col">Mount</th>
+												</tr>
+											</thead>
+											<tbody id="install-plan"></tbody>
+										</table>
+									</div>
+
+									<div id="install-warn" class="tool-note" hidden>
+										<strong>Warnings</strong>
+										<ul id="install-warnings" class="arch-list"></ul>
+									</div>
+
+									<h3 class="tool-subhead">Files</h3>
+									<div id="file-tabs" class="wb-subtabs" role="tablist" aria-label="Generated files">
+										<button id="file-tab-script" class="wb-subtab" type="button" role="tab" data-file="install.sh" aria-selected="true" aria-controls="viewer" tabindex="0">install.sh</button>
+										<button id="file-tab-fstab" class="wb-subtab" type="button" role="tab" data-file="fstab.preview" aria-selected="false" aria-controls="viewer" tabindex="-1">fstab.preview</button>
+										<button id="file-tab-notes" class="wb-subtab" type="button" role="tab" data-file="NOTES.md" aria-selected="false" aria-controls="viewer" tabindex="-1">NOTES.md</button>
+									</div>
+
+									<div class="arch-viewer">
+										<div class="arch-viewer-bar">
+											<span id="viewer-path" class="arch-path">install.sh</span>
+											<span class="arch-viewer-actions">
+												<span id="viewer-copy-slot"></span>
+												<button id="viewer-download" class="btn btn--ghost wb-btn" type="button" disabled>Download</button>
+											</span>
+										</div>
+										<pre id="viewer" class="arch-pre" tabindex="0" aria-label="Generated file contents"></pre>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- ============================================================ 2. fstab builder -->
+					<section id="panel-fstab" class="wb-ws arch-fstab-ws" role="tabpanel" aria-labelledby="tab-fstab" tabindex="-1" hidden>
+						<div class="wb-in">
+							<div class="wb-pane-head">Entries</div>
+							<div class="wb-in-body">
+								<p class="wb-hint">One line per mounted filesystem, in the order they should appear. Line numbers in the validation list match the # column.</p>
+
+								<div class="arch-quick">
+									<span class="arch-presets-label">Quick add</span>
+									<div class="tool-row">
+										<button id="quick-root-ext4" class="btn btn--ghost wb-btn tool-small" type="button">Root ext4</button>
+										<button id="quick-root-btrfs" class="btn btn--ghost wb-btn tool-small" type="button">Root btrfs subvol @</button>
+										<button id="quick-esp" class="btn btn--ghost wb-btn tool-small" type="button">ESP /boot vfat</button>
+										<button id="quick-swap" class="btn btn--ghost wb-btn tool-small" type="button">Swap partition</button>
+										<button id="quick-tmpfs" class="btn btn--ghost wb-btn tool-small" type="button">tmpfs /tmp</button>
+										<button id="quick-nfs" class="btn btn--ghost wb-btn tool-small" type="button">NFS share</button>
+										<button id="quick-ntfs" class="btn btn--ghost wb-btn tool-small" type="button">Windows data disk (ntfs3)</button>
+									</div>
+								</div>
+
+								<div class="tool-row">
+									<button id="fstab-add" class="btn btn--ghost wb-btn" type="button">Add row</button>
+									<button id="fstab-example" class="btn btn--ghost wb-btn" type="button">Load example</button>
+									<button id="fstab-clear" class="btn btn--ghost wb-btn" type="button">Clear</button>
+								</div>
+
+								<div id="fstab-offer" class="tool-alert arch-offer" hidden>
+									<p id="fstab-offer-text"></p>
+									<div class="tool-row">
+										<button id="fstab-offer-apply" class="btn btn--primary wb-btn tool-small" type="button">Apply defaults</button>
+										<button id="fstab-offer-keep" class="btn btn--ghost wb-btn tool-small" type="button">Keep my values</button>
+									</div>
+								</div>
+
+								<p id="fstab-none" class="tool-empty">No entries yet. Add a row or use a quick-add button.</p>
+
+								<div id="fstab-table-wrap" class="tool-table-wrap" hidden>
+									<table id="fstab-table" class="tool-table arch-fstab-table">
+										<caption class="tool-sr-only">fstab entries</caption>
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Device</th>
+												<th scope="col">Mount point</th>
+												<th scope="col">Type</th>
+												<th scope="col">Options</th>
+												<th scope="col">Dump</th>
+												<th scope="col">Pass</th>
+												<th scope="col">Comment</th>
+												<th scope="col"><span class="tool-sr-only">Actions</span></th>
+											</tr>
+										</thead>
+										<tbody id="fstab-body"></tbody>
+									</table>
+								</div>
+							</div>
+							<div class="wb-in-foot">
+								<p>Output updates as you type. Focus a row to see its options explained.</p>
+							</div>
+						</div>
+
+						<div class="wb-out">
+							<div class="wb-out-bar">
+								<span class="wb-pane-title">fstab</span>
+								<div class="wb-out-actions">
+									<span id="fstab-copy-slot"></span>
+									<button id="fstab-download" class="btn btn--primary wb-btn" type="button">Download</button>
+								</div>
+							</div>
+
+							<div class="wb-out-body">
+								<h3 class="tool-subhead">Generated fstab</h3>
+								<pre id="fstab-output" class="arch-pre" tabindex="0" aria-label="Generated fstab"></pre>
+
+								<h3 class="tool-subhead">Validation</h3>
+								<p id="fstab-status" class="tool-status" aria-live="polite"></p>
+								<ul id="fstab-problems" class="arch-problems" aria-label="Validation messages"></ul>
+
+								<h3 class="tool-subhead">Options explained</h3>
+								<p id="fstab-explain-note" class="tool-muted"></p>
+								<dl id="fstab-explain" class="arch-explain"></dl>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+
+			<footer class="wb-status">
+				<span id="wb-status-msg" aria-live="polite"></span>
+				<span class="wb-status-keys">Ctrl+Enter generates the script · ? for help</span>
+			</footer>
+
+			<aside id="arch-help" class="wb-drawer" role="dialog" aria-labelledby="arch-help-title" tabindex="-1" hidden>
+				<div class="wb-pop-head">
+					<h2 id="arch-help-title" class="wb-pop-title">Help</h2>
+					<button id="arch-help-close" class="btn btn--ghost wb-btn" type="button">Close</button>
+				</div>
+				<div class="wb-drawer-body">
+					<section class="wb-help-sec" data-help="install" aria-labelledby="help-install">
+						<h3 id="help-install">Install script</h3>
+						<p>Writes a bash script for a fresh Arch Linux install. You boot the official Arch ISO, copy the script over, read it, and run it as root.</p>
+						<h4>How to use it from the Arch ISO</h4>
+						<ol>
+							<li>Boot the official Arch ISO in the same mode (UEFI or BIOS) you chose here.</li>
+							<li>Get online. Use <code>iwctl</code> for Wi-Fi, or plug in a cable.</li>
+							<li>Copy <code>install.sh</code> to the ISO (curl, scp or a USB stick). You can also download the zip and copy the files.</li>
+							<li>Read the script. It is plain bash with no hidden steps.</li>
+							<li>Run <code>bash install.sh</code>. It shows the disk layout and asks you to type the disk path again before it touches anything.</li>
+							<li>When it finishes, remove the install medium and reboot.</li>
+						</ol>
+						<p class="tool-note"><strong>Test it first.</strong> Run it in a virtual machine with the same settings before you use it on real hardware.</p>
+						<h4>What the script does</h4>
+						<ul>
+							<li>Wipes the disk and creates a GPT partition table with the layout in the plan.</li>
+							<li>Creates the filesystems, optionally a LUKS2 container, and btrfs subvolumes.</li>
+							<li>Mounts everything under /mnt, then runs pacstrap with the packages you chose.</li>
+							<li>Writes fstab with genfstab, then runs a chroot step for time zone, locale, hostname, bootloader, user, network and passwords.</li>
+							<li>Prompts you for the root password, the user password and, with LUKS, the disk passphrase.</li>
+						</ul>
+						<h4>Not generated: archinstall JSON</h4>
+						<p>This tool does not write an archinstall JSON config. archinstall's schema changes between versions, so a file made here could break on the ISO you use. The script does the same job without that risk.</p>
+						<h4>Safety design</h4>
+						<ul>
+							<li>Every value that reaches the script passes a strict allowlist, such as the disk path pattern and the package name pattern.</li>
+							<li>Values are single-quoted, so the shell does not interpret them.</li>
+							<li>The script refuses to run unless you are root, the disk is a block device, and (for UEFI) the ISO booted in UEFI mode.</li>
+							<li>You must retype the disk path. Check the lsblk output before you do.</li>
+						</ul>
+						<p class="tool-note"><strong>Cannot do:</strong> check that you picked the right disk. Confirm the device name with lsblk on the ISO. Verify the script yourself. You are responsible for the result.</p>
+					</section>
+
+					<section class="wb-help-sec" data-help="fstab" aria-labelledby="help-fstab">
+						<h3 id="help-fstab">fstab builder</h3>
+						<p>Builds the text of an /etc/fstab file from rows. Each row becomes one line, and the output updates as you type.</p>
+						<ul>
+							<li><strong>Device</strong> is a UUID=, LABEL=, PARTUUID=, PARTLABEL= or a path such as /dev/sdb1. Prefer UUID= for disks that do not move.</li>
+							<li><strong>Type</strong> chooses the filesystem. Changing it can offer that type's usual options and pass value.</li>
+							<li><strong>Pass</strong> is 1 only for the root filesystem on ext4, and 0 for everything else.</li>
+							<li>Quick-add buttons fill a row with a sensible starting point. Replace the placeholder device names before you use the file.</li>
+						</ul>
+						<h4>Validation</h4>
+						<p>Errors block a working fstab. Warnings explain risks you may want to accept. Click a message with a line number to jump to that row. Line numbers match the # column in the table.</p>
+						<h4>Options explained</h4>
+						<p>Focus any row to see what each of its options does.</p>
+						<h4>Using the output</h4>
+						<p>Copy the text or download the file named <code>fstab</code>. Keep the copy under /etc/fstab on the installed system, and check it with <code>findmnt --verify</code> after you reboot.</p>
+						<p class="tool-note"><strong>Cannot do:</strong> read your disks. Device names and UUIDs are typed in by you. Use <code>blkid</code> on the running system to find them.</p>
+					</section>
+
+					<section class="wb-help-sec" aria-labelledby="help-keys">
+						<h3 id="help-keys">Keyboard</h3>
+						<ul>
+							<li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> (or <kbd>⌘</kbd>+<kbd>Enter</kbd>) generates the install script.</li>
+							<li><kbd>?</kbd> opens this help when you are not typing in a field.</li>
+							<li><kbd>Esc</kbd> closes Help.</li>
+							<li>Arrow keys move between the two sections and between the files and tabs.</li>
+						</ul>
+					</section>
+				</div>
+			</aside>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../../index.html">Home</a>
+				<a href="../index.html">Tools</a>
+				<a href="../../articles/index.html">Writing</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../../app.js" defer></script>
+		<script type="module" src="ui.js"></script>
+	</body>
+</html>
