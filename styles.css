@@ -10,13 +10,13 @@
 	--accent-2: #ff8a87;
 	--accent-soft: rgba(250, 98, 95, 0.16);
 	--accent-hover: #e84e4b;
-	--gold: #e8b84a;
-	--gold-soft: rgba(232, 184, 74, 0.18);
-	--violet: #a392ff;
-	--teal: #45d3c3;
-	--blue: #6fb0ff;
-	--green: #62d69d;
-	--pink: #f68fc3;
+	--gold: #ffc24d;
+	--gold-soft: rgba(255, 194, 77, 0.2);
+	--violet: #9d88ff;
+	--teal: #2ee6c8;
+	--blue: #55a9ff;
+	--green: #4be3a0;
+	--pink: #ff7fc2;
 	--radius: 0;
 	--radius-sm: 0;
 	--font: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont,
@@ -31,13 +31,13 @@
 	--focus-ring: 0 0 0 3px rgba(250, 98, 95, 0.35);
 }
 html[data-theme="light"] {
-	--gold: #b4800c;
-	--gold-soft: rgba(180, 128, 12, 0.16);
-	--violet: #6a56e0;
-	--teal: #14917f;
-	--blue: #2a68cc;
-	--green: #1c9660;
-	--pink: #cc4189;
+	--gold: #b87800;
+	--gold-soft: rgba(184, 120, 0, 0.17);
+	--violet: #6044ec;
+	--teal: #0c9d88;
+	--blue: #1f6fe0;
+	--green: #139556;
+	--pink: #d42a86;
 	--ink: #1a1824;
 	--text: #3a3848;
 	--muted: #6e6a7c;
@@ -3202,12 +3202,12 @@ main > .doc-section:nth-of-type(7n+7) { --h: var(--pink); }
 }
 .skill-num {
 	color: var(--h, var(--accent));
-	background: color-mix(in srgb, var(--h, var(--accent)) 16%, transparent);
-	border-color: color-mix(in srgb, var(--h, var(--accent)) 32%, var(--line));
+	background: color-mix(in srgb, var(--h, var(--accent)) 26%, transparent);
+	border-color: color-mix(in srgb, var(--h, var(--accent)) 48%, var(--line));
 }
 .skill-card .chip {
-	background: color-mix(in srgb, var(--h, var(--accent)) 12%, transparent);
-	border-color: color-mix(in srgb, var(--h, var(--accent)) 22%, var(--line));
+	background: color-mix(in srgb, var(--h, var(--accent)) 20%, transparent);
+	border-color: color-mix(in srgb, var(--h, var(--accent)) 38%, var(--line));
 }
 .skill-card .chip:hover {
 	border-color: var(--h, var(--accent));
@@ -3216,12 +3216,12 @@ main > .doc-section:nth-of-type(7n+7) { --h: var(--pink); }
 .project-card,
 .skill-card,
 .article-card {
-	box-shadow: 5px 5px 0 color-mix(in srgb, var(--h, var(--accent)) 18%, transparent);
+	box-shadow: 5px 5px 0 color-mix(in srgb, var(--h, var(--accent)) 30%, transparent);
 }
 .project-card:hover,
 .skill-card:hover,
 .article-card:hover {
-	box-shadow: 10px 10px 0 color-mix(in srgb, var(--h, var(--accent)) 34%, transparent), 0 26px 44px -22px rgba(0, 0, 0, 0.55);
+	box-shadow: 10px 10px 0 color-mix(in srgb, var(--h, var(--accent)) 48%, transparent), 0 26px 44px -22px color-mix(in srgb, var(--h, var(--accent)) 55%, black);
 }
 .project-badge,
 .project-link,
@@ -3287,9 +3287,10 @@ html[data-theme="light"] .hero-orbit {
 .project-card,
 .article-card {
 	position: relative;
-	background: radial-gradient(120% 95% at 0% 0%, color-mix(in srgb, var(--h, var(--accent)) 22%, transparent), transparent 62%),
-		color-mix(in srgb, var(--h, var(--accent)) 8%, var(--surface));
-	border-color: color-mix(in srgb, var(--h, var(--accent)) 26%, var(--line));
+	background: radial-gradient(120% 95% at 0% 0%, color-mix(in srgb, var(--h, var(--accent)) 38%, transparent), transparent 64%),
+		radial-gradient(90% 80% at 100% 100%, color-mix(in srgb, var(--h, var(--accent)) 14%, transparent), transparent 70%),
+		color-mix(in srgb, var(--h, var(--accent)) 12%, var(--surface));
+	border-color: color-mix(in srgb, var(--h, var(--accent)) 44%, var(--line));
 }
 @supports not (color: color-mix(in srgb, white, black)) {
 	.skill-card,

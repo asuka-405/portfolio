@@ -3,8 +3,10 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"build": "node scripts/build-articles.mjs && node scripts/build-docs.mjs",
-		"build:local-docs": "node scripts/build-local-docs.mjs"
+		"build": "node scripts/build-articles.mjs && node scripts/build-docs.mjs && node scripts/build-assistant-index.mjs",
+		"build:local-docs": "node scripts/build-local-docs.mjs",
+		"build:assistant": "node scripts/build-assistant-index.mjs",
+		"test:assistant": "node --test assistant/assistant.test.mjs"
 	},
 	"dependencies": {
 		"@notionhq/client": "^2.2.15",

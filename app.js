@@ -30,9 +30,13 @@
 		var name = t.textContent.trim().toLowerCase();
 		if (name) t.setAttribute("data-hue", hueOf(name));
 	});
-	[].slice.call(document.querySelectorAll(".article-card")).forEach(function (c) {
-		var t = c.querySelector(".tag[data-hue]");
-		if (t) c.setAttribute("data-hue", t.getAttribute("data-hue"));
+	// Article cards take their colour from their position, so neighbours always differ. Hashing the topic tag
+	// made unrelated cards collide (three green ones in a row) whenever two tags landed on the same hue.
+	[].slice.call(document.querySelectorAll(".article-card")).forEach(function (c, i) {
+		c.setAttribute("data-hue", i % HUES);
+		[].slice.call(c.querySelectorAll(".tag")).forEach(function (t) {
+			t.setAttribute("data-hue", i % HUES); // the labels match their card
+		});
 	});
 
 	// Cards borrow the Works tiles' look: a hue-tinted slab with a large extruded icon.
@@ -340,4 +344,14 @@
 
 	var y = document.getElementById("year");
 	if (y) y.textContent = new Date().getFullYear();
+})();
+
+// On-device AI assistant: only a floating button loads here. The panel and the model load on click (see assistant/).
+(function () {
+	var me = document.currentScript;
+	if (!me || !me.src || document.querySelector("script[data-ai-launcher]")) return;
+	var s = document.createElement("script");
+	s.src = new URL("assistant/launcher.js", me.src).href;
+	s.setAttribute("data-ai-launcher", "");
+	document.head.appendChild(s);
 })();
