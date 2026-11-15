@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="darkreader-lock" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="FileHarbor: a Linux file manager built on Nemo with an embedded terminal, text editor, image and media tools. Downloads for Arch (AUR), Flatpak and source, plus the engineering story."
+		/>
+		<meta name="color-scheme" content="dark light" />
+		<title>FileHarbor: Downloads and case study · Suryansh Kapil</title>
+		<script>
+			(function () {
+				var r = document.documentElement;
+				r.className += " js";
+				try {
+					var t = localStorage.getItem("sk-theme");
+					if (t) r.setAttribute("data-theme", t);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="stylesheet" href="../styles.css" />
+	</head>
+	<body>
+		<div class="bg-stack" aria-hidden="true">
+			<div class="bg-grid"></div>
+			<div class="bg-grid-accent"></div>
+			<div class="bg-vignette"></div>
+		</div>
+
+		<header class="site-header">
+			<a class="site-logo" href="../index.html">suryansh<span class="dot">.</span></a>
+			<div class="header-right">
+				<nav class="site-nav">
+					<a href="../index.html#about">About</a>
+					<a href="../index.html#projects">Projects</a>
+					<a href="../articles/index.html">Writing</a>
+					<a href="../works/index.html">Works</a>
+					<a href="../docs/index.html">Docs</a>
+					<a href="../tools/index.html">Tools</a>
+					<a href="../index.html#contact">Contact</a>
+				</nav>
+				<button class="site-theme" type="button" aria-label="Toggle color theme">
+					<span class="theme-ic-sun">☀</span>
+					<span class="theme-ic-moon">☾</span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<section class="doc-hero">
+				<div class="hero-ambient" aria-hidden="true"><div class="hero-orbit"></div></div>
+				<a class="back-link reveal" href="../index.html#projects">← All projects</a>
+				<p class="doc-status reveal" style="--d: 0.04s">
+					Open source · Linux · v0.1
+				</p>
+				<h1 class="doc-title reveal" style="--d: 0.08s">
+					File<span class="text-accent">Harbor</span>
+				</h1>
+				<p class="doc-tagline reveal" style="--d: 0.12s">
+					A file manager for Linux that <strong>keeps its tools inside the
+					window</strong>: an embedded terminal, a text editor with Prettier, an
+					image editor, a media player and a disk-usage page, all as tabs, on top
+					of <strong>Nemo's</strong> fast, mature engine.
+				</p>
+				<div class="doc-meta reveal" style="--d: 0.16s">
+					<span class="chip">C · GTK 3</span>
+					<span class="chip">Embedded Python</span>
+					<span class="chip chip--muted">Nemo fork</span>
+					<span class="chip chip--muted">GPL-2.0-or-later</span>
+				</div>
+				<div class="doc-actions reveal" style="--d: 0.2s">
+					<a class="btn btn--primary" href="#download">Download</a>
+					<a class="btn btn--ghost" href="https://github.com/asuka-405/FileHarbor" target="_blank" rel="noopener">Source on GitHub</a>
+				</div>
+			</section>
+
+			<section class="doc-section" id="download">
+				<p class="doc-kicker reveal">Download</p>
+				<h2 class="reveal" style="--d: 0.04s">Get FileHarbor</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						FileHarbor installs the <code>nemo</code> binary, so on Arch it
+						<strong>replaces</strong> the <code>nemo</code> package and cannot
+						be installed next to it. Every release is published with the
+						source, an Arch package and a Flatpak bundle on GitHub.
+					</p>
+				</div>
+				<div class="dl-grid">
+					<article class="dl-card reveal" style="--d: 0.04s">
+						<span class="k">Arch Linux</span>
+						<h3>AUR · coming soon</h3>
+						<p>The AUR packages <code>fileharbor</code> and <code>fileharbor-bin</code> are being set up. Until they are listed, use the prebuilt package below or build from source.</p>
+						<pre class="cmd"><code>yay -S fileharbor-bin   # soon</code></pre>
+						<a class="dl-link" href="#download">Use the prebuilt package ↓</a>
+					</article>
+					<article class="dl-card reveal" style="--d: 0.09s">
+						<span class="k">Any distribution</span>
+						<h3>Flatpak bundle</h3>
+						<p>A single file from the latest release. The embedded terminal runs inside the sandbox.</p>
+						<pre class="cmd"><code>flatpak install --user FileHarbor-*.flatpak</code></pre>
+						<a class="dl-link" href="https://github.com/asuka-405/FileHarbor/releases/latest" target="_blank" rel="noopener">Latest release →</a>
+					</article>
+					<article class="dl-card reveal" style="--d: 0.14s">
+						<span class="k">Arch Linux</span>
+						<h3>Prebuilt package</h3>
+						<p>The same package without an AUR helper, built by the release workflow.</p>
+						<pre class="cmd"><code>sudo pacman -U fileharbor-*.pkg.tar.zst</code></pre>
+						<a class="dl-link" href="https://github.com/asuka-405/FileHarbor/releases/latest" target="_blank" rel="noopener">Latest release →</a>
+					</article>
+					<article class="dl-card reveal" style="--d: 0.19s">
+						<span class="k">Anywhere</span>
+						<h3>Source</h3>
+						<p>The release tarball with its SHA-256, or the repository. Build steps for Arch and Debian are in the README.</p>
+						<pre class="cmd"><code>git clone https://github.com/asuka-405/FileHarbor
+cd FileHarbor &amp;&amp; scripts/build.sh &amp;&amp; scripts/run.sh</code></pre>
+						<a class="dl-link" href="https://github.com/asuka-405/FileHarbor" target="_blank" rel="noopener">Repository →</a>
+					</article>
+				</div>
+				<p class="mock-caption reveal">
+					Found a problem? <a href="https://github.com/asuka-405/FileHarbor/issues" target="_blank" rel="noopener">Open an issue</a>
+					on GitHub.
+				</p>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Overview</p>
+				<h2 class="reveal" style="--d: 0.04s">Nemo's engine, a new shell around it</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						FileHarbor is a fork of <strong>Nemo</strong>, the file manager of
+						the Cinnamon desktop. Nemo already does the hard parts well:
+						browsing, remote locations, thumbnails, file operations. I kept
+						that engine and changed what surrounds it, so the everyday
+						jobs that usually send you to another app happen in a tab next
+						to your files.
+					</p>
+					<p>
+						It follows the desktop's light or dark mode and accent colour with
+						square, COSMIC-style corners, and everything it adds is optional:
+						each built-in tool can be switched off in the appearance settings
+						and the file manager falls back to Nemo's own behaviour.
+					</p>
+				</div>
+				<div class="fact-grid">
+					<div class="fact reveal" style="--d: 0.04s">
+						<span class="k">Base</span>
+						<span class="v">Nemo 6.8.3</span>
+					</div>
+					<div class="fact reveal" style="--d: 0.09s">
+						<span class="k">Stack</span>
+						<span class="v">C, GTK 3, Python tools</span>
+					</div>
+					<div class="fact reveal" style="--d: 0.14s">
+						<span class="k">Role</span>
+						<span class="v">Solo: design, build, packaging</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">What it adds</p>
+				<h2 class="reveal" style="--d: 0.04s">Everything is a tab</h2>
+				<div class="feature-grid">
+					<div class="feature reveal" style="--d: 0.04s"><h3>Embedded terminal</h3><p>A panel that follows the folder you are in, with a toolbar toggle. Focus stays in the terminal when the path changes.</p></div>
+					<div class="feature reveal" style="--d: 0.08s"><h3>Text editor</h3><p>Syntax highlighting for about 170 languages, search and replace, minimap, 19 colour themes and Prettier formatting.</p></div>
+					<div class="feature reveal" style="--d: 0.12s"><h3>Markdown and MDX</h3><p>Live preview beside the editor, 19 preview themes, MDX components, and a collapse button for the editor pane.</p></div>
+					<div class="feature reveal" style="--d: 0.16s"><h3>Image editor</h3><p>Rotate, crop, resize, adjust, remove a plain background, camera RAW, plus batch resize and convert.</p></div>
+					<div class="feature reveal" style="--d: 0.2s"><h3>Media player</h3><p>Video and music open in a tab, with trim, convert, extract audio and GIF maker.</p></div>
+					<div class="feature reveal" style="--d: 0.24s"><h3>Storage page</h3><p>A disk-usage view of your drives and folders, so you see what fills them.</p></div>
+					<div class="feature reveal" style="--d: 0.28s"><h3>Developer tools</h3><p>File hashes, JSON and text helpers and more, from a Tools page and the context menu.</p></div>
+					<div class="feature reveal" style="--d: 0.32s"><h3>Themes and extensions</h3><p>A live theme editor, remote-connection dialogs and an extension system for your own pages.</p></div>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Screenshots</p>
+				<h2 class="reveal" style="--d: 0.04s">Files, terminal and tools in one window</h2>
+				<div class="shot-grid">
+					<figure class="shot reveal" style="--d: 0.04s">
+						<img src="../assets/fileharbor/files.webp" width="1440" height="900" loading="lazy" decoding="async"
+							alt="FileHarbor showing a folder of files with the embedded terminal open above them" />
+						<figcaption>Files with the embedded terminal, which follows the folder you are in.</figcaption>
+					</figure>
+					<figure class="shot reveal" style="--d: 0.09s">
+						<img src="../assets/fileharbor/editor.webp" width="1440" height="900" loading="lazy" decoding="async"
+							alt="The built-in text editor in a tab, editing Markdown with a live preview beside it" />
+						<figcaption>The editor as a tab: Markdown source with a live preview, syntax highlighting and Prettier.</figcaption>
+					</figure>
+					<figure class="shot reveal" style="--d: 0.14s">
+						<img src="../assets/fileharbor/image-editor.webp" width="1440" height="900" loading="lazy" decoding="async"
+							alt="The image editor removing a plain background from a picture of a mug" />
+						<figcaption>The image editor, removing a plain background with a live preview.</figcaption>
+					</figure>
+					<figure class="shot reveal" style="--d: 0.19s">
+						<img src="../assets/fileharbor/storage.webp" width="1440" height="900" loading="lazy" decoding="async"
+							alt="The Storage page showing what is using disk space by type and by folder" />
+						<figcaption>The Storage page: what uses your disk, by type and by folder.</figcaption>
+					</figure>
+				</div>
+				<p class="mock-caption reveal">
+					Double-click a file and its tool opens as a new tab and takes focus.
+				</p>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Engineering challenges</p>
+				<h2 class="reveal" style="--d: 0.04s">What was hard, and what I learned</h2>
+				<div class="challenges">
+					<div class="challenge reveal" style="--d: 0.04s">
+						<div class="challenge-num">01</div>
+						<h3>Tools as tabs inside a C application</h3>
+						<span class="label">Problem</span>
+						<p>
+							Nemo is C and GTK. I wanted the editor, image and media tools
+							in Python, but as real tabs in the file manager, not separate
+							windows.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Embed CPython, build each tool as a GTK widget, and hand the
+							widget back to C as a virtual view. The same pages also run
+							standalone, which kept them easy to test.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.09s">
+						<div class="challenge-num">02</div>
+						<h3>Focus that stays where you put it</h3>
+						<span class="label">Problem</span>
+						<p>
+							When the terminal changes directory, the file view reloads and
+							pulled keyboard focus away mid-typing. Opening a file in a new
+							tab could also lose the switch to it.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Guard the focus calls when the terminal owns focus, and defer
+							the tab switch until the old tab's own focus handling has
+							finished.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.14s">
+						<div class="challenge-num">03</div>
+						<h3>Dialogs and popup menus on Wayland</h3>
+						<span class="label">Problem</span>
+						<p>
+							A modal dialog started from inside a popup menu's own click
+							handler is fragile on Wayland and can take the app down.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							Open the dialog a moment after the menu has closed, so the
+							toolkit never has two grabs in flight.
+						</p>
+					</div>
+					<div class="challenge reveal" style="--d: 0.19s">
+						<div class="challenge-num">04</div>
+						<h3>Shipping a fork that replaces a system package</h3>
+						<span class="label">Problem</span>
+						<p>
+							FileHarbor owns Nemo's binary, libraries and D-Bus names, and
+							has Python and WebKit dependencies of its own.
+						</p>
+						<span class="label">Approach</span>
+						<p class="fix">
+							An Arch package that provides and conflicts with
+							<code>nemo</code>, a Flatpak manifest, and a release workflow
+							that builds both and updates the AUR when a production
+							version is published.
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="doc-section">
+				<p class="doc-kicker reveal">Credits</p>
+				<h2 class="reveal" style="--d: 0.04s">Built on Nemo</h2>
+				<div class="prose reveal" style="--d: 0.08s">
+					<p>
+						FileHarbor stands on the work of the Linux Mint team and Nemo's
+						contributors, and of Nautilus, GNOME and Cinnamon before them. It
+						is licensed GPL-2.0-or-later, like Nemo, and is
+						<strong>not affiliated</strong> with Linux Mint or the Nemo
+						project.
+					</p>
+				</div>
+				<div class="doc-actions reveal" style="--d: 0.12s">
+					<a class="btn btn--primary" href="#download">Download</a>
+					<a class="btn btn--ghost" href="https://github.com/asuka-405/FileHarbor" target="_blank" rel="noopener">View on GitHub</a>
+				</div>
+			</section>
+		</main>
+
+
+		<footer class="site-footer">
+			<div class="footer-links">
+				<a href="../index.html#projects">All projects</a>
+				<a href="https://github.com/asuka-405" target="_blank" rel="noopener">GitHub</a>
+				<a href="mailto:suryansh@archdev.in">Email</a>
+			</div>
+			<p>© <span id="year"></span> <strong>Suryansh Kapil</strong></p>
+		</footer>
+
+		<script src="../app.js" defer></script>
+	</body>
+</html>

@@ -93,6 +93,7 @@ const STATIC_PAGES = [
 	"works/stockpulse/index.html",
 	"projects/auditflow.html",
 	"projects/blog-bits.html",
+	"projects/fileharbor.html",
 	"projects/sutrix.html",
 ];
 
